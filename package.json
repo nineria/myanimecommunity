@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@chakra-ui/icons": "^2.0.1",
     "@chakra-ui/react": "^2.1.2",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
@@ -20,6 +21,7 @@
     "react-dom": "18.1.0",
     "react-firebase-hooks": "^5.0.3",
     "react-simple-animate": "^3.4.0",
+    "react-tooltip": "^4.2.21",
     "react-visibility-sensor": "^5.1.1",
     "tabler-icons-react": "^1.48.0"
   },
