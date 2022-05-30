@@ -14,14 +14,7 @@ import {
   AvatarBadge,
   MenuDivider,
 } from "@chakra-ui/react";
-import {
-  Logout,
-  Users,
-  Settings,
-  File,
-  Palette,
-  Login,
-} from "tabler-icons-react";
+import { Logout, Users, Settings, File, Palette } from "tabler-icons-react";
 import Link from "next/link";
 import { useState } from "react";
 import { Animate } from "react-simple-animate";
@@ -110,7 +103,7 @@ export default function Navbar({ pageName }) {
                     </Button>
                   </Link>
                   <Link href="/register">
-                    <Button colorScheme="gray" size="sm">
+                    <Button colorScheme="whiteAlpha" size="sm">
                       ลงทะเบียน
                     </Button>
                   </Link>
