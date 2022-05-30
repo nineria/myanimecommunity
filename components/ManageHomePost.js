@@ -98,7 +98,7 @@ export default function ManageHomePost(props) {
                 background: "#fff",
                 color: "#111",
               }}
-              backgroundColor="#3a3939"
+              backgroundColor="#333"
               w="full"
             />
           </Tooltip>
@@ -145,15 +145,15 @@ export default function ManageHomePost(props) {
 
   const ExamplePost = () => {
     return (
-      <div className="rounded-sm bg-[#242629] w-full ">
+      <div className="rounded-sm bg-[#242629]">
         <h2
           className={`flex flex-row justify-between items-center bg-[#ec5555] py-1 px-3 font-bold text-md text-white ${
             toggle === true ? "rounded-t-sm" : "rounded-sm"
           }`}
         >
-          <a>
-            <span className="cursor-pointer hover:underline">{data.title}</span>
-          </a>
+          <span className="truncate cursor-pointer hover:underline">
+            {data.title}
+          </span>
           <div className="flex flex-row gap-2 ">
             <Edit className="hover:translate-y-[1px] hover:opacity-75 cursor-pointer" />
             <ChevronUp
@@ -165,25 +165,23 @@ export default function ManageHomePost(props) {
             />
           </div>
         </h2>
-        <div className="flex flex-col bg-[#aaa] gap-[1px]">
+        <div className="flex flex-col bg-[#aaa] gap-[1px] ">
           {toggle ? (
             <div
-              className={`flex lg:flex-row flex-col lg:justify-between lg:items-center px-3 py-2 text-[#ec5555] bg-[#242629]`}
+              className={`flex lg:flex-row flex-col lg:justify-between lg:items-center px-3 py-2 text-[#ec5555] bg-[#242629] `}
             >
-              <div className="flex gap-2">
+              <div className="flex gap-2 ">
                 <Messages size={45} />
-                <div className={`"flex items-center"}`}>
-                  <div className="flex flex-row justify-start gap-2 items-center ">
-                    <a className="truncate text-white cursor-pointer hover:underline w-fit">
+                <div className="flex flex-col justify-start w-full">
+                  <div className="flex flex-row justify-start gap-2 items-center">
+                    <a className="truncate text-white cursor-pointer hover:underline ">
                       {data.header}
                     </a>
                     <div className="px-1 bg-[#ec5555] w-fit h-fit rounded-sm text-white text-xs">
                       ใหม่
                     </div>
                   </div>
-                  <p className="truncate w-full text-[#aaa] text-xs">
-                    {data.body}
-                  </p>
+                  <p className="truncate text-[#aaa] text-xs">{data.body}</p>
                 </div>
               </div>
               <div className="flex flex-row gap-4 text-white">
@@ -215,7 +213,7 @@ export default function ManageHomePost(props) {
           <div className="bg-[#242629] opacity-90 w-screen h-screen"></div>
           <div className="flex justify-center items-center w-full h-full">
             <div className="fixed  top-20  max-w-[800px] w-full px-2">
-              <div className="bg-[#474545] rounded-md">
+              <div className="bg-[#444] rounded-md">
                 <EditPost />
                 <div className="h-[1px] bg-neutral-500 mt-4"></div>
                 <div className="flex flex-row items-center gap-3 mb-2">

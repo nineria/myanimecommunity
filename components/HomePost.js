@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { ChevronUp, Messages, Edit, SquareX } from "tabler-icons-react";
 import Link from "next/link";
+import { useContext } from "react";
+import { UserContext } from "@lib/context";
 import ManageHomePost from "./ManageHomePost";
 import { Container } from "@chakra-ui/react";
 import { Animate } from "react-simple-animate";
 
 export default function HomePost({ dummyData }) {
+  const { user, username } = useContext(UserContext);
+
   const [toggle, setTogle] = useState(true);
 
   const [openMenu, setOpenMenu] = useState(false);
@@ -27,10 +31,10 @@ export default function HomePost({ dummyData }) {
       >
         <div className="flex gap-2">
           <Messages size={45} />
-          <div className={`${body ? "flex  flex-col" : "flex items-center"}`}>
+          <div className={`${body ? "flex flex-col" : "flex items-center"}`}>
             <div className="flex flex-row justify-start gap-2 items-center ">
               <Link href={headerLink}>
-                <a className="truncate text-white cursor-pointer hover:underline w-fit">
+                <a className="truncate w-full text-white cursor-pointer hover:underline">
                   {header}
                 </a>
               </Link>
@@ -79,24 +83,24 @@ export default function HomePost({ dummyData }) {
           }}
           end={{ transform: "translateY(0%)", opacity: "1" }}
         >
-          <div className="rounded-sm bg-[#242629] w-full ">
+          <div className="rounded-sm bg-[#242629] w-full">
             <h2
-              className={`flex flex-row justify-between items-center bg-[#ec5555] py-1 px-3 font-bold text-md text-white ${
+              className={`flex flex-row justify-between items-center  bg-[#ec5555] py-1 px-3 font-bold text-md text-white ${
                 toggle === true ? "rounded-t-sm" : "rounded-sm"
               }`}
             >
               <Link href={postData.titleLink}>
-                <a>
-                  <span className="cursor-pointer hover:underline">
-                    {postData.title}
-                  </span>
+                <a className="truncate cursor-pointer hover:underline">
+                  {postData.title}
                 </a>
               </Link>
               <div className="flex flex-row gap-2 ">
-                <Edit
-                  onClick={() => setOpenMenu(!openMenu)}
-                  className="hover:translate-y-[1px] hover:opacity-75 cursor-pointer"
-                />
+                {user && (
+                  <Edit
+                    onClick={() => setOpenMenu(!openMenu)}
+                    className="hover:translate-y-[1px] hover:opacity-75 cursor-pointer"
+                  />
+                )}
                 <ChevronUp
                   size={22}
                   onClick={() => setTogle(!toggle)}
