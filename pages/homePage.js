@@ -1,11 +1,12 @@
 import React from "react";
 import HomePost from "@components/HomePost";
-import { Button, Container, Tooltip } from "@chakra-ui/react";
-import { BookDownload, SquarePlus } from "tabler-icons-react";
-import { ViewOffIcon } from "@chakra-ui/icons";
-import ReactTooltip from "react-tooltip";
+import { Container } from "@chakra-ui/react";
+import { useContext } from "react";
+import { UserContext } from "@lib/context";
 
 export default function HomePage() {
+  const { user, username } = useContext(UserContext);
+
   const postDummy = [
     {
       title: "อัพเดทข่าวสาร",
@@ -29,6 +30,17 @@ export default function HomePage() {
       body: "โพสต์รวบรวมรีวิวอนิเมะก่อนไปรับชม และเรื่องย่อต่างๆ พร้อมข้อมูลจำเพราะของตัวละคร ฯลฯ",
     },
   ];
+
+  const publicPostDummy = [
+    {
+      title: "อัพเดทข่าวสาร",
+      titleLink: "/news",
+      header: "ข่าวสารอนิเมะอนิเมะ & ประกาศจากเว็บไซต์",
+      headerLink: "/news",
+      body: "โพสต์รวบรวมอนิเมะเปิดตัวใหม่ และข่าวสารต่างๆ เกี่ยวกับอนิเมะ",
+    },
+  ];
+
   return (
     <div>
       <div className="h-full text-white">
@@ -40,11 +52,16 @@ export default function HomePage() {
           </div>
         </Container>
         <div className="flex flex-col gap-2">
-          <HomePost dummyData={postDummy[0]} />
-          <HomePost dummyData={postDummy[1]} />
-          <HomePost dummyData={postDummy[2]} />
+          {user ? (
+            <div className="flex flex-col gap-1">
+              <HomePost dummyData={postDummy[0]} />
+              <HomePost dummyData={postDummy[1]} />
+              <HomePost dummyData={postDummy[2]} />
+            </div>
+          ) : (
+            <HomePost dummyData={postDummy[0]} />
+          )}
         </div>
-        <div className="h-[400px]"></div>
       </div>
     </div>
   );
