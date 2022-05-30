@@ -5,6 +5,7 @@ import Navbar from "@components/Navbar";
 import { useEffect, useState, useCallback, useContext } from "react";
 import debounce from "lodash.debounce";
 import { Button, Container, Image } from "@chakra-ui/react";
+import UserProfile from "@components/UserProfile";
 
 export default function Enter(props) {
   const { user, username } = useContext(UserContext);
@@ -24,7 +25,7 @@ export default function Enter(props) {
           !username ? (
             <UsernameForm />
           ) : (
-            <UserProfile user={user} />
+            <UserProfile user={user} username={username} />
           )
         ) : (
           <SignInButton />
@@ -44,18 +45,21 @@ function SignInButton() {
     "https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png";
 
   return (
-    <div className="flex justify-center bg-[#181a1d]">
-      <Button
+    <div className="flex justify-center bg-[#181a1d] mt-10">
+      <div
         onClick={signInWithGoogle}
-        padding="7"
-        margin="2"
-        background="white"
+        className="bg-white py-2 px-4 rounded-md cursor-pointer hover:translate-y-[1px] hover:opacity-75 group"
       >
         <div className="flex flex-row gap-2 items-center">
-          <img src={googleLogo} width="30px" className="text-gray-600" /> Sign
-          in with Google
+          <img
+            src={googleLogo}
+            width="30px"
+            className="group-hover:-rotate-12 transition-all"
+          />
+
+          <p className="text-black">Sign in with Google</p>
         </div>
-      </Button>
+      </div>
     </div>
   );
 }
@@ -64,34 +68,6 @@ function SignInButton() {
 // function SignOutButton() {
 //   return <button onClick={() => auth.signOut()}>Sign Out</button>;
 // }
-
-function UserProfile({ user }) {
-  const [rank, setRank] = useState([]);
-
-  useEffect(() => {
-    // user.rank.map((i) => {
-    //   setRank(i);
-    // });
-    console.log(user?.birthday);
-  }, []);
-  return (
-    <div className="flex flex-col justify-center py-2">
-      <div className="flex flex-col justify-between ">
-        <h1 className="bg-[#ec5555] rounded-t-md py-1 px-3 font-bold w-full">
-          {user?.displayName} - Profile
-        </h1>
-        <div className="flex flex-row justify-start gap-10 bg-[#25262b] p-10">
-          <Image src={user?.photoURL} alt="" />
-          <div className="flex flex-col gap-2">
-            <p>ชื่อจริง: {user?.displayName}</p>
-            <p>อีเมล: {user?.email}</p>
-            <p>ยศ: {user?.birthday}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 // Username form
 function UsernameForm() {
