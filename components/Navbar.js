@@ -143,7 +143,7 @@ export default function Navbar({ pageName }) {
                       </div>
                       <div
                         className={`${
-                          toggle === true ? "rotate-180" : ""
+                          toggle === true ? "rotate-90" : ""
                         } transition-all`}
                       >
                         <Settings />
@@ -162,7 +162,7 @@ export default function Navbar({ pageName }) {
                         _focus={{ bg: "#181a1d" }}
                       >
                         <div className="flex flex-row gap-2">
-                          <Users className="group-hover:rotate-12" />
+                          <Users className="group-hover:rotate-12 transition-all" />
                           โปรไฟล์
                         </div>
                       </MenuItem>
@@ -172,7 +172,7 @@ export default function Navbar({ pageName }) {
                         className="group"
                       >
                         <div className="flex flex-row gap-2">
-                          <Settings className="group-hover:rotate-12" />
+                          <Settings className="group-hover:rotate-90 transition-all" />
                           ตั้งค่า
                         </div>
                       </MenuItem>
@@ -182,7 +182,7 @@ export default function Navbar({ pageName }) {
                         className="group"
                       >
                         <div className="flex flex-row gap-2">
-                          <File className="group-hover:rotate-12" />
+                          <File className="group-hover:rotate-12 transition-all" />
                           โพสต์ของฉัน
                         </div>
                       </MenuItem>
@@ -192,7 +192,7 @@ export default function Navbar({ pageName }) {
                         className="group"
                       >
                         <div className="flex flex-row gap-2">
-                          <Palette className="group-hover:rotate-12" />
+                          <Palette className="group-hover:rotate-12 transition-all" />
                           เลือกธีม
                         </div>
                       </MenuItem>
@@ -205,7 +205,7 @@ export default function Navbar({ pageName }) {
                         className="group"
                       >
                         <div className="flex flex-row gap-2">
-                          <Logout className="group-hover:rotate-12" />
+                          <Logout className="group-hover:rotate-12 transition-all" />
                           ออกจากระบบ
                         </div>
                       </MenuItem>
