@@ -154,10 +154,12 @@ export default function Navbar({ pageName }) {
                         className="group"
                         _focus={{ bg: "#181a1d" }}
                       >
-                        <div className="flex flex-row gap-2">
-                          <Users className="group-hover:rotate-12 transition-all" />
-                          โปรไฟล์
-                        </div>
+                        <Link href="/enter">
+                          <a className="flex flex-row gap-2">
+                            <Users className="group-hover:rotate-12 transition-all" />
+                            โปรไฟล์
+                          </a>
+                        </Link>
                       </MenuItem>
                       <MenuItem
                         _hover={{ bg: "#181a1d" }}
