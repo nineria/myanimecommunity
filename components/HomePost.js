@@ -3,7 +3,7 @@ import { ChevronUp, Messages, Edit, SquareX } from "tabler-icons-react";
 import Link from "next/link";
 import { useContext } from "react";
 import { UserContext } from "@lib/context";
-import ManageHomePost from "./ManageHomePost";
+import EditHomePost from "./EditHomePost";
 import { Container } from "@chakra-ui/react";
 import { Animate } from "react-simple-animate";
 
@@ -22,6 +22,7 @@ export default function HomePost({ dummyData }) {
 
   const HandlePostDataChange = (data) => {
     console.log(data);
+    postData = data;
   };
 
   const Content = ({ header, headerLink, body }) => {
@@ -31,10 +32,12 @@ export default function HomePost({ dummyData }) {
       >
         <div className="flex gap-2">
           <Messages size={45} />
-          <div className={`${body ? "flex flex-col" : "flex items-center"}`}>
-            <div className="flex flex-row justify-start gap-2 items-center ">
+          <div
+            className={`${body ? "flex flex-col" : "flex items-center"} w-full`}
+          >
+            <div className="flex flex-row justify-start gap-2 items-center">
               <Link href={headerLink}>
-                <a className="truncate w-full text-white cursor-pointer hover:underline">
+                <a className="truncate  text-white cursor-pointer hover:underline">
                   {header}
                 </a>
               </Link>
@@ -42,10 +45,10 @@ export default function HomePost({ dummyData }) {
                 ใหม่
               </div>
             </div>
-            <p className="truncate w-full text-[#aaa] text-xs">{body}</p>
+            <p className="truncate max-w-[600px] text-[#aaa] text-xs">{body}</p>
           </div>
         </div>
-        <div className="flex flex-row gap-4 text-white">
+        <div className="flex flex-row gap-4 text-white ">
           <div className="flex lg:flex-col lg:items-center items-end gap-1">
             <div>25</div>
             <div className="text-sm text-[#aaa]">โพสต์</div>
@@ -65,62 +68,61 @@ export default function HomePost({ dummyData }) {
   };
 
   return (
-    <div>
+    <div className="">
       {openMenu === true ? (
-        <ManageHomePost
-          handleOpenMenu={HandleOpenMenu}
-          open={openMenu}
-          postData={postData}
-          handlePostDataChange={HandlePostDataChange}
-        />
-      ) : null}
-      <Container maxW="container.xl">
         <Animate
           play
           start={{
-            transform: "translateY(1%)",
             opacity: "0",
           }}
-          end={{ transform: "translateY(0%)", opacity: "1" }}
+          end={{ opacity: "1" }}
         >
-          <div className="rounded-sm bg-[#242629] w-full">
-            <h2
-              className={`flex flex-row justify-between items-center  bg-[#ec5555] py-1 px-3 font-bold text-md text-white ${
-                toggle === true ? "rounded-t-sm" : "rounded-sm"
-              }`}
-            >
-              <Link href={postData.titleLink}>
-                <a className="truncate cursor-pointer hover:underline">
-                  {postData.title}
-                </a>
-              </Link>
-              <div className="flex flex-row gap-2 ">
-                {user && (
-                  <Edit
-                    onClick={() => setOpenMenu(!openMenu)}
-                    className="hover:translate-y-[1px] hover:opacity-75 cursor-pointer"
-                  />
-                )}
-                <ChevronUp
-                  size={22}
-                  onClick={() => setTogle(!toggle)}
-                  className={`${
-                    toggle === false ? "rotate-180" : ""
-                  } cursor-pointer transition-all hover:translate-y-[1px] hover:opacity-75`}
-                />
-              </div>
-            </h2>
-            <div className="flex flex-col bg-[#aaa] gap-[1px]">
-              {toggle ? (
-                <Content
-                  header={postData.header}
-                  headerLink={postData.headerLink}
-                  body={postData.body}
-                />
-              ) : null}
-            </div>
-          </div>
+          <EditHomePost
+            handleOpenMenu={HandleOpenMenu}
+            open={openMenu}
+            postData={postData}
+            handlePostDataChange={HandlePostDataChange}
+          />
         </Animate>
+      ) : null}
+      <Container maxW="container.xl">
+        <div className="rounded-sm bg-[#242629] w-full">
+          <h2
+            className={`flex flex-row justify-between items-center  bg-[#ec5555] py-1 px-3 font-bold text-md text-white ${
+              toggle === true ? "rounded-t-sm" : "rounded-sm"
+            }`}
+          >
+            <Link href={postData.titleLink}>
+              <a className="truncate cursor-pointer hover:underline">
+                {postData.title}
+              </a>
+            </Link>
+            <div className="flex flex-row gap-2 ">
+              {user && (
+                <Edit
+                  onClick={() => setOpenMenu(!openMenu)}
+                  className="hover:translate-y-[1px] hover:opacity-75 cursor-pointer"
+                />
+              )}
+              <ChevronUp
+                size={22}
+                onClick={() => setTogle(!toggle)}
+                className={`${
+                  toggle === false ? "rotate-180" : ""
+                } cursor-pointer transition-all hover:translate-y-[1px] hover:opacity-75`}
+              />
+            </div>
+          </h2>
+          <div className="flex flex-col bg-[#aaa] gap-[1px]">
+            {toggle ? (
+              <Content
+                header={postData.header}
+                headerLink={postData.headerLink}
+                body={postData.body}
+              />
+            ) : null}
+          </div>
+        </div>
       </Container>
     </div>
   );
