@@ -14,24 +14,13 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
-  Tag,
   Text,
-  Box,
   Flex,
-  useDisclosure,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
-  Checkbox,
-  Textarea,
   StatArrow,
-  AvatarBadge,
   Avatar,
+  useDisclosure,
 } from "@chakra-ui/react";
+
 import React from "react";
 import { Animate } from "react-simple-animate";
 import {
@@ -40,6 +29,10 @@ import {
   BrandLinkedin,
   Mail,
 } from "tabler-icons-react";
+import Description from "./Description";
+import Favorite from "./Favorite";
+import Information from "./Information";
+import Report from "./Report";
 
 export default function UserProfile({ user, username }) {
   const postDummy = [
@@ -113,46 +106,7 @@ export default function UserProfile({ user, username }) {
           <div className="flex flex-col pb-4 bg-[#25262b] rounded-md">
             <div className="fixed top-32 bg-[#25262b] text-white bg-opacity-40 rounded-md ml-4">
               <div className="flex flex-row justify-end pt-2 pr-2">
-                <Modal isOpen={isOpen} onClose={onClose}>
-                  <ModalOverlay />
-                  <ModalContent>
-                    <ModalHeader>เหตุผลที่รายงาน</ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody>
-                      <Flex flexDir="column">
-                        <Checkbox colorScheme="red">
-                          ชื่อผู้ใช้ไม่เหมาะสม
-                        </Checkbox>
-                        <Checkbox colorScheme="red">
-                          ใช้วาจาไม่เหมาะสม / ทัศนคติเชิงลบ
-                        </Checkbox>
-                        <Checkbox colorScheme="red">
-                          โฆษณาขายของ / การสแปมข้อความ
-                        </Checkbox>
-                        <Checkbox colorScheme="red">
-                          คำพูดแสดงถึงความเกลียดชัง
-                        </Checkbox>
-                        <Checkbox colorScheme="red">
-                          เนื้อหามีการอัพเดท
-                        </Checkbox>
-                        <Checkbox colorScheme="red" mt="4">
-                          อื่นๆ
-                        </Checkbox>
-                        <Textarea
-                          placeholder="โปรดระบุข้อมูลเพิ่มเติม"
-                          my="8px"
-                        />
-                      </Flex>
-                    </ModalBody>
-
-                    <ModalFooter>
-                      <Button colorScheme="red" mr={3} onClick={onClose}>
-                        ยกเลิก
-                      </Button>
-                      <Button variant="ghost">ส่งเรื่อง</Button>
-                    </ModalFooter>
-                  </ModalContent>
-                </Modal>
+                <Report isOpen={isOpen} onClose={onClose} />
               </div>
               <div className="flex flex-row px-3 mb-2">
                 <Avatar
@@ -184,61 +138,44 @@ export default function UserProfile({ user, username }) {
               <div className="h-[1px] bg-neutral-500 mt-2"></div>
               <div className="w-full px-4">
                 <div className="flex flex-col gap-2">
-                  <div className="pt-5 mb-4">
-                    <LinkBox
-                      as="article"
-                      w="full"
-                      p="5"
-                      borderWidth="1px"
-                      rounded="md"
-                    >
-                      <Box as="time" dateTime="2021-01-15 15:30:00 +0000 UTC">
-                        13 days ago
-                      </Box>
-                      <Heading size="md" my="2">
-                        <LinkOverlay href="#">
-                          New Year, New Beginnings: Smashing Workshops & Audits
-                        </LinkOverlay>
-                      </Heading>
-                      <Text>
-                        Catch up on what’s been cookin’ at Smashing and explore
-                        some of the most popular community resources.
-                      </Text>
-                    </LinkBox>
-                  </div>
-                  <div className="bg-[#37383a] text-center py-1 rounded-md hover:opacity-75 cursor-pointer">
-                    แก้ไขคำอธิบายตัวเอง
-                  </div>
+                  <Description>
+                    <Description.CreateDate>13 days ago</Description.CreateDate>
+                    <Description.Header>
+                      New Year, New Beginnings: Smashing Workshops & Audits
+                    </Description.Header>
+                    <Description.Body>
+                      Catch up on what’s been cookin’ at Smashing and explore
+                      some of the most popular community resources.
+                    </Description.Body>
+                    <Description.Button>แก้ไขคำอธิบายตัวเอง</Description.Button>
+                  </Description>
                   <div className="h-[1px] bg-neutral-500 mt-2"></div>
-
-                  <p className="flex flex-row gap-2 items-center mt-3">
-                    <Mail /> {user?.email}
-                  </p>
-                  <p className="flex flex-row gap-2 items-center">
-                    <BrandInstagram /> Instagram
-                  </p>
-                  <p className="flex flex-row gap-2 items-center">
-                    <BrandGithub /> Github
-                  </p>
-                  <p className="flex flex-row gap-2 items-center">
-                    <BrandLinkedin /> Linkedin
-                  </p>
-
-                  <div className="bg-[#37383a] text-center py-1 rounded-md hover:opacity-75 cursor-pointer">
-                    แก้ไขรายละเอียด
-                  </div>
+                  <Information>
+                    <Information.Detail>
+                      <Mail /> {user?.email}
+                    </Information.Detail>
+                    <Information.Detail>
+                      <BrandInstagram /> Instagram
+                    </Information.Detail>
+                    <Information.Detail>
+                      <BrandGithub /> Github
+                    </Information.Detail>
+                    <Information.Detail>
+                      <BrandLinkedin /> Linkedin
+                    </Information.Detail>
+                    <Information.Button>แก้ไขรายละเอียด</Information.Button>
+                  </Information>
                   <div className="h-[1px] bg-neutral-500 mt-2"></div>
-
-                  <div className="flex flex-row gap-2 items-center mt-3">
-                    <Tag>Action</Tag>
-                    <Tag>Drama</Tag>
-                    <Tag>School</Tag>
-                    <Tag>Love</Tag>
-                    <Tag>Comedy</Tag>
-                  </div>
-                  <div className="bg-[#37383a] text-center py-1 rounded-md hover:opacity-75 cursor-pointer">
-                    แก้ไขแนวอนิเมะหรือมังงะที่ชอบ
-                  </div>
+                  <Favorite>
+                    <Favorite.Detail>Action</Favorite.Detail>
+                    <Favorite.Detail>Drama</Favorite.Detail>
+                    <Favorite.Detail>School</Favorite.Detail>
+                    <Favorite.Detail>Love</Favorite.Detail>
+                    <Favorite.Detail>Comedy</Favorite.Detail>
+                    <Favorite.Button>
+                      แก้ไขแนวอนิเมะหรือมังงะที่ชอบ
+                    </Favorite.Button>
+                  </Favorite>
                 </div>
               </div>
             </div>
