@@ -64,7 +64,7 @@ export default function EditHomePost(props) {
           <IconButton
             color="whtie"
             backgroundColor="red.400"
-            icon={<SquareX boxSize={3} />}
+            icon={<SquareX boxsize={3} />}
             {...getCancelButtonProps()}
           />
         </ButtonGroup>

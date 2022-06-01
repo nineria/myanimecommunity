@@ -70,7 +70,7 @@ export default function Navbar({ pageName }) {
               {username && (
                 <>
                   {menu.map((item) => (
-                    <Link href={item.path}>
+                    <Link key={item.name} href={item.path}>
                       <div
                         className={`border-b-4 border-transparent hover:border-b-4 hover:border-[#FA5252] ${
                           item.name === pageName && active === true
