@@ -52,7 +52,7 @@ export default function Navbar({ pageName }) {
   ];
 
   return (
-    <div className="bg-[#25262B] py-2">
+    <div className="bg-[#25262B] py-2 sticky top-0 z-50">
       <Container maxW="container.xl">
         <div className="flex justify-start">
           <div className="text-4xl font-bold">

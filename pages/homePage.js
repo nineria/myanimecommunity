@@ -59,50 +59,48 @@ export default function HomePage() {
 
   return (
     <div>
-      <div className="h-full text-white">
-        {openMenu === true ? (
-          <AddHomePost
-            handleOpenMenu={HandleOpenMenu}
-            open={openMenu}
-            postData={postData}
-            handlePostDataChange={HandlePostDataChange}
-          />
-        ) : null}
-        <Container maxW="container.xl">
-          <div className="flex flex-row justify-between w-full">
-            <div
-              onClick={() => HandleOpenMenu(!openMenu)}
-              className="bg-[#ec5555] w-fit px-3 mb-2 rounded-sm cursor-pointer hover:translate-y-[1px] hover:opacity-75"
-            >
-              สร้าง +
-            </div>
-          </div>
-        </Container>
-        <div className="fixed top-24 right-0 left-0">
-          <div className="flex flex-col gap-2">
-            {user ? (
-              <Animate
-                play
-                start={{
-                  transform: "translateY(2%)",
-                  opacity: "0",
-                }}
-                end={{ transform: "translateY(0%)", opacity: "1" }}
-              >
-                <div className="flex flex-col gap-1 ">
-                  <HomePost dummyData={postDummy[0]} />
-                  <HomePost dummyData={postDummy[1]} />
-                  <HomePost dummyData={postDummy[2]} />
+      <div className="mt-2 text-white w-full">
+        {user ? (
+          <Animate
+            play
+            start={{
+              transform: "translateY(2%)",
+              opacity: "0",
+            }}
+            end={{ transform: "translateY(0%)", opacity: "1" }}
+          >
+            <div className="">
+              <div className="flex flex-col gap-2">
+                {openMenu === true ? (
+                  <AddHomePost
+                    handleOpenMenu={HandleOpenMenu}
+                    open={openMenu}
+                    postData={postData}
+                    handlePostDataChange={HandlePostDataChange}
+                  />
+                ) : null}
+                <div className="flex flex-row justify-between w-full">
+                  <Container maxW="container.xl">
+                    <div
+                      onClick={() => HandleOpenMenu(!openMenu)}
+                      className="bg-[#ec5555] w-fit px-3 rounded-sm cursor-pointer hover:translate-y-[1px] hover:opacity-75"
+                    >
+                      สร้าง +
+                    </div>
+                  </Container>
                 </div>
-              </Animate>
-            ) : (
-              <HomePost dummyData={postDummy[0]} />
-            )}
-            {postData.title === "หัวข้อหลัก" ? null : (
-              <HomePost dummyData={postData} />
-            )}
-          </div>
-        </div>
+                <HomePost dummyData={postDummy[0]} />
+                <HomePost dummyData={postDummy[1]} />
+                <HomePost dummyData={postDummy[2]} />
+              </div>
+            </div>
+          </Animate>
+        ) : (
+          <HomePost dummyData={postDummy[0]} />
+        )}
+        {postData.title === "หัวข้อหลัก" ? null : (
+          <HomePost dummyData={postData} />
+        )}
       </div>
     </div>
   );

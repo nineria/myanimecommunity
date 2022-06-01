@@ -30,6 +30,7 @@ import {
   Textarea,
   StatArrow,
   AvatarBadge,
+  Avatar,
 } from "@chakra-ui/react";
 import React from "react";
 import { Animate } from "react-simple-animate";
@@ -154,7 +155,12 @@ export default function UserProfile({ user, username }) {
                 </Modal>
               </div>
               <div className="flex flex-row px-3 mb-2">
-                <Image src={user?.photoURL} rounded="full" bgColor="#25262b" />
+                <Avatar
+                  name={user?.displayName || "username"}
+                  src={user?.photoURL}
+                  bg="white"
+                  size="xl"
+                />
                 <div className="flex flex-col justify-end gap-2 pl-4 pb-2">
                   <p className="text-3xl font-bold">{username}</p>
                   <Button
@@ -241,7 +247,7 @@ export default function UserProfile({ user, username }) {
           <div className="flex flex-row justify-around w-full bg-[#25262b] rounded-md pb-4 mt-2 p-4">
             <Flex justifyContent="space-around" w="full">
               <Stat textAlign="center">
-                <StatLabel>Post</StatLabel>
+                <StatLabel>โพสต์</StatLabel>
                 <StatNumber>25</StatNumber>
                 <StatHelpText>
                   <StatArrow type="increase" />
@@ -249,19 +255,19 @@ export default function UserProfile({ user, username }) {
                 </StatHelpText>
               </Stat>
               <Stat textAlign="center">
-                <StatLabel>Comment</StatLabel>
-                <StatNumber>2.1K</StatNumber>
-                <StatHelpText>
-                  <StatArrow type="decrease" />
-                  1.26%
-                </StatHelpText>
-              </Stat>
-              <Stat textAlign="center">
-                <StatLabel>Like</StatLabel>
+                <StatLabel>ถูกใจ</StatLabel>
                 <StatNumber>26K</StatNumber>
                 <StatHelpText>
                   <StatArrow type="increase" />
                   58.29%
+                </StatHelpText>
+              </Stat>
+              <Stat textAlign="center">
+                <StatLabel>คอมเมนต์</StatLabel>
+                <StatNumber>2.1K</StatNumber>
+                <StatHelpText>
+                  <StatArrow type="decrease" />
+                  1.26%
                 </StatHelpText>
               </Stat>
             </Flex>
@@ -287,18 +293,19 @@ export default function UserProfile({ user, username }) {
                       <Flex gap="2">
                         <Flex
                           flexDir="column"
-                          w="120px"
                           backgroundColor="#323436"
                           minWidth="100px"
                           maxWidth="100px"
+                          py="2"
                         >
-                          <Image
-                            src={user.photoURL}
-                            borderRadius="full"
-                            p="2"
+                          <Avatar
+                            margin="auto"
+                            name={user?.displayName || "username"}
+                            src={user?.photoURL}
+                            bg="white"
                           />
                           <Text textAlign="center" color="yellow.400">
-                            nineria
+                            {username || "username"}
                           </Text>
                           <Text
                             textAlign="center"
@@ -308,118 +315,7 @@ export default function UserProfile({ user, username }) {
                             Admin
                           </Text>
                         </Flex>
-                        <Flex flexDir="column">
-                          <Text fontSize="x-small" color="#bbb">
-                            {item.postTime}
-                          </Text>
-                          <Heading size="md" noOfLines={1}>
-                            <LinkOverlay href="#">{item.header}</LinkOverlay>
-                          </Heading>
-                          <Text
-                            fontSize="sm"
-                            overflow="hidden"
-                            h="10"
-                            noOfLines={3}
-                          >
-                            {item.body}
-                          </Text>
-                        </Flex>
-                      </Flex>
-                    </LinkBox>
-                  ))}
-                  <div className="bg-[#37383a] text-center py-1 rounded-md hover:opacity-75 cursor-pointer mt-2">
-                    โหลดข้อมูลเพิ่มเติม...
-                  </div>
-                </TabPanel>
-
-                <TabPanel>
-                  {postDummy.slice(3).map((item, key) => (
-                    <LinkBox
-                      borderWidth="1px"
-                      borderRadius="sm"
-                      overflow="hidden"
-                      key={key}
-                      my="1"
-                    >
-                      <Flex gap="2">
-                        <Flex
-                          flexDir="column"
-                          backgroundColor="#323436"
-                          minWidth="100px"
-                          maxWidth="100px"
-                        >
-                          <Image
-                            src={user.photoURL}
-                            borderRadius="full"
-                            p="2"
-                          />
-                          <Text textAlign="center" color="yellow.400">
-                            nineria
-                          </Text>
-                          <Text
-                            textAlign="center"
-                            fontSize="xs"
-                            color="#ec5555"
-                          >
-                            Admin
-                          </Text>
-                        </Flex>
-                        <Flex flexDir="column">
-                          <Text fontSize="x-small" color="#bbb">
-                            {item.postTime}
-                          </Text>
-                          <Heading size="md" noOfLines={1}>
-                            <LinkOverlay href="#">{item.header}</LinkOverlay>
-                          </Heading>
-                          <Text
-                            fontSize="sm"
-                            overflow="hidden"
-                            h="10"
-                            noOfLines={3}
-                          >
-                            {item.body}
-                          </Text>
-                        </Flex>
-                      </Flex>
-                    </LinkBox>
-                  ))}
-                  <div className="bg-[#37383a] text-center py-1 rounded-md hover:opacity-75 cursor-pointer mt-2">
-                    โหลดข้อมูลเพิ่มเติม...
-                  </div>
-                </TabPanel>
-                <TabPanel>
-                  {postDummy.slice(1).map((item, key) => (
-                    <LinkBox
-                      borderWidth="1px"
-                      borderRadius="sm"
-                      overflow="hidden"
-                      key={key}
-                      my="1"
-                    >
-                      <Flex gap="2">
-                        <Flex
-                          flexDir="column"
-                          backgroundColor="#323436"
-                          minWidth="100px"
-                          maxWidth="100px"
-                        >
-                          <Image
-                            src={user.photoURL}
-                            borderRadius="full"
-                            p="2"
-                          />
-                          <Text textAlign="center" color="yellow.400">
-                            nineria
-                          </Text>
-                          <Text
-                            textAlign="center"
-                            fontSize="xs"
-                            color="#ec5555"
-                          >
-                            Admin
-                          </Text>
-                        </Flex>
-                        <Flex flexDir="column">
+                        <Flex flexDir="column" pt="2">
                           <Text fontSize="x-small" color="#bbb">
                             {item.postTime}
                           </Text>

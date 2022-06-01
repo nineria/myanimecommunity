@@ -157,73 +157,73 @@ export default function AddHomePost(props) {
   };
 
   return (
-    <div className="">
+    <div
+      onClick={props.handleOpenMenu}
+      className="fixed z-10 h-full top-0 lg:pt-20 md:pt-10 pt-5 w-full p-2 text-white bg-[#181a1d] bg-opacity-75 backdrop-blur-sm"
+    >
       {props.open === true ? (
-        <div className="fixed -top-24 z-10 text-white">
-          <div className="bg-[#242629] opacity-90 w-screen h-screen"></div>
-          <div className="flex justify-center items-center w-full h-full">
-            <div className="fixed top-20  max-w-[800px] w-full px-2">
-              <Animate
-                play
-                start={{
-                  transform: "translateY(2%)",
-                  opacity: "0",
-                }}
-                end={{ transform: "translateY(0)", opacity: "1" }}
-              >
-                <div className="bg-[#444] rounded-md">
-                  <HandlePost />
-                  <div className="h-[1px] bg-neutral-500 mt-4"></div>
-                  <div className="flex flex-row items-center gap-3 mb-2">
-                    <h1 className="py-2 pl-3">ตัวอย่างโพสต์</h1>
-                    <Tooltip hasArrow label="กดเพื่อรีโหลดตัวอย่าง" bg="gray">
-                      <div
-                        onClick={() => setReload(!reload)}
-                        className="bg-neutral-500 p-1 rounded-sm flex hover:translate-y-[1px] hover:opacity-75 cursor-pointer group"
-                      >
-                        <RepeatIcon className="group-hover:rotate-180 transition-all" />
-                      </div>
-                    </Tooltip>
-                  </div>
-                  <div className="bg-[#181a1d] py-4 px-8 ">
-                    {/* <HomePost dummyData={data} /> */}
-                  </div>
-                  <div className="flex flex-row gap-2 pl-3 pt-2 text-xs">
-                    <AlertCircle size={24} />
-                    <span className="w-4/5">
-                      ผู้ดูแลระบบขอสงวนสิทธิ์ในการลบโพสต์ของผู้ที่ไม่ปฏิบัติตาม{" "}
-                      <span className="text-[#ec5555] underline cursor-pointer">
-                        กฎ กติกา และมารยาท
-                      </span>{" "}
-                      ของเว็บไซต์ MyAnimeCommu
-                      <p>เพื่อรักษาบรรยากาศการพูดคุยของชุมชนคนรักอนิเมะ</p>
-                    </span>
-                  </div>
-                  <div className="flex flex-row justify-between p-2 items-center">
-                    <div className="flex flex-row gap-2">
-                      <div
-                        onClick={props.handleOpenMenu}
-                        className="py-1 px-3 bg-neutral-500 rounded-sm cursor-pointer hover:opacity-75 hover:translate-y-[1px]"
-                      >
-                        ยกเลิก
-                      </div>
-                      <div
-                        onClick={props.handleOpenMenu}
-                        className="py-1 px-3 bg-[#ec5555] rounded-sm cursor-pointer hover:opacity-75 hover:translate-y-[1px]"
-                      >
-                        ลบโพสต์
-                      </div>
+        <div className="flex justify-center items-center">
+          <div className="max-w-[800px] w-full ">
+            <Animate
+              play
+              start={{
+                transform: "translateY(2%)",
+                opacity: "0",
+              }}
+              end={{ transform: "translateY(0)", opacity: "1" }}
+            >
+              <div className="bg-[#444] rounded-md">
+                <HandlePost />
+                <div className="h-[1px] bg-neutral-500 mt-4"></div>
+                <div className="flex flex-row items-center gap-3 mb-2">
+                  <h1 className="py-2 pl-3">ตัวอย่างโพสต์</h1>
+                  <Tooltip hasArrow label="กดเพื่อรีโหลดตัวอย่าง" bg="gray">
+                    <div
+                      onClick={() => setReload(!reload)}
+                      className="bg-neutral-500 p-1 rounded-sm flex hover:translate-y-[1px] hover:opacity-75 cursor-pointer group"
+                    >
+                      <RepeatIcon className="group-hover:rotate-180 transition-all" />
+                    </div>
+                  </Tooltip>
+                </div>
+                <div className="bg-[#181a1d] py-4 px-8 ">
+                  {/* <HomePost dummyData={data} /> */}
+                </div>
+                <div className="flex flex-row gap-2 pl-3 pt-2 text-xs">
+                  <AlertCircle size={24} />
+                  <span className="w-4/5">
+                    ผู้ดูแลระบบขอสงวนสิทธิ์ในการลบโพสต์ของผู้ที่ไม่ปฏิบัติตาม{" "}
+                    <span className="text-[#ec5555] underline cursor-pointer">
+                      กฎ กติกา และมารยาท
+                    </span>{" "}
+                    ของเว็บไซต์ MyAnimeCommu
+                    <p>เพื่อรักษาบรรยากาศการพูดคุยของชุมชนคนรักอนิเมะ</p>
+                  </span>
+                </div>
+                <div className="flex flex-row justify-between p-2 items-center">
+                  <div className="flex flex-row gap-2">
+                    <div
+                      onClick={props.handleOpenMenu}
+                      className="py-1 px-3 bg-neutral-500 rounded-sm cursor-pointer hover:opacity-75 hover:translate-y-[1px]"
+                    >
+                      ยกเลิก
                     </div>
                     <div
                       onClick={props.handleOpenMenu}
-                      className="py-1 px-3 bg-green-500 rounded-sm cursor-pointer hover:opacity-75 hover:translate-y-[1px]"
+                      className="py-1 px-3 bg-[#ec5555] rounded-sm cursor-pointer hover:opacity-75 hover:translate-y-[1px]"
                     >
-                      ยืนยัน
+                      ลบโพสต์
                     </div>
                   </div>
+                  <div
+                    onClick={props.handleOpenMenu}
+                    className="py-1 px-3 bg-green-500 rounded-sm cursor-pointer hover:opacity-75 hover:translate-y-[1px]"
+                  >
+                    ยืนยัน
+                  </div>
                 </div>
-              </Animate>
-            </div>
+              </div>
+            </Animate>
           </div>
         </div>
       ) : null}

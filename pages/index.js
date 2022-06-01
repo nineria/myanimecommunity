@@ -54,7 +54,7 @@ export default function Home(props) {
   };
 
   return (
-    <div className="flex flex-col gap-2 bg-[#181a1d]">
+    <div className="bg-[#181a1d]">
       <Navbar />
       <HomePage />
       {/* <PostFeed posts={posts} /> */}

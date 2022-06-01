@@ -7,7 +7,7 @@ import EditHomePost from "./EditHomePost";
 import { Container } from "@chakra-ui/react";
 import { Animate } from "react-simple-animate";
 
-export default function HomePost({ dummyData }) {
+export default function HomePost({ dummyData, isDisabled = false }) {
   const { user, username } = useContext(UserContext);
 
   const [toggle, setTogle] = useState(true);
@@ -28,7 +28,7 @@ export default function HomePost({ dummyData }) {
   const Content = ({ header, headerLink, body }) => {
     return (
       <div
-        className={`flex lg:flex-row flex-col lg:justify-between lg:items-center px-3 py-2 text-[#ec5555] bg-[#242629]`}
+        className={`flex overflow-hidden lg:flex-row flex-col lg:justify-between lg:items-center px-3 py-2 text-[#ec5555] bg-[#242629]`}
       >
         <div className="flex gap-2">
           <Messages size={45} />
@@ -37,7 +37,7 @@ export default function HomePost({ dummyData }) {
           >
             <div className="flex flex-row justify-start gap-2 items-center">
               <Link href={headerLink}>
-                <a className="truncate  text-white cursor-pointer hover:underline">
+                <a className="truncate max-w-[600px] text-white cursor-pointer hover:underline">
                   {header}
                 </a>
               </Link>
@@ -85,6 +85,7 @@ export default function HomePost({ dummyData }) {
           />
         </Animate>
       ) : null}
+
       <Container maxW="container.xl">
         <div className="rounded-sm bg-[#242629] w-full">
           <h2
@@ -93,14 +94,16 @@ export default function HomePost({ dummyData }) {
             }`}
           >
             <Link href={postData.titleLink}>
-              <a className="truncate cursor-pointer hover:underline">
+              <a className="truncate max-w-[600px] cursor-pointer hover:underline">
                 {postData.title}
               </a>
             </Link>
             <div className="flex flex-row gap-2 ">
               {user && (
                 <Edit
-                  onClick={() => setOpenMenu(!openMenu)}
+                  onClick={
+                    isDisabled === true ? null : () => setOpenMenu(!openMenu)
+                  }
                   className="hover:translate-y-[1px] hover:opacity-75 cursor-pointer"
                 />
               )}
