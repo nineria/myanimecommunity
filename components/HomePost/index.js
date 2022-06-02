@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useContext } from "react";
 import { UserContext } from "@lib/context";
 import EditPost from "./Edit";
-import { Container } from "@chakra-ui/react";
+import { Badge, Container } from "@chakra-ui/react";
 import { Animate } from "react-simple-animate";
 
 export default function HomePost({ dummyData, isDisabled = false }) {
@@ -27,36 +27,38 @@ export default function HomePost({ dummyData, isDisabled = false }) {
 
   const Content = ({ header, headerLink, body }) => {
     return (
-      <div className="flex lg:flex-row flex-col lg:justify-between lg:items-center px-3 py-2 text-[#ec5555] bg-[#242629]">
-        <div className="flex gap-2 w-full">
-          <Messages className="min-w-max" size={45} />
-          <div className={`${body ? "flex flex-col" : "flex items-center"} `}>
-            <div className="flex flex-row justify-start gap-2 items-center ">
-              <Link href={headerLink}>
-                <a className="truncate max-w-[600px] text-white cursor-pointer hover:underline">
-                  {header}
-                </a>
-              </Link>
-              <div className="px-1 bg-[#ec5555] w-fit h-fit rounded-sm text-white text-xs">
-                ใหม่
-              </div>
-            </div>
+      <div className="flex lg:flex-row flex-col gap-2 lg:justify-between lg:items-center px-3 py-2 text-[#ec5555] bg-[#242629]">
+        <div className="flex gap-2">
+          <Messages size={35} className="min-w-fit" />
+          <div
+            className={`${
+              body ? "flex flex-col" : "flex items-center"
+            } overflow-hidden`}
+          >
+            <Link href={headerLink}>
+              <a className="flex items-center text-sm text-white cursor-pointer hover:underline">
+                <span className="truncate">{header}</span>
+                <span className="ml-2 px-1 bg-[#ec5555] rounded-sm text-white text-xs">
+                  ใหม่
+                </span>
+              </a>
+            </Link>
             <p className="text-[#aaa] text-xs">{body}</p>
           </div>
         </div>
-        <div className="flex flex-row gap-4 text-white min-w-max">
-          <div className="flex lg:flex-col lg:items-center items-end gap-1">
+        <div className="flex flex-row gap-4 text-white">
+          <div className="flex text-sm lg:flex-col lg:items-center items-center gap-1">
             <div>25</div>
-            <div className="text-sm text-[#aaa]">โพสต์</div>
+            <div className="text-xs text-[#aaa]">โพสต์</div>
           </div>
           <div className="lg:border-r-[1px] lg:border-[#aaa]" />
-          <div className="flex lg:flex-col lg:items-center items-end gap-1">
+          <div className="flex text-sm lg:flex-col lg:items-center items-center gap-1">
             <div>3.6K</div>
-            <div className="text-sm text-[#aaa]">ข้อความ</div>
+            <div className="text-xs text-[#aaa]">ข้อความ</div>
           </div>
-          <div className="flex lg:flex-col lg:items-center items-end gap-1">
-            <div>แก้ไขล่าสุด</div>
-            <div className="text-sm text-[#aaa] ">28/5/2565 - Admin</div>
+          <div className="flex text-sm lg:flex-col lg:items-center items-center gap-1 ">
+            <span>แก้ไขล่าสุด</span>
+            <span className="text-xs text-[#aaa]">28/5/2565</span>
           </div>
         </div>
       </div>
@@ -84,8 +86,8 @@ export default function HomePost({ dummyData, isDisabled = false }) {
 
       <Container maxW="container.xl">
         <div className="rounded-sm bg-[#242629] w-full">
-          <h2
-            className={`flex flex-row justify-between items-center  bg-[#ec5555] py-1 px-3 font-bold text-md text-white ${
+          <div
+            className={`flex flex-row justify-between items-center  bg-[#ec5555] py-1 px-3 font-bold text-sm text-white ${
               toggle === true ? "rounded-t-sm" : "rounded-sm"
             }`}
           >
@@ -111,7 +113,7 @@ export default function HomePost({ dummyData, isDisabled = false }) {
                 } cursor-pointer transition-all hover:translate-y-[1px] hover:opacity-75`}
               />
             </div>
-          </h2>
+          </div>
           <div className="flex flex-col bg-[#aaa] gap-[1px]">
             {toggle ? (
               <Content
