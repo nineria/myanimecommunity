@@ -1,5 +1,5 @@
-import PostFeed from "@components/PostFeed";
-import Loader from "@components/Loader";
+// import PostFeed from "@components/PostFeed";
+// import Loader from "@components/Loader";
 import Navbar from "@components/Navbar";
 import { firestore, fromMillis, postToJSON } from "@lib/firebase";
 

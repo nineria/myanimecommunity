@@ -4,8 +4,8 @@ import { Container } from "@chakra-ui/react";
 import { useContext } from "react";
 import { UserContext } from "@lib/context";
 import { Animate } from "react-simple-animate";
-import EditHomePost from "@components/EditHomePost";
-import AddHomePost from "@components/AddHomePost";
+import AddPost from "@components/HomePost/Add";
+import Navbar from "@components/Navbar";
 
 export default function HomePage() {
   const { user, username } = useContext(UserContext);
@@ -72,7 +72,7 @@ export default function HomePage() {
             <div className="">
               <div className="flex flex-col gap-2">
                 {openMenu === true ? (
-                  <AddHomePost
+                  <AddPost
                     handleOpenMenu={HandleOpenMenu}
                     open={openMenu}
                     postData={postData}
@@ -82,7 +82,9 @@ export default function HomePage() {
                 <div className="flex flex-row justify-between w-full">
                   <Container maxW="container.xl">
                     <div
-                      onClick={() => HandleOpenMenu(!openMenu)}
+                      onClick={() => {
+                        HandleOpenMenu(!openMenu);
+                      }}
                       className="bg-[#ec5555] w-fit px-3 rounded-sm cursor-pointer hover:translate-y-[1px] hover:opacity-75"
                     >
                       สร้าง +
