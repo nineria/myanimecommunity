@@ -20,7 +20,7 @@ import { useState } from "react";
 import { Animate } from "react-simple-animate";
 
 // Top navbar
-export default function Navbar({ pageName }) {
+export default function Navbar({ page, isBusy = false }) {
   const { user, username } = useContext(UserContext);
 
   const [toggle, setToggle] = useState(false);
@@ -73,7 +73,7 @@ export default function Navbar({ pageName }) {
                     <Link key={item.name} href={item.path}>
                       <div
                         className={`border-b-4 border-transparent hover:border-b-4 hover:border-[#FA5252] ${
-                          item.name === pageName && active === true
+                          item.name === page && active === true
                             ? "border-red-400"
                             : ""
                         } `}
@@ -124,7 +124,11 @@ export default function Navbar({ pageName }) {
                         bg="white"
                         size="sm"
                       >
-                        <AvatarBadge boxSize="0.9em" bg="green.500" />
+                        {isBusy === true ? (
+                          <AvatarBadge boxSize="0.9em" bg="red.500" />
+                        ) : (
+                          <AvatarBadge boxSize="0.9em" bg="green.500" />
+                        )}
                       </Avatar>
                       <div className="flex flex-col text-sm font-bold">
                         <div className="text-left">
@@ -207,22 +211,6 @@ export default function Navbar({ pageName }) {
                     </MenuList>
                   </Portal>
                 </Menu>
-                {/* <Group position="center">
-                  <Menu
-                    withArrow
-                    placement="center"
-                    control={<UserButton user={user} />}
-                  >
-                    <Menu.Label>Application</Menu.Label>
-                    <Menu.Item
-                      icon={<ExternalLink size={14} />}
-                      component="a"
-                      onClick={signOut}
-                    >
-                      Sign Out
-                    </Menu.Item>
-                  </Menu>
-                </Group> */}
               </div>
             )}
           </div>

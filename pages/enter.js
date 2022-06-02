@@ -4,7 +4,7 @@ import Navbar from "@components/Navbar";
 
 import { useEffect, useState, useCallback, useContext } from "react";
 import debounce from "lodash.debounce";
-import { Button, Container, Image } from "@chakra-ui/react";
+import { Container } from "@chakra-ui/react";
 import UserProfile from "@components/UserProfile";
 
 export default function Enter(props) {
@@ -18,7 +18,7 @@ export default function Enter(props) {
 
   return (
     <main className="bg-[#181a1d] text-white">
-      <Navbar />
+      <Navbar isBusy={true} page="enter" />
       <Container maxW={"container.xl"}>
         {/* <Metatags title="Enter" description="Sign up for this amazing app!" /> */}
         {user ? (
