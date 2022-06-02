@@ -54,7 +54,7 @@ export default function Navbar({ page, isBusy = false }) {
       path: "animeNews",
     },
     {
-      name: "รีวิว",
+      name: "รีวิวอนิเมะ",
       path: "animeReview",
     },
     {
@@ -70,9 +70,16 @@ export default function Navbar({ page, isBusy = false }) {
           <div className="text-4xl font-bold">
             <Link href="/">
               <a>
-                <span className="text-[#4C6EF5]">My</span>
-                <span className="text-[#FA5252]">A</span>
-                <span className="text-white">nimeCommu</span>
+                <div className="md:flex md:visible hidden ">
+                  <span className="text-[#4C6EF5]">My</span>
+                  <span className="text-[#FA5252]">A</span>
+                  <span className="text-white">nimeCommunity</span>
+                </div>
+                <div className="md:hidden visible">
+                  <span className="text-[#4C6EF5]">My</span>
+                  <span className="text-[#FA5252]">A</span>
+                  <span className="text-white">niCommu</span>
+                </div>
               </a>
             </Link>
           </div>
@@ -129,7 +136,7 @@ export default function Navbar({ page, isBusy = false }) {
               <Menu>
                 <MenuButton>
                   <div className="flex flex-row gap-3 items-center">
-                    <div className="md:flex hidden">
+                    <div className="">
                       <Avatar
                         name={user?.displayName || "username"}
                         src={user?.photoURL}
