@@ -79,7 +79,7 @@ export default function HomePage() {
                     handlePostDataChange={HandlePostDataChange}
                   />
                 ) : null}
-                <div className="flex flex-row justify-between w-full text-md">
+                <div className="flex flex-row justify-between w-full md:text-base text-sm">
                   <Container maxW="container.xl">
                     <div
                       onClick={() => {

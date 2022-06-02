@@ -27,23 +27,25 @@ export default function HomePost({ dummyData, isDisabled = false }) {
 
   const Content = ({ header, headerLink, body }) => {
     return (
-      <div className="flex lg:flex-row flex-col gap-2 lg:justify-between lg:items-center px-3 py-2 text-[#ec5555] bg-[#242629]">
+      <div className="flex lg:flex-row flex-col gap-2 lg:justify-between lg:items-center px-3 py-2 text-[#ec5555] bg-[#242629] overflow-hidden">
         <div className="flex gap-2">
-          <Messages size={35} className="min-w-fit" />
+          <Messages size={40} className="min-w-fit" />
           <div
             className={`${
               body ? "flex flex-col" : "flex items-center"
             } overflow-hidden`}
           >
             <Link href={headerLink}>
-              <a className="flex items-center text-sm text-white cursor-pointer hover:underline">
-                <span className="truncate">{header}</span>
+              <a className="flex items-center md:text-base text-sm text-white ">
+                <span className="truncate cursor-pointer hover:underline">
+                  {header}
+                </span>
                 <span className="ml-2 px-1 bg-[#ec5555] rounded-sm text-white text-xs">
                   ใหม่
                 </span>
               </a>
             </Link>
-            <p className="text-[#aaa] text-xs">{body}</p>
+            <p className="text-[#aaa] md:text-sm text-xs">{body}</p>
           </div>
         </div>
         <div className="flex flex-row gap-4 text-white">
@@ -87,7 +89,7 @@ export default function HomePost({ dummyData, isDisabled = false }) {
       <Container maxW="container.xl">
         <div className="rounded-sm bg-[#242629] w-full">
           <div
-            className={`flex flex-row justify-between items-center  bg-[#ec5555] py-1 px-3 font-bold text-sm text-white ${
+            className={`flex flex-row justify-between items-center transition-all bg-[#ec5555] py-1 px-3 font-bold md:text-lg text-sm text-white ${
               toggle === true ? "rounded-t-sm" : "rounded-sm"
             }`}
           >

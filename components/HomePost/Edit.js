@@ -99,34 +99,41 @@ export default function EditPost(props) {
 
     return (
       <div>
-        <div className="flex flex-row justify-between bg-[#ec5555] py-2 px-3 rounded-t-md ">
-          <h1 className="">แก้ไขโพสต์ - หน้าหลัก</h1>
+        <div className="flex flex-row justify-between bg-[#ec5555] py-2 px-3 rounded-t-sm">
+          <h1 className="font-bold md:text-lg text-base">
+            แก้ไขโพสต์ - หน้าหลัก
+          </h1>
           <SquareX
             className="cursor-pointer hover:translate-y-[1px] hover:opacity-75"
             onClick={props.handleOpenMenu}
           />
         </div>
         <div className="py-2 px-3 flex flex-col gap-3">
-          <h1>หัวข้อโพสต์</h1>
-          <div className="flex flex-row gap-2">
-            <div className="rounded-md">
+          <h1 className="font-bold md:text-base text-sm ">หัวข้อโพสต์</h1>
+          <div className="flex flex-row gap-2 md:text-base text-sm">
+            <div className="rounded-sm">
               <Edit text={data.titleLink} type="titleLink" />
             </div>
-            <div className="rounded-md w-full">
+            <div className="rounded-sm w-full">
               <Edit text={data.title} type="title" />
             </div>
           </div>
-          <h1>หัวข้อย่อย</h1>
-          <div className="flex flex-row gap-2">
-            <div className="rounded-md">
+        </div>
+        <div className="h-[1px] bg-neutral-500 mt-4"></div>
+        <div className="py-2 px-3 flex flex-col gap-3">
+          <h1 className="font-bold md:text-base text-sm ">หัวข้อย่อย</h1>
+          <div className="flex flex-row gap-2 md:text-base text-sm">
+            <div className="rounded-sm">
               <Edit text={data.headerLink} type="headerLink" />
             </div>
-            <div className="rounded-md w-full">
+            <div className="rounded-sm w-full">
               <Edit text={data.header} type="header" />
             </div>
           </div>
-          <h1>เนื้อหา</h1>
-          <Edit text={data.body} type="body" />
+          <h1 className="font-bold md:text-base text-sm">เนื้อหา</h1>
+          <div className="md:text-base text-sm">
+            <Edit text={data.body} type="body" />
+          </div>
         </div>
       </div>
     );
@@ -145,10 +152,10 @@ export default function EditPost(props) {
               }}
               end={{ transform: "translateY(0)", opacity: "1" }}
             >
-              <div className="bg-[#444] rounded-md">
+              <div className="bg-[#444] rounded-sm">
                 <EditPost />
                 <div className="h-[1px] bg-neutral-500 mt-4"></div>
-                <div className="flex flex-row items-center gap-3 mb-2">
+                <div className="flex flex-row items-center gap-3 mb-2 md:text-base text-sm font-bold">
                   <h1 className="py-2 pl-3">ตัวอย่างโพสต์</h1>
                   <Tooltip hasArrow label="กดเพื่อรีโหลดตัวอย่าง" bg="gray">
                     <div
@@ -162,7 +169,7 @@ export default function EditPost(props) {
                 <div className="pb-4">
                   <HomePost dummyData={data} isDisabled={true} />
                 </div>
-                <div className="flex flex-row gap-2 pl-3 pt-2 text-xs">
+                <div className="flex flex-row gap-2 pl-3 pt-2  text-xs">
                   <AlertCircle size={24} />
                   <span className="w-4/5">
                     ผู้ดูแลระบบขอสงวนสิทธิ์ในการลบโพสต์ของผู้ที่ไม่ปฏิบัติตาม{" "}
@@ -173,7 +180,7 @@ export default function EditPost(props) {
                     <p>เพื่อรักษาบรรยากาศการพูดคุยของชุมชนคนรักอนิเมะ</p>
                   </span>
                 </div>
-                <div className="flex flex-row justify-between p-2 items-center">
+                <div className="flex flex-row justify-between p-2 items-center md:text-base text-sm">
                   <div className="flex flex-row gap-2">
                     <div
                       onClick={props.handleOpenMenu}
