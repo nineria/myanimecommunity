@@ -20,9 +20,9 @@ import {
   Messages,
   AlertCircle,
 } from "tabler-icons-react";
-import HomePost from "./HomePost";
+import HomePost from ".";
 
-export default function EditHomePost(props) {
+export default function EditPost(props) {
   const [reload, setReload] = useState(false);
 
   const data = props.postData;
@@ -133,10 +133,7 @@ export default function EditHomePost(props) {
   };
 
   return (
-    <div
-      onClick={props.handleOpenMenu}
-      className="fixed z-10 h-full top-0 lg:pt-20 md:pt-10 pt-5 w-full p-2 text-white bg-[#181a1d] bg-opacity-75 backdrop-blur-sm"
-    >
+    <div className="fixed z-10 h-full top-0 lg:pt-20 md:pt-10 pt-5 w-full p-2 text-white bg-[#181a1d] bg-opacity-75 backdrop-blur-sm">
       {props.open === true ? (
         <div className="flex justify-center items-center">
           <div className="max-w-[800px] w-full ">
@@ -162,7 +159,7 @@ export default function EditHomePost(props) {
                     </div>
                   </Tooltip>
                 </div>
-                <div className="bg-[#181a1d] py-4 px-8 ">
+                <div className="pb-4">
                   <HomePost dummyData={data} isDisabled={true} />
                 </div>
                 <div className="flex flex-row gap-2 pl-3 pt-2 text-xs">

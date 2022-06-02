@@ -3,7 +3,7 @@ import { ChevronUp, Messages, Edit, SquareX } from "tabler-icons-react";
 import Link from "next/link";
 import { useContext } from "react";
 import { UserContext } from "@lib/context";
-import EditHomePost from "./EditHomePost";
+import EditPost from "./Edit";
 import { Container } from "@chakra-ui/react";
 import { Animate } from "react-simple-animate";
 
@@ -27,15 +27,11 @@ export default function HomePost({ dummyData, isDisabled = false }) {
 
   const Content = ({ header, headerLink, body }) => {
     return (
-      <div
-        className={`flex overflow-hidden lg:flex-row flex-col lg:justify-between lg:items-center px-3 py-2 text-[#ec5555] bg-[#242629]`}
-      >
-        <div className="flex gap-2">
-          <Messages size={45} />
-          <div
-            className={`${body ? "flex flex-col" : "flex items-center"} w-full`}
-          >
-            <div className="flex flex-row justify-start gap-2 items-center">
+      <div className="flex lg:flex-row flex-col lg:justify-between lg:items-center px-3 py-2 text-[#ec5555] bg-[#242629]">
+        <div className="flex gap-2 w-full">
+          <Messages className="min-w-max" size={45} />
+          <div className={`${body ? "flex flex-col" : "flex items-center"} `}>
+            <div className="flex flex-row justify-start gap-2 items-center ">
               <Link href={headerLink}>
                 <a className="truncate max-w-[600px] text-white cursor-pointer hover:underline">
                   {header}
@@ -45,10 +41,10 @@ export default function HomePost({ dummyData, isDisabled = false }) {
                 ใหม่
               </div>
             </div>
-            <p className="truncate max-w-[600px] text-[#aaa] text-xs">{body}</p>
+            <p className="text-[#aaa] text-xs">{body}</p>
           </div>
         </div>
-        <div className="flex flex-row gap-4 text-white ">
+        <div className="flex flex-row gap-4 text-white min-w-max">
           <div className="flex lg:flex-col lg:items-center items-end gap-1">
             <div>25</div>
             <div className="text-sm text-[#aaa]">โพสต์</div>
@@ -60,7 +56,7 @@ export default function HomePost({ dummyData, isDisabled = false }) {
           </div>
           <div className="flex lg:flex-col lg:items-center items-end gap-1">
             <div>แก้ไขล่าสุด</div>
-            <div className="text-sm text-[#aaa]">28/5/2565 - Admin</div>
+            <div className="text-sm text-[#aaa] ">28/5/2565 - Admin</div>
           </div>
         </div>
       </div>
@@ -77,7 +73,7 @@ export default function HomePost({ dummyData, isDisabled = false }) {
           }}
           end={{ opacity: "1" }}
         >
-          <EditHomePost
+          <EditPost
             handleOpenMenu={HandleOpenMenu}
             open={openMenu}
             postData={postData}
