@@ -6,6 +6,7 @@ import { UserContext } from "@lib/context";
 import EditPost from "./Edit";
 import { Badge, Container } from "@chakra-ui/react";
 import { Animate } from "react-simple-animate";
+import Content from "./Contnet";
 
 export default function HomePost({ dummyData, isDisabled = false }) {
   const { user, username } = useContext(UserContext);
@@ -25,50 +26,9 @@ export default function HomePost({ dummyData, isDisabled = false }) {
     postData = data;
   };
 
-  const Content = ({ header, headerLink, body }) => {
-    return (
-      <div className="flex lg:flex-row flex-col gap-2 lg:justify-between lg:items-center px-3 py-2 text-[#ec5555] bg-[#242629] overflow-hidden">
-        <div className="flex gap-2">
-          <Messages size={40} className="min-w-fit" />
-          <div
-            className={`${
-              body ? "flex flex-col" : "flex items-center"
-            } overflow-hidden`}
-          >
-            <Link href={headerLink}>
-              <a className="flex items-center md:text-base text-sm text-white ">
-                <span className="truncate cursor-pointer hover:underline">
-                  {header}
-                </span>
-                <span className="ml-2 px-1 bg-[#ec5555] rounded-sm text-white text-xs">
-                  ใหม่
-                </span>
-              </a>
-            </Link>
-            <p className="text-[#aaa] md:text-sm text-xs">{body}</p>
-          </div>
-        </div>
-        <div className="flex flex-row gap-4 text-white">
-          <div className="flex text-sm lg:flex-col lg:items-center items-center gap-1">
-            <div>25</div>
-            <div className="text-xs text-[#aaa]">โพสต์</div>
-          </div>
-          <div className="lg:border-r-[1px] lg:border-[#aaa]" />
-          <div className="flex text-sm lg:flex-col lg:items-center items-center gap-1">
-            <div>3.6K</div>
-            <div className="text-xs text-[#aaa]">ข้อความ</div>
-          </div>
-          <div className="flex text-sm lg:flex-col lg:items-center items-center gap-1 ">
-            <span>แก้ไขล่าสุด</span>
-            <span className="text-xs text-[#aaa]">28/5/2565</span>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
   return (
     <div className="">
+      {/* Edit post overlay */}
       {openMenu === true ? (
         <Animate
           play
@@ -93,11 +53,13 @@ export default function HomePost({ dummyData, isDisabled = false }) {
               toggle === true ? "rounded-t-sm" : "rounded-sm"
             }`}
           >
+            {/* Title */}
             <Link href={postData.titleLink}>
               <a className="truncate max-w-[600px] cursor-pointer hover:underline">
                 {postData.title}
               </a>
             </Link>
+            {/* Edit button */}
             <div className="flex flex-row gap-2 ">
               {user && (
                 <Edit
@@ -107,6 +69,7 @@ export default function HomePost({ dummyData, isDisabled = false }) {
                   className="hover:translate-y-[1px] hover:opacity-75 cursor-pointer"
                 />
               )}
+              {/* Show-hide content */}
               <ChevronUp
                 size={22}
                 onClick={() => setTogle(!toggle)}
@@ -116,6 +79,7 @@ export default function HomePost({ dummyData, isDisabled = false }) {
               />
             </div>
           </div>
+          {/* Post */}
           <div className="flex flex-col bg-[#aaa] gap-[1px]">
             {toggle ? (
               <Content
