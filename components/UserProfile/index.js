@@ -36,6 +36,7 @@ import Report from "./Report";
 
 export default function UserProfile({ user, username }) {
   const postDummy = [
+    // Dummy data (Temporary)
     {
       postTime: "13 days ago",
       header:
@@ -77,13 +78,15 @@ export default function UserProfile({ user, username }) {
           <h1 className="bg-[#ec5555] rounded-t-md py-1 px-3 font-bold w-full">
             {user?.displayName} - Profile
           </h1>
+          {/* Background Image */}
           <div className="h-56 bg-[#25262b] -z-10 overflow-hidden">
             <Image
               className="-translate-y-1/2 "
-              src="https://i.pinimg.com/originals/d2/e2/80/d2e280b67f661783fb70ba721c6f2b8e.png"
+              src="https://i.pinimg.com/originals/d2/e2/80/d2e280b67f661783fb70ba721c6f2b8e.png" // Temporary
             />
           </div>
 
+          {/* Button -> Edit bg-image, Report user */}
           <div className="fixed top-10 right-2">
             <div className="flex flex-row gap-2">
               <Button
@@ -108,16 +111,19 @@ export default function UserProfile({ user, username }) {
 
           <div className="flex flex-col pb-4 bg-[#25262b] rounded-b-md">
             <div className="fixed top-32 bg-[#25262b] text-white bg-opacity-40 rounded-md ml-4">
+              {/* Report overlay */}
               <div className="flex flex-row justify-end pt-2 pr-2">
                 <Report isOpen={isOpen} onClose={onClose} />
               </div>
               <div className="flex flex-row px-3 mb-2">
+                {/* Profile image */}
                 <Avatar
                   name={user?.displayName || "username"}
                   src={user?.photoURL}
                   bg="white"
                   size="xl"
                 />
+                {/* Button Edit -> User profile image */}
                 <div className="flex flex-col justify-end gap-2 pl-4 pb-2">
                   <p className="text-3xl font-bold">{username}</p>
                   <Button
@@ -140,6 +146,7 @@ export default function UserProfile({ user, username }) {
             <div>
               <div className="h-[1px] bg-neutral-500 mt-2"></div>
               <div className="w-full px-4">
+                {/* Description */}
                 <div className="flex flex-col gap-2">
                   <Description>
                     <Description.CreateDate>13 days ago</Description.CreateDate>
@@ -153,6 +160,7 @@ export default function UserProfile({ user, username }) {
                     <Description.Button>แก้ไขคำอธิบายตัวเอง</Description.Button>
                   </Description>
                   <div className="h-[1px] bg-neutral-500 mt-2"></div>
+                  {/* Information */}
                   <Information>
                     <Information.Detail>
                       <Mail /> {user?.email}
@@ -169,6 +177,7 @@ export default function UserProfile({ user, username }) {
                     <Information.Button>แก้ไขรายละเอียด</Information.Button>
                   </Information>
                   <div className="h-[1px] bg-neutral-500 mt-2"></div>
+                  {/* Favorite tag */}
                   <Favorite>
                     <Favorite.Detail>Action</Favorite.Detail>
                     <Favorite.Detail>Drama</Favorite.Detail>
@@ -184,6 +193,7 @@ export default function UserProfile({ user, username }) {
             </div>
           </div>
 
+          {/* Stat -> Post, Like, Comment */}
           <div className="flex flex-row justify-around w-full bg-[#25262b] rounded-md pb-4 mt-2 p-4">
             <Flex justifyContent="space-around" w="full">
               <Stat textAlign="center">
@@ -213,6 +223,7 @@ export default function UserProfile({ user, username }) {
             </Flex>
           </div>
 
+          {/* Created post, Liked post, My comment */}
           <div className="w-full bg-[#25262b] rounded-md pb-4 my-2">
             <Tabs isFitted variant="enclosed">
               <TabList>

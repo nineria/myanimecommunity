@@ -5,7 +5,6 @@ import { useContext } from "react";
 import { UserContext } from "@lib/context";
 import { Animate } from "react-simple-animate";
 import AddPost from "@components/HomePost/Add";
-import Navbar from "@components/Navbar";
 
 export default function HomePage() {
   const { user, username } = useContext(UserContext);

@@ -31,9 +31,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { Animate } from "react-simple-animate";
 
-// Top navbar
 export default function Navbar({ page, isBusy = false }) {
-  const { user, username } = useContext(UserContext);
+  const { user, username } = useContext(UserContext); // User data
 
   const [toggle, setToggle] = useState(false);
 
@@ -45,6 +44,7 @@ export default function Navbar({ page, isBusy = false }) {
   };
 
   const menu = [
+    // Dummy data (Temporary)
     {
       name: "โพสต์ใหม่",
       path: "allPost",
@@ -68,6 +68,7 @@ export default function Navbar({ page, isBusy = false }) {
       <Container maxW="container.xl">
         <div className="flex items-end justify-between w-full text-md">
           <div className="text-4xl font-bold">
+            {/* Website Logo */}
             <Link href="/">
               <a>
                 <div className="md:flex md:visible hidden ">
@@ -84,6 +85,7 @@ export default function Navbar({ page, isBusy = false }) {
             </Link>
           </div>
           <div className="lg:flex hidden justify-start pl-10 w-full">
+            {/* Navbar menu */}
             {/* user is signed-in and has username */}
             {username && (
               <div className="flex flex-row gap-5">
@@ -96,7 +98,6 @@ export default function Navbar({ page, isBusy = false }) {
                           : ""
                       } `}
                     >
-                      {/* <div className={` outline-2 outline-red-100`}> */}
                       <Animate
                         play
                         start={{ transform: "translateX(5%)", opacity: "0" }}
@@ -111,7 +112,7 @@ export default function Navbar({ page, isBusy = false }) {
                 ))}
               </div>
             )}
-
+            {/* Login or Register */}
             {/* user is not signed OR has not created username */}
             {!username && (
               <div className="flex flex-row justify-end w-full gap-2">
@@ -128,6 +129,7 @@ export default function Navbar({ page, isBusy = false }) {
               </div>
             )}
           </div>
+          {/* User Information (Image, Name, Email etc.) */}
           {username && (
             <div
               className="justify-end gap-2 text-white"
@@ -168,6 +170,7 @@ export default function Navbar({ page, isBusy = false }) {
                     </div>
                   </div>
                 </MenuButton>
+                {/* Dropdown menu */}
                 <Portal>
                   <MenuList
                     mt="2"
