@@ -73,12 +73,15 @@ export default function UserProfile({ user, username }) {
         }}
         end={{ transform: "translateY(0%)", opacity: "1" }}
       >
-        <div className="flex flex-col justify-between">
+        <div className="flex flex-col justify-between ">
           <h1 className="bg-[#ec5555] rounded-t-md py-1 px-3 font-bold w-full">
             {user?.displayName} - Profile
           </h1>
-          <div className="w-full h-56 overflow-hidden bg-[#25262b] opacity-75">
-            <Image src="https://images.pexels.com/photos/2246476/pexels-photo-2246476.jpeg" />
+          <div className="h-56 bg-[#25262b] -z-10 overflow-hidden">
+            <Image
+              className="-translate-y-1/2 "
+              src="https://i.pinimg.com/originals/d2/e2/80/d2e280b67f661783fb70ba721c6f2b8e.png"
+            />
           </div>
 
           <div className="fixed top-10 right-2">
@@ -103,7 +106,7 @@ export default function UserProfile({ user, username }) {
             </div>
           </div>
 
-          <div className="flex flex-col pb-4 bg-[#25262b] rounded-md">
+          <div className="flex flex-col pb-4 bg-[#25262b] rounded-b-md">
             <div className="fixed top-32 bg-[#25262b] text-white bg-opacity-40 rounded-md ml-4">
               <div className="flex flex-row justify-end pt-2 pr-2">
                 <Report isOpen={isOpen} onClose={onClose} />
