@@ -6,7 +6,7 @@ import { UserContext } from "@lib/context";
 import EditPost from "./Edit";
 import { Badge, Container } from "@chakra-ui/react";
 import { Animate } from "react-simple-animate";
-import Content from "./Contnet";
+import Content from "./Content";
 
 export default function HomePost({ dummyData, isDisabled = false }) {
   const { user, username } = useContext(UserContext);

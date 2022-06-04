@@ -6,7 +6,7 @@ function Description({ children }) {
     child.type.displayName === "CreateDate" ? child : null
   );
   const header = React.Children.map(children, (child) =>
-    child.type.displayName === "Deader" ? child : null
+    child.type.displayName === "Header" ? child : null
   );
   const body = React.Children.map(children, (child) =>
     child.type.displayName === "Body" ? child : null
