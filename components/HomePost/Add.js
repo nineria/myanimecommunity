@@ -93,14 +93,6 @@ export default function AddPost(props) {
       );
     };
 
-    // const HandleAddSubHeader = () => {
-    //   data.content.push({
-    //     header: "",
-    //     headerLink: "",
-    //     body: "",
-    //   });
-    //   return;
-    // };
     return (
       <div>
         <div className="flex flex-row justify-between bg-[#ec5555] py-2 px-3 rounded-t-md ">

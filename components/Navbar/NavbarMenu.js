@@ -2,7 +2,7 @@ import Link from "next/link";
 import React from "react";
 import { Animate } from "react-simple-animate";
 
-export default function DropdownMenu({ page, menu }) {
+export default function NavbarMenu({ page, menu }) {
   return (
     <div className="flex flex-row gap-5">
       {menu.map((item) => (

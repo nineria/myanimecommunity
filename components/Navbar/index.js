@@ -2,14 +2,12 @@ import { useRouter } from "next/router";
 import { useContext } from "react";
 import { UserContext } from "@lib/context";
 import { auth } from "@lib/firebase";
-import { Container, Button } from "@chakra-ui/react";
-import Link from "next/link";
+import { Container } from "@chakra-ui/react";
 import { useState } from "react";
-import { Animate } from "react-simple-animate";
 import MyAniLogo from "./MyAniLogo";
 import UserMenu from "./UserMenu";
 import LoginRegister from "./LogInRegister";
-import DropdownMenu from "./DropdownMenu";
+import NavbarMenu from "./NavbarMenu";
 
 export default function Navbar({ page, isBusy = false }) {
   const { user, username } = useContext(UserContext); // User data
@@ -25,7 +23,7 @@ export default function Navbar({ page, isBusy = false }) {
     router.reload();
   };
 
-  const menu = [
+  const navbarItem = [
     // Dummy data (Temporary)
     {
       name: "โพสต์ใหม่",
@@ -56,7 +54,7 @@ export default function Navbar({ page, isBusy = false }) {
           <div className="lg:flex hidden justify-start pl-10 w-full">
             {/* Navbar menu */}
             {/* user is signed-in and has username */}
-            {username && <DropdownMenu page={page} menu={menu} />}
+            {username && <NavbarMenu page={page} menu={navbarItem} />}
             {/* Login or Register */}
             {/* user is not signed OR has not created username */}
             {!username && <LoginRegister login="/enter" register="/register" />}

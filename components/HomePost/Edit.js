@@ -12,14 +12,7 @@ import {
 
 import React, { useState } from "react";
 import { Animate } from "react-simple-animate";
-import {
-  SquareX,
-  CircleCheck,
-  Edit,
-  ChevronUp,
-  Messages,
-  AlertCircle,
-} from "tabler-icons-react";
+import { SquareX, CircleCheck, AlertCircle } from "tabler-icons-react";
 import HomePost from ".";
 
 export default function EditPost(props) {
@@ -153,60 +146,88 @@ export default function EditPost(props) {
               end={{ transform: "translateY(0)", opacity: "1" }}
             >
               <div className="bg-[#444] rounded-sm">
+                {/* Edit post */}
                 <EditPost />
                 <div className="h-[1px] bg-neutral-500 mt-4"></div>
-                <div className="flex flex-row items-center gap-3 mb-2 md:text-base text-sm font-bold">
-                  <h1 className="py-2 pl-3">ตัวอย่างโพสต์</h1>
-                  <Tooltip hasArrow label="กดเพื่อรีโหลดตัวอย่าง" bg="gray">
-                    <div
-                      onClick={() => setReload(!reload)}
-                      className="bg-neutral-500 p-1 rounded-sm flex hover:translate-y-[1px] hover:opacity-75 cursor-pointer group"
-                    >
-                      <RepeatIcon className="group-hover:rotate-180 transition-all" />
-                    </div>
-                  </Tooltip>
-                </div>
-                <div className="pb-4">
-                  <HomePost dummyData={data} isDisabled={true} />
-                </div>
-                <div className="flex flex-row gap-2 pl-3 pt-2  text-xs">
-                  <AlertCircle size={24} />
-                  <span className="w-4/5">
-                    ผู้ดูแลระบบขอสงวนสิทธิ์ในการลบโพสต์ของผู้ที่ไม่ปฏิบัติตาม{" "}
-                    <span className="text-[#ec5555] underline cursor-pointer">
-                      กฎ กติกา และมารยาท
-                    </span>{" "}
-                    ของเว็บไซต์ MyAnimeCommu
-                    <p>เพื่อรักษาบรรยากาศการพูดคุยของชุมชนคนรักอนิเมะ</p>
-                  </span>
-                </div>
-                <div className="flex flex-row justify-between p-2 items-center md:text-base text-sm">
-                  <div className="flex flex-row gap-2">
-                    <div
-                      onClick={props.handleOpenMenu}
-                      className="py-1 px-3 bg-neutral-500 rounded-sm cursor-pointer hover:opacity-75 hover:translate-y-[1px]"
-                    >
-                      ยกเลิก
-                    </div>
-                    <div
-                      onClick={props.handleOpenMenu}
-                      className="py-1 px-3 bg-[#ec5555] rounded-sm cursor-pointer hover:opacity-75 hover:translate-y-[1px]"
-                    >
-                      ลบโพสต์
-                    </div>
-                  </div>
-                  <div
-                    onClick={props.handleOpenMenu}
-                    className="py-1 px-3 bg-green-500 rounded-sm cursor-pointer hover:opacity-75 hover:translate-y-[1px]"
-                  >
-                    ยืนยัน
-                  </div>
-                </div>
+                {/* Post example */}
+                <PostExample
+                  reload={reload}
+                  setReload={setReload}
+                  data={data}
+                />
+                {/* Term and service */}
+                <TermAndService />
+                {/* Control button -> cancel, delete, confirm */}
+                <ControlButton props={props.handleOpenMenu} />
               </div>
             </Animate>
           </div>
         </div>
       ) : null}
+    </div>
+  );
+}
+
+function PostExample({ reload, setReload, data }) {
+  return (
+    <div>
+      <div className="flex flex-row items-center gap-3 mb-2 md:text-base text-sm font-bold">
+        <h1 className="py-2 pl-3">ตัวอย่างโพสต์</h1>
+        <Tooltip hasArrow label="กดเพื่อรีโหลดตัวอย่าง" bg="gray">
+          <div
+            onClick={() => setReload(!reload)}
+            className="bg-neutral-500 p-1 rounded-sm flex hover:translate-y-[1px] hover:opacity-75 cursor-pointer group"
+          >
+            <RepeatIcon className="group-hover:rotate-180 transition-all" />
+          </div>
+        </Tooltip>
+      </div>
+      <div className="pb-4">
+        <HomePost dummyData={data} isDisabled={true} />
+      </div>
+    </div>
+  );
+}
+
+function TermAndService() {
+  return (
+    <div className="flex flex-row gap-2 pl-3 pt-2  text-xs">
+      <AlertCircle size={24} />
+      <span className="w-4/5">
+        ผู้ดูแลระบบขอสงวนสิทธิ์ในการลบโพสต์ของผู้ที่ไม่ปฏิบัติตาม{" "}
+        <span className="text-[#ec5555] underline cursor-pointer">
+          กฎ กติกา และมารยาท
+        </span>{" "}
+        ของเว็บไซต์ MyAnimeCommu
+        <p>เพื่อรักษาบรรยากาศการพูดคุยของชุมชนคนรักอนิเมะ</p>
+      </span>
+    </div>
+  );
+}
+
+function ControlButton({ props }) {
+  return (
+    <div className="flex flex-row justify-between p-2 items-center md:text-base text-sm">
+      <div className="flex flex-row gap-2">
+        <div
+          onClick={props}
+          className="py-1 px-3 bg-neutral-500 rounded-sm cursor-pointer hover:opacity-75 hover:translate-y-[1px]"
+        >
+          ยกเลิก
+        </div>
+        <div
+          onClick={props}
+          className="py-1 px-3 bg-[#ec5555] rounded-sm cursor-pointer hover:opacity-75 hover:translate-y-[1px]"
+        >
+          ลบโพสต์
+        </div>
+      </div>
+      <div
+        onClick={props}
+        className="py-1 px-3 bg-green-500 rounded-sm cursor-pointer hover:opacity-75 hover:translate-y-[1px]"
+      >
+        ยืนยัน
+      </div>
     </div>
   );
 }
