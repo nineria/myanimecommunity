@@ -1,19 +1,29 @@
-<img src="./public/image/Screenshot%202022-06-02%20103609.png">
+# My Anime Community
 
+## Homepage
+
+My Anime Community website purpose is to bring together people who like anime. They can come in and talk and exchange knowledge about anime, manga or light novels.
+
+<img src="./public/image/Screenshot%202022-06-02%20103609.png">
 <div align="center">
-เว็บไซต์ MyAnimeCommunity มีจุดประสงค์เพื่อรวบรวมคนที่ชอบอนิเมะเข้าด้วยกัน โดยสามารถเข้ามาพูดคุยแลกเปลี่ยนความรู้เกี่ยวที่เกี่ยวข้อง อนิเมะ มังงะ หรือ ไลท์โนเวล
 </div>
 
-## การติดตั้ง
+## Stack
 
-First, run the development server:
+- [Next.js](https://nextjs.org/) - The React Framework for Production
+- [Chakra UI](https://chakra-ui.com/) - Chakra UI is a simple, modular and accessible component library
+- [Firebase](https://firebase.google.com/) - Cross-platform SDKs documentation help you build and ship apps on Android, iOS and Website
 
-```bash
-npm install
-# หรือ
-yarn
+## Project structure
+
 ```
-
-เปิดใช้ [http://localhost:3000](http://localhost:3000) บนเว็บบราวเซอร์เพื่อแสดงผล
-
-สามารถเริ่มพัฒนาได้ตั้งแต่ `pages/index.js`. เป็นต้นไป หรือ `components/`.
+$PROJECT_ROOT
+│   # Page files
+├── pages
+│   # React component files
+├── components
+│   # Non-react modules
+├── lib
+│   # Static files for images, video, 3d model etc.
+└── public
+```
