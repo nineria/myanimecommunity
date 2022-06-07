@@ -4,7 +4,7 @@
 
 My Anime Community website purpose is to bring together people who like anime. They can come in and talk and exchange knowledge about anime, manga or light novels.
 
-<img src="./public/image/Screenshot%202022-06-02%20103609.png">
+<img src="./public/image/Screenshot 2022-06-07 192446.png">
 <div align="center">
 </div>
 
