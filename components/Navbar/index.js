@@ -16,8 +16,6 @@ export default function Navbar({ page, isBusy = false }) {
 
   const router = useRouter();
 
-  console.log(user);
-
   const signOut = () => {
     auth.signOut();
     router.reload();

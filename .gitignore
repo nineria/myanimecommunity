@@ -31,7 +31,3 @@ yarn-error.log*
 
 # vercel
 .vercel
-
-# docs
-/HOW_TO_COMMIT_GIT.md
-/HOW_TO_COMMIT_GIT.pdf
