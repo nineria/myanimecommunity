@@ -9,7 +9,7 @@ export default function NavbarMenu({ page, menu }) {
         <Link key={item.name} href={item.path}>
           <div
             className={`border-b-4 border-transparent hover:border-b-4 hover:border-[#FA5252] ${
-              item.name === page && active === true ? "border-red-400" : ""
+              item.path === page ? "border-[#FA5252]" : ""
             } `}
           >
             <Animate

@@ -9,6 +9,7 @@ import {
   MenuList,
   Portal,
 } from "@chakra-ui/react";
+
 import Link from "next/link";
 import React from "react";
 import {
@@ -18,6 +19,7 @@ import {
   MoodHappy,
   MoodSuprised,
   MoodConfuzed,
+  MoodCrazyHappy,
 } from "tabler-icons-react";
 
 export default function UserMenu({ user, isBusy, toggle, signOut }) {
@@ -35,6 +37,11 @@ export default function UserMenu({ user, isBusy, toggle, signOut }) {
   ];
 
   const accessMenu = [
+    {
+      name: "โพสต์ใหม่",
+      link: "/postPage",
+      icon: <MoodCrazyHappy className="group-hover:rotate-12 transition-all" />,
+    },
     {
       name: "ข่าวสาร",
       link: "/news",
@@ -114,7 +121,7 @@ function DropdownMenu({ settingMenu, accessMenu, signOut }) {
                 className="group"
                 _focus={{ bg: "#181a1d" }}
               >
-                <Link href="/enter">
+                <Link href={item.link}>
                   <a className="flex flex-row gap-2">
                     {item.icon}
                     {item.name}
@@ -132,7 +139,7 @@ function DropdownMenu({ settingMenu, accessMenu, signOut }) {
                   className="group"
                   _focus={{ bg: "#181a1d" }}
                 >
-                  <Link href="/enter">
+                  <Link href={item.link}>
                     <a className="flex flex-row gap-2">
                       {item.icon}
                       {item.name}
