@@ -1,6 +1,6 @@
 # My Anime Community
 
-[https://myanimecommunity.vercel.app](myanimecommunity.vercel.app)
+[https://myanimecommunity.vercel.app](https://myanimecommunity.vercel.app)
 
 ## Homepage
 
