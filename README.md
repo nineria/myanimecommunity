@@ -1,6 +1,6 @@
 # My Anime Community
 
-[https://myanimecommunity.app/](https://myanimecommunity-nw7d45qqx-ninelie-nananai.vercel.app/)
+[https://myanimecommunity.vercel.app](https://myanimecommunity.vercel.app)
 
 ## Homepage
 
