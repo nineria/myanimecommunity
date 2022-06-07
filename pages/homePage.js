@@ -28,7 +28,6 @@ export default function HomePage() {
   };
 
   const HandlePostDataChange = (data) => {
-    console.log(data);
     setPostData(data);
   };
 

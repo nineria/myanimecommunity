@@ -25,7 +25,7 @@ export default function Navbar({ page, isBusy = false }) {
     // Dummy data (Temporary)
     {
       name: "โพสต์ใหม่",
-      path: "/PostPage",
+      path: "/postPage",
     },
     {
       name: "ข่าวสาร",
