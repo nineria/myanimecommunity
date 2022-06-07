@@ -6,7 +6,7 @@ import { Container } from "@chakra-ui/react";
 import { useState } from "react";
 import MyAniLogo from "./MyAniLogo";
 import UserMenu from "./UserMenu";
-import LoginRegister from "./LogInRegister";
+import Login from "./Login";
 import NavbarMenu from "./NavbarMenu";
 
 export default function Navbar({ page, isBusy = false }) {
@@ -55,7 +55,7 @@ export default function Navbar({ page, isBusy = false }) {
             {username && <NavbarMenu page={page} menu={navbarItem} />}
             {/* Login or Register */}
             {/* user is not signed OR has not created username */}
-            {!username && <LoginRegister login="/enter" register="/register" />}
+            {!username && <Login login="/enter" register="/register" />}
           </div>
           {/* User Information (Image, Name, Email etc.) */}
           {username && (

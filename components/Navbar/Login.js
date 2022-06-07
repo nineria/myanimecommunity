@@ -2,7 +2,7 @@ import { Button } from "@chakra-ui/react";
 import Link from "next/link";
 import React from "react";
 
-export default function LoginRegister({ login, register }) {
+export default function Login({ login, register }) {
   return (
     <div className="flex flex-row justify-end w-full gap-2">
       <Link href={login}>
@@ -10,11 +10,11 @@ export default function LoginRegister({ login, register }) {
           เข้าสู่ระบบ
         </Button>
       </Link>
-      <Link href={register}>
+      <a>
         <Button colorScheme="whiteAlpha" size="sm">
           ลงทะเบียน
         </Button>
-      </Link>
+      </a>
     </div>
   );
 }
