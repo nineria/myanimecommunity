@@ -177,7 +177,7 @@ function AllPost({ property, layout }) {
             ))}
         </SimpleGrid>
       ) : (
-        <Flex flexDirection="column" gap={1} paddingTop={2}>
+        <Flex flexDirection="column" gap={{ sm: 5, md: 1 }} paddingTop={2}>
           {property &&
             property.map((data, index) => (
               <Card layout={layout} key={index} property={data} />
