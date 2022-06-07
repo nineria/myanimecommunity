@@ -39,7 +39,7 @@ export default function UserMenu({ user, isBusy, toggle, signOut }) {
   const accessMenu = [
     {
       name: "โพสต์ใหม่",
-      link: "/postPage",
+      link: "/PostPage",
       icon: <MoodCrazyHappy className="group-hover:rotate-12 transition-all" />,
     },
     {

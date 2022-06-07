@@ -114,7 +114,7 @@ export default function AddPost(props) {
           </div>
           <div className="h-[1px] bg-neutral-500 mt-4"></div>
           {data.content.map((item, index) => (
-            <div className="flex flex-col gap-2">
+            <div key={index} className="flex flex-col gap-2">
               <div className="flex flex-row justify-between">
                 <h1>หัวข้อย่อย</h1>
                 <div className="hover:translate-y-[1px] hover:opacity-75 cursor-pointer">

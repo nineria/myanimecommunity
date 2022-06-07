@@ -1,18 +1,12 @@
-import {
-  Container,
-  Flex,
-  GridItem,
-  layout,
-  SimpleGrid,
-} from "@chakra-ui/react";
+import { Container, Flex, SimpleGrid } from "@chakra-ui/react";
 import Announcement from "@components/Announcement";
 import Card from "@components/Card";
 import Navbar from "@components/Navbar";
 import React, { useState } from "react";
 import { Animate } from "react-simple-animate";
-import { GridDots, LayoutGrid, ListDetails, Menu2 } from "tabler-icons-react";
+import { LayoutGrid, ListDetails } from "tabler-icons-react";
 
-export default function postPage() {
+export default function PostPage() {
   const [layout, setLayout] = useState("grid");
 
   const property = [
