@@ -14,8 +14,6 @@ export default function Enter(props) {
   // 2. user signed in, but missing username <UsernameForm />
   // 3. user signed in, has username <SignOutButton />
 
-  console.log(props.username);
-
   return (
     <main className="bg-[#181a1d] text-white">
       <Navbar isBusy={true} page="enter" />
