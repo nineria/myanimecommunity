@@ -22,7 +22,6 @@ export default function HomePost({ dummyData, isDisabled = false }) {
   };
 
   const HandlePostDataChange = (data) => {
-    console.log(data);
     postData = data;
   };
 

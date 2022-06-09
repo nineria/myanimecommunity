@@ -31,7 +31,6 @@ export default function AddPost(props) {
         data.titleLink = e;
         break;
       case "header":
-        console.log((data.content[index].header = e));
         data.content[index].header = e;
         break;
       case "headerLink":
