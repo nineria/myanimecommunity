@@ -155,10 +155,9 @@ function DropdownMenu({ settingMenu, accessMenu, signOut }) {
           onClick={signOut}
           _hover={{ bg: "#181a1d" }}
           _focus={{ bg: "#181a1d" }}
-          className="group"
         >
           <div className="flex flex-row gap-2">
-            <Logout className="group-hover:rotate-12 transition-all" />
+            <Logout />
             ออกจากระบบ
           </div>
         </MenuItem>

@@ -1,4 +1,4 @@
-import { Container, Flex, SimpleGrid } from "@chakra-ui/react";
+import { Container, Flex, Grid, GridItem, SimpleGrid } from "@chakra-ui/react";
 import Announcement from "@components/Announcement";
 import Card from "@components/Card";
 import Navbar from "@components/Navbar";
@@ -143,14 +143,21 @@ function MenuController({ layout, setLayout }) {
         สร้างโพสต์ +
       </div>
       <div className="flex flex-row gap-2">
-        {/* <div className="p-1 bg-[#494d53] w-fit rounded-sm font-bold text-sm hover:opacity-75 cursor-pointer">
-          <Menu2 />
-        </div> */}
-        <div className="p-1 bg-[#494d53] w-fit rounded-sm font-bold text-sm hover:opacity-75 cursor-pointer">
-          <LayoutGrid size={17} onClick={() => setLayout("grid")} />
+        <div
+          onClick={() => setLayout("grid")}
+          className={`p-1 ${
+            layout === "grid" ? "bg-[#181a1d]" : "bg-[#494d53]"
+          }  w-fit rounded-sm font-bold text-sm hover:opacity-75 cursor-pointer`}
+        >
+          <LayoutGrid size={17} />
         </div>
-        <div className="p-1 bg-[#494d53] w-fit rounded-sm font-bold text-sm hover:opacity-75 cursor-pointer">
-          <ListDetails size={17} onClick={() => setLayout("list")} />
+        <div
+          onClick={() => setLayout("list")}
+          className={`p-1 ${
+            layout === "list" ? "bg-[#181a1d]" : "bg-[#494d53]"
+          }  w-fit rounded-sm font-bold text-sm hover:opacity-75 cursor-pointer`}
+        >
+          <ListDetails size={17} />
         </div>
       </div>
     </div>
