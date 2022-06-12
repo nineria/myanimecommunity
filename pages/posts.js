@@ -1,12 +1,11 @@
-import { Container, Flex, Grid, GridItem, SimpleGrid } from "@chakra-ui/react";
+import { Container } from "@chakra-ui/react";
 import Announcement from "@components/Announcement";
-import Card from "@components/Card";
 import Navbar from "@components/Navbar";
 import React, { useState } from "react";
-import { Animate } from "react-simple-animate";
-import { LayoutGrid, ListDetails } from "tabler-icons-react";
+import PostsMenuController from "@components/Posts/MenuController";
+import PostLayout from "@components/Posts/PostLayout";
 
-export default function PostPage() {
+export default function PostsPage() {
   const [layout, setLayout] = useState("grid");
 
   const property = [
@@ -115,7 +114,7 @@ export default function PostPage() {
     },
   ];
 
-  const AnnoProperty = {
+  const AnnouncementProperty = {
     type: "danger",
     content:
       "ประกาศปิดปรับปรุงเว็บไซต์ในวันที่ 21 เมษายน 2022 ขออภัยผู้ใช้และสมาชิกชุมชนคนรักอนิเมะทุกท่าน การปิดปรับปรุงครั้งนี้มีขึ้นเพื่อเพิ่มประสมการณ์ใช้เว็บไซต์ของเราให้ดยิ่งขึ้น(เพิ่มเติม) ในส่วนของการเขียนโพสต์สามารถใช้ได้ตามปกติแล้ว และ Back-endใหม่ของเราจะมีประสิทธิภาพมากขึ้นกว่าเดิม (รวมถึง UI แบบใหม่) ทั้งนี้ ขอขอบคุณสำหรับความอดทนของทุกคน",
@@ -123,74 +122,18 @@ export default function PostPage() {
 
   return (
     <div className="bg-[#181a1d] text-white">
-      <Navbar page="/postPage" />
+      <Navbar page="/posts" />
       <Container maxW="container.xl">
         {/* Announcement */}
-        <Announcement type={AnnoProperty.type} content={AnnoProperty.content} />
+        <Announcement
+          type={AnnouncementProperty.type}
+          content={AnnouncementProperty.content}
+        />
         {/* Menu Controller */}
-        <MenuController layout={layout} setLayout={setLayout} />
+        <PostsMenuController layout={layout} setLayout={setLayout} />
         {/* Posts */}
-        <AllPost property={property} layout={layout} />
+        <PostLayout property={property} layout={layout} />
       </Container>
     </div>
-  );
-}
-
-function MenuController({ layout, setLayout }) {
-  return (
-    <div className="flex flex-row justify-between w-full bg-[#282a2d] rounded-sm mt-2 p-1">
-      <div className="flex items-center px-1 bg-[#ec5555] w-fit rounded-sm font-bold text-sm hover:opacity-75 cursor-pointer">
-        สร้างโพสต์ +
-      </div>
-      <div className="flex flex-row gap-2">
-        <div
-          onClick={() => setLayout("grid")}
-          className={`p-1 ${
-            layout === "grid" ? "bg-[#181a1d]" : "bg-[#494d53]"
-          }  w-fit rounded-sm font-bold text-sm hover:opacity-75 cursor-pointer`}
-        >
-          <LayoutGrid size={17} />
-        </div>
-        <div
-          onClick={() => setLayout("list")}
-          className={`p-1 ${
-            layout === "list" ? "bg-[#181a1d]" : "bg-[#494d53]"
-          }  w-fit rounded-sm font-bold text-sm hover:opacity-75 cursor-pointer`}
-        >
-          <ListDetails size={17} />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function AllPost({ property, layout }) {
-  return (
-    <Animate
-      play
-      start={{ transform: "translateY(5%)", opacity: "0" }}
-      end={{ transform: "translateY(0%)", opacity: "1" }}
-    >
-      {layout === "grid" ? (
-        <SimpleGrid
-          columns={{ sm: 1, md: 2, lg: 3 }}
-          spacingX={2}
-          spacingY={5}
-          paddingTop={2}
-        >
-          {property &&
-            property.map((data, index) => (
-              <Card layout={layout} key={index} property={data} />
-            ))}
-        </SimpleGrid>
-      ) : (
-        <Flex flexDirection="column" gap={{ sm: 5, md: 1 }} paddingTop={2}>
-          {property &&
-            property.map((data, index) => (
-              <Card layout={layout} key={index} property={data} />
-            ))}
-        </Flex>
-      )}
-    </Animate>
   );
 }
