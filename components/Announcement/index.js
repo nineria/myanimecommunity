@@ -27,9 +27,9 @@ export default function Announcement({ type, content }) {
         //     : "bg-green-500"
         // } h-full`}
         >
-          <AlertCircle size={25} className="text-white opacity-50 m-1" />
+          <AlertCircle size={25} className="text-white opacity-75 m-1" />
         </div>
-        <div className="px-2 text-[#eee] text-xs md:text-sm py-2 bg-[#242629] rounded-r-md">
+        <div className="px-2 text-[#eee] w-full text-xs md:text-sm py-2 bg-[#242629] rounded-r-md">
           {content}
         </div>
       </div>

@@ -21,44 +21,9 @@ import {
   MoodConfuzed,
   MoodCrazyHappy,
 } from "tabler-icons-react";
+import { settingMenuProperty, accessMenuProperty } from "./DummyData";
 
 export default function UserMenu({ user, isBusy, toggle, signOut }) {
-  const settingMenu = [
-    {
-      name: "โปรไฟล์",
-      link: "/profile",
-      icon: <Users className="group-hover:rotate-12 transition-all" />,
-    },
-    {
-      name: "ตั้งค่า",
-      link: "/setting",
-      icon: <Settings className="group-hover:rotate-12 transition-all" />,
-    },
-  ];
-
-  const accessMenu = [
-    {
-      name: "โพสต์ใหม่",
-      link: "/postPage",
-      icon: <MoodCrazyHappy className="group-hover:rotate-12 transition-all" />,
-    },
-    {
-      name: "ข่าวสาร",
-      link: "/news",
-      icon: <MoodHappy className="group-hover:rotate-12 transition-all" />,
-    },
-    {
-      name: "รีวิว",
-      link: "/review",
-      icon: <MoodSuprised className="group-hover:rotate-12 transition-all" />,
-    },
-    {
-      name: "Q&A ถามตอบ",
-      link: "/qAndA",
-      icon: <MoodConfuzed className="group-hover:rotate-12 transition-all" />,
-    },
-  ];
-
   return (
     <Menu>
       {/* Profile */}
@@ -67,8 +32,8 @@ export default function UserMenu({ user, isBusy, toggle, signOut }) {
       </MenuButton>
       {/* Dropdown menu */}
       <DropdownMenu
-        settingMenu={settingMenu}
-        accessMenu={accessMenu}
+        settingMenu={settingMenuProperty}
+        accessMenu={accessMenuProperty}
         signOut={signOut}
       />
     </Menu>

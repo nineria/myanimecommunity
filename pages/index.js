@@ -4,7 +4,7 @@ import Navbar from "@components/Navbar";
 import { firestore, fromMillis, postToJSON } from "@lib/firebase";
 
 import { useState } from "react";
-import HomePage from "./homePage";
+import HomePage from "./home";
 
 // Max post to query per page
 const LIMIT = 1;

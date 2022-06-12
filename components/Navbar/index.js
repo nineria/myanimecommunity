@@ -5,10 +5,10 @@ import { auth } from "@lib/firebase";
 import { Container } from "@chakra-ui/react";
 import { useState } from "react";
 import MyAniLogo from "./MyAniLogo";
-import UserMenu from "./UserMenu";
+import UserMenu from "./DropdownMenu";
 import Login from "./Login";
 import NavbarMenu from "./NavbarMenu";
-
+import { navbarProperty } from "./DummyData";
 export default function Navbar({ page, isBusy = false }) {
   const { user, username } = useContext(UserContext); // User data
 
@@ -21,26 +21,6 @@ export default function Navbar({ page, isBusy = false }) {
     router.reload();
   };
 
-  const navbarItem = [
-    // Dummy data (Temporary)
-    {
-      name: "โพสต์ใหม่",
-      path: "/postPage",
-    },
-    {
-      name: "ข่าวสาร",
-      path: "animeNews",
-    },
-    {
-      name: "รีวิวอนิเมะ",
-      path: "animeReview",
-    },
-    {
-      name: "Q&A ถามตอบ",
-      path: "animeQAndA",
-    },
-  ];
-
   return (
     <div className="bg-[#25262B] py-2 sticky top-0 z-50">
       <Container maxW="container.xl">
@@ -52,7 +32,7 @@ export default function Navbar({ page, isBusy = false }) {
           <div className="lg:flex hidden justify-start pl-10 w-full">
             {/* Navbar menu */}
             {/* user is signed-in and has username */}
-            {username && <NavbarMenu page={page} menu={navbarItem} />}
+            {username && <NavbarMenu page={page} menu={navbarProperty} />}
             {/* Login or Register */}
             {/* user is not signed OR has not created username */}
             {!username && <Login login="/enter" register="/register" />}

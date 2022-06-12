@@ -19,9 +19,10 @@ import {
   StatArrow,
   Avatar,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Animate } from "react-simple-animate";
 import {
   BrandGithub,
@@ -35,6 +36,26 @@ import Information from "./Information";
 import Report from "./Report";
 
 export default function UserProfile({ user, username }) {
+  // const [showToast, setShowToast] = useState(true);
+
+  // const toast = useToast();
+
+  // useEffect(() => {
+  //   const notify = () => {
+  //     toast({
+  //       title: `ยินดีต้อนรับ ${user.displayName}!`,
+  //       status: "success",
+  //       duration: 3000,
+  //       isClosable: true,
+  //     });
+  //     setShowToast(false);
+  //   };
+
+  //   if (showToast) {
+  //     notify();
+  //   }
+  // }, [showToast]);
+
   const postDummy = [
     // Dummy data (Temporary)
     {
