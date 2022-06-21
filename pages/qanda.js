@@ -3,10 +3,22 @@ import Announcement from "@components/Announcement";
 import Navbar from "@components/Navbar";
 import PostLayout from "@components/Posts/PostLayout";
 import PostsMenuController from "@components/Posts/MenuController";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useThemeContext } from "@lib/useTheme";
 
 export default function QAndAPage() {
   const [layout, setLayout] = useState("grid");
+
+  const { setTheme } = useThemeContext();
+
+  useEffect(() => {
+    const localData = localStorage.getItem("themes");
+    if (localData == null) {
+      localStorage.setItem("themes", "red");
+      setTheme("red");
+    }
+    setTheme(localData);
+  }, []);
 
   const property = [
     {
@@ -20,15 +32,15 @@ export default function QAndAPage() {
       badges: [
         {
           name: "อนิเมะ",
-          color: "red",
+          color: "red.400",
         },
         {
           name: "คำถาม",
-          color: "yellow",
+          color: "yellow.400",
         },
         {
           name: "คำถาม",
-          color: "green",
+          color: "green.400",
         },
       ],
       postType: "ANIME",
@@ -36,14 +48,10 @@ export default function QAndAPage() {
   ];
 
   return (
-    <div className="bg-[#181a1d] text-white">
+    <div className="bg-background text-white h-screen">
       <Navbar page="/qanda" />
       <Container maxW="container.xl">
         {/* Announcement */}
-        {/* <Announcement
-          type="success"
-          content="Attack on Titan ประกาศสร้าง The Final Season Part 3 ฉบับซีรีส์ พร้อมวางกำหนดฉายภายในปี 2023 โดย Attack on Titan The Final Season Part 3 จะยังคงได้สตูดิโอ MAPPA มารับหน้าที่ดูแลการผลิตเช่นเดิม พร้อมด้วย ยูอิจิโระ ฮายาชิ ผู้กำกับจาก The Final Season Part 1-2 มารับหน้าที่ปิดฉากสงครามระหว่างมนุษยชาติและเหล่าไททันในครั้งนี้"
-        /> */}
         {/* Menu Controller */}
         <PostsMenuController layout={layout} setLayout={setLayout} />
         {/* Posts */}

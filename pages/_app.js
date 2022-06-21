@@ -1,15 +1,26 @@
 import "../styles/globals.css";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { UserContext } from "../lib/context";
 import { useUserData } from "../lib/hooks";
+import ThemeProvider from "@lib/useTheme";
 
 function MyApp({ Component, pageProps }) {
   const userData = useUserData();
+
+  const theme = extendTheme({
+    config: {
+      useSystemColorMode: false,
+      initialColorMode: "dark",
+    },
+  });
+
   return (
     <UserContext.Provider value={userData}>
-      <ChakraProvider>
-        <Component {...pageProps} />
-      </ChakraProvider>
+      <ThemeProvider>
+        <ChakraProvider theme={theme}>
+          <Component {...pageProps} />
+        </ChakraProvider>
+      </ThemeProvider>
     </UserContext.Provider>
   );
 }

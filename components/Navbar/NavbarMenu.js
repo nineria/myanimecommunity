@@ -14,8 +14,8 @@ export default function NavbarMenu({ page, menu }) {
         >
           <Link href={item.path}>
             <div
-              className={`border-b-4 border-transparent hover:border-b-4 hover:border-[#FA5252] ${
-                item.path === page ? "border-[#FA5252]" : ""
+              className={`border-b-4 border-transparent hover:border-b-4 hover:border-content ${
+                item.path === page ? "border-content" : ""
               } `}
             >
               <div className="truncate text-[#ccc] font-bold cursor-pointer hover:text-[#fff]">

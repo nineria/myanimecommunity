@@ -3,15 +3,25 @@ import Announcement from "@components/Announcement";
 import Navbar from "@components/Navbar";
 import PostLayout from "@components/Posts/PostLayout";
 import PostsMenuController from "@components/Posts/MenuController";
+import { Alert } from "@mantine/core";
+import { AlertCircle } from "tabler-icons-react";
 
 import React, { useEffect, useState } from "react";
+import { useThemeContext } from "@lib/useTheme";
 
 export default function ReviewPage() {
   const [layout, setLayout] = useState("grid");
 
-  const [showToast, setShowToast] = useState(true);
+  const { setTheme } = useThemeContext();
 
-  const toast = useToast();
+  useEffect(() => {
+    const localData = localStorage.getItem("themes");
+    if (localData == null) {
+      localStorage.setItem("themes", "red");
+      setTheme("red");
+    }
+    setTheme(localData);
+  }, []);
 
   const property = [
     {
@@ -25,15 +35,15 @@ export default function ReviewPage() {
       badges: [
         {
           name: "อนิเมะ",
-          color: "red",
+          color: "red.400",
         },
         {
           name: "คำถาม",
-          color: "yellow",
+          color: "yellow.400",
         },
         {
           name: "รีวิว",
-          color: "green",
+          color: "green.400",
         },
       ],
       postType: "ANIME",
@@ -48,49 +58,39 @@ export default function ReviewPage() {
       badges: [
         {
           name: "อนิเมะ",
-          color: "red",
+          color: "red.400",
         },
         {
           name: "คำถาม",
-          color: "yellow",
+          color: "yellow.400",
         },
         {
           name: "รีวิว",
-          color: "green",
+          color: "green.400",
         },
       ],
       postType: "ANIME",
     },
   ];
 
-  useEffect(() => {
-    const notify = () => {
-      toast({
-        title: "เนื้อหาอาจมีการสปอย!",
-        description:
-          "โปรดทราบว่าเนื้อหาในหน้านี้อาจมีการสปอย สำหรับผู้ที่อาจเข้ามาที่นี่โดยไม่ได้ตั้งใจ หรือโดยจุดประสงค์อื่น",
-        status: "warning",
-        variant: "left-accent",
-        duration: 5000,
-        isClosable: true,
-      });
-      setShowToast(false);
-    };
-
-    if (showToast) {
-      notify();
-    }
-  }, [showToast]);
+  // Announcement property
+  const AnmProperty = {
+    type: "warning",
+    header: "เนื้อหาอาจมีการสปอย!",
+    content:
+      'โปรดทราบว่าในหมวดหมู่ "รีวิวอนิเมะ" อาจมีการเปิดเผย(สปอย)เนื้อหาบางส่วนหรือทั้งหมด เช่น ฉากจบ, ชะตากรรมของตัวละคร, เหตุการณ์สําคัญ ฯลฯ',
+  };
 
   return (
-    <div className="bg-[#181a1d] text-white">
+    <div className="bg-background text-white h-screen">
       <Navbar page="/review" />
       <Container maxW="container.xl">
         {/* Announcement */}
-        {/* <Announcement
-          type="warning"
-          content={`โปรดทราบว่าในหมวดหมู่ \"รีวิวอนิเมะ\" อาจมีการเปิดเผย(สปอย)เนื้อหาบางส่วนหรือทั้งหมด เช่น ฉากจบ, ชะตากรรมของตัวละคร, เหตุการณ์สําคัญ ฯลฯ`}
-        /> */}
+        <Announcement
+          type={AnmProperty.type}
+          header={AnmProperty.header}
+          content={AnmProperty.content}
+        />
         {/* Menu Controller */}
         <PostsMenuController layout={layout} setLayout={setLayout} />
         {/* Posts */}

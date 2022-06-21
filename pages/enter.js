@@ -6,9 +6,21 @@ import { useEffect, useState, useCallback, useContext } from "react";
 import debounce from "lodash.debounce";
 import { Container } from "@chakra-ui/react";
 import UserProfile from "@components/UserProfile";
+import { useThemeContext } from "@lib/useTheme";
 
 export default function Enter(props) {
   const { user, username } = useContext(UserContext);
+
+  const { setTheme } = useThemeContext();
+
+  useEffect(() => {
+    const localData = localStorage.getItem("themes");
+    if (localData == null) {
+      localStorage.setItem("themes", "red");
+      setTheme("red");
+    }
+    setTheme(localData);
+  }, []);
 
   // 1. user signed out <SignInButton />
   // 2. user signed in, but missing username <UsernameForm />

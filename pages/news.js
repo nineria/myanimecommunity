@@ -3,10 +3,22 @@ import Announcement from "@components/Announcement";
 import Navbar from "@components/Navbar";
 import PostLayout from "@components/Posts/PostLayout";
 import PostsMenuController from "@components/Posts/MenuController";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useThemeContext } from "@lib/useTheme";
 
 export default function NewsPage() {
   const [layout, setLayout] = useState("grid");
+
+  const { setTheme } = useThemeContext();
+
+  useEffect(() => {
+    const localData = localStorage.getItem("themes");
+    if (localData == null) {
+      localStorage.setItem("themes", "red");
+      setTheme("red");
+    }
+    setTheme(localData);
+  }, []);
 
   const property = [
     {
@@ -20,7 +32,7 @@ export default function NewsPage() {
       badges: [
         {
           name: "ข่าว",
-          color: "blue",
+          color: "blue.400",
         },
       ],
       postType: "NEWS",
@@ -36,7 +48,7 @@ export default function NewsPage() {
       badges: [
         {
           name: "ข่าว",
-          color: "blue",
+          color: "blue.400",
         },
       ],
       postType: "NEWS",
@@ -44,7 +56,7 @@ export default function NewsPage() {
   ];
 
   return (
-    <div className="bg-[#181a1d] text-white">
+    <div className="bg-background text-white h-screen">
       <Navbar page="/news" />
       <Container maxW="container.xl">
         {/* Announcement */}

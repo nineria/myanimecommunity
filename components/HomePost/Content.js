@@ -5,7 +5,7 @@ import ContentStat from "./ContentStat";
 
 const Content = ({ header, headerLink, body }) => {
   return (
-    <div className="flex lg:flex-row flex-col gap-2 lg:justify-between lg:items-center px-3 py-2 text-[#ec5555] bg-[#242629] overflow-hidden">
+    <div className="flex lg:flex-row flex-col gap-2 lg:justify-between lg:items-center px-3 py-2 text-content bg-foreground overflow-hidden">
       <div className="flex gap-2">
         <Messages size={40} className="min-w-fit" />
         <div
@@ -19,7 +19,7 @@ const Content = ({ header, headerLink, body }) => {
               <span className="truncate cursor-pointer hover:underline">
                 {header}
               </span>
-              <span className="ml-2 px-1 bg-[#ec5555] rounded-sm text-white text-xs">
+              <span className="ml-2 px-1 bg-content rounded-sm text-white text-xs">
                 ใหม่
               </span>
             </a>

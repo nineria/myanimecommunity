@@ -9,7 +9,7 @@ export default function Card({ property, layout }) {
     <div>
       {layout === "grid" ? (
         <AspectRatio ratio={16 / 9}>
-          <div className="relative flex flex-col rounded-sm shadow-md border-2 border-transparent hover:border-red-500 hover:brightness-110 cursor-pointer">
+          <div className="relative flex flex-col rounded-sm shadow-md cursor-pointer hover:translate-y-[2px] hover:shadow-lg">
             <Image
               className="rounded-sm"
               src={data.imageUrl}
@@ -18,24 +18,24 @@ export default function Card({ property, layout }) {
             />
             <div className="absolute bottom-14 left-2 flex flex-row gap-1 z-10 text-sm shadow-md">
               {data.badges.map((item, index) => (
-                <Badge key={index} variant="solid" colorScheme={item.color}>
+                <Badge key={index} variant="solid" bg={item.color}>
                   {item.name}
                 </Badge>
               ))}
             </div>
-            <div className="absolute bottom-0 left-0 right-0 bg-[#242629] px-2 py-2">
+            <div className="absolute bottom-0 left-0 right-0 bg-foreground px-2 py-2">
               <h1 className="truncate font-bold">{data.title}</h1>
               <div className="flex flex-row justify-start gap-4 text-gray-400">
                 <div className="flex flex-row gap-1 items-center">
-                  <Clock size={20} className="text-red-500" />
+                  <Clock size={20} className="text-content" />
                   <p>{data.date}</p>
                 </div>
                 <div className="flex flex-row gap-1 items-center">
-                  <ThumbUp size={20} className="text-red-500" />
+                  <ThumbUp size={20} className="text-content" />
                   <p>{data.like}</p>
                 </div>
                 <div className="flex flex-row gap-1 items-center">
-                  <Star size={20} className="text-red-500" />
+                  <Star size={20} className="text-content" />
                   <p>{data.star}</p>
                 </div>
               </div>
@@ -63,28 +63,28 @@ export default function Card({ property, layout }) {
 
 function ScreenSmall({ data }) {
   return (
-    <div className="relative flex flex-col rounded-sm shadow-md border-2 border-transparent hover:border-red-500 hover:brightness-110 cursor-pointer">
+    <div className="relative flex flex-col rounded-sm shadow-md border-2 border-transparent hover:border-content hover:brightness-110 cursor-pointer">
       <Image className="rounded-sm" src={data.imageUrl} alt={data.title} />
       <div className="absolute bottom-14 left-2 flex flex-row gap-1 z-10 text-sm shadow-md">
         {data.badges.map((item, index) => (
-          <Badge key={index} variant="solid" colorScheme={item.color}>
+          <Badge key={index} variant="solid" bg={item.color}>
             {item.name}
           </Badge>
         ))}
       </div>
-      <div className="absolute bottom-0 left-0 right-0 bg-[#242629] px-2 py-2">
+      <div className="absolute bottom-0 left-0 right-0 bg-foreground px-2 py-2">
         <h1 className="truncate font-bold ">{data.title}</h1>
         <div className="flex flex-row justify-start gap-4 text-gray-400">
           <div className="flex flex-row gap-1 items-center">
-            <Clock size={20} className="text-red-500" />
+            <Clock size={20} className="text-content" />
             <p>{data.date}</p>
           </div>
           <div className="flex flex-row gap-1 items-center">
-            <ThumbUp size={20} className="text-red-500" />
+            <ThumbUp size={20} className="text-content" />
             <p>{data.like}</p>
           </div>
           <div className="flex flex-row gap-1 items-center">
-            <Star size={20} className="text-red-500" />
+            <Star size={20} className="text-content" />
             <p>{data.star}</p>
           </div>
         </div>
@@ -100,15 +100,15 @@ function ScreenSmall({ data }) {
 
 function ScreenLarge({ data }) {
   return (
-    <div className="flex flex-row rounded-sm shadow-md  border-2 w-full border-transparent hover:border-red-500 hover:brightness-110 cursor-pointer ">
+    <div className="flex flex-row rounded-sm shadow-md  border-2 w-full border-transparent hover:border-content hover:brightness-110 cursor-pointer ">
       <div className="w-[300px] h-[100px] overflow-hidden ">
         <Image className="rounded-sm" src={data.imageUrl} alt={data.title} />
       </div>
 
-      <div className="relative flex flex-col gap-2 justify-center bg-[#242629] px-2 py-2  w-full">
+      <div className="relative flex flex-col gap-2 justify-center bg-foreground px-2 py-2  w-full">
         <div className="flex flex-row gap-1 z-10 text-sm">
           {data.badges.map((item, index) => (
-            <Badge key={index} variant="solid" colorScheme={item.color}>
+            <Badge key={index} variant="solid" bg={item.color}>
               {item.name}
             </Badge>
           ))}
@@ -118,15 +118,15 @@ function ScreenLarge({ data }) {
         </h1>
         <div className="flex flex-row justify-start gap-4 text-white text-opacity-50 text-sm">
           <div className="flex flex-row gap-1 items-center">
-            <Clock size={20} className="text-red-500" />
+            <Clock size={20} className="text-content" />
             <p>{data.date}</p>
           </div>
           <div className="flex flex-row gap-1 items-center">
-            <ThumbUp size={20} className="text-red-500" />
+            <ThumbUp size={20} className="text-content" />
             <p>{data.like}</p>
           </div>
           <div className="flex flex-row gap-1 items-center">
-            <Star size={20} className="text-red-500" />
+            <Star size={20} className="text-content" />
             <p>{data.star}</p>
           </div>
         </div>

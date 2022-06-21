@@ -92,7 +92,7 @@ export default function EditPost(props) {
 
     return (
       <div>
-        <div className="flex flex-row justify-between bg-[#ec5555] py-2 px-3 rounded-t-sm">
+        <div className="flex flex-row justify-between bg-content py-2 px-3 rounded-t-sm">
           <h1 className="font-bold md:text-lg text-base">
             แก้ไขโพสต์ - หน้าหลัก
           </h1>
@@ -195,7 +195,7 @@ function TermAndService() {
       <AlertCircle size={24} />
       <span className="w-4/5">
         ผู้ดูแลระบบขอสงวนสิทธิ์ในการลบโพสต์ของผู้ที่ไม่ปฏิบัติตาม{" "}
-        <span className="text-[#ec5555] underline cursor-pointer">
+        <span className="text-content underline cursor-pointer">
           กฎ กติกา และมารยาท
         </span>{" "}
         ของเว็บไซต์ MyAnimeCommu
@@ -217,7 +217,7 @@ function ControlButton({ props }) {
         </div>
         <div
           onClick={props}
-          className="py-1 px-3 bg-[#ec5555] rounded-sm cursor-pointer hover:opacity-75 hover:translate-y-[1px]"
+          className="py-1 px-3 bg-content rounded-sm cursor-pointer hover:opacity-75 hover:translate-y-[1px]"
         >
           ลบโพสต์
         </div>

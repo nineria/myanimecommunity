@@ -1,12 +1,11 @@
-import React, { useState } from "react";
-import HomePost from "@components/HomePost";
 import { Container } from "@chakra-ui/react";
-import { useContext } from "react";
-import { UserContext } from "@lib/context";
-import { Animate } from "react-simple-animate";
+import HomePost from "@components/HomePost";
 import AddPost from "@components/HomePost/Add";
+import { UserContext } from "@lib/context";
+import { useContext, useState } from "react";
+import { Animate } from "react-simple-animate";
 
-export default function HomePage() {
+export default function HomeComponent() {
   const { user, username } = useContext(UserContext);
 
   const [openMenu, setOpenMenu] = useState(false);
@@ -56,8 +55,8 @@ export default function HomePage() {
   ];
 
   return (
-    <div>
-      <div className="mt-2 text-white w-full">
+    <Container maxW="container.xl">
+      <div className={` mt-2 text-white w-full`}>
         {user ? (
           <Animate
             play
@@ -69,6 +68,7 @@ export default function HomePage() {
           >
             <div className="">
               <div className="flex flex-col gap-2">
+                {/* Add home post */}
                 {openMenu === true ? (
                   <AddPost
                     handleOpenMenu={HandleOpenMenu}
@@ -77,30 +77,38 @@ export default function HomePage() {
                     handlePostDataChange={HandlePostDataChange}
                   />
                 ) : null}
-                <div className="flex flex-row justify-between w-full md:text-base text-sm">
-                  <Container maxW="container.xl">
-                    <div
-                      onClick={() => {
-                        HandleOpenMenu(!openMenu);
-                      }}
-                      className="bg-[#ec5555] w-fit px-3 rounded-sm cursor-pointer hover:translate-y-[1px] hover:opacity-75"
-                    >
-                      สร้าง +
-                    </div>
-                  </Container>
+                {/* Create home post */}
+                <CreateHomePost
+                  HandleOpenMenu={HandleOpenMenu}
+                  openMenu={openMenu}
+                />
+                {/* Display home post */}
+                <div className="flex flex-col gap-2">
+                  {postDummy.map((item, index) => (
+                    <HomePost dummyData={item} key={index} />
+                  ))}
                 </div>
-                <HomePost dummyData={postDummy[0]} />
-                <HomePost dummyData={postDummy[1]} />
-                <HomePost dummyData={postDummy[2]} />
               </div>
             </div>
           </Animate>
         ) : (
           <HomePost dummyData={postDummy[0]} />
         )}
-        {postData.title === "หัวข้อหลัก" ? null : (
-          <HomePost dummyData={postData} />
-        )}
+        {postData.title === "หัวข้อหลัก" ? null : <HomePost data={postData} />}
+      </div>
+    </Container>
+  );
+}
+
+function CreateHomePost({ HandleOpenMenu, openMenu }) {
+  return (
+    <div className="bg-content w-fit px-3 rounded-sm cursor-pointer hover:translate-y-[1px] hover:opacity-75 md:text-base text-sm text-[#fff]">
+      <div
+        onClick={() => {
+          HandleOpenMenu(!openMenu);
+        }}
+      >
+        สร้าง +
       </div>
     </div>
   );

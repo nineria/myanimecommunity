@@ -1,10 +1,12 @@
 // import PostFeed from "@components/PostFeed";
 // import Loader from "@components/Loader";
+import HomeComponent from "@components/HomeComponent";
 import Navbar from "@components/Navbar";
+import { myTheme } from "@components/Theme";
 import { firestore, fromMillis, postToJSON } from "@lib/firebase";
+import { useThemeContext } from "@lib/useTheme";
 
-import { useState } from "react";
-import HomePage from "./home";
+import { useState, useEffect } from "react";
 
 // Max post to query per page
 const LIMIT = 1;
@@ -23,11 +25,22 @@ export async function getServerSideProps(context) {
   };
 }
 
-export default function Home(props) {
+export default function HomePage(props) {
   const [posts, setPosts] = useState(props.posts);
   const [loading, setLoading] = useState(false);
 
   const [postsEnd, setPostsEnd] = useState(false);
+
+  const { setTheme } = useThemeContext();
+
+  useEffect(() => {
+    const localData = localStorage.getItem("themes");
+    if (localData == null) {
+      localStorage.setItem("themes", "red");
+      setTheme("red");
+    }
+    setTheme(localData);
+  }, []);
 
   const getMorePosts = async () => {
     setLoading(true);
@@ -54,17 +67,15 @@ export default function Home(props) {
   };
 
   return (
-    <div className="bg-[#181a1d]">
+    <div className="bg-background h-screen">
       <Navbar />
-      <HomePage />
+      <HomeComponent />
       {/* <PostFeed posts={posts} /> */}
 
       {/* {!loading && !postsEnd && (
         <button onClick={getMorePosts}>Load more...</button>
       )}
-
       <Loader show={loading} />
-
       {postsEnd && "You have reached the end!"} */}
     </div>
   );

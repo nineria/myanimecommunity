@@ -12,15 +12,7 @@ import {
 
 import Link from "next/link";
 import React from "react";
-import {
-  Logout,
-  Users,
-  Settings,
-  MoodHappy,
-  MoodSuprised,
-  MoodConfuzed,
-  MoodCrazyHappy,
-} from "tabler-icons-react";
+import { Logout, Settings } from "tabler-icons-react";
 import { settingMenuProperty, accessMenuProperty } from "./DummyData";
 
 export default function UserMenu({ user, isBusy, toggle, signOut }) {
@@ -80,37 +72,35 @@ function DropdownMenu({ settingMenu, accessMenu, signOut }) {
         <MenuGroup title="การตั้งค่า" color="gray.400">
           {settingMenu &&
             settingMenu.map((item, index) => (
-              <MenuItem
-                key={index}
-                _hover={{ bg: "#181a1d" }}
-                className="group"
-                _focus={{ bg: "#181a1d" }}
-              >
-                <Link href={item.link}>
+              <Link href={item.link} key={index}>
+                <MenuItem
+                  _hover={{ bg: "#181a1d" }}
+                  className="group"
+                  _focus={{ bg: "#181a1d" }}
+                >
                   <a className="flex flex-row gap-2">
                     {item.icon}
                     {item.name}
                   </a>
-                </Link>
-              </MenuItem>
+                </MenuItem>
+              </Link>
             ))}
           <MenuDivider />
           <MenuGroup title="การเข้าถึง" color="gray.400">
             {accessMenu &&
               accessMenu.map((item, index) => (
-                <MenuItem
-                  key={index}
-                  _hover={{ bg: "#181a1d" }}
-                  className="group"
-                  _focus={{ bg: "#181a1d" }}
-                >
-                  <Link href={item.link}>
+                <Link href={item.link} key={index}>
+                  <MenuItem
+                    _hover={{ bg: "#181a1d" }}
+                    className="group"
+                    _focus={{ bg: "#181a1d" }}
+                  >
                     <a className="flex flex-row gap-2">
                       {item.icon}
                       {item.name}
                     </a>
-                  </Link>
-                </MenuItem>
+                  </MenuItem>
+                </Link>
               ))}
             <MenuDivider />
           </MenuGroup>

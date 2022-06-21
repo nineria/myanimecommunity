@@ -1,12 +1,10 @@
-import { Container } from "@chakra-ui/react";
-import Announcement from "@components/Announcement";
-import Navbar from "@components/Navbar";
-import React, { useEffect, useState } from "react";
 import PostsMenuController from "@components/Posts/MenuController";
-import PostLayout from "@components/Posts/PostLayout";
 import { useThemeContext } from "@lib/useTheme";
+import React, { useEffect, useState } from "react";
+import { Settings } from "tabler-icons-react";
+import PostLayout from "@components/Posts/PostLayout";
 
-export default function PostsPage() {
+export default function PostLayoutComponent() {
   const [layout, setLayout] = useState("grid");
 
   const { setTheme } = useThemeContext();
@@ -126,26 +124,25 @@ export default function PostsPage() {
     },
   ];
 
-  const AnnouncementProperty = {
-    type: "danger",
-    content:
-      "ประกาศปิดปรับปรุงเว็บไซต์ในวันที่ 21 เมษายน 2022 ขออภัยผู้ใช้และสมาชิกชุมชนคนรักอนิเมะทุกท่าน การปิดปรับปรุงครั้งนี้มีขึ้นเพื่อเพิ่มประสมการณ์ใช้เว็บไซต์ของเราให้ดยิ่งขึ้น(เพิ่มเติม) ในส่วนของการเขียนโพสต์สามารถใช้ได้ตามปกติแล้ว และ Back-endใหม่ของเราจะมีประสิทธิภาพมากขึ้นกว่าเดิม (รวมถึง UI แบบใหม่) ทั้งนี้ ขอขอบคุณสำหรับความอดทนของทุกคน",
-  };
-
   return (
-    <div className="bg-background text-white h-screen">
-      <Navbar page="/posts" />
-      <Container maxW="container.xl">
-        {/* Announcement */}
-        <Announcement
-          type={AnnouncementProperty.type}
-          content={AnnouncementProperty.content}
-        />
-        {/* Menu Controller */}
-        <PostsMenuController layout={layout} setLayout={setLayout} />
-        {/* Posts */}
-        <PostLayout property={property} layout={layout} />
-      </Container>
+    <div className="bg-foreground my-2 w-full rounded-sm shadow-md">
+      {/* Header */}
+      <div className="flex flex-row items-center gap-1 px-4 py-2 ">
+        <Settings size={20} />
+        <h1 className="font-bold">การตั้งค่าเลย์เอาท์</h1>
+      </div>
+      <div className="py-[0.5px] w-full bg-[#ccc]" />
+      {/* Theme */}
+      <div className="px-4 py-2 flex flex-row justify-between items-center">
+        <div className="w-full">
+          <h1>ธีมของเว็บไซต์</h1>
+          <h2 className="text-sm text-[#aaa]"></h2>
+        </div>
+      </div>
+      {/* Menu Controller */}
+      <PostsMenuController layout={layout} setLayout={setLayout} />
+      {/* Posts */}
+      <PostLayout property={property} layout={layout} />
     </div>
   );
 }
