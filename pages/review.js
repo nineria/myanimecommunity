@@ -88,7 +88,7 @@ export default function ReviewPage() {
         {/* Announcement */}
         <Announcement
           type={AnmProperty.type}
-          header={AnmProperty.header}
+          title={AnmProperty.header}
           content={AnmProperty.content}
         />
         {/* Menu Controller */}

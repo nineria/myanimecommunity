@@ -4,7 +4,7 @@ import Navbar from "@components/Navbar";
 
 import { useEffect, useState, useCallback, useContext } from "react";
 import debounce from "lodash.debounce";
-import { Container } from "@chakra-ui/react";
+import { Container, Image } from "@chakra-ui/react";
 import UserProfile from "@components/UserProfile";
 import { useThemeContext } from "@lib/useTheme";
 
@@ -61,11 +61,7 @@ function SignInButton() {
         className="bg-white py-2 px-4 rounded-md cursor-pointer hover:translate-y-[1px] hover:opacity-75 group"
       >
         <div className="flex flex-row gap-2 items-center">
-          <img
-            src={googleLogo}
-            width="30px"
-            className="group-hover:-rotate-12 transition-all"
-          />
+          <Image src={googleLogo} width="30px" />
 
           <p className="text-black">Sign in with Google</p>
         </div>

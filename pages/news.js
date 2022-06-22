@@ -62,7 +62,8 @@ export default function NewsPage() {
         {/* Announcement */}
         <Announcement
           type="success"
-          content="Attack on Titan ประกาศสร้าง The Final Season Part 3 ฉบับซีรีส์ พร้อมวางกำหนดฉายภายในปี 2023 โดย Attack on Titan The Final Season Part 3 จะยังคงได้สตูดิโอ MAPPA มารับหน้าที่ดูแลการผลิตเช่นเดิม พร้อมด้วย ยูอิจิโระ ฮายาชิ ผู้กำกับจาก The Final Season Part 1-2 มารับหน้าที่ปิดฉากสงครามระหว่างมนุษยชาติและเหล่าไททันในครั้งนี้"
+          title="Attack on Titan ประกาศสร้าง The Final Season Part 3 ฉบับซีรีส์"
+          content="กำหนดฉายภายในปี 2023 โดย Attack on Titan The Final Season Part 3 จะยังคงได้สตูดิโอ MAPPA มารับหน้าที่ดูแลการผลิตเช่นเดิม พร้อมด้วย ยูอิจิโระ ฮายาชิ ผู้กำกับจาก The Final Season Part 1-2 มารับหน้าที่ปิดฉากสงครามระหว่างมนุษยชาติและเหล่าไททันในครั้งนี้"
         />
         {/* Menu Controller */}
         <PostsMenuController layout={layout} setLayout={setLayout} />

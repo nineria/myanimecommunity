@@ -1,10 +1,10 @@
-import { Center, Container, Select } from "@chakra-ui/react";
+import { Container } from "@chakra-ui/react";
 import Navbar from "@components/Navbar";
 import React, { useContext, useEffect } from "react";
 import Theme from "@components/SettingComponent/Theme";
 import { UserContext } from "@lib/context";
 import { useThemeContext } from "@lib/useTheme";
-import PostLayout from "@components/SettingComponent/PostLayout";
+import PageNotFound from "../pages/_error";
 
 export default function settingPage() {
   const { user } = useContext(UserContext);
@@ -23,7 +23,7 @@ export default function settingPage() {
   return (
     <div className="bg-background text-accent h-screen">
       <Navbar page="/setting" isBusy />
-      {user && (
+      {user && user ? (
         <Container maxW="container.xl">
           {/* Option menu */}
           {/* Theme */}
@@ -31,6 +31,8 @@ export default function settingPage() {
           {/* Post layout */}
           {/* <PostLayout /> */}
         </Container>
+      ) : (
+        <PageNotFound />
       )}
     </div>
   );

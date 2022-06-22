@@ -66,7 +66,7 @@ export default function ThemeComponent() {
       {/* Header */}
       <div className="flex flex-row items-center gap-1 px-4 py-2 ">
         <Settings size={20} />
-        <h1 className="font-bold">การตั้งค่าธีม</h1>
+        <h1 className="font-bold">การตั้งค่า</h1>
       </div>
       <div className="py-[0.5px] w-full bg-[#ccc]" />
       {/* Theme */}

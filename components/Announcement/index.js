@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Animate } from "react-simple-animate";
 import { AlertCircle, X } from "tabler-icons-react";
 
-export default function Announcement({ type, header, content }) {
+export default function Announcement({ type, title, content }) {
   const [onClose, setOnClose] = useState(true);
 
   const { setTheme } = useThemeContext();
@@ -47,7 +47,7 @@ export default function Announcement({ type, header, content }) {
             </div>
             <div className="flex flex-row px-2 text-[#eee] w-full text-xs md:text-sm py-2 bg-background rounded-r-sm">
               <div className="w-full">
-                <h1 className="font-bold">{header}</h1>
+                <h1 className="font-bold">{title}</h1>
                 <p>{content}</p>
               </div>
               <div
