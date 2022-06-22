@@ -67,7 +67,7 @@ export default function LoginPage() {
                   </p>
                 </Link>
                 <Link href="/enter">
-                  <a className="bg-content px-2 py-1 rounded-sm hover:opacity-75">
+                  <a className="bg-content text-accent px-2 py-1 rounded-sm hover:opacity-75">
                     เข้าสู่ระบบ
                   </a>
                 </Link>
@@ -90,7 +90,7 @@ export default function LoginPage() {
           </div>
         </div>
       ) : (
-        <div>
+        <div className="h-screen">
           <Navbar />
           <HomeComponent />
         </div>

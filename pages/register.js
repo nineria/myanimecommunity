@@ -70,7 +70,7 @@ export default function RegisterPage() {
               </InputWrapper>
               <Stack>
                 <Checkbox label="ยอมรับ กฎ กติกา และมารยาท ของ MyAnimeCommu" />
-                <Checkbox label="ยอมรับ นโยบายเกี่ยวกับข้อมูลส่วนบุคคล ของ MyAnimeCommu" />
+                <Checkbox label="ยอมรับ นโยบายเกี่ยวกับข้อมูลส่วนบุคคล ของ MyAnimeCommunity" />
               </Stack>
               <Group position="apart">
                 <Link href="/enter">
@@ -79,7 +79,7 @@ export default function RegisterPage() {
                   </p>
                 </Link>
                 <Link href="/enter">
-                  <a className="bg-content px-2 py-1 rounded-sm hover:opacity-75">
+                  <a className="bg-content text-accent px-2 py-1 rounded-sm hover:opacity-75">
                     ลงทะเบียน
                   </a>
                 </Link>
@@ -102,7 +102,7 @@ export default function RegisterPage() {
           </div>
         </div>
       ) : (
-        <div>
+        <div className="h-screen">
           <Navbar />
           <HomeComponent />
         </div>
