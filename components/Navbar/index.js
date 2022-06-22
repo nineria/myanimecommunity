@@ -9,6 +9,9 @@ import UserMenu from "./DropdownMenu";
 import Login from "./Login";
 import NavbarMenu from "./NavbarMenu";
 import { navbarProperty } from "./DummyData";
+import { Settings } from "tabler-icons-react";
+import DropdownLoginRegisterMenu from "./DropdownLoginRegisterMenu";
+
 export default function Navbar({ page, isBusy = false }) {
   const { user, username } = useContext(UserContext); // User data
 
@@ -36,6 +39,21 @@ export default function Navbar({ page, isBusy = false }) {
             {/* Login or Register */}
             {/* user is not signed OR has not created username */}
             {!username && <Login login="/enter" register="/register" />}
+          </div>
+          <div className="lg:hidden flex justify-end pl-10 w-full">
+            {/* {!username && <Login login="/enter" register="/register" />} */}
+            {!username && (
+              <div
+                className="justify-end gap-2 text-white"
+                onClick={() => setToggle(!toggle)}
+              >
+                <DropdownLoginRegisterMenu
+                  login="/enter"
+                  register="/register"
+                  toggle={toggle}
+                />
+              </div>
+            )}
           </div>
           {/* User Information (Image, Name, Email etc.) */}
           {username && (

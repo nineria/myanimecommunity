@@ -10,7 +10,7 @@ import {
 export const settingMenuProperty = [
   {
     name: "โปรไฟล์",
-    link: "/enter",
+    link: "/profile",
     icon: <Users />,
   },
   {

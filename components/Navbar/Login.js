@@ -1,4 +1,3 @@
-import { Button } from "@chakra-ui/react";
 import Link from "next/link";
 import React from "react";
 
@@ -6,15 +5,15 @@ export default function Login({ login, register }) {
   return (
     <div className="flex flex-row justify-end w-full gap-2">
       <Link href={login}>
-        <Button variant="outline" colorScheme="red" size="sm">
+        <a className="flex items-center px-2 py-1 rounded-sm bg-content text-accent md:text-base text-sm hover:opacity-75">
           เข้าสู่ระบบ
-        </Button>
+        </a>
       </Link>
-      <a>
-        <Button variant="outline" size="sm">
+      <Link href={register}>
+        <a className="flex items-center px-2 py-1 rounded-sm bg-background text-accent md:text-base text-sm hover:opacity-75">
           ลงทะเบียน
-        </Button>
-      </a>
+        </a>
+      </Link>
     </div>
   );
 }

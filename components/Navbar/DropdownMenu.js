@@ -12,7 +12,7 @@ import {
 
 import Link from "next/link";
 import React from "react";
-import { Logout, Settings } from "tabler-icons-react";
+import { Login, Logout, Settings, UserPlus } from "tabler-icons-react";
 import { settingMenuProperty, accessMenuProperty } from "./DummyData";
 
 export default function UserMenu({ user, isBusy, toggle, signOut }) {

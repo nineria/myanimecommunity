@@ -4,12 +4,134 @@ import Navbar from "@components/Navbar";
 
 import { useEffect, useState, useCallback, useContext } from "react";
 import debounce from "lodash.debounce";
-import { Container, Image } from "@chakra-ui/react";
-import UserProfile from "@components/UserProfile";
 import { useThemeContext } from "@lib/useTheme";
+import HomeComponent from "@components/HomeComponent";
+import {
+  Button,
+  Checkbox,
+  Group,
+  Image,
+  Input,
+  InputWrapper,
+  PasswordInput,
+  Stack,
+} from "@mantine/core";
+import { Mail } from "tabler-icons-react";
+import { EmailIcon } from "@chakra-ui/icons";
+import Link from "next/link";
+import { Center } from "@chakra-ui/react";
+import MyAniLogo from "@components/Navbar/MyAniLogo";
 
 export default function Enter(props) {
   const { user, username } = useContext(UserContext);
+
+  const [layout, setLayout] = useState("grid");
+
+  const property = [
+    {
+      imageUrl:
+        "https://www.anime-internet.com/content/images/size/w2000/2021/09/tileburnedin.jpg",
+      title:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, ea?",
+      date: "1 เดือน",
+      like: "25K",
+      star: "4.5",
+      badges: [
+        {
+          name: "อนิเมะ",
+          color: "red.400",
+        },
+        {
+          name: "คำถาม",
+          color: "yellow.400",
+        },
+        {
+          name: "สปอย",
+          color: "green.400",
+        },
+      ],
+      postType: "ANIME",
+    },
+    {
+      imageUrl:
+        "https://techxcite.com/topics/38671/thumbnail/1200one-piece-thai-version-by-cartoon-club-stop-broadcasting-due-to-copyright.jpg",
+      title: "Lorem ipsum dolor sit amet.",
+      date: "10 เดือน",
+      like: "25K",
+      star: "4.5",
+      badges: [
+        {
+          name: "อนิเมะ",
+          color: "red.400",
+        },
+        {
+          name: "คำถาม",
+          color: "yellow.400",
+        },
+        {
+          name: "สปอย",
+          color: "green.400",
+        },
+      ],
+      postType: "ANIME",
+    },
+    {
+      imageUrl:
+        "https://jw-webmagazine.com/wp-content/uploads/2019/08/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88-2019-08-13-8.16.03-min.png",
+      title:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae officiis quibusdam rem deleniti obcaecati dignissimos, architecto eveniet vel praesentium quod!",
+      date: "2 เดือน",
+      like: "25K",
+      star: "4.5",
+      badges: [
+        {
+          name: "อนิเมะ",
+          color: "red.400",
+        },
+        {
+          name: "คำถาม",
+          color: "yellow.400",
+        },
+        {
+          name: "สปอย",
+          color: "green.400",
+        },
+      ],
+      postType: "REVIEW",
+    },
+    {
+      imageUrl:
+        "https://www.matichon.co.th/wp-content/uploads/2019/07/JAPAN-FIRE2.jpg",
+      title:
+        "An aerial view shows firefighters battling the fires at the site where a man started a fire after spraying a liquid, at a three-story studio of Kyoto Animation Co. in Kyoto, western Japan, in this photo taken by Kyodo",
+      date: "2 เดือน",
+      like: "25K",
+      star: "4.5",
+      badges: [
+        {
+          name: "ข่าว",
+          color: "blue.400",
+        },
+      ],
+      postType: "NEWS",
+    },
+    {
+      imageUrl:
+        "https://static1.cbrimages.com/wordpress/wp-content/uploads/2020/09/Attack-on-Titan-Final-Season-Poster-Header.jpg?q=50&fit=contain&w=750&h=&dpr=1.5",
+      title:
+        "5 Ways Attack On Titan Is The Best Anime Of Winter 2021 (& 5 It's Overhyped)",
+      date: "2 เดือน",
+      like: "25K",
+      star: "4.5",
+      badges: [
+        {
+          name: "ข่าว",
+          color: "blue.400",
+        },
+      ],
+      postType: "NEWS",
+    },
+  ];
 
   const { setTheme } = useThemeContext();
 
@@ -28,19 +150,19 @@ export default function Enter(props) {
 
   return (
     <main className="bg-[#181a1d] text-white">
-      <Navbar isBusy={true} page="enter" />
-      <Container maxW={"container.xl"}>
-        {/* <Metatags title="Enter" description="Sign up for this amazing app!" /> */}
-        {user ? (
-          !username ? (
-            <UsernameForm />
-          ) : (
-            <UserProfile user={user} username={username} />
-          )
+      {/* <Metatags title="Enter" description="Sign up for this amazing app!" /> */}
+      {user ? (
+        !username ? (
+          <UsernameForm />
         ) : (
-          <SignInButton />
-        )}
-      </Container>
+          <div>
+            <Navbar />
+            <HomeComponent />
+          </div>
+        )
+      ) : (
+        <SignInButton />
+      )}
     </main>
   );
 }
@@ -50,21 +172,75 @@ function SignInButton() {
   const signInWithGoogle = async () => {
     await auth.signInWithPopup(googleAuthProvider);
   };
+  const [opened, setOpened] = useState(false);
 
   const googleLogo =
     "https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png";
 
   return (
-    <div className="flex justify-center bg-[#181a1d] mt-10">
-      <div
-        onClick={signInWithGoogle}
-        className="bg-white py-2 px-4 rounded-md cursor-pointer hover:translate-y-[1px] hover:opacity-75 group"
-      >
-        <div className="flex flex-row gap-2 items-center">
-          <Image src={googleLogo} width="30px" />
+    <div className="bg-background">
+      <div className="relative flex justify-center items-center h-screen">
+        <div className="absolute w-full h-full opacity-5 bg-cover bg-[url('https://images8.alphacoders.com/854/854961.png')]" />
+        <Link href="/">
+          <div className="absolute top-4 left-4 md:text-4xl text-3xl font-bold cursor-pointer">
+            <span className="text-[#4C6EF5]">My</span>
+            <span className="text-content">A</span>
+            <span className="text-white">nimeCommunity</span>
+          </div>
+        </Link>
+        <div className="bg-[#1a1b1e] p-4 rounded-sm flex flex-col gap-4 z-10 shadow-md">
+          <h1>แนะนำตัวกันหน่อย!</h1>
+          <Group>
+            <InputWrapper id="input-demo" required label="ชื่อจริง">
+              <Input id="input-demo" placeholder="ชื่อจริงของคุณ" />
+            </InputWrapper>
+            <InputWrapper id="input-demo" required label="นามสกุล">
+              <Input id="input-demo" placeholder="นามสกุลของคุณ" />
+            </InputWrapper>
+          </Group>
+          <InputWrapper id="input-demo" required label="อีเมล (Email)">
+            <Input
+              icon={<Mail size={20} />}
+              id="input-demo"
+              placeholder="อีเมลของคุณ"
+            />
+          </InputWrapper>
+          <InputWrapper id="input-demo" required label="รหัสผ่าน">
+            <PasswordInput placeholder="รหัสผ่านของคุณ" id="your-password" />
+          </InputWrapper>
+          <InputWrapper id="input-demo" required label="ยืนยันรหัสผ่าน">
+            <PasswordInput
+              placeholder="ยืนยันรหัสผ่านของคุณ"
+              id="your-password"
+            />
+          </InputWrapper>
+          <Stack>
+            <Checkbox label="ยอมรับ กฎ กติกา และมารยาท ของ MyAnimeCommu" />
+            <Checkbox label="ยอมรับ นโยบายเกี่ยวกับข้อมูลส่วนบุคคล ของ MyAnimeCommu" />
+          </Stack>
+          <Group position="apart">
+            <Link href="/login">
+              <p className="text-sm hover:underline cursor-pointer">
+                มีบัญชีอยู่แล้ว? เข้าสู่ระบบ
+              </p>
+            </Link>
+            <Button color="red">ลงทะเบียน</Button>
+          </Group>
+          <Center>หรือ</Center>
+          <Center>
+            <div
+              onClick={signInWithGoogle}
+              className="bg-white py-2 px-4 rounded-sm cursor-pointer hover:opacity-75 group"
+            >
+              <div className="flex flex-row gap-2 items-center">
+                <Image src={googleLogo} width="30px" />
 
-          <p className="text-black">Sign in with Google</p>
+                <p className="text-black">Sign in with Google</p>
+              </div>
+            </div>
+          </Center>
         </div>
+        {/* Sign btn */}
       </div>
     </div>
   );
