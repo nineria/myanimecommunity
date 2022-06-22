@@ -68,7 +68,7 @@ export default function ThemeComponent() {
   const SelectItem = forwardRef(({ label, description, color, value }, ref) => (
     <div
       ref={ref}
-      className="hover:bg-foreground hover:brightness-75 px-4 rounded-sm cursor-pointer"
+      className="hover:bg-content px-4 rounded-sm cursor-pointer"
       onClick={() => handleChangeTheme(value)}
     >
       <Group noWrap>
@@ -95,10 +95,10 @@ export default function ThemeComponent() {
   return (
     <div className="bg-foreground my-2 w-full rounded-sm shadow-md">
       {/* Header */}
-      <div className="flex flex-row items-center gap-1 px-4 py-2 ">
-        <Settings size={20} />
+      <Group className="py-2 px-4 font-bold w-full">
+        <Settings size={18} />
         <h1 className="font-bold">การตั้งค่า</h1>
-      </div>
+      </Group>
       <div className="py-[0.5px] w-full bg-[#ccc]" />
       {/* Theme */}
       <div className="px-4 py-2 flex flex-row justify-between items-center">

@@ -11,12 +11,12 @@ export const settingMenuProperty = [
   {
     name: "โปรไฟล์",
     link: "/profile",
-    icon: <Users />,
+    icon: <Users size={14} />,
   },
   {
     name: "ตั้งค่า",
     link: "/setting",
-    icon: <Settings />,
+    icon: <Settings size={14} />,
   },
 ];
 
@@ -24,22 +24,22 @@ export const accessMenuProperty = [
   {
     name: "โพสต์ใหม่",
     link: "/posts",
-    icon: <MoodCrazyHappy />,
+    icon: <MoodCrazyHappy size={14} />,
   },
   {
     name: "ข่าวสาร",
     link: "/news",
-    icon: <MoodHappy />,
+    icon: <MoodHappy size={14} />,
   },
   {
     name: "รีวิว",
     link: "/review",
-    icon: <MoodSuprised />,
+    icon: <MoodSuprised size={14} />,
   },
   {
     name: "Q&A ถามตอบ",
     link: "/qanda",
-    icon: <MoodConfuzed />,
+    icon: <MoodConfuzed size={14} />,
   },
 ];
 

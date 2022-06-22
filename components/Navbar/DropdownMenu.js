@@ -1,36 +1,128 @@
+// import {
+//   Avatar,
+//   AvatarBadge,
+//   Menu,
+//   MenuButton,
+//   MenuDivider,
+//   MenuGroup,
+//   MenuItem,
+//   MenuList,
+//   Portal,
+// } from "@chakra-ui/react";
 import {
   Avatar,
-  AvatarBadge,
+  Group,
+  Indicator,
   Menu,
-  MenuButton,
-  MenuDivider,
-  MenuGroup,
-  MenuItem,
-  MenuList,
-  Portal,
-} from "@chakra-ui/react";
+  Text,
+  UnstyledButton,
+} from "@mantine/core";
 
 import Link from "next/link";
-import React from "react";
-import { Login, Logout, Settings, UserPlus } from "tabler-icons-react";
+import React, { forwardRef } from "react";
+import { ChevronRight, Logout, Photo } from "tabler-icons-react";
 import { settingMenuProperty, accessMenuProperty } from "./DummyData";
 
 export default function UserMenu({ user, isBusy, toggle, signOut }) {
   return (
-    <Menu>
-      {/* Profile */}
-      <MenuButton>
-        <Profile user={user} isBusy={isBusy} toggle={toggle} />
-      </MenuButton>
-      {/* Dropdown menu */}
-      <DropdownMenu
-        settingMenu={settingMenuProperty}
-        accessMenu={accessMenuProperty}
-        signOut={signOut}
-      />
-    </Menu>
+    <Group position="center">
+      <div className="flex flex-row items-center gap-2">
+        <Link href="/profile">
+          <a className="flex flex-row gap-2 items-center cursor-pointer">
+            <Indicator
+              inline
+              size={12}
+              offset={5}
+              position="bottom-end"
+              color={isBusy ? "red" : "green"}
+              withBorder
+            >
+              <Avatar
+                name={user?.displayName || "username"}
+                src={user?.photoURL}
+                radius="xl"
+              />
+            </Indicator>
+            <div style={{ flex: 1 }}>
+              <div className="text-sm font-bold truncate">
+                {user?.displayName || "username"}
+              </div>
+
+              <Text color="dimmed" size="xs">
+                {user?.email || "email"}
+              </Text>
+            </div>
+          </a>
+        </Link>
+        <Menu withArrow placement="end">
+          {/* Setting */}
+          <Menu.Label>การตั้งค่า</Menu.Label>
+          {settingMenuProperty &&
+            settingMenuProperty.map((item, index) => (
+              <Link href={item.link} key={index}>
+                <Menu.Item className="hover:bg-content" icon={item.icon}>
+                  {item.name}
+                </Menu.Item>
+              </Link>
+            ))}
+          {/* Pages */}
+          <Menu.Label>การเข้าถึง</Menu.Label>
+          {accessMenuProperty &&
+            accessMenuProperty.map((item, index) => (
+              <Link href={item.link} key={index}>
+                <Menu.Item className="hover:bg-content" icon={item.icon}>
+                  {item.name}
+                </Menu.Item>
+              </Link>
+            ))}
+          {/* Sign out */}
+          <Menu.Label>ออกจากระบบ</Menu.Label>
+          <Menu.Item
+            icon={<Logout size={14} />}
+            onClick={signOut}
+            className="hover:bg-accent"
+            color="red"
+          >
+            ออกจากระบบ
+          </Menu.Item>
+        </Menu>
+      </div>
+    </Group>
+    // <Menu>
+    //   {/* Profile */}
+    //   <MenuButton>
+    //     <Profile user={user} isBusy={isBusy} toggle={toggle} />
+    //   </MenuButton>
+    //   {/* Dropdown menu */}
+    //   <DropdownMenu
+    //     settingMenu={settingMenuProperty}
+    //     accessMenu={accessMenuProperty}
+    //     signOut={signOut}
+    //   />
+    // </Menu>
   );
 }
+
+const UserButton = forwardRef(({ user, icon }, ref) => (
+  <UnstyledButton
+    ref={ref}
+    sx={(theme) => ({
+      display: "block",
+      width: "100%",
+      padding: theme.spacing.md,
+      color: theme.colorScheme === "dark" ? theme.colors.dark[0] : theme.black,
+
+      "&:hover": {
+        backgroundColor:
+          theme.colorScheme === "dark"
+            ? theme.colors.dark[8]
+            : theme.colors.gray[0],
+      },
+    })}
+  >
+    <Group></Group>
+  </UnstyledButton>
+));
 
 function Profile({ user, isBusy, toggle }) {
   return (

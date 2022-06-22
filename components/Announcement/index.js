@@ -34,15 +34,7 @@ export default function Announcement({ type, title, content }) {
                 : "border-green-500 bg-green-500"
             } border-2 rounded-sm flex flex-row items-center`}
           >
-            <div
-            // className={`${
-            //   props.type === "danger"
-            //     ? "bg-red-500"
-            //     : props.type === "warning"
-            //     ? "bg-orange-500"
-            //     : "bg-green-500"
-            // } h-full`}
-            >
+            <div>
               <AlertCircle size={25} className="text-white opacity-75 m-1" />
             </div>
             <div className="flex flex-row px-2 text-[#eee] w-full text-xs md:text-sm py-2 bg-background rounded-r-sm">

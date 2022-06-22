@@ -1,6 +1,6 @@
 import { AspectRatio, Badge, Image } from "@mantine/core";
-import React, { useEffect, useState } from "react";
-import { Clock, Eye, Star, ThumbUp } from "tabler-icons-react";
+import React, { useState } from "react";
+import { Clock, Star, ThumbUp } from "tabler-icons-react";
 
 export default function Card({ property, layout }) {
   const [data, setData] = useState(property);
@@ -9,7 +9,7 @@ export default function Card({ property, layout }) {
     <div>
       {layout === "grid" ? (
         <AspectRatio ratio={16 / 9}>
-          <div className="relative flex flex-col rounded-sm shadow-md cursor-pointer hover:translate-y-[2px] hover:shadow-lg">
+          <div className="relative flex flex-col rounded-sm shadow-md cursor-pointer hover:brightness-90">
             <Image className="h-full" src={data.imageUrl} alt={data.title} />
             <div className="absolute bottom-14 left-2 flex flex-row gap-1 z-10 text-sm shadow-md">
               {data.badges.map((item, index) => (
@@ -63,7 +63,7 @@ export default function Card({ property, layout }) {
 
 function ScreenSmall({ data }) {
   return (
-    <div className="relative flex flex-col rounded-sm shadow-md border-2 border-transparent hover:border-content hover:brightness-110 cursor-pointer">
+    <div className="relative flex flex-col rounded-sm shadow-md cursor-pointer hover:brightness-90">
       <Image className="rounded-sm" src={data.imageUrl} alt={data.title} />
       <div className="absolute bottom-14 left-2 flex flex-row gap-1 z-10 text-sm shadow-md">
         {data.badges.map((item, index) => (
@@ -100,7 +100,7 @@ function ScreenSmall({ data }) {
 
 function ScreenLarge({ data }) {
   return (
-    <div className="flex flex-row rounded-sm shadow-md  border-2 w-full border-transparent hover:border-content hover:brightness-110 cursor-pointer ">
+    <div className="flex flex-row rounded-sm shadow-md w-full cursor-pointer hover:brightness-90">
       <div className="w-[300px] h-[100px] overflow-hidden ">
         <Image className="rounded-sm" src={data.imageUrl} alt={data.title} />
       </div>

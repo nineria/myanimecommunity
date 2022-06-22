@@ -1,5 +1,6 @@
-import { Flex, SimpleGrid } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import Card from "@components/Card";
+import { Grid, Group, Stack } from "@mantine/core";
 import React from "react";
 import { Animate } from "react-simple-animate";
 
@@ -11,24 +12,21 @@ export default function PostLayout({ property, layout }) {
       end={{ transform: "translateY(0%)", opacity: "1" }}
     >
       {layout === "grid" ? (
-        <SimpleGrid
-          columns={{ sm: 1, md: 2, lg: 3 }}
-          spacingX={2}
-          spacingY={5}
-          paddingTop={2}
-        >
+        <Grid gutter="xs">
           {property &&
             property.map((data, index) => (
-              <Card layout={layout} key={index} property={data} />
+              <Grid.Col md={6} lg={4}>
+                <Card layout={layout} key={index} property={data} />
+              </Grid.Col>
             ))}
-        </SimpleGrid>
+        </Grid>
       ) : (
-        <Flex flexDirection="column" gap={{ sm: 5, md: 1 }} paddingTop={2}>
+        <Stack spacing={8}>
           {property &&
             property.map((data, index) => (
               <Card layout={layout} key={index} property={data} />
             ))}
-        </Flex>
+        </Stack>
       )}
     </Animate>
   );
