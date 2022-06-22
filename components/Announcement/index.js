@@ -22,7 +22,7 @@ export default function Announcement({ type, title, content }) {
       {onClose ? (
         <Animate
           play
-          start={{ transform: "translateY(10%)", opacity: "0" }}
+          start={{ transform: "translateY(5%)", opacity: "0" }}
           end={{ transform: "translateY(0%)", opacity: "1" }}
         >
           <div

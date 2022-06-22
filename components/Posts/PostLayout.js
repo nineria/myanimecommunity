@@ -7,7 +7,7 @@ export default function PostLayout({ property, layout }) {
   return (
     <Animate
       play
-      start={{ transform: "translateY(5%)", opacity: "0" }}
+      start={{ transform: "translateY(2%)", opacity: "0" }}
       end={{ transform: "translateY(0%)", opacity: "1" }}
     >
       {layout === "grid" ? (

@@ -1,10 +1,8 @@
-import { Container, useToast } from "@chakra-ui/react";
 import Announcement from "@components/Announcement";
 import Navbar from "@components/Navbar";
 import PostLayout from "@components/Posts/PostLayout";
 import PostsMenuController from "@components/Posts/MenuController";
-import { Alert } from "@mantine/core";
-import { AlertCircle } from "tabler-icons-react";
+import { Container } from "@mantine/core";
 
 import React, { useEffect, useState } from "react";
 import { useThemeContext } from "@lib/useTheme";
@@ -35,15 +33,15 @@ export default function ReviewPage() {
       badges: [
         {
           name: "อนิเมะ",
-          color: "red.400",
+          color: "red",
         },
         {
           name: "คำถาม",
-          color: "yellow.400",
+          color: "yellow",
         },
         {
           name: "รีวิว",
-          color: "green.400",
+          color: "green",
         },
       ],
       postType: "ANIME",
@@ -58,15 +56,15 @@ export default function ReviewPage() {
       badges: [
         {
           name: "อนิเมะ",
-          color: "red.400",
+          color: "red",
         },
         {
           name: "คำถาม",
-          color: "yellow.400",
+          color: "yellow",
         },
         {
           name: "รีวิว",
-          color: "green.400",
+          color: "green",
         },
       ],
       postType: "ANIME",
@@ -84,7 +82,7 @@ export default function ReviewPage() {
   return (
     <div className="bg-background text-white h-screen">
       <Navbar page="/review" />
-      <Container maxW="container.xl">
+      <Container size="xl">
         {/* Announcement */}
         <Announcement
           type={AnmProperty.type}

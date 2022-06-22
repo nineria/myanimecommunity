@@ -9,7 +9,7 @@ export default function NavbarMenu({ page, menu }) {
         <Animate
           key={item.name}
           play
-          start={{ transform: "translateX(5%)", opacity: "0" }}
+          start={{ transform: "translateX(2%)", opacity: "0" }}
           end={{ transform: "translateX(0)", opacity: "1" }}
         >
           <Link href={item.path}>

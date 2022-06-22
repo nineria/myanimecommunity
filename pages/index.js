@@ -1,8 +1,5 @@
-// import PostFeed from "@components/PostFeed";
-// import Loader from "@components/Loader";
 import HomeComponent from "@components/HomeComponent";
 import Navbar from "@components/Navbar";
-import { myTheme } from "@components/Theme";
 import { firestore, fromMillis, postToJSON } from "@lib/firebase";
 import { useThemeContext } from "@lib/useTheme";
 

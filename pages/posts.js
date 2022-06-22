@@ -1,10 +1,10 @@
-import { Container } from "@chakra-ui/react";
 import Announcement from "@components/Announcement";
 import Navbar from "@components/Navbar";
 import React, { useEffect, useState } from "react";
 import PostsMenuController from "@components/Posts/MenuController";
 import PostLayout from "@components/Posts/PostLayout";
 import { useThemeContext } from "@lib/useTheme";
+import { Container } from "@mantine/core";
 
 export default function PostsPage() {
   const [layout, setLayout] = useState("grid");
@@ -32,15 +32,15 @@ export default function PostsPage() {
       badges: [
         {
           name: "อนิเมะ",
-          color: "red.400",
+          color: "red",
         },
         {
           name: "คำถาม",
-          color: "yellow.400",
+          color: "yellow",
         },
         {
           name: "สปอย",
-          color: "green.400",
+          color: "green",
         },
       ],
       postType: "ANIME",
@@ -55,15 +55,15 @@ export default function PostsPage() {
       badges: [
         {
           name: "อนิเมะ",
-          color: "red.400",
+          color: "red",
         },
         {
           name: "คำถาม",
-          color: "yellow.400",
+          color: "yellow",
         },
         {
           name: "สปอย",
-          color: "green.400",
+          color: "green",
         },
       ],
       postType: "ANIME",
@@ -79,15 +79,15 @@ export default function PostsPage() {
       badges: [
         {
           name: "อนิเมะ",
-          color: "red.400",
+          color: "red",
         },
         {
           name: "คำถาม",
-          color: "yellow.400",
+          color: "yellow",
         },
         {
           name: "สปอย",
-          color: "green.400",
+          color: "green",
         },
       ],
       postType: "REVIEW",
@@ -103,7 +103,7 @@ export default function PostsPage() {
       badges: [
         {
           name: "ข่าว",
-          color: "blue.400",
+          color: "",
         },
       ],
       postType: "NEWS",
@@ -119,7 +119,7 @@ export default function PostsPage() {
       badges: [
         {
           name: "ข่าว",
-          color: "blue.400",
+          color: "",
         },
       ],
       postType: "NEWS",
@@ -135,7 +135,7 @@ export default function PostsPage() {
   return (
     <div className="bg-background text-white h-screen">
       <Navbar page="/posts" />
-      <Container maxW="container.xl">
+      <Container size="xl">
         {/* Announcement */}
         <Announcement
           type={AnnouncementProperty.type}

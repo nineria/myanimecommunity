@@ -19,7 +19,6 @@ import {
   StatArrow,
   Avatar,
   useDisclosure,
-  Container,
 } from "@chakra-ui/react";
 
 import React, { useContext } from "react";
@@ -36,6 +35,7 @@ import Information from "@components/ProfileComponent/Information";
 import Report from "@components/ProfileComponent/Report";
 import { UserContext } from "@lib/context";
 import Navbar from "@components/Navbar";
+import { Container } from "@mantine/core";
 
 export default function UserProfilePage() {
   const { user, username } = useContext(UserContext); // User data
@@ -71,8 +71,8 @@ export default function UserProfilePage() {
 
   return (
     <div className="bg-background text-accent">
-      <Navbar page="/setting" isBusy />
-      <Container maxW={"container.xl"}>
+      <Navbar page="/profile" isBusy />
+      <Container size="xl">
         <Animate
           play
           start={{

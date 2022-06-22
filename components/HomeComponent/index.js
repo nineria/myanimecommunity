@@ -1,7 +1,7 @@
-import { Container } from "@chakra-ui/react";
 import HomePost from "@components/HomePost";
 import AddPost from "@components/HomePost/Add";
 import { UserContext } from "@lib/context";
+import { Container } from "@mantine/core";
 import { useContext, useState } from "react";
 import { Animate } from "react-simple-animate";
 
@@ -55,13 +55,13 @@ export default function HomeComponent() {
   ];
 
   return (
-    <Container maxW="container.xl">
+    <Container size="xl">
       <div className={` mt-2 text-white w-full`}>
         {user ? (
           <Animate
             play
             start={{
-              transform: "translateY(2%)",
+              transform: "translateY(1%)",
               opacity: "0",
             }}
             end={{ transform: "translateY(0%)", opacity: "1" }}

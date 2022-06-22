@@ -2,15 +2,14 @@ import { useRouter } from "next/router";
 import { useContext } from "react";
 import { UserContext } from "@lib/context";
 import { auth } from "@lib/firebase";
-import { Container } from "@chakra-ui/react";
 import { useState } from "react";
 import MyAniLogo from "./MyAniLogo";
 import UserMenu from "./DropdownMenu";
 import Login from "./Login";
 import NavbarMenu from "./NavbarMenu";
 import { navbarProperty } from "./DummyData";
-import { Settings } from "tabler-icons-react";
 import DropdownLoginRegisterMenu from "./DropdownLoginRegisterMenu";
+import { Container } from "@mantine/core";
 
 export default function Navbar({ page, isBusy = false }) {
   const { user, username } = useContext(UserContext); // User data
@@ -26,7 +25,7 @@ export default function Navbar({ page, isBusy = false }) {
 
   return (
     <div className="bg-foreground py-2 sticky top-0 z-50">
-      <Container maxW="container.xl">
+      <Container size="xl">
         <div className="flex items-end justify-between w-full text-md">
           <div className="text-4xl font-bold">
             {/* Website Logo */}
@@ -38,7 +37,7 @@ export default function Navbar({ page, isBusy = false }) {
             {username && <NavbarMenu page={page} menu={navbarProperty} />}
             {/* Login or Register */}
             {/* user is not signed OR has not created username */}
-            {!username && <Login login="/enter" register="/register" />}
+            {!username && <Login login="/login" register="/register" />}
           </div>
           <div className="lg:hidden flex justify-end pl-10 w-full">
             {/* {!username && <Login login="/enter" register="/register" />} */}

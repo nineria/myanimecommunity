@@ -1,10 +1,10 @@
-import { Container } from "@chakra-ui/react";
 import Announcement from "@components/Announcement";
 import Navbar from "@components/Navbar";
 import PostLayout from "@components/Posts/PostLayout";
 import PostsMenuController from "@components/Posts/MenuController";
 import React, { useEffect, useState } from "react";
 import { useThemeContext } from "@lib/useTheme";
+import { Container } from "@mantine/core";
 
 export default function NewsPage() {
   const [layout, setLayout] = useState("grid");
@@ -32,7 +32,7 @@ export default function NewsPage() {
       badges: [
         {
           name: "ข่าว",
-          color: "blue.400",
+          color: "",
         },
       ],
       postType: "NEWS",
@@ -48,7 +48,7 @@ export default function NewsPage() {
       badges: [
         {
           name: "ข่าว",
-          color: "blue.400",
+          color: "",
         },
       ],
       postType: "NEWS",
@@ -58,7 +58,7 @@ export default function NewsPage() {
   return (
     <div className="bg-background text-white h-screen">
       <Navbar page="/news" />
-      <Container maxW="container.xl">
+      <Container size="xl">
         {/* Announcement */}
         <Announcement
           type="success"

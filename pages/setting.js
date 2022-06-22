@@ -1,10 +1,11 @@
-import { Container } from "@chakra-ui/react";
 import Navbar from "@components/Navbar";
 import React, { useContext, useEffect } from "react";
 import Theme from "@components/SettingComponent/Theme";
 import { UserContext } from "@lib/context";
 import { useThemeContext } from "@lib/useTheme";
 import PageNotFound from "../pages/_error";
+import { Animate } from "react-simple-animate";
+import { Container } from "@mantine/core";
 
 export default function settingPage() {
   const { user } = useContext(UserContext);
@@ -24,12 +25,16 @@ export default function settingPage() {
     <div className="bg-background text-accent h-screen">
       <Navbar page="/setting" isBusy />
       {user && user ? (
-        <Container maxW="container.xl">
+        <Container size="xl">
           {/* Option menu */}
           {/* Theme */}
-          <Theme />
-          {/* Post layout */}
-          {/* <PostLayout /> */}
+          <Animate
+            play
+            start={{ transform: "translateY(1%)", opacity: "0" }}
+            end={{ transform: "translateY(0%)", opacity: "1" }}
+          >
+            <Theme />
+          </Animate>
         </Container>
       ) : (
         <PageNotFound />

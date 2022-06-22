@@ -1,7 +1,8 @@
-import { Select } from "@chakra-ui/react";
+import { SettingsIcon } from "@chakra-ui/icons";
 import HomePost from "@components/HomePost";
 import { useThemeContext } from "@lib/useTheme";
-import React, { useEffect, useState } from "react";
+import { Avatar, ColorSwatch, Group, Select, Text } from "@mantine/core";
+import React, { forwardRef, useEffect, useState } from "react";
 import { Settings } from "tabler-icons-react";
 
 export default function ThemeComponent() {
@@ -16,50 +17,80 @@ export default function ThemeComponent() {
     setTheme(localData);
   }, []);
 
-  const handleChangeTheme = (e) => {
-    const tmpTheme = e.target.value;
-    localStorage.setItem("themes", tmpTheme);
-    setTheme(tmpTheme);
+  const handleChangeTheme = (value) => {
+    localStorage.setItem("themes", value);
+    setTheme(value);
   };
 
-  const options = [
+  const data = [
     {
-      label: "[DARK] ROSE",
+      color: ["bg-[#ec5555]", "bg-[#181a1d]"],
+      label: "ROSE",
       value: "red",
+      description: "Dark theme",
     },
     {
-      label: "[DARK] TIGER",
+      color: ["bg-[#ff7315]", "bg-[#232020]"],
+      label: "TIGER",
       value: "tiger",
+      description: "Dark theme",
     },
     {
-      label: "[DARK] NAVY BLUE",
+      color: ["bg-[#3382b8]", "bg-[#1b262c]"],
+      label: "NAVY BLUE",
       value: "navy",
+      description: "Dark theme",
     },
     {
-      label: "[DARK] PINKY SWEAR",
+      color: ["bg-[#ff5d8d]", "bg-[#323232]"],
+      label: "PINKY SWEAR",
       value: "pinky",
+      description: "Dark theme",
     },
     {
-      label: "[DARK] Cyberpunk",
+      color: ["bg-[#00adb5]", "bg-[#222831]"],
+      label: "Cyberpunk",
       value: "punk",
+      description: "Dark theme",
     },
     {
-      label: "[LIGHT] ROSE",
+      color: ["bg-[#ec5555]", "bg-[#eeeeee]"],
+      label: "MOON ROSE",
       value: "red-light",
-    },
-    {
-      label: "[LIGHT] TIGER",
-      value: "tiger-light",
-    },
-    {
-      label: "[LIGHT] NAVY BLUE",
-      value: "navy-light",
+      description: "Light theme",
     },
   ];
 
-  const filtered = options.filter((employee) => {
+  const filtered = data.filter((employee) => {
     return employee.value === theme;
   });
+
+  const SelectItem = forwardRef(({ label, description, color, value }, ref) => (
+    <div
+      ref={ref}
+      className="hover:bg-foreground hover:brightness-75 px-4 rounded-sm cursor-pointer"
+      onClick={() => handleChangeTheme(value)}
+    >
+      <Group noWrap>
+        <div className="flex flex-col rotate-45 rounded-full border-2 border-white">
+          <div
+            className={`h-2 w-4 ${color[0]} 
+            rounded-tl-full rounded-tr-full`}
+          />
+          <div
+            className={`h-2 w-4 ${color[1]} 
+            rounded-bl-full rounded-br-full`}
+          />
+        </div>
+        <div>
+          <Text size="sm">{label}</Text>
+          <Text size="xs" color="dimmed">
+            {description}
+          </Text>
+        </div>
+      </Group>
+    </div>
+  ));
 
   return (
     <div className="bg-foreground my-2 w-full rounded-sm shadow-md">
@@ -77,20 +108,24 @@ export default function ThemeComponent() {
             ธีมปัจจุบัน : {filtered && filtered[0]?.label}
           </h2>
         </div>
-        {/* Select option */}
-        <Select
-          size="sm"
-          placeholder="เลือกธีม"
-          variant="filled"
-          color="#fff"
-          onChange={(e) => handleChangeTheme(e)}
-        >
-          {options.map((item, index) => (
-            <option key={index} value={item.value}>
-              {item.label}
-            </option>
-          ))}
-        </Select>
+        {/* Select Theme */}
+        <div className="w-[50%]">
+          <Select
+            placeholder="เลือกธีม"
+            itemComponent={SelectItem}
+            data={data}
+            searchable
+            value={theme}
+            maxDropdownHeight={400}
+            nothingFound="ไม่พบธีมที่ต้องการ"
+            filter={(value, item) =>
+              item.label.toLowerCase().includes(value.toLowerCase().trim()) ||
+              item.description
+                .toLowerCase()
+                .includes(value.toLowerCase().trim())
+            }
+          />
+        </div>
       </div>
       {/* Option menu result changed example */}
       <div className="bg-foreground px-4 py-2">

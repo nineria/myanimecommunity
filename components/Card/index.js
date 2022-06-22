@@ -1,4 +1,4 @@
-import { Image, AspectRatio, Badge } from "@chakra-ui/react";
+import { AspectRatio, Badge, Image } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { Clock, Eye, Star, ThumbUp } from "tabler-icons-react";
 
@@ -10,15 +10,15 @@ export default function Card({ property, layout }) {
       {layout === "grid" ? (
         <AspectRatio ratio={16 / 9}>
           <div className="relative flex flex-col rounded-sm shadow-md cursor-pointer hover:translate-y-[2px] hover:shadow-lg">
-            <Image
-              className="rounded-sm"
-              src={data.imageUrl}
-              alt={data.title}
-              boxSize={{ sm: "800px", md: "500px" }}
-            />
+            <Image className="h-full" src={data.imageUrl} alt={data.title} />
             <div className="absolute bottom-14 left-2 flex flex-row gap-1 z-10 text-sm shadow-md">
               {data.badges.map((item, index) => (
-                <Badge key={index} variant="solid" bg={item.color}>
+                <Badge
+                  key={index}
+                  color={item.color}
+                  radius="sm"
+                  variant="filled"
+                >
                   {item.name}
                 </Badge>
               ))}
@@ -67,7 +67,7 @@ function ScreenSmall({ data }) {
       <Image className="rounded-sm" src={data.imageUrl} alt={data.title} />
       <div className="absolute bottom-14 left-2 flex flex-row gap-1 z-10 text-sm shadow-md">
         {data.badges.map((item, index) => (
-          <Badge key={index} variant="solid" bg={item.color}>
+          <Badge key={index} color={item.color} radius="sm" variant="filled">
             {item.name}
           </Badge>
         ))}
@@ -108,7 +108,7 @@ function ScreenLarge({ data }) {
       <div className="relative flex flex-col gap-2 justify-center bg-foreground px-2 py-2  w-full">
         <div className="flex flex-row gap-1 z-10 text-sm">
           {data.badges.map((item, index) => (
-            <Badge key={index} variant="solid" bg={item.color}>
+            <Badge key={index} color={item.color} radius="sm" variant="filled">
               {item.name}
             </Badge>
           ))}
