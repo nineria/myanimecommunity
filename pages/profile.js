@@ -1,6 +1,4 @@
 import {
-  Badge,
-  Button,
   Heading,
   Image,
   LinkBox,
@@ -17,17 +15,21 @@ import {
   Text,
   Flex,
   StatArrow,
-  Avatar,
   useDisclosure,
 } from "@chakra-ui/react";
 
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Animate } from "react-simple-animate";
 import {
+  AlertOctagon,
   BrandGithub,
   BrandInstagram,
   BrandLinkedin,
+  CircleCheck,
+  CircleDashed,
+  Edit,
   Mail,
+  User,
 } from "tabler-icons-react";
 import Description from "@components/ProfileComponent/Description";
 import Favorite from "@components/ProfileComponent/Favorite";
@@ -35,7 +37,24 @@ import Information from "@components/ProfileComponent/Information";
 import Report from "@components/ProfileComponent/Report";
 import { UserContext } from "@lib/context";
 import Navbar from "@components/Navbar";
-import { Container } from "@mantine/core";
+import {
+  Container,
+  Divider,
+  Group,
+  Paper,
+  ThemeIcon,
+  Title,
+  List,
+  Badge,
+  Button,
+  Avatar,
+  Modal,
+  Textarea,
+  Checkbox,
+  Stack,
+  Space,
+  Center,
+} from "@mantine/core";
 
 export default function UserProfilePage() {
   const { user, username } = useContext(UserContext); // User data
@@ -69,6 +88,8 @@ export default function UserProfilePage() {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const [opened, setOpened] = useState(false);
+
   return (
     <div className="bg-background text-accent">
       <Navbar page="/profile" isBusy />
@@ -82,9 +103,10 @@ export default function UserProfilePage() {
           end={{ transform: "translateY(0%)", opacity: "1" }}
         >
           <div className="flex flex-col justify-between mt-2">
-            <h1 className="bg-[#ec5555] rounded-t-md py-1 px-3 font-bold w-full">
-              {user?.displayName} - Profile
-            </h1>
+            <Group className="bg-foreground rounded-t-sm py-2 px-4 font-bold w-full">
+              <User size={18} />
+              {user?.displayName} ({username || "username"})
+            </Group>
             {/* Background Image */}
             <div className="h-56 bg-[#25262b] -z-10 overflow-hidden">
               <Image
@@ -94,30 +116,54 @@ export default function UserProfilePage() {
             </div>
 
             {/* Button -> Edit bg-image, Report user */}
-            <div className="fixed top-10 right-2">
-              <div className="flex flex-row gap-2">
-                <Button
-                  colorScheme="blackAlpha"
-                  _hover={{ opacity: "0.7" }}
-                  size="xs"
+            <div className="fixed top-12 right-2">
+              <div className="flex flex-col gap-2">
+                <div className="text-sm justify-end flex flex-row items-center gap-1 cursor-pointer hover:opacity-75">
+                  <Edit size={16} /> แก้ไขรูปภาพพื้นหลัง
+                </div>
+
+                <Modal
+                  opened={opened}
+                  onClose={() => setOpened(false)}
+                  title="เหตุผลที่รายงาน!"
                 >
-                  แก้ไขรูปภาพพื้นหลัง
-                </Button>
-                <Button
-                  color="#ec5555"
-                  variant="outline"
-                  borderColor="#ec5555"
-                  _hover={{ opacity: "0.7" }}
-                  size="xs"
-                  onClick={onOpen}
+                  <Stack>
+                    <Checkbox label="ชื่อผู้ใช้ไม่เหมาะสม" />
+                    <Checkbox label="ใช้วาจาไม่เหมาะสม / ทัศนคติเชิงลบ" />
+                    <Checkbox label="โฆษณาขายของ / การสแปมข้อความ" />
+                    <Checkbox label="คำพูดแสดงถึงความเกลียดชัง" />
+                    <Checkbox label="เนื้อหามีการอัพเดท" />
+                    <Textarea placeholder="โปรดระบุ" label="อื่นๆ" />
+                  </Stack>
+                  <Space />
+                  <Center mt="md">
+                    <Group>
+                      <div
+                        onClick={() => setOpened(false)}
+                        className="text-base bg-content w-fit px-4 py-1 text-accent rounded-sm cursor-pointer hover:opacity-75"
+                      >
+                        ยกเลิก
+                      </div>
+                      <div
+                        onClick={() => setOpened(false)}
+                        className="text-base bg-foreground w-fit px-4 py-1 text-accent rounded-sm cursor-pointer hover:opacity-75"
+                      >
+                        ส่งเรื่อง
+                      </div>
+                    </Group>
+                  </Center>
+                </Modal>
+                <div
+                  onClick={() => setOpened(true)}
+                  className="text-sm justify-end flex flex-row items-center gap-1 cursor-pointer hover:opacity-75 rounded-sm"
                 >
-                  รายงานผู้ใช้
-                </Button>
+                  <AlertOctagon size={16} /> รายงานผู้ใช้
+                </div>
               </div>
             </div>
 
-            <div className="flex flex-col pb-4 bg-[#25262b] rounded-b-md">
-              <div className="fixed top-32 bg-[#25262b] text-white bg-opacity-40 rounded-md ml-4">
+            <div className="flex flex-col pb-4 bg-[#25262b] rounded-b-sm">
+              <div className="fixed top-32 bg-[#25262b] text-white bg-opacity-70 rounded-sm ml-4">
                 {/* Report overlay */}
                 <div className="flex flex-row justify-end pt-2 pr-2">
                   <Report isOpen={isOpen} onClose={onClose} />
@@ -127,85 +173,147 @@ export default function UserProfilePage() {
                   <Avatar
                     name={user?.displayName || "username"}
                     src={user?.photoURL}
-                    bg="white"
-                    size="xl"
+                    size="xxl"
+                    radius="xs"
                   />
                   {/* Button Edit -> User profile image */}
                   <div className="flex flex-col justify-end gap-2 pl-4 pb-2">
                     <p className="text-3xl font-bold">{username}</p>
-                    <Button
-                      colorScheme="whiteAlpha"
-                      _hover={{ opacity: "0.7" }}
-                      size="xs"
-                    >
+                    <Button variant="outline" color="gray" compact>
                       แก้ไขรูปภาพประจำตัว
                     </Button>
                     <div className="flex flex-wrap gap-2 text-white text-sm">
-                      <Badge colorScheme="purple">ผู้ดูแลระบบ</Badge>
-                      <Badge colorScheme="pink">ผู้เฒ่า</Badge>
-                      <Badge colorScheme="green">นายทุน</Badge>
-                      <Badge colorScheme="yellow">อัศวิน</Badge>
+                      <Badge variant="outline" color="yellow">
+                        ผู้ดูแลระบบ
+                      </Badge>
+                      <Badge variant="outline" color="yellow">
+                        ผู้เฒ่า
+                      </Badge>
+                      <Badge variant="outline" color="yellow">
+                        นายทุน
+                      </Badge>
+                      <Badge variant="outline" color="yellow">
+                        อัศวิน
+                      </Badge>
                     </div>
                   </div>
                 </div>
               </div>
 
               <div>
-                <div className="h-[1px] bg-neutral-500 mt-2"></div>
                 <div className="w-full px-4">
                   {/* Description */}
                   <div className="flex flex-col gap-2">
-                    <Description>
-                      <Description.CreateDate>
-                        13 days ago
-                      </Description.CreateDate>
-                      <Description.Header>
+                    <Divider
+                      my="xs"
+                      label="อธิบายตัวเอง"
+                      labelPosition="center"
+                    />
+                    <Paper shadow="xs" p="md">
+                      <Text>13 days ago</Text>
+                      <Title order={3}>
                         New Year, New Beginnings: Smashing Workshops & Audits
-                      </Description.Header>
-                      <Description.Body>
+                      </Title>
+                      <Text>
                         Catch up on what’s been cookin’ at Smashing and explore
                         some of the most popular community resources.
-                      </Description.Body>
-                      <Description.Button>
+                      </Text>
+                      <div className="bg-[#37383a] text-[#ccc] text-sm text-center py-1 rounded-sm hover:opacity-75 cursor-pointer mt-4">
                         แก้ไขคำอธิบายตัวเอง
-                      </Description.Button>
-                    </Description>
-                    <div className="h-[1px] bg-neutral-500 mt-2"></div>
+                      </div>
+                    </Paper>
+                    <Divider
+                      my="xs"
+                      label="รายละเอียด"
+                      labelPosition="center"
+                    />
                     {/* Information */}
-                    <Information>
-                      <Information.Detail>
-                        <Mail /> {user?.email}
-                      </Information.Detail>
-                      <Information.Detail>
-                        <BrandInstagram /> Instagram
-                      </Information.Detail>
-                      <Information.Detail>
-                        <BrandGithub /> Github
-                      </Information.Detail>
-                      <Information.Detail>
-                        <BrandLinkedin /> Linkedin
-                      </Information.Detail>
-                      <Information.Button>แก้ไขรายละเอียด</Information.Button>
-                    </Information>
-                    <div className="h-[1px] bg-neutral-500 mt-2"></div>
+                    <List spacing="xs" size="sm">
+                      <List.Item
+                        icon={
+                          <ThemeIcon color="gray" size={24} radius="xl">
+                            <Mail size={20} />
+                          </ThemeIcon>
+                        }
+                      >
+                        {user?.email}
+                      </List.Item>
+                      <List.Item
+                        icon={
+                          <ThemeIcon color="gray" size={24} radius="xl">
+                            <BrandInstagram />
+                          </ThemeIcon>
+                        }
+                      >
+                        Instagram
+                      </List.Item>
+                      <List.Item
+                        icon={
+                          <ThemeIcon color="gray" size={24} radius="xl">
+                            <BrandGithub />
+                          </ThemeIcon>
+                        }
+                      >
+                        Github
+                      </List.Item>
+                      <List.Item
+                        icon={
+                          <ThemeIcon color="gray" size={24} radius="xl">
+                            <BrandLinkedin />
+                          </ThemeIcon>
+                        }
+                      >
+                        Linkedin
+                      </List.Item>
+                    </List>
+                    <div className="bg-[#37383a] text-[#ccc] text-sm text-center py-1 rounded-sm hover:opacity-75 cursor-pointer mt-4">
+                      แก้ไขรายละเอียด
+                    </div>
+
+                    <Divider my="xs" label="แนวที่ชอบ" labelPosition="center" />
                     {/* Favorite tag */}
-                    <Favorite>
-                      <Favorite.Detail>Action</Favorite.Detail>
-                      <Favorite.Detail>Drama</Favorite.Detail>
-                      <Favorite.Detail>School</Favorite.Detail>
-                      <Favorite.Detail>Love</Favorite.Detail>
-                      <Favorite.Detail>Comedy</Favorite.Detail>
-                      <Favorite.Button>
-                        แก้ไขแนวอนิเมะหรือมังงะที่ชอบ
-                      </Favorite.Button>
-                    </Favorite>
+                    <Group spacing="xs">
+                      <Badge
+                        variant="gradient"
+                        gradient={{ from: "indigo", to: "cyan", deg: 105 }}
+                      >
+                        Action
+                      </Badge>
+                      <Badge
+                        variant="gradient"
+                        gradient={{ from: "teal", to: "lime", deg: 105 }}
+                      >
+                        Drama
+                      </Badge>
+                      <Badge
+                        variant="gradient"
+                        gradient={{ from: "teal", to: "blue", deg: 105 }}
+                      >
+                        School
+                      </Badge>
+                      <Badge
+                        variant="gradient"
+                        gradient={{ from: "orange", to: "red", deg: 105 }}
+                      >
+                        Love
+                      </Badge>
+                      <Badge
+                        variant="gradient"
+                        gradient={{ from: "#ed6ea0", to: "#ec8c69", deg: 105 }}
+                      >
+                        Comedy
+                      </Badge>
+                    </Group>
+                    <div className="bg-[#37383a] text-[#ccc] text-sm text-center py-1 rounded-sm hover:opacity-75 cursor-pointer mt-4">
+                      แก้ไขแนวที่ชอบ
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Stat -> Post, Like, Comment */}
-            <div className="flex flex-row justify-around w-full bg-[#25262b] rounded-md pb-4 mt-2 p-4">
+            {/* <div className="flex flex-row justify-around w-full bg-[#25262b] rounded-md pb-4 mt-2 p-4">
               <Flex justifyContent="space-around" w="full">
                 <Stat textAlign="center">
                   <StatLabel>โพสต์</StatLabel>
@@ -232,10 +340,10 @@ export default function UserProfilePage() {
                   </StatHelpText>
                 </Stat>
               </Flex>
-            </div>
+            </div> */}
 
             {/* Created post, Liked post, My comment */}
-            <div className="w-full bg-[#25262b] rounded-md pb-4 my-2">
+            {/* <div className="w-full bg-[#25262b] rounded-md pb-4 my-2">
               <Tabs isFitted variant="enclosed">
                 <TabList>
                   <Tab>โพสต์ของฉัน</Tab>
@@ -302,7 +410,7 @@ export default function UserProfilePage() {
                   </TabPanel>
                 </TabPanels>
               </Tabs>
-            </div>
+            </div> */}
           </div>
         </Animate>
       </Container>
