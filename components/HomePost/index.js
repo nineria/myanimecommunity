@@ -46,7 +46,7 @@ export default function HomePost({ dummyData, isDisabled = false }) {
 
       <div className="rounded-sm w-full">
         <div
-          className={`bg-content flex flex-row justify-between items-center transition-all py-1 px-3 font-bold md:text-lg text-sm text-accent ${
+          className={`bg-content flex flex-row justify-between items-center transition-all py-1 px-3 font-bold md:text-base text-sm text-accent ${
             toggle === true ? "rounded-t-sm" : "rounded-sm"
           }`}
         >

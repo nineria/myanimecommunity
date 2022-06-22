@@ -1,23 +1,3 @@
-import {
-  Heading,
-  Image,
-  LinkBox,
-  LinkOverlay,
-  Stat,
-  StatHelpText,
-  StatLabel,
-  StatNumber,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
-  Text,
-  Flex,
-  StatArrow,
-  useDisclosure,
-} from "@chakra-ui/react";
-
 import React, { useContext, useState } from "react";
 import { Animate } from "react-simple-animate";
 import {
@@ -25,15 +5,13 @@ import {
   BrandGithub,
   BrandInstagram,
   BrandLinkedin,
-  CircleCheck,
-  CircleDashed,
   Edit,
   Mail,
   User,
 } from "tabler-icons-react";
-import Description from "@components/ProfileComponent/Description";
-import Favorite from "@components/ProfileComponent/Favorite";
-import Information from "@components/ProfileComponent/Information";
+// import Description from "@components/ProfileComponent/Description";
+// import Favorite from "@components/ProfileComponent/Favorite";
+// import Information from "@components/ProfileComponent/Information";
 import Report from "@components/ProfileComponent/Report";
 import { UserContext } from "@lib/context";
 import Navbar from "@components/Navbar";
@@ -54,7 +32,10 @@ import {
   Stack,
   Space,
   Center,
+  Image,
+  Text,
 } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 
 export default function UserProfilePage() {
   const { user, username } = useContext(UserContext); // User data
@@ -85,6 +66,72 @@ export default function UserProfilePage() {
       body: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rerum, facilis, a tempore omnis odio dolor corrupti nemo atque ducimus voluptate modi dolorum inventore assumenda eligendi molestiae alias accusamus magnam veritatis dolore. Minima laboriosam similique, ullam non aliquid perspiciatis ad aspernatur error, pariatur, fuga incidunt dicta dolorum. Alias corporis necessitatibus totam.",
     },
   ];
+
+  const typeProps = [
+    {
+      name: "Action",
+      color: {
+        from: "indigo",
+        to: "cyan",
+      },
+    },
+    {
+      name: "Drama",
+      color: {
+        from: "teal",
+        to: "lime",
+      },
+    },
+    {
+      name: "School",
+      color: {
+        from: "teal",
+        to: "blue",
+      },
+    },
+    {
+      name: "Love",
+      color: {
+        from: "orange",
+        to: "red",
+      },
+    },
+    {
+      name: "Comedy",
+      color: {
+        from: "#ed6ea0",
+        to: "#ec8c69",
+      },
+    },
+  ];
+
+  const socialProps = [
+    {
+      name: user?.email,
+      icon: <Mail />,
+    },
+    {
+      name: "Instagram",
+      icon: <BrandInstagram />,
+    },
+    {
+      name: "Github",
+      icon: <BrandGithub />,
+    },
+    {
+      name: "Linkedin",
+      icon: <BrandLinkedin />,
+    },
+  ];
+
+  const paperProps = {
+    date: "13 days ago",
+    title: "New Year, New Beginnings: Smashing Workshops & Audits",
+    content:
+      "Catch up on what’s been cookin’ at Smashing and explore some of the most popular community resources.",
+  };
+
+  const rankProps = ["ผู้ดูแลระบบ", "ผู้เฒ่า", "นายทุน", "อัศวิน"];
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -182,20 +229,14 @@ export default function UserProfilePage() {
                     <Button variant="outline" color="gray" compact>
                       แก้ไขรูปภาพประจำตัว
                     </Button>
-                    <div className="flex flex-wrap gap-2 text-white text-sm">
-                      <Badge variant="outline" color="yellow">
-                        ผู้ดูแลระบบ
-                      </Badge>
-                      <Badge variant="outline" color="yellow">
-                        ผู้เฒ่า
-                      </Badge>
-                      <Badge variant="outline" color="yellow">
-                        นายทุน
-                      </Badge>
-                      <Badge variant="outline" color="yellow">
-                        อัศวิน
-                      </Badge>
-                    </div>
+                    <Group spacing="xs">
+                      {rankProps &&
+                        rankProps.map((item, index) => (
+                          <Badge key={index} variant="dot" color="yellow">
+                            {item}
+                          </Badge>
+                        ))}
+                    </Group>
                   </div>
                 </div>
               </div>
@@ -206,18 +247,13 @@ export default function UserProfilePage() {
                   <div className="flex flex-col gap-2">
                     <Divider
                       my="xs"
-                      label="อธิบายตัวเอง"
+                      label="คำอธิบายตัวเอง"
                       labelPosition="center"
                     />
                     <Paper shadow="xs" p="md">
-                      <Text>13 days ago</Text>
-                      <Title order={3}>
-                        New Year, New Beginnings: Smashing Workshops & Audits
-                      </Title>
-                      <Text>
-                        Catch up on what’s been cookin’ at Smashing and explore
-                        some of the most popular community resources.
-                      </Text>
+                      <Text>{paperProps.date}</Text>
+                      <Title order={3}>{paperProps.title}</Title>
+                      <Text>{paperProps.content}</Text>
                       <div className="bg-[#37383a] text-[#ccc] text-sm text-center py-1 rounded-sm hover:opacity-75 cursor-pointer mt-4">
                         แก้ไขคำอธิบายตัวเอง
                       </div>
@@ -229,42 +265,19 @@ export default function UserProfilePage() {
                     />
                     {/* Information */}
                     <List spacing="xs" size="sm">
-                      <List.Item
-                        icon={
-                          <ThemeIcon color="gray" size={24} radius="xl">
-                            <Mail size={20} />
-                          </ThemeIcon>
-                        }
-                      >
-                        {user?.email}
-                      </List.Item>
-                      <List.Item
-                        icon={
-                          <ThemeIcon color="gray" size={24} radius="xl">
-                            <BrandInstagram />
-                          </ThemeIcon>
-                        }
-                      >
-                        Instagram
-                      </List.Item>
-                      <List.Item
-                        icon={
-                          <ThemeIcon color="gray" size={24} radius="xl">
-                            <BrandGithub />
-                          </ThemeIcon>
-                        }
-                      >
-                        Github
-                      </List.Item>
-                      <List.Item
-                        icon={
-                          <ThemeIcon color="gray" size={24} radius="xl">
-                            <BrandLinkedin />
-                          </ThemeIcon>
-                        }
-                      >
-                        Linkedin
-                      </List.Item>
+                      {socialProps &&
+                        socialProps.map((item, index) => (
+                          <List.Item
+                            key={index}
+                            icon={
+                              <ThemeIcon color="gray" size={24} radius="xl">
+                                {item.icon}
+                              </ThemeIcon>
+                            }
+                          >
+                            {item.name}
+                          </List.Item>
+                        ))}
                     </List>
                     <div className="bg-[#37383a] text-[#ccc] text-sm text-center py-1 rounded-sm hover:opacity-75 cursor-pointer mt-4">
                       แก้ไขรายละเอียด
@@ -273,36 +286,20 @@ export default function UserProfilePage() {
                     <Divider my="xs" label="แนวที่ชอบ" labelPosition="center" />
                     {/* Favorite tag */}
                     <Group spacing="xs">
-                      <Badge
-                        variant="gradient"
-                        gradient={{ from: "indigo", to: "cyan", deg: 105 }}
-                      >
-                        Action
-                      </Badge>
-                      <Badge
-                        variant="gradient"
-                        gradient={{ from: "teal", to: "lime", deg: 105 }}
-                      >
-                        Drama
-                      </Badge>
-                      <Badge
-                        variant="gradient"
-                        gradient={{ from: "teal", to: "blue", deg: 105 }}
-                      >
-                        School
-                      </Badge>
-                      <Badge
-                        variant="gradient"
-                        gradient={{ from: "orange", to: "red", deg: 105 }}
-                      >
-                        Love
-                      </Badge>
-                      <Badge
-                        variant="gradient"
-                        gradient={{ from: "#ed6ea0", to: "#ec8c69", deg: 105 }}
-                      >
-                        Comedy
-                      </Badge>
+                      {typeProps &&
+                        typeProps.map((item, index) => (
+                          <Badge
+                            key={index}
+                            variant="gradient"
+                            gradient={{
+                              from: item.color.from,
+                              to: item.color.to,
+                              deg: 105,
+                            }}
+                          >
+                            {item.name}
+                          </Badge>
+                        ))}
                     </Group>
                     <div className="bg-[#37383a] text-[#ccc] text-sm text-center py-1 rounded-sm hover:opacity-75 cursor-pointer mt-4">
                       แก้ไขแนวที่ชอบ

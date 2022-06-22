@@ -24,18 +24,20 @@ export default function Card({ property, layout }) {
               ))}
             </div>
             <div className="absolute bottom-0 left-0 right-0 bg-foreground px-2 py-2">
-              <h1 className="truncate font-bold">{data.title}</h1>
-              <div className="flex flex-row justify-start gap-4 text-gray-400">
+              <h1 className="truncate font-bold md:text-base text-sm">
+                {data.title}
+              </h1>
+              <div className="flex flex-row justify-start gap-4 md:text-sm text-xs text-gray-400">
                 <div className="flex flex-row gap-1 items-center">
-                  <Clock size={20} className="text-content" />
+                  <Clock size={14} className="text-content" />
                   <p>{data.date}</p>
                 </div>
                 <div className="flex flex-row gap-1 items-center">
-                  <ThumbUp size={20} className="text-content" />
+                  <ThumbUp size={14} className="text-content" />
                   <p>{data.like}</p>
                 </div>
                 <div className="flex flex-row gap-1 items-center">
-                  <Star size={20} className="text-content" />
+                  <Star size={14} className="text-content" />
                   <p>{data.star}</p>
                 </div>
               </div>
