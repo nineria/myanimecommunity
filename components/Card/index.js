@@ -1,4 +1,5 @@
 import { AspectRatio, Badge, Image } from "@mantine/core";
+import Link from "next/link";
 import React, { useState } from "react";
 import { Clock, Star, ThumbUp } from "tabler-icons-react";
 
@@ -6,7 +7,7 @@ export default function Card({ property, layout }) {
   const [data, setData] = useState(property);
 
   return (
-    <div>
+    <Link href="/post">
       {layout === "grid" ? (
         <AspectRatio ratio={16 / 9}>
           <div className="relative flex flex-col rounded-sm shadow-md cursor-pointer hover:brightness-90">
@@ -59,7 +60,7 @@ export default function Card({ property, layout }) {
           </div>
         </div>
       )}
-    </div>
+    </Link>
   );
 }
 

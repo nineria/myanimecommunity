@@ -1,8 +1,8 @@
 import Announcement from "@components/Announcement";
 import Navbar from "@components/Navbar";
 import React, { useEffect, useState } from "react";
-import PostsMenuController from "@components/Posts/MenuController";
-import PostLayout from "@components/Posts/PostLayout";
+import PostsMenuController from "@components/PostComponent/MenuController";
+import PostLayout from "@components/PostComponent/PostLayout";
 import { useThemeContext } from "@lib/useTheme";
 import { Container } from "@mantine/core";
 
