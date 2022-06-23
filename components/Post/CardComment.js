@@ -1,4 +1,12 @@
-import { Avatar, Badge, Divider, Image, Stack, Text } from "@mantine/core";
+import {
+  Avatar,
+  Badge,
+  Divider,
+  Image,
+  Stack,
+  Text,
+  ThemeIcon,
+} from "@mantine/core";
 import { data } from "autoprefixer";
 import React from "react";
 import { CalendarMinus, Eye, ThumbUp } from "tabler-icons-react";
@@ -20,7 +28,12 @@ function LeftMenu({ data }) {
   return (
     <div className="px-2 py-4 mt-2">
       <div className="flex flex-col items-center w-[150px] ">
-        <Avatar radius="xl" size="lg" src={data.photoURL} alt={data.username} />
+        <Avatar
+          radius="100px"
+          size="100px"
+          src={data.photoURL}
+          alt={data.username}
+        />
         <Text color="red">{data.username}</Text>
         <p className="text-title text-xs">Admin</p>
       </div>
@@ -54,7 +67,9 @@ function MainPost({ data }) {
 
       <p className="absolute bottom-4 text-xs">
         <div className="flex items-center text-content gap-1 mb-2 border-2 border-title border-opacity-10 p-1 rounded-sm">
-          <ThumbUp size={14} color="cyan" />
+          <ThemeIcon radius="md" size="xs" color="gray">
+            <ThumbUp />
+          </ThemeIcon>
           {data?.userLike.map((item, index) => (
             <span
               key={index}

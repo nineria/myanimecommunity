@@ -5,6 +5,7 @@ import PostsMenuController from "@components/PostComponent/MenuController";
 import PostLayout from "@components/PostComponent/PostLayout";
 import { useThemeContext } from "@lib/useTheme";
 import { Container } from "@mantine/core";
+import { Footer } from "@components/Footer";
 
 export default function PostsPage() {
   const [layout, setLayout] = useState("grid");

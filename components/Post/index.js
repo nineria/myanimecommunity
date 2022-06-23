@@ -104,10 +104,6 @@ export default function Post() {
     { title: "หน้าหลัก", href: "/" },
     { title: "โพสต์ทั้งหมด", href: "/posts" },
     { title: "Q&A ถามตอบ", href: "/qanda" },
-    {
-      title: "มีข้อสงสัยเกี่ยวกับตอนจบในอนิเมะ Jujutsu Kaisen ครับ",
-      href: "/id",
-    },
   ].map((item, index) => (
     <Anchor size="sm" color="dimmed" href={item.href} key={index}>
       {item.title}
@@ -119,9 +115,36 @@ export default function Post() {
       <Stack spacing="xs" mt={10}>
         <Breadcrumbs separator="→">{items}</Breadcrumbs>
         <Top data={dummy} />
-        <Pagination total={10} size="sm" page={activePage} onChange={setPage} />
-        <Card data={dummy} />
-        <CardComment data={dummyComment} />
+        <div className="p-1 bg-foreground rounded-sm">
+          <Pagination
+            total={2}
+            size="sm"
+            page={activePage}
+            onChange={setPage}
+          />
+        </div>
+        {activePage === 1 ? (
+          <Stack spacing="xs">
+            <Card data={dummy} />
+            <CardComment data={dummyComment} />
+          </Stack>
+        ) : (
+          <Stack spacing="xs">
+            <CardComment data={dummyComment} />
+            <CardComment data={dummyComment} />
+            <CardComment data={dummyComment} />
+            <CardComment data={dummyComment} />
+            <CardComment data={dummyComment} />
+          </Stack>
+        )}
+        <div className="p-1 bg-foreground rounded-sm mb-10">
+          <Pagination
+            total={2}
+            size="sm"
+            page={activePage}
+            onChange={setPage}
+          />
+        </div>
       </Stack>
     </Container>
   );
