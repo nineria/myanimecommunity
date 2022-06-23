@@ -1,6 +1,5 @@
-import { Flex } from "@chakra-ui/react";
 import Card from "@components/Card";
-import { Grid, Group, Stack } from "@mantine/core";
+import { Grid, Stack } from "@mantine/core";
 import React from "react";
 import { Animate } from "react-simple-animate";
 
@@ -15,7 +14,7 @@ export default function PostLayout({ property, layout }) {
         <Grid gutter="xs">
           {property &&
             property.map((data, index) => (
-              <Grid.Col md={6} lg={4}>
+              <Grid.Col sm={6} md={6} lg={4}>
                 <Card layout={layout} key={index} property={data} />
               </Grid.Col>
             ))}

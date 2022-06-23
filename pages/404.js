@@ -13,7 +13,7 @@ export default function PageNotFound() {
           </p>
         </Blockquote>
         <Link href="/">
-          <a className="bg-content px-2 py-1 rounded-sm hover:opacity-75">
+          <a className="bg-content text-accent px-2 py-1 rounded-sm hover:opacity-75">
             กลับหน้าหลัก
           </a>
         </Link>

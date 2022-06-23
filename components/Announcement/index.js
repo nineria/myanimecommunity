@@ -37,13 +37,15 @@ export default function Announcement({ type, title, content }) {
             <div>
               <AlertCircle size={25} className="text-white opacity-75 m-1" />
             </div>
-            <div className="flex flex-row px-2 text-[#eee] w-full py-2 bg-background rounded-r-sm">
+            <div className="flex flex-row px-2 text-title  w-full py-2 bg-foreground rounded-r-sm">
               <div className="w-full">
-                <h1 className="font-bold md:text-base text-sm">{title}</h1>
-                <p className="text-xs md:text-sm ">{content}</p>
+                <h1 className="font-bold md:text-base text-sm opacity-80">
+                  {title}
+                </h1>
+                <p className="text-xs md:text-sm opacity-80">{content}</p>
               </div>
               <div
-                className="cursor-pointer bg-background"
+                className="cursor-pointer bg-foreground"
                 onClick={() => setOnClose(!onClose)}
               >
                 <X size={18} color="#aaa" />

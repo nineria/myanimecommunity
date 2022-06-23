@@ -11,19 +11,19 @@ function ContentStat({ children }) {
     child.type.displayName === "EditDate" ? child : null
   );
   return (
-    <div className="flex flex-row gap-4 text-white">
+    <div className="flex flex-row gap-4 text-title">
       <div className="flex text-sm lg:flex-col lg:items-center items-center gap-1">
         <div>{posts}</div>
-        <div className="text-xs text-[#aaa]">โพสต์</div>
+        <div className="text-xs text-title opacity-50">โพสต์</div>
       </div>
       <div className="lg:border-r-[1px] lg:border-[#aaa]" />
       <div className="flex text-sm lg:flex-col lg:items-center items-center gap-1">
         <div>{comments}</div>
-        <div className="text-xs text-[#aaa]">ข้อความ</div>
+        <div className="text-xs text-title opacity-50">ข้อความ</div>
       </div>
       <div className="flex text-sm lg:flex-col lg:items-center items-center gap-1 ">
         <span>แก้ไขล่าสุด</span>
-        <span className="text-xs text-[#aaa]">{editDate}</span>
+        <span className="text-xs text-title opacity-50">{editDate}</span>
       </div>
     </div>
   );

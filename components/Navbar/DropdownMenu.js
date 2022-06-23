@@ -44,7 +44,7 @@ export default function UserMenu({ user, isBusy, toggle, signOut }) {
               />
             </Indicator>
             <div style={{ flex: 1 }}>
-              <div className="text-sm font-bold truncate">
+              <div className="text-sm font-bold truncate text-title opacity-80">
                 {user?.displayName || "username"}
               </div>
 

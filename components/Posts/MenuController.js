@@ -14,7 +14,7 @@ export default function PostsMenuController({ layout, setLayout }) {
             layout === "grid" ? "bg-background" : "bg-foreground"
           }  w-fit rounded-sm font-bold text-sm hover:opacity-75 cursor-pointer`}
         >
-          <LayoutGrid size={17} />
+          <LayoutGrid size={17} className="text-title" />
         </div>
         <div
           onClick={() => setLayout("list")}
@@ -22,7 +22,7 @@ export default function PostsMenuController({ layout, setLayout }) {
             layout === "list" ? "bg-background" : "bg-foreground"
           }  w-fit rounded-sm font-bold text-sm hover:opacity-75 cursor-pointer`}
         >
-          <ListDetails size={17} />
+          <ListDetails size={17} className="text-title" />
         </div>
       </div>
     </div>

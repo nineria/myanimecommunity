@@ -8,6 +8,8 @@ module.exports = {
       colors: {
         accent: ({ opacityVariable }) =>
           `rgba(var(--accent) / var(${opacityVariable}))`,
+        title: ({ opacityVariable }) =>
+          `rgba(var(--title) / var(${opacityVariable}))`,
         content: ({ opacityVariable }) =>
           `rgba(var(--content) / var(${opacityVariable}))`,
         foreground: ({ opacityVariable }) =>

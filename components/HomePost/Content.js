@@ -15,7 +15,7 @@ const Content = ({ header, headerLink, body }) => {
         >
           {/* Header */}
           <Link href={headerLink}>
-            <a className="flex items-center md:text-base text-sm text-white ">
+            <a className="flex items-center md:text-base text-sm text-title ">
               <span className="truncate cursor-pointer hover:underline">
                 {header}
               </span>
@@ -25,7 +25,7 @@ const Content = ({ header, headerLink, body }) => {
             </a>
           </Link>
           {/* Body */}
-          <p className="text-[#aaa] md:text-sm text-xs">{body}</p>
+          <p className="text-title opacity-50 md:text-sm text-xs">{body}</p>
         </div>
       </div>
       {/* Stat */}

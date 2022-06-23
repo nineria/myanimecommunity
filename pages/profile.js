@@ -138,7 +138,7 @@ export default function UserProfilePage() {
   const [opened, setOpened] = useState(false);
 
   return (
-    <div className="bg-background text-accent">
+    <div className="bg-background text-accent h-screen">
       <Navbar page="/profile" isBusy />
       <Container size="xl">
         <Animate
@@ -149,7 +149,7 @@ export default function UserProfilePage() {
           }}
           end={{ transform: "translateY(0%)", opacity: "1" }}
         >
-          <div className="flex flex-col justify-between mt-2">
+          <div className="flex flex-col justify-between mt-2 text-title text-opacity-80">
             <Group className="bg-foreground rounded-t-sm py-2 px-4 font-bold w-full">
               <User size={18} />
               {user?.displayName} ({username || "username"})
@@ -164,7 +164,7 @@ export default function UserProfilePage() {
 
             {/* Button -> Edit bg-image, Report user */}
             <div className="fixed top-12 right-2">
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2 text-accent">
                 <div className="text-sm justify-end flex flex-row items-center gap-1 cursor-pointer hover:opacity-75">
                   <Edit size={16} /> แก้ไขรูปภาพพื้นหลัง
                 </div>
@@ -193,7 +193,7 @@ export default function UserProfilePage() {
                       </div>
                       <div
                         onClick={() => setOpened(false)}
-                        className="text-base bg-foreground w-fit px-4 py-1 text-accent rounded-sm cursor-pointer hover:opacity-75"
+                        className="text-base text-title bg-foreground w-fit px-4 py-1 rounded-sm cursor-pointer hover:opacity-75"
                       >
                         ส่งเรื่อง
                       </div>
@@ -209,8 +209,8 @@ export default function UserProfilePage() {
               </div>
             </div>
 
-            <div className="flex flex-col pb-4 bg-[#25262b] rounded-b-sm">
-              <div className="fixed top-32 bg-[#25262b] text-white bg-opacity-70 rounded-sm ml-4">
+            <div className="flex flex-col pb-4 bg-foreground rounded-b-sm">
+              <div className="fixed top-32 bg-foreground text-title text-opacity-80 bg-opacity-70 rounded-sm ml-4">
                 {/* Report overlay */}
                 <div className="flex flex-row justify-end pt-2 pr-2">
                   <Report isOpen={isOpen} onClose={onClose} />
@@ -226,13 +226,17 @@ export default function UserProfilePage() {
                   {/* Button Edit -> User profile image */}
                   <div className="flex flex-col justify-end gap-2 pl-4 pb-2">
                     <p className="text-3xl font-bold">{username}</p>
-                    <Button variant="outline" color="gray" compact>
+                    <Button
+                      variant="outline"
+                      className="text-title border-title text-opacity-80 border-opacity-80"
+                      compact
+                    >
                       แก้ไขรูปภาพประจำตัว
                     </Button>
                     <Group spacing="xs">
                       {rankProps &&
                         rankProps.map((item, index) => (
-                          <Badge key={index} variant="dot" color="yellow">
+                          <Badge key={index} variant="filled" color="yellow">
                             {item}
                           </Badge>
                         ))}
@@ -250,11 +254,15 @@ export default function UserProfilePage() {
                       label="คำอธิบายตัวเอง"
                       labelPosition="center"
                     />
-                    <Paper shadow="xs" p="md">
+                    <Paper
+                      shadow="xs"
+                      p="md"
+                      className="bg-background text-title text-opacity-80"
+                    >
                       <Text>{paperProps.date}</Text>
                       <Title order={3}>{paperProps.title}</Title>
                       <Text>{paperProps.content}</Text>
-                      <div className="bg-[#37383a] text-[#ccc] text-sm text-center py-1 rounded-sm hover:opacity-75 cursor-pointer mt-4">
+                      <div className="bg-foreground text-title text-opacity-80 text-sm text-center py-1 rounded-sm hover:opacity-75 cursor-pointer mt-4">
                         แก้ไขคำอธิบายตัวเอง
                       </div>
                     </Paper>
@@ -269,8 +277,13 @@ export default function UserProfilePage() {
                         socialProps.map((item, index) => (
                           <List.Item
                             key={index}
+                            className="text-title text-opacity-80"
                             icon={
-                              <ThemeIcon color="gray" size={24} radius="xl">
+                              <ThemeIcon
+                                className="bg-background"
+                                size={24}
+                                radius="xl"
+                              >
                                 {item.icon}
                               </ThemeIcon>
                             }
@@ -279,7 +292,8 @@ export default function UserProfilePage() {
                           </List.Item>
                         ))}
                     </List>
-                    <div className="bg-[#37383a] text-[#ccc] text-sm text-center py-1 rounded-sm hover:opacity-75 cursor-pointer mt-4">
+
+                    <div className="bg-background text-title text-opacity-80 text-sm text-center py-1 rounded-sm hover:opacity-75 cursor-pointer mt-4">
                       แก้ไขรายละเอียด
                     </div>
 
@@ -301,7 +315,7 @@ export default function UserProfilePage() {
                           </Badge>
                         ))}
                     </Group>
-                    <div className="bg-[#37383a] text-[#ccc] text-sm text-center py-1 rounded-sm hover:opacity-75 cursor-pointer mt-4">
+                    <div className="bg-background text-title text-opacity-80 text-sm text-center py-1 rounded-sm hover:opacity-75 cursor-pointer mt-4">
                       แก้ไขแนวที่ชอบ
                     </div>
                   </div>

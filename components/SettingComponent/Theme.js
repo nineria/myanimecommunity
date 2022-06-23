@@ -1,7 +1,14 @@
 import { SettingsIcon } from "@chakra-ui/icons";
 import HomePost from "@components/HomePost";
 import { useThemeContext } from "@lib/useTheme";
-import { Avatar, ColorSwatch, Group, Select, Text } from "@mantine/core";
+import {
+  Avatar,
+  ColorSwatch,
+  Divider,
+  Group,
+  Select,
+  Text,
+} from "@mantine/core";
 import React, { forwardRef, useEffect, useState } from "react";
 import { Settings } from "tabler-icons-react";
 
@@ -95,16 +102,16 @@ export default function ThemeComponent() {
   return (
     <div className="bg-foreground my-2 w-full rounded-sm shadow-md">
       {/* Header */}
-      <Group className="py-2 px-4 font-bold w-full">
+      <Group className="py-2 px-4 font-bold w-full text-title">
         <Settings size={18} />
         <h1 className="font-bold">การตั้งค่า</h1>
       </Group>
-      <div className="py-[0.5px] w-full bg-[#ccc]" />
+      <Divider className="opacity-50" />
       {/* Theme */}
       <div className="px-4 py-2 flex flex-row justify-between items-center">
-        <div className="w-full">
+        <div className="w-full text-title">
           <h1>ธีมของเว็บไซต์</h1>
-          <h2 className="text-sm text-[#aaa]">
+          <h2 className="text-sm opacity-60">
             ธีมปัจจุบัน : {filtered && filtered[0]?.label}
           </h2>
         </div>

@@ -8,12 +8,12 @@ export default function MyAniLogo({ link }) {
         <div className="md:flex md:visible hidden ">
           <span className="text-[#4C6EF5]">My</span>
           <span className="text-content">A</span>
-          <span className="text-white">nimeCommunity</span>
+          <span className="text-title opacity-80">nimeCommunity</span>
         </div>
         <div className="md:hidden visible">
           <span className="text-[#4C6EF5]">My</span>
           <span className="text-content">A</span>
-          <span className="text-white">niCommu</span>
+          <span className="text-title opacity-80">niCommu</span>
         </div>
       </a>
     </Link>

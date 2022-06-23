@@ -52,7 +52,7 @@ export default function HomePost({ dummyData, isDisabled = false }) {
         >
           {/* Title */}
           <Link href={postData.titleLink}>
-            <a className="truncate max-w-[600px] cursor-pointer hover:underline">
+            <a className="truncate text-accent max-w-[600px] cursor-pointer hover:underline">
               {postData.title}
             </a>
           </Link>

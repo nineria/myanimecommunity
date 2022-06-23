@@ -3,7 +3,7 @@ import React, { useContext, useEffect } from "react";
 import Theme from "@components/SettingComponent/Theme";
 import { UserContext } from "@lib/context";
 import { useThemeContext } from "@lib/useTheme";
-import PageNotFound from "../pages/_error";
+import PageNotFound from "./404.js";
 import { Animate } from "react-simple-animate";
 import { Container } from "@mantine/core";
 
