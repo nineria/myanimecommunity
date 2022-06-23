@@ -7,7 +7,7 @@ import PageNotFound from "./404.js";
 import { Animate } from "react-simple-animate";
 import { Container } from "@mantine/core";
 
-export default function settingPage() {
+export default function SettingPage() {
   const { user } = useContext(UserContext);
 
   const { setTheme } = useThemeContext();
