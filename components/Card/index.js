@@ -24,7 +24,7 @@ export default function Card({ property, layout }) {
                 </Badge>
               ))}
             </div>
-            <div className="absolute bottom-0 left-0 right-0 bg-foreground px-2 py-2 text-title ">
+            <div className="absolute bottom-0 left-0 right-0 bg-foreground px-2 py-2 text-title h-[65px]">
               <h1 className="truncate font-bold md:text-base text-sm opacity-80">
                 {data.title}
               </h1>
