@@ -14,8 +14,8 @@ export default function PostLayout({ property, layout }) {
         <Grid gutter="xs">
           {property &&
             property.map((data, index) => (
-              <Grid.Col sm={6} md={6} lg={4}>
-                <Card layout={layout} key={index} property={data} />
+              <Grid.Col key={index} sm={6} md={6} lg={4}>
+                <Card layout={layout} property={data} />
               </Grid.Col>
             ))}
         </Grid>

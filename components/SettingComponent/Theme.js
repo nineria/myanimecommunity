@@ -1,14 +1,6 @@
-import { SettingsIcon } from "@chakra-ui/icons";
 import HomePost from "@components/HomePost";
 import { useThemeContext } from "@lib/useTheme";
-import {
-  Avatar,
-  ColorSwatch,
-  Divider,
-  Group,
-  Select,
-  Text,
-} from "@mantine/core";
+import { Divider, Group, Select, Text } from "@mantine/core";
 import React, { forwardRef, useEffect, useState } from "react";
 import { Settings } from "tabler-icons-react";
 
@@ -98,6 +90,8 @@ export default function ThemeComponent() {
       </Group>
     </div>
   ));
+
+  SelectItem.displayName = "SelectItem";
 
   return (
     <div className="bg-foreground my-2 w-full rounded-sm shadow-md">
