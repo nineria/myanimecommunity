@@ -210,7 +210,7 @@ export function Footer() {
   });
 
   return (
-    <footer className=" bg-black/10 pt-8 border-t-2 border-content">
+    <footer className=" pt-8 ">
       <Container size="lg" className="flex md:justify-between justify-center">
         <div className="w-[250px] md:text-left text-center">
           <div className="text-3xl font-bold">
@@ -228,7 +228,7 @@ export function Footer() {
         <div className={classes.groups}>{groups}</div>
       </Container>
       <Container size="lg">
-        <Divider my="lg" />
+        <Divider mt="lg" />
       </Container>
       <Container
         size="lg"
