@@ -6,7 +6,6 @@ import { useEffect, useState, useCallback, useContext } from "react";
 import debounce from "lodash.debounce";
 import { useThemeContext } from "@lib/useTheme";
 import HomeComponent from "@components/HomeComponent";
-import LoginPage from "./login";
 
 export default function Enter(props) {
   const { user, username } = useContext(UserContext);
@@ -147,7 +146,10 @@ export default function Enter(props) {
           </div>
         )
       ) : (
-        <LoginPage />
+        <div>
+          <Navbar />
+          <HomeComponent />
+        </div>
       )}
     </main>
   );
