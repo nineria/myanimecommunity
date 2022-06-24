@@ -6,6 +6,7 @@ import { Container } from "@mantine/core";
 
 import React, { useEffect, useState } from "react";
 import { useThemeContext } from "@lib/useTheme";
+import { Footer } from "@components/Footer";
 
 export default function ReviewPage() {
   const [layout, setLayout] = useState("grid");
@@ -80,20 +81,23 @@ export default function ReviewPage() {
   };
 
   return (
-    <div className="bg-background text-white h-screen">
-      <Navbar page="/review" />
-      <Container size="xl">
-        {/* Announcement */}
-        <Announcement
-          type={AnmProperty.type}
-          title={AnmProperty.header}
-          content={AnmProperty.content}
-        />
-        {/* Menu Controller */}
-        <PostsMenuController layout={layout} setLayout={setLayout} />
-        {/* Posts */}
-        <PostLayout property={property} layout={layout} />
-      </Container>
-    </div>
+    <>
+      <div className="bg-background text-white min-h-[1024px]">
+        <Navbar page="/review" />
+        <Container size="lg">
+          {/* Announcement */}
+          <Announcement
+            type={AnmProperty.type}
+            title={AnmProperty.header}
+            content={AnmProperty.content}
+          />
+          {/* Menu Controller */}
+          <PostsMenuController layout={layout} setLayout={setLayout} />
+          {/* Posts */}
+          <PostLayout property={property} layout={layout} />
+        </Container>
+      </div>
+      <Footer />
+    </>
   );
 }

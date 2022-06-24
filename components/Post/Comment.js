@@ -11,7 +11,7 @@ import { data } from "autoprefixer";
 import React from "react";
 import { CalendarMinus, Eye, ThumbUp } from "tabler-icons-react";
 
-export default function CardComment({ data }) {
+export default function Comment({ data }) {
   return (
     <div className="bg-foreground rounded-sm">
       {/* Left menu */}
@@ -66,7 +66,7 @@ function MainPost({ data }) {
       </p>
 
       <p className="absolute bottom-4 text-xs">
-        <div className="flex items-center text-content gap-1 mb-2 border-2 border-title border-opacity-10 p-1 rounded-sm">
+        <div className="flex items-center text-content gap-1 mb-2 border-[1px] border-title border-opacity-10 p-1 rounded-sm">
           <ThemeIcon radius="md" size="xs" color="gray">
             <ThumbUp />
           </ThemeIcon>

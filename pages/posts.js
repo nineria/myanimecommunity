@@ -134,20 +134,23 @@ export default function PostsPage() {
   };
 
   return (
-    <div className="bg-background text-white h-screen">
-      <Navbar page="/posts" />
-      <Container size="xl">
-        {/* Announcement */}
-        <Announcement
-          type={AnnouncementProperty.type}
-          title={AnnouncementProperty.title}
-          content={AnnouncementProperty.content}
-        />
-        {/* Menu Controller */}
-        <PostsMenuController layout={layout} setLayout={setLayout} />
-        {/* Posts */}
-        <PostLayout property={property} layout={layout} />
-      </Container>
-    </div>
+    <>
+      <div className="bg-background text-white pb-4 min-h-[1024px]">
+        <Navbar page="/posts" />
+        <Container size="lg">
+          {/* Announcement */}
+          <Announcement
+            type={AnnouncementProperty.type}
+            title={AnnouncementProperty.title}
+            content={AnnouncementProperty.content}
+          />
+          {/* Menu Controller */}
+          <PostsMenuController layout={layout} setLayout={setLayout} />
+          {/* Posts */}
+          <PostLayout property={property} layout={layout} />
+        </Container>
+      </div>
+      <Footer />
+    </>
   );
 }

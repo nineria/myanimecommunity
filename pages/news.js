@@ -5,6 +5,7 @@ import PostsMenuController from "@components/PostComponent/MenuController";
 import React, { useEffect, useState } from "react";
 import { useThemeContext } from "@lib/useTheme";
 import { Container } from "@mantine/core";
+import { Footer } from "@components/Footer";
 
 export default function NewsPage() {
   const [layout, setLayout] = useState("grid");
@@ -56,20 +57,23 @@ export default function NewsPage() {
   ];
 
   return (
-    <div className="bg-background text-white h-screen">
-      <Navbar page="/news" />
-      <Container size="xl">
-        {/* Announcement */}
-        <Announcement
-          type="success"
-          title="Attack on Titan ประกาศสร้าง The Final Season Part 3 ฉบับซีรีส์"
-          content="กำหนดฉายภายในปี 2023 โดย Attack on Titan The Final Season Part 3 จะยังคงได้สตูดิโอ MAPPA มารับหน้าที่ดูแลการผลิตเช่นเดิม พร้อมด้วย ยูอิจิโระ ฮายาชิ ผู้กำกับจาก The Final Season Part 1-2 มารับหน้าที่ปิดฉากสงครามระหว่างมนุษยชาติและเหล่าไททันในครั้งนี้"
-        />
-        {/* Menu Controller */}
-        <PostsMenuController layout={layout} setLayout={setLayout} />
-        {/* Posts */}
-        <PostLayout property={property} layout={layout} />
-      </Container>
-    </div>
+    <>
+      <div className="bg-background text-white min-h-[1024px]">
+        <Navbar page="/news" />
+        <Container size="lg">
+          {/* Announcement */}
+          <Announcement
+            type="success"
+            title="Attack on Titan ประกาศสร้าง The Final Season Part 3 ฉบับซีรีส์"
+            content="กำหนดฉายภายในปี 2023 โดย Attack on Titan The Final Season Part 3 จะยังคงได้สตูดิโอ MAPPA มารับหน้าที่ดูแลการผลิตเช่นเดิม พร้อมด้วย ยูอิจิโระ ฮายาชิ ผู้กำกับจาก The Final Season Part 1-2 มารับหน้าที่ปิดฉากสงครามระหว่างมนุษยชาติและเหล่าไททันในครั้งนี้"
+          />
+          {/* Menu Controller */}
+          <PostsMenuController layout={layout} setLayout={setLayout} />
+          {/* Posts */}
+          <PostLayout property={property} layout={layout} />
+        </Container>
+      </div>
+      <Footer />
+    </>
   );
 }

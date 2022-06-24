@@ -1,3 +1,4 @@
+import { Footer } from "@components/Footer";
 import HomeComponent from "@components/HomeComponent";
 import Navbar from "@components/Navbar";
 import { firestore, fromMillis, postToJSON } from "@lib/firebase";
@@ -64,16 +65,19 @@ export default function HomePage(props) {
   };
 
   return (
-    <div className="bg-background h-screen">
-      <Navbar />
-      <HomeComponent />
-      {/* <PostFeed posts={posts} /> */}
+    <>
+      <div className="bg-background min-h-[1024px]">
+        <Navbar />
+        <HomeComponent />
+        {/* <PostFeed posts={posts} /> */}
 
-      {/* {!loading && !postsEnd && (
+        {/* {!loading && !postsEnd && (
         <button onClick={getMorePosts}>Load more...</button>
-      )}
-      <Loader show={loading} />
+        )}
+        <Loader show={loading} />
       {postsEnd && "You have reached the end!"} */}
-    </div>
+      </div>
+      <Footer />
+    </>
   );
 }

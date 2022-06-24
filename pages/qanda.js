@@ -4,6 +4,7 @@ import PostsMenuController from "@components/PostComponent/MenuController";
 import React, { useEffect, useState } from "react";
 import { useThemeContext } from "@lib/useTheme";
 import { Container } from "@mantine/core";
+import { Footer } from "@components/Footer";
 
 export default function QAndAPage() {
   const [layout, setLayout] = useState("grid");
@@ -47,15 +48,18 @@ export default function QAndAPage() {
   ];
 
   return (
-    <div className="bg-background text-white h-screen">
-      <Navbar page="/qanda" />
-      <Container size="xl">
-        {/* Announcement */}
-        {/* Menu Controller */}
-        <PostsMenuController layout={layout} setLayout={setLayout} />
-        {/* Posts */}
-        <PostLayout property={property} layout={layout} />
-      </Container>
-    </div>
+    <>
+      <div className="bg-background text-white min-h-[1024px]">
+        <Navbar page="/qanda" />
+        <Container size="lg">
+          {/* Announcement */}
+          {/* Menu Controller */}
+          <PostsMenuController layout={layout} setLayout={setLayout} />
+          {/* Posts */}
+          <PostLayout property={property} layout={layout} />
+        </Container>
+      </div>
+      <Footer />
+    </>
   );
 }

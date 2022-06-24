@@ -24,8 +24,8 @@ export default function Navbar({ page, isBusy = false }) {
   };
 
   return (
-    <div className="bg-foreground py-2 sticky top-0 z-50">
-      <Container size="xl">
+    <div className="bg-foreground py-2 sticky top-0 z-50 bg-opacity-95">
+      <Container size="lg">
         <div className="flex items-end justify-between w-full text-md">
           <div className="text-4xl font-bold">
             {/* Website Logo */}

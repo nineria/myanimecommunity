@@ -1,8 +1,6 @@
-import { UserContext } from "@lib/context";
-import { Badge, Divider, Pagination, Title } from "@mantine/core";
-import React, { useContext, useState } from "react";
-import { CurrencyBitcoin, Flag3, Old, User } from "tabler-icons-react";
-import Card from "./Card";
+import { Badge, Title } from "@mantine/core";
+import React from "react";
+import { User } from "tabler-icons-react";
 
 export default function Top({ data }) {
   return (

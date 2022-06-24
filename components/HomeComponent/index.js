@@ -55,7 +55,7 @@ export default function HomeComponent() {
   ];
 
   return (
-    <Container size="xl">
+    <Container size="lg">
       <div className={` mt-2 text-white w-full`}>
         {user ? (
           <Animate

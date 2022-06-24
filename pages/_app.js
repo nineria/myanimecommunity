@@ -3,7 +3,6 @@ import { UserContext } from "../lib/context";
 import { useUserData } from "../lib/hooks";
 import ThemeProvider from "@lib/useTheme";
 import { MantineProvider } from "@mantine/core";
-import { Footer } from "@components/Footer";
 
 function MyApp({ Component, pageProps }) {
   const userData = useUserData();
@@ -13,7 +12,6 @@ function MyApp({ Component, pageProps }) {
       <ThemeProvider>
         <MantineProvider theme={{ colorScheme: "dark" }}>
           <Component {...pageProps} />
-          <Footer />
         </MantineProvider>
       </ThemeProvider>
     </UserContext.Provider>

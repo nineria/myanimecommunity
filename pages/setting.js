@@ -6,6 +6,7 @@ import { useThemeContext } from "@lib/useTheme";
 import PageNotFound from "./404.js";
 import { Animate } from "react-simple-animate";
 import { Container } from "@mantine/core";
+import { Footer } from "@components/Footer/index.js";
 
 export default function SettingPage() {
   const { user } = useContext(UserContext);
@@ -22,23 +23,26 @@ export default function SettingPage() {
   }, []);
 
   return (
-    <div className="bg-background text-accent h-screen">
-      <Navbar page="/setting" isBusy />
-      {user && user ? (
-        <Container size="xl">
-          {/* Option menu */}
-          {/* Theme */}
-          <Animate
-            play
-            start={{ transform: "translateY(1%)", opacity: "0" }}
-            end={{ transform: "translateY(0%)", opacity: "1" }}
-          >
-            <Theme />
-          </Animate>
-        </Container>
-      ) : (
-        <PageNotFound />
-      )}
-    </div>
+    <>
+      <div className="bg-background text-accent min-h-[1024px]">
+        <Navbar page="/setting" isBusy />
+        {user && user ? (
+          <Container size="lg">
+            {/* Option menu */}
+            {/* Theme */}
+            <Animate
+              play
+              start={{ transform: "translateY(1%)", opacity: "0" }}
+              end={{ transform: "translateY(0%)", opacity: "1" }}
+            >
+              <Theme />
+            </Animate>
+          </Container>
+        ) : (
+          <PageNotFound />
+        )}
+      </div>
+      <Footer />
+    </>
   );
 }

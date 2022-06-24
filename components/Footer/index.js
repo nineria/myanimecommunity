@@ -5,9 +5,11 @@ import {
   Container,
   ActionIcon,
   Group,
+  Divider,
 } from "@mantine/core";
 import { BrandTwitter, BrandYoutube, BrandInstagram } from "tabler-icons-react";
 import MyAniLogo from "@components/Navbar/MyAniLogo";
+import Link from "next/link";
 
 const useStyles = createStyles((theme) => ({
   footer: {
@@ -116,64 +118,64 @@ export function Footer() {
 
   const data = [
     {
-      title: "About",
+      title: "ชุมชนคนรักอนิเมะ",
       links: [
         {
-          label: "Features",
+          label: "โพสต์ใหม่",
+          link: "/posts",
+        },
+        {
+          label: "ข่าวสาร",
+          link: "/news",
+        },
+        {
+          label: "รีวิว",
+          link: "/review",
+        },
+        {
+          label: "Q&A ถามตอบ",
+          link: "/qanda",
+        },
+      ],
+    },
+    {
+      title: "จัดการข้อมูล",
+      links: [
+        {
+          label: "โปรไฟล์",
+          link: "/profile",
+        },
+        {
+          label: "ตั้งค่า",
+          link: "/setting",
+        },
+        {
+          label: "-",
           link: "#",
         },
         {
-          label: "Pricing",
-          link: "#",
-        },
-        {
-          label: "Support",
-          link: "#",
-        },
-        {
-          label: "Forums",
+          label: "ออกจากระบบ",
           link: "#",
         },
       ],
     },
     {
-      title: "Project",
+      title: "ข้อมูลเว็บไซต์",
       links: [
         {
-          label: "Contribute",
+          label: "จำนวนโพสต์ : " + "145K",
+          link: "/posts",
+        },
+        {
+          label: "จำนวนสมาชิก : " + "1M",
+          link: "/news",
+        },
+        {
+          label: "-",
           link: "#",
         },
         {
-          label: "Media assets",
-          link: "#",
-        },
-        {
-          label: "Changelog",
-          link: "#",
-        },
-        {
-          label: "Releases",
-          link: "#",
-        },
-      ],
-    },
-    {
-      title: "Community",
-      links: [
-        {
-          label: "Join Discord",
-          link: "#",
-        },
-        {
-          label: "Follow on Twitter",
-          link: "#",
-        },
-        {
-          label: "Email newsletter",
-          link: "#",
-        },
-        {
-          label: "GitHub discussions",
+          label: "-",
           link: "#",
         },
       ],
@@ -184,18 +186,22 @@ export function Footer() {
     const links = group.links.map((link, index) => (
       <Text
         key={index}
-        className={`${classes.link} text-title opacity-50`}
+        className={`flex mt-1 flex-col text-sm text-title opacity-50 text-right`}
         component="a"
         href={link.link}
         onClick={(event) => event.preventDefault()}
       >
-        {link.label}
+        <Link href={link.link}>
+          <a className="hover:underline">{link.label}</a>
+        </Link>
       </Text>
     ));
 
     return (
       <div className={classes.wrapper} key={group.title}>
-        <Text className={`${classes.title} text-title opacity-80`}>
+        <Text
+          className={`text-base font-bold text-title opacity-80 text-right`}
+        >
           {group.title}
         </Text>
         {links}
@@ -204,15 +210,15 @@ export function Footer() {
   });
 
   return (
-    <footer className="bg-black/10 pt-10 border-t-2 border-content">
-      <Container className={classes.inner}>
-        <div className={classes.logo}>
+    <footer className=" bg-black/10 pt-8 border-t-2 border-content">
+      <Container size="lg" className="flex md:justify-between justify-center">
+        <div className="w-[250px] md:text-left text-center">
           <div className="text-3xl font-bold">
             <MyAniLogo link="/" />
           </div>
           <Text
-            size="xs"
-            className={`${classes.description} text-title opacity-80`}
+            size="sm"
+            className={`mt-2 md:text-left text-center text-title opacity-80`}
           >
             ศูนย์กลางในการพูดคุย รีวิว และโพสต์ถามตอบคำถามต่างๆ
             ที่เกี่ยวกับอนิเมะ โปรโมทอนิเมะ
@@ -221,7 +227,13 @@ export function Footer() {
         </div>
         <div className={classes.groups}>{groups}</div>
       </Container>
-      <Container className={classes.afterFooter}>
+      <Container size="lg">
+        <Divider my="lg" />
+      </Container>
+      <Container
+        size="lg"
+        className="flex flex-col md:flex-row md:justify-between items-center "
+      >
         <Text className="text-title opacity-80" size="sm">
           © 2022 MyAnimeCommunity. All rights reserved.
         </Text>
