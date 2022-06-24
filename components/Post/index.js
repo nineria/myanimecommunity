@@ -19,13 +19,8 @@ export default function Post({ data }) {
 function LeftMenu({ data }) {
   return (
     <div className="px-2 py-4">
-      <div className="flex flex-col items-center w-[150px] ">
-        <Avatar
-          radius="100px"
-          size="100px"
-          src={data.photoURL}
-          alt={data.username}
-        />
+      <div className="flex flex-col items-center w-[100px] ">
+        <Avatar radius="xl" size="lg" src={data.photoURL} alt={data.username} />
         <Text color="red">{data.username}</Text>
         <p className="text-title text-xs">Admin</p>
       </div>
@@ -44,15 +39,15 @@ function LeftMenu({ data }) {
         ))}
       </div>
       <div className="flex flex-col mt-4 text-title text-opacity-80">
-        <div className="flex flex-row items-center text-sm gap-2">
+        <div className="flex flex-row items-center text-xs gap-2">
           <CalendarMinus size={14} />
-          <p>: 15 เมษายน 2018</p>
+          <p>: 15/08/2018</p>
         </div>
-        <div className="flex flex-row items-center text-sm gap-2">
+        <div className="flex flex-row items-center text-xs gap-2">
           <Eye size={14} />
           <p>: 12.5K</p>
         </div>
-        <div className="flex flex-row items-center text-sm gap-2">
+        <div className="flex flex-row items-center text-xs gap-2">
           <ThumbUp size={14} />
           <p>: 182K</p>
         </div>

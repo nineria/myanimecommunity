@@ -32,40 +32,21 @@ export default function Comment({ data }) {
 function LeftMenu({ data }) {
   return (
     <div className="px-2 py-4 mt-2">
-      <div className="flex flex-col items-center w-[150px] ">
-        <Avatar
-          radius="100px"
-          size="100px"
-          src={data.photoURL}
-          alt={data.username}
-        />
+      <div className="flex flex-col items-center w-[100px] ">
+        <Avatar radius="xl" size="lg" src={data.photoURL} alt={data.username} />
         <Text color="red">{data.username}</Text>
         <p className="text-title text-xs">Admin</p>
       </div>
       <div className="flex flex-col mt-4 text-title text-opacity-80">
-        <div className="flex flex-row items-center text-sm gap-2">
+        <div className="flex flex-row items-center text-xs gap-2">
           <CalendarMinus size={14} />
-          <p>: 15 เมษายน 2018</p>
+          <p>: 15/08/2018</p>
         </div>
-        <div className="flex flex-row items-center text-sm gap-2">
+        <div className="flex flex-row items-center text-xs gap-2">
           <ThumbUp size={14} />
           <p>: 15</p>
         </div>
       </div>
-      {/* Ranks */}
-      {/* <div className="flex flex-col gap-1 mt-4">
-        {data.rank.map((item, index) => (
-          <Badge
-            radius="sm"
-            variant="filled"
-            color={item.color}
-            rightSection={item.icon}
-            key={index}
-          >
-            {item.name}
-          </Badge>
-        ))}
-      </div> */}
     </div>
   );
 }

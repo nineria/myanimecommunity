@@ -1,4 +1,4 @@
-import { Avatar, Tabs, Text, Textarea } from "@mantine/core";
+import { Avatar, Space, Tabs, Text, Textarea } from "@mantine/core";
 import React from "react";
 import { AlertTriangle, Markdown } from "tabler-icons-react";
 
@@ -7,6 +7,7 @@ export default function CreateComment({ data }) {
     <div className="bg-foreground ">
       <div className="flex flex-row">
         <LeftMenu data={data} />
+        <div className="px-[0.5px] bg-white opacity-50"></div>
         <div className="p-2 text-title w-full">
           <div className="border-[1px] border-white border-opacity-10 rounded-sm p-2">
             <Tabs variant="outline">
@@ -51,8 +52,14 @@ export default function CreateComment({ data }) {
 
 function LeftMenu({ data }) {
   return (
-    <div className="m-4">
-      <Avatar radius="xl" size="lg" src={data?.photoURL} alt={data?.username} />
+    <div className="px-2 py-4 mt-2">
+      <div className="flex flex-col gap-2 items-center w-[100px]">
+        <Avatar radius="xl" size="lg" src={data.photoURL} alt={data.username} />
+        <div className="block text-center">
+          <Text color="red">{data.username}</Text>
+          <p className="text-title text-xs">Admin</p>
+        </div>
+      </div>
     </div>
   );
 }
