@@ -26,7 +26,7 @@ export default function Announcement({ type, title, content }) {
           end={{ transform: "translateY(0%)", opacity: "1" }}
         >
           <div
-            className={`mt-2 ${
+            className={`${
               type === "danger"
                 ? "border-red-500 bg-red-500"
                 : type === "warning"

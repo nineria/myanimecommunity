@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import PostsMenuController from "@components/PostComponent/MenuController";
 import PostLayout from "@components/PostComponent/PostLayout";
 import { useThemeContext } from "@lib/useTheme";
-import { Container } from "@mantine/core";
+import { Anchor, Breadcrumbs, Container, Stack } from "@mantine/core";
 import { Footer } from "@components/Footer";
 
 export default function PostsPage() {
@@ -20,6 +20,15 @@ export default function PostsPage() {
     }
     setTheme(localData);
   }, []);
+
+  const items = [
+    { title: "หน้าหลัก", href: "/" },
+    { title: "โพสต์ทั้งหมด", href: "/posts" },
+  ].map((item, index) => (
+    <Anchor size="sm" color="dimmed" href={item.href} key={index}>
+      {item.title}
+    </Anchor>
+  ));
 
   const property = [
     {
@@ -137,17 +146,21 @@ export default function PostsPage() {
     <>
       <div className="bg-background text-white pb-4 min-h-[1024px]">
         <Navbar page="/posts" />
+
         <Container size="lg">
-          {/* Announcement */}
-          <Announcement
-            type={AnnouncementProperty.type}
-            title={AnnouncementProperty.title}
-            content={AnnouncementProperty.content}
-          />
-          {/* Menu Controller */}
-          <PostsMenuController layout={layout} setLayout={setLayout} />
-          {/* Posts */}
-          <PostLayout property={property} layout={layout} />
+          <Stack spacing="xs">
+            <Breadcrumbs separator="→">{items}</Breadcrumbs>
+            {/* Announcement */}
+            <Announcement
+              type={AnnouncementProperty.type}
+              title={AnnouncementProperty.title}
+              content={AnnouncementProperty.content}
+            />
+            {/* Menu Controller */}
+            <PostsMenuController layout={layout} setLayout={setLayout} />
+            {/* Posts */}
+            <PostLayout property={property} layout={layout} />
+          </Stack>
         </Container>
       </div>
       <Footer />

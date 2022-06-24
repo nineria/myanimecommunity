@@ -4,7 +4,7 @@ import PostLayout from "@components/PostComponent/PostLayout";
 import PostsMenuController from "@components/PostComponent/MenuController";
 import React, { useEffect, useState } from "react";
 import { useThemeContext } from "@lib/useTheme";
-import { Container } from "@mantine/core";
+import { Anchor, Breadcrumbs, Container, Stack } from "@mantine/core";
 import { Footer } from "@components/Footer";
 
 export default function NewsPage() {
@@ -20,6 +20,15 @@ export default function NewsPage() {
     }
     setTheme(localData);
   }, []);
+
+  const items = [
+    { title: "หน้าหลัก", href: "/" },
+    { title: "โพสต์ทั้งหมด", href: "/posts" },
+  ].map((item, index) => (
+    <Anchor size="sm" color="dimmed" href={item.href} key={index}>
+      {item.title}
+    </Anchor>
+  ));
 
   const property = [
     {
@@ -61,16 +70,19 @@ export default function NewsPage() {
       <div className="bg-background text-white min-h-[1024px]">
         <Navbar page="/news" />
         <Container size="lg">
-          {/* Announcement */}
-          <Announcement
-            type="success"
-            title="Attack on Titan ประกาศสร้าง The Final Season Part 3 ฉบับซีรีส์"
-            content="กำหนดฉายภายในปี 2023 โดย Attack on Titan The Final Season Part 3 จะยังคงได้สตูดิโอ MAPPA มารับหน้าที่ดูแลการผลิตเช่นเดิม พร้อมด้วย ยูอิจิโระ ฮายาชิ ผู้กำกับจาก The Final Season Part 1-2 มารับหน้าที่ปิดฉากสงครามระหว่างมนุษยชาติและเหล่าไททันในครั้งนี้"
-          />
-          {/* Menu Controller */}
-          <PostsMenuController layout={layout} setLayout={setLayout} />
-          {/* Posts */}
-          <PostLayout property={property} layout={layout} />
+          <Stack spacing="xs">
+            <Breadcrumbs separator="→">{items}</Breadcrumbs>
+            {/* Announcement */}
+            <Announcement
+              type="success"
+              title="Attack on Titan ประกาศสร้าง The Final Season Part 3 ฉบับซีรีส์"
+              content="กำหนดฉายภายในปี 2023 โดย Attack on Titan The Final Season Part 3 จะยังคงได้สตูดิโอ MAPPA มารับหน้าที่ดูแลการผลิตเช่นเดิม พร้อมด้วย ยูอิจิโระ ฮายาชิ ผู้กำกับจาก The Final Season Part 1-2 มารับหน้าที่ปิดฉากสงครามระหว่างมนุษยชาติและเหล่าไททันในครั้งนี้"
+            />
+            {/* Menu Controller */}
+            <PostsMenuController layout={layout} setLayout={setLayout} />
+            {/* Posts */}
+            <PostLayout property={property} layout={layout} />
+          </Stack>
         </Container>
       </div>
       <Footer />

@@ -2,6 +2,7 @@ import { Footer } from "@components/Footer";
 import Navbar from "@components/Navbar";
 import Post from "@components/Post";
 import Comment from "@components/Post/Comment";
+import CreateComment from "@components/Post/CreateComment";
 import Top from "@components/Post/Top";
 import { UserContext } from "@lib/context";
 import {
@@ -121,24 +122,34 @@ export default function PostPage() {
           <Stack spacing="xs">
             <Breadcrumbs separator="→">{items}</Breadcrumbs>
             <Top data={dummy} />
-            <div className="p-1 bg-foreground rounded-sm">
-              <Pagination
-                total={2}
-                size="sm"
-                page={activePage}
-                onChange={setPage}
-              />
-            </div>
-            <Post data={dummy} />
-            <Comment data={dummyComment} />
-            <div className="p-1 bg-foreground rounded-sm">
-              <Pagination
-                total={2}
-                size="sm"
-                page={activePage}
-                onChange={setPage}
-              />
-            </div>
+            <Pagination
+              total={2}
+              size="sm"
+              page={activePage}
+              onChange={setPage}
+            />
+            {activePage === 1 ? (
+              <Stack spacing="xs">
+                <Post data={dummy} />
+                <Comment data={dummyComment} />
+              </Stack>
+            ) : (
+              <Stack spacing="xs">
+                <Comment data={dummyComment} />
+                <Comment data={dummyComment} />
+                <Comment data={dummyComment} />
+                <Comment data={dummyComment} />
+                <Comment data={dummyComment} />
+              </Stack>
+            )}
+
+            <Pagination
+              total={2}
+              size="sm"
+              page={activePage}
+              onChange={setPage}
+            />
+            <CreateComment data={dummyComment} />
           </Stack>
           <Space h="xl" />
         </Container>

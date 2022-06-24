@@ -24,7 +24,7 @@ export default function Navbar({ page, isBusy = false }) {
   };
 
   return (
-    <div className="bg-foreground py-2 sticky top-0 z-50 bg-opacity-95">
+    <div className="bg-foreground py-2 sticky top-0 z-50 bg-opacity-95 mb-2">
       <Container size="lg">
         <div className="flex items-end justify-between w-full text-md">
           <div className="text-4xl font-bold">

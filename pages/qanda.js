@@ -3,7 +3,7 @@ import PostLayout from "@components/PostComponent/PostLayout";
 import PostsMenuController from "@components/PostComponent/MenuController";
 import React, { useEffect, useState } from "react";
 import { useThemeContext } from "@lib/useTheme";
-import { Container } from "@mantine/core";
+import { Anchor, Breadcrumbs, Container, Stack } from "@mantine/core";
 import { Footer } from "@components/Footer";
 
 export default function QAndAPage() {
@@ -19,6 +19,15 @@ export default function QAndAPage() {
     }
     setTheme(localData);
   }, []);
+
+  const items = [
+    { title: "หน้าหลัก", href: "/" },
+    { title: "โพสต์ทั้งหมด", href: "/posts" },
+  ].map((item, index) => (
+    <Anchor size="sm" color="dimmed" href={item.href} key={index}>
+      {item.title}
+    </Anchor>
+  ));
 
   const property = [
     {
@@ -52,11 +61,15 @@ export default function QAndAPage() {
       <div className="bg-background text-white min-h-[1024px]">
         <Navbar page="/qanda" />
         <Container size="lg">
-          {/* Announcement */}
-          {/* Menu Controller */}
-          <PostsMenuController layout={layout} setLayout={setLayout} />
-          {/* Posts */}
-          <PostLayout property={property} layout={layout} />
+          <Stack spacing="xs">
+            <Breadcrumbs separator="→">{items}</Breadcrumbs>
+
+            {/* Announcement */}
+            {/* Menu Controller */}
+            <PostsMenuController layout={layout} setLayout={setLayout} />
+            {/* Posts */}
+            <PostLayout property={property} layout={layout} />
+          </Stack>
         </Container>
       </div>
       <Footer />
