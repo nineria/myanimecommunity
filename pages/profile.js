@@ -9,7 +9,6 @@ import {
   Mail,
   User,
 } from "tabler-icons-react";
-import Report from "@components/ProfileComponent/Report";
 import { UserContext } from "@lib/context";
 import Navbar from "@components/Navbar";
 import {
@@ -212,11 +211,7 @@ export default function UserProfilePage() {
 
                 <div className="flex flex-col pb-4 bg-foreground rounded-b-sm">
                   <div className="fixed top-32 bg-foreground text-title text-opacity-80 bg-opacity-70 rounded-sm ml-4">
-                    {/* Report overlay */}
-                    <div className="flex flex-row justify-end pt-2 pr-2">
-                      <Report isOpen={isOpen} onClose={onClose} />
-                    </div>
-                    <div className="flex flex-row px-3 mb-2">
+                    <div className="flex flex-row px-3 my-2">
                       {/* Profile image */}
                       <Avatar
                         name={user?.displayName || "username"}
