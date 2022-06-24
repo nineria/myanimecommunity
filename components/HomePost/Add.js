@@ -1,220 +1,133 @@
-import { RepeatIcon } from "@chakra-ui/icons";
 import {
-  EditablePreview,
-  IconButton,
+  Button,
+  Divider,
+  Grid,
+  Group,
   Input,
-  useEditableControls,
-  ButtonGroup,
-  Editable,
-  Tooltip,
-  EditableInput,
-} from "@chakra-ui/react";
-
-import React, { useState } from "react";
-import { Animate } from "react-simple-animate";
-import { SquareX, CircleCheck, AlertCircle, Trash } from "tabler-icons-react";
-import HomePost from ".";
+  InputWrapper,
+  Stack,
+  Textarea,
+} from "@mantine/core";
+import { useForm } from "@mantine/hooks";
+import React from "react";
 
 export default function AddPost(props) {
-  const [toggle, setTogle] = useState(true);
-
-  const [reload, setReload] = useState(false);
-
   const data = props.postData;
 
-  const HandleChange = (e, index, type) => {
-    switch (type) {
-      case "title":
-        data.title = e;
-        break;
-      case "titleLink":
-        data.titleLink = e;
-        break;
-      case "header":
-        data.content[index].header = e;
-        break;
-      case "headerLink":
-        data.content[index].headerLink = e;
-        break;
-      case "body":
-        data.content[index].body = e;
-        break;
-    }
-    props.handlePostDataChange(data);
+  const HandleChange = (values) => {
+    data = values;
+    props.handlePostDataChange(values);
+    props.setOpened(false);
   };
 
-  const HandlePost = () => {
-    function EditableControls() {
-      const { isEditing, getSubmitButtonProps, getCancelButtonProps } =
-        useEditableControls();
-
-      return isEditing ? (
-        <ButtonGroup justifyContent="end" size="sm" w="full" spacing={2} mt={2}>
-          <IconButton
-            color="whtie"
-            backgroundColor="green.400"
-            icon={<CircleCheck />}
-            {...getSubmitButtonProps()}
-          />
-          <IconButton
-            color="whtie"
-            backgroundColor="red.400"
-            icon={<SquareX boxSize={3} />}
-            {...getCancelButtonProps()}
-          />
-        </ButtonGroup>
-      ) : null;
-    }
-
-    const Edit = (props) => {
-      return (
-        <Editable
-          defaultValue={props.text}
-          isPreviewFocusable={true}
-          selectAllOnFocus={false}
-          onSubmit={(e) => HandleChange(e, props.index, props.type)}
-        >
-          <Tooltip label="กดเพื่อแก้ไข" bg="gray">
-            <EditablePreview
-              py={2}
-              px={4}
-              _hover={{
-                background: "#fff",
-                color: "#111",
-              }}
-              backgroundColor="#333"
-              w="full"
-            />
-          </Tooltip>
-          <Input py={2} px={4} as={EditableInput} />
-          <EditableControls />
-        </Editable>
-      );
-    };
-
-    return (
-      <div>
-        <div className="flex flex-row justify-between bg-content py-2 px-3 rounded-t-md ">
-          <h1 className="">สร้างโพสต์ - หน้าหลัก</h1>
-          <SquareX
-            className="cursor-pointer hover:translate-y-[1px] hover:opacity-75"
-            onClick={props.handleOpenMenu}
-          />
-        </div>
-        <div className="py-2 px-3 flex flex-col gap-3">
-          <h1>หัวข้อโพสต์</h1>
-          <div className="flex flex-row gap-2">
-            <div className="rounded-md">
-              <Edit text={data.titleLink} type="titleLink" />
-            </div>
-            <div className="rounded-md w-full">
-              <Edit text={data.title} type="title" />
-            </div>
-          </div>
-          <div className="h-[1px] bg-neutral-500 mt-4"></div>
-          {data.content.map((item, index) => (
-            <div key={index} className="flex flex-col gap-2">
-              <div className="flex flex-row justify-between">
-                <h1>หัวข้อย่อย</h1>
-                <div className="hover:translate-y-[1px] hover:opacity-75 cursor-pointer">
-                  <Trash size={20} />
-                </div>
-              </div>
-              <div className="flex flex-row gap-2">
-                <div className="rounded-md">
-                  <Edit
-                    text={item.headerLink}
-                    index={index}
-                    type="headerLink"
-                  />
-                </div>
-                <div className="rounded-md w-full">
-                  <Edit text={item.header} index={index} type="header" />
-                </div>
-              </div>
-              <h1>เนื้อหา</h1>
-              <Edit text={item.body} index={index} type="body" />
-            </div>
-          ))}
-          {/* <div
-            onClick={HandleAddSubHeader(data.content)}
-            className="text-center py-1 px-3 bg-stone-500 rounded-sm cursor-pointer hover:opacity-75 hover:translate-y-[1px]"
-          >
-            เพิ่มหัวข้อย่อย +
-          </div> */}
-        </div>
-      </div>
-    );
-  };
+  const form = useForm({
+    initialValues: {
+      title: data.title,
+      titleLink: data.titleLink,
+      header: data.header,
+      headerLink: data.headerLink,
+      body: data.body,
+    },
+  });
 
   return (
-    <div className="fixed z-10 h-full top-0 lg:pt-20 md:pt-10 pt-5 w-full p-2 text-white bg-[#181a1d] bg-opacity-75 backdrop-blur-sm">
-      {props.open === true ? (
-        <div className="flex justify-center items-center">
-          <div className="max-w-[800px] w-full ">
-            <Animate
-              play
-              start={{
-                transform: "translateY(2%)",
-                opacity: "0",
-              }}
-              end={{ transform: "translateY(0)", opacity: "1" }}
+    <form onSubmit={form.onSubmit((values) => HandleChange(values))}>
+      <Stack>
+        {/* หัวข้อโพสต์ */}
+        <InputWrapper
+          label="หัวข้อโพสต์"
+          description="เชื่อมโยงไปยังหน้าที่ต้องการ และใส่หัวข้อโพสต์หลัก"
+        >
+          <Grid grow>
+            <Grid.Col sm={2}>
+              <Input
+                placeholder="/review"
+                {...form.getInputProps("titleLink")}
+              />
+            </Grid.Col>
+            <Grid.Col sm={10}>
+              <Input
+                placeholder="หัวข้อโพสต์"
+                {...form.getInputProps("title")}
+              />
+            </Grid.Col>
+          </Grid>
+        </InputWrapper>
+        <Divider />
+
+        {/* หัวข้อย่อย */}
+        <InputWrapper
+          label="หัวข้อย่อย"
+          description="เชื่อมโยงไปยังหน้าที่ต้องการ และใส่หัวข้อย่อย"
+        >
+          <Grid grow>
+            <Grid.Col sm={2}>
+              <Input
+                placeholder="/review"
+                {...form.getInputProps("headerLink")}
+              />
+            </Grid.Col>
+            <Grid.Col sm={10}>
+              <Input
+                placeholder="หัวข้อโพสต์"
+                {...form.getInputProps("header")}
+              />
+            </Grid.Col>
+          </Grid>
+        </InputWrapper>
+        <Divider />
+
+        {/* เนื้อหา */}
+        <InputWrapper label="เนื้อหา" description="รายละเอียดเนื้อหาของโพสต์">
+          <Textarea
+            placeholder="เขียนรายละเอียด"
+            autosize
+            minRows={3}
+            {...form.getInputProps("body")}
+          />
+        </InputWrapper>
+        <TermAndService />
+
+        <Group mt="md" position="apart">
+          <Group spacing="xs" position="left">
+            <Button
+              size="xs"
+              onClick={() => props.setOpened(false)}
+              className="bg-gray-500 hover:bg-gray-500 hover:opacity-75"
             >
-              <div className="bg-[#444] rounded-md">
-                <HandlePost />
-                <div className="h-[1px] bg-neutral-500 mt-4"></div>
-                <div className="flex flex-row items-center gap-3 mb-2">
-                  <h1 className="py-2 pl-3">ตัวอย่างโพสต์</h1>
-                  <Tooltip hasArrow label="กดเพื่อรีโหลดตัวอย่าง" bg="gray">
-                    <div
-                      onClick={() => setReload(!reload)}
-                      className="bg-neutral-500 p-1 rounded-sm flex hover:translate-y-[1px] hover:opacity-75 cursor-pointer group"
-                    >
-                      <RepeatIcon className="group-hover:rotate-180 transition-all" />
-                    </div>
-                  </Tooltip>
-                </div>
-                <div className="bg-[#181a1d] py-4 px-8 ">
-                  {/* <HomePost dummyData={data} /> */}
-                </div>
-                <div className="flex flex-row gap-2 pl-3 pt-2 text-xs">
-                  <AlertCircle size={24} />
-                  <span className="w-4/5">
-                    ผู้ดูแลระบบขอสงวนสิทธิ์ในการลบโพสต์ของผู้ที่ไม่ปฏิบัติตาม{" "}
-                    <span className="text-content underline cursor-pointer">
-                      กฎ กติกา และมารยาท
-                    </span>{" "}
-                    ของเว็บไซต์ MyAnimeCommu
-                    <p>เพื่อรักษาบรรยากาศการพูดคุยของชุมชนคนรักอนิเมะ</p>
-                  </span>
-                </div>
-                <div className="flex flex-row justify-between p-2 items-center">
-                  <div className="flex flex-row gap-2">
-                    <div
-                      onClick={props.handleOpenMenu}
-                      className="py-1 px-3 bg-neutral-500 rounded-sm cursor-pointer hover:opacity-75 hover:translate-y-[1px]"
-                    >
-                      ยกเลิก
-                    </div>
-                    <div
-                      onClick={props.handleOpenMenu}
-                      className="py-1 px-3 bg-content rounded-sm cursor-pointer hover:opacity-75 hover:translate-y-[1px]"
-                    >
-                      ลบโพสต์
-                    </div>
-                  </div>
-                  <div
-                    onClick={props.handleOpenMenu}
-                    className="py-1 px-3 bg-green-500 rounded-sm cursor-pointer hover:opacity-75 hover:translate-y-[1px]"
-                  >
-                    ยืนยัน
-                  </div>
-                </div>
-              </div>
-            </Animate>
-          </div>
-        </div>
-      ) : null}
+              ยกเลิก
+            </Button>
+            <Button
+              size="xs"
+              className="bg-red-500 hover:bg-red-500 hover:opacity-75"
+            >
+              ลบโพสต์
+            </Button>
+          </Group>
+          <Button
+            type="submit"
+            size="xs"
+            className="bg-green-500 hover:bg-green-500 hover:opacity-75"
+          >
+            ยืนยัน
+          </Button>
+        </Group>
+      </Stack>
+    </form>
+  );
+}
+
+function TermAndService() {
+  return (
+    <div className="flex flex-row items-center gap-2 text-xs">
+      <span className="w-4/5">
+        ผู้ดูแลระบบขอสงวนสิทธิ์ในการลบโพสต์ของผู้ที่ไม่ปฏิบัติตาม{" "}
+        <span className="text-content underline cursor-pointer">
+          กฎ กติกา และมารยาท
+        </span>{" "}
+        ของเว็บไซต์ MyAnimeCommu
+        <p>เพื่อรักษาบรรยากาศการพูดคุยของชุมชนคนรักอนิเมะ</p>
+      </span>
     </div>
   );
 }

@@ -1,25 +1,21 @@
 import HomePost from "@components/HomePost";
 import AddPost from "@components/HomePost/Add";
 import { UserContext } from "@lib/context";
-import { Container } from "@mantine/core";
+import { Container, Modal } from "@mantine/core";
 import { useContext, useState } from "react";
 import { Animate } from "react-simple-animate";
 
 export default function HomeComponent() {
   const { user, username } = useContext(UserContext);
 
-  const [openMenu, setOpenMenu] = useState(false);
+  const [opened, setOpened] = useState(false);
 
   const [postData, setPostData] = useState({
-    title: "หัวข้อหลัก",
-    titleLink: "/",
-    content: [
-      {
-        header: "หัวข้อย่อย",
-        headerLink: "/news",
-        body: "เนื้อหา",
-      },
-    ],
+    title: "",
+    titleLink: "",
+    header: "",
+    headerLink: "",
+    body: "",
   });
 
   const HandleOpenMenu = () => {
@@ -69,19 +65,23 @@ export default function HomeComponent() {
             <div className="">
               <div className="flex flex-col gap-2">
                 {/* Add home post */}
-                {openMenu === true ? (
-                  <AddPost
-                    handleOpenMenu={HandleOpenMenu}
-                    open={openMenu}
-                    postData={postData}
-                    handlePostDataChange={HandlePostDataChange}
-                  />
-                ) : null}
-                {/* Create home post */}
-                <CreateHomePost
-                  HandleOpenMenu={HandleOpenMenu}
-                  openMenu={openMenu}
-                />
+                <div>
+                  <Modal
+                    size="lg"
+                    opened={opened}
+                    onClose={() => setOpened(false)}
+                    title="สร้างโพสต์ - หน้าหลัก"
+                  >
+                    <AddPost
+                      setOpened={setOpened}
+                      postData={postData}
+                      handlePostDataChange={HandlePostDataChange}
+                    />
+                  </Modal>
+                  <div className="bg-content w-fit px-3 rounded-sm cursor-pointer hover:translate-y-[1px] hover:opacity-75 md:text-base text-sm text-[#fff]">
+                    <div onClick={() => setOpened(true)}>สร้าง +</div>
+                  </div>
+                </div>
                 {/* Display home post */}
                 <div className="flex flex-col gap-2">
                   {postDummy.map((item, index) => (
@@ -94,7 +94,6 @@ export default function HomeComponent() {
         ) : (
           <HomePost dummyData={postDummy[0]} />
         )}
-        {postData.title === "หัวข้อหลัก" ? null : <HomePost data={postData} />}
       </div>
     </Container>
   );

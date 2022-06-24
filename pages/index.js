@@ -69,13 +69,6 @@ export default function HomePage(props) {
       <div className="bg-background min-h-[1024px]">
         <Navbar />
         <HomeComponent />
-        {/* <PostFeed posts={posts} /> */}
-
-        {/* {!loading && !postsEnd && (
-        <button onClick={getMorePosts}>Load more...</button>
-        )}
-        <Loader show={loading} />
-      {postsEnd && "You have reached the end!"} */}
       </div>
       <Footer />
     </>

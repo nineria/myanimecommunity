@@ -71,7 +71,7 @@ function Logo() {
   );
 }
 
-function LoginPopUp() {
+export function LoginPopUp() {
   const signInWithGoogle = async () => {
     await auth.signInWithPopup(googleAuthProvider);
   };
@@ -122,7 +122,7 @@ function LoginPopUp() {
   );
 }
 
-function RegisterPopUp() {
+export function RegisterPopUp() {
   const signInWithGoogle = async () => {
     await auth.signInWithPopup(googleAuthProvider);
   };
