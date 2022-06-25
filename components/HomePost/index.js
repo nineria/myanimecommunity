@@ -47,6 +47,7 @@ export default function HomePost({ dummyData, isDisabled = false }) {
               <div>
                 <Modal
                   size="lg"
+                  overlayColor="#333"
                   opened={opened}
                   onClose={() => setOpened(false)}
                   title="แก้ไขโพสต์ - หน้าหลัก"

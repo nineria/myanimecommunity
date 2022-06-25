@@ -68,6 +68,7 @@ export default function HomeComponent() {
                 <div>
                   <Modal
                     size="lg"
+                    overlayColor="#333"
                     opened={opened}
                     onClose={() => setOpened(false)}
                     title="สร้างโพสต์ - หน้าหลัก"
