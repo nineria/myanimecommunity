@@ -3,7 +3,13 @@ import PostLayout from "@components/PostComponent/PostLayout";
 import PostsMenuController from "@components/PostComponent/MenuController";
 import React, { useEffect, useState } from "react";
 import { useThemeContext } from "@lib/useTheme";
-import { Anchor, Breadcrumbs, Container, Stack } from "@mantine/core";
+import {
+  Anchor,
+  Breadcrumbs,
+  Container,
+  Stack,
+  useMantineColorScheme,
+} from "@mantine/core";
 import { Footer } from "@components/Footer";
 
 export default function QAndAPage() {
@@ -11,12 +17,16 @@ export default function QAndAPage() {
 
   const { setTheme } = useThemeContext();
 
+  const { toggleColorScheme } = useMantineColorScheme();
+
   useEffect(() => {
     const localData = localStorage.getItem("themes");
     if (localData == null) {
       localStorage.setItem("themes", "red");
       setTheme("red");
     }
+    if (localData === "red-light") toggleColorScheme("light");
+    else toggleColorScheme("dark");
     setTheme(localData);
   }, []);
 

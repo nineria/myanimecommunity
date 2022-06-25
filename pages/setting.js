@@ -5,7 +5,7 @@ import { UserContext } from "@lib/context";
 import { useThemeContext } from "@lib/useTheme";
 import PageNotFound from "./404.js";
 import { Animate } from "react-simple-animate";
-import { Container } from "@mantine/core";
+import { Container, useMantineColorScheme } from "@mantine/core";
 import { Footer } from "@components/Footer/index.js";
 
 export default function SettingPage() {
@@ -13,12 +13,16 @@ export default function SettingPage() {
 
   const { setTheme } = useThemeContext();
 
+  const { toggleColorScheme } = useMantineColorScheme();
+
   useEffect(() => {
     const localData = localStorage.getItem("themes");
     if (localData == null) {
       localStorage.setItem("themes", "red");
       setTheme("red");
     }
+    if (localData === "red-light") toggleColorScheme("light");
+    else toggleColorScheme("dark");
     setTheme(localData);
   }, []);
 

@@ -42,7 +42,10 @@ export default function UserMenu({ user, isBusy, signOut }) {
           {settingMenuProperty &&
             settingMenuProperty.map((item, index) => (
               <Link href={item.link} key={index}>
-                <Menu.Item className="hover:bg-content" icon={item.icon}>
+                <Menu.Item
+                  className="hover:bg-content hover:text-accent"
+                  icon={item.icon}
+                >
                   {item.name}
                 </Menu.Item>
               </Link>
@@ -52,7 +55,10 @@ export default function UserMenu({ user, isBusy, signOut }) {
           {accessMenuProperty &&
             accessMenuProperty.map((item, index) => (
               <Link href={item.link} key={index}>
-                <Menu.Item className="hover:bg-content" icon={item.icon}>
+                <Menu.Item
+                  className="hover:bg-content hover:text-accent"
+                  icon={item.icon}
+                >
                   {item.name}
                 </Menu.Item>
               </Link>
@@ -62,7 +68,7 @@ export default function UserMenu({ user, isBusy, signOut }) {
           <Menu.Item
             icon={<Logout size={14} />}
             onClick={signOut}
-            className="hover:bg-accent"
+            className="hover:bg-content hover:text-accent"
             color="red"
           >
             ออกจากระบบ

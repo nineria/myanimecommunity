@@ -1,6 +1,6 @@
-import { Avatar, Space, Tabs, Text, Textarea } from "@mantine/core";
+import { Avatar, Button, Tabs, Text, Textarea } from "@mantine/core";
 import React from "react";
-import { AlertTriangle, Markdown } from "tabler-icons-react";
+import { Markdown } from "tabler-icons-react";
 
 export default function CreateComment({ data }) {
   return (
@@ -33,9 +33,13 @@ export default function CreateComment({ data }) {
                 <Markdown size={16} />
                 <Text size="xs">รองรับการเขียนด้วย Markdown</Text>
               </div>
-              <button className="bg-content px-4 rounded-sm hover:opacity-75">
+              <Button
+                className="bg-content text-accent hover:bg-content hover:opacity-75"
+                variant="default"
+                size="xs"
+              >
                 โพสต์
-              </button>
+              </Button>
             </div>
           </div>
           <div className="flex flex-row gap-1 items-center mt-2 text-title">

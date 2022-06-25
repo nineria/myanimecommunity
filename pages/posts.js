@@ -10,17 +10,6 @@ import { Footer } from "@components/Footer";
 export default function PostsPage() {
   const [layout, setLayout] = useState("grid");
 
-  const { setTheme } = useThemeContext();
-
-  useEffect(() => {
-    const localData = localStorage.getItem("themes");
-    if (localData == null) {
-      localStorage.setItem("themes", "red");
-      setTheme("red");
-    }
-    setTheme(localData);
-  }, []);
-
   const items = [
     { title: "หน้าหลัก", href: "/" },
     { title: "โพสต์ทั้งหมด", href: "/posts" },

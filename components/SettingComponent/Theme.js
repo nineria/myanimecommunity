@@ -1,11 +1,19 @@
 import HomePost from "@components/HomePost";
 import { useThemeContext } from "@lib/useTheme";
-import { Divider, Group, Select, Text } from "@mantine/core";
+import {
+  Divider,
+  Group,
+  Select,
+  Text,
+  useMantineColorScheme,
+} from "@mantine/core";
 import React, { forwardRef, useEffect, useState } from "react";
 import { Settings } from "tabler-icons-react";
 
 export default function ThemeComponent() {
   const { theme, setTheme } = useThemeContext();
+
+  const { toggleColorScheme } = useMantineColorScheme();
 
   useEffect(() => {
     const localData = localStorage.getItem("themes");
@@ -13,10 +21,15 @@ export default function ThemeComponent() {
       localStorage.setItem("themes", "red");
       setTheme("red");
     }
+    if (localData === "red-light") toggleColorScheme("light");
+    else toggleColorScheme("dark");
     setTheme(localData);
   }, []);
 
   const handleChangeTheme = (value) => {
+    if (value === "red-light") toggleColorScheme("light");
+    else toggleColorScheme("dark");
+
     localStorage.setItem("themes", value);
     setTheme(value);
   };

@@ -5,6 +5,7 @@ import Comment from "@components/Post/Comment";
 import CreateComment from "@components/Post/CreateComment";
 import Top from "@components/Post/Top";
 import { UserContext } from "@lib/context";
+import { useThemeContext } from "@lib/useTheme";
 import {
   Anchor,
   Breadcrumbs,
@@ -12,13 +13,25 @@ import {
   Pagination,
   Space,
   Stack,
+  useMantineColorScheme,
 } from "@mantine/core";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { CurrencyBitcoin, Flag3, Old } from "tabler-icons-react";
 
 export default function PostPage() {
   const { user, username } = useContext(UserContext);
   const [activePage, setPage] = useState(1);
+
+  const { setTheme } = useThemeContext();
+
+  useEffect(() => {
+    const localData = localStorage.getItem("themes");
+    if (localData == null) {
+      localStorage.setItem("themes", "red");
+      setTheme("red");
+    }
+    setTheme(localData);
+  }, []);
 
   const items = [
     { title: "หน้าหลัก", href: "/" },
@@ -149,7 +162,7 @@ export default function PostPage() {
               page={activePage}
               onChange={setPage}
             />
-            <CreateComment data={dummyComment} />
+            {user && <CreateComment data={dummyComment} />}
           </Stack>
           <Space h="xl" />
         </Container>

@@ -2,24 +2,12 @@ import Announcement from "@components/Announcement";
 import Navbar from "@components/Navbar";
 import PostLayout from "@components/PostComponent/PostLayout";
 import PostsMenuController from "@components/PostComponent/MenuController";
-import React, { useEffect, useState } from "react";
-import { useThemeContext } from "@lib/useTheme";
+import React, { useState } from "react";
 import { Anchor, Breadcrumbs, Container, Stack } from "@mantine/core";
 import { Footer } from "@components/Footer";
 
 export default function NewsPage() {
   const [layout, setLayout] = useState("grid");
-
-  const { setTheme } = useThemeContext();
-
-  useEffect(() => {
-    const localData = localStorage.getItem("themes");
-    if (localData == null) {
-      localStorage.setItem("themes", "red");
-      setTheme("red");
-    }
-    setTheme(localData);
-  }, []);
 
   const items = [
     { title: "หน้าหลัก", href: "/" },

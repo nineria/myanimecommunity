@@ -2,7 +2,13 @@ import Announcement from "@components/Announcement";
 import Navbar from "@components/Navbar";
 import PostLayout from "@components/PostComponent/PostLayout";
 import PostsMenuController from "@components/PostComponent/MenuController";
-import { Anchor, Breadcrumbs, Container, Stack } from "@mantine/core";
+import {
+  Anchor,
+  Breadcrumbs,
+  Container,
+  Stack,
+  useMantineColorScheme,
+} from "@mantine/core";
 
 import React, { useEffect, useState } from "react";
 import { useThemeContext } from "@lib/useTheme";
@@ -13,12 +19,16 @@ export default function ReviewPage() {
 
   const { setTheme } = useThemeContext();
 
+  const { toggleColorScheme } = useMantineColorScheme();
+
   useEffect(() => {
     const localData = localStorage.getItem("themes");
     if (localData == null) {
       localStorage.setItem("themes", "red");
       setTheme("red");
     }
+    if (localData === "red-light") toggleColorScheme("light");
+    else toggleColorScheme("dark");
     setTheme(localData);
   }, []);
 

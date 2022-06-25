@@ -1,29 +1,40 @@
+import { Button, ThemeIcon } from "@mantine/core";
 import React from "react";
 import { LayoutGrid, ListDetails } from "tabler-icons-react";
 
 export default function PostsMenuController({ layout, setLayout }) {
   return (
     <div className="flex flex-row justify-between w-full bg-foreground rounded-sm p-1">
-      <div className="flex items-center px-1 bg-content w-fit rounded-sm font-bold text-sm hover:opacity-75 cursor-pointer">
+      <Button
+        className="bg-content text-accent hover:bg-content hover:opacity-75"
+        variant="default"
+        size="xs"
+      >
         สร้างโพสต์ +
-      </div>
+      </Button>
       <div className="flex flex-row gap-2">
-        <div
+        <ThemeIcon
+          variant={layout === "grid" ? "dark" : "light"}
+          className="cursor-pointer"
+          color="gray"
           onClick={() => setLayout("grid")}
-          className={`p-1 ${
-            layout === "grid" ? "bg-background" : "bg-foreground"
-          }  w-fit rounded-sm font-bold text-sm hover:opacity-75 cursor-pointer`}
         >
-          <LayoutGrid size={17} className="text-title" />
-        </div>
-        <div
+          <LayoutGrid
+            size={14}
+            className={layout === "grid" ? "text-accent" : "text-title"}
+          />
+        </ThemeIcon>
+        <ThemeIcon
+          variant={`${layout === "grid" ? "light" : "dark"}`}
+          className="cursor-pointer"
+          color="gray"
           onClick={() => setLayout("list")}
-          className={`p-1 ${
-            layout === "list" ? "bg-background" : "bg-foreground"
-          }  w-fit rounded-sm font-bold text-sm hover:opacity-75 cursor-pointer`}
         >
-          <ListDetails size={17} className="text-title" />
-        </div>
+          <ListDetails
+            size={14}
+            className={layout === "grid" ? "text-title" : "text-accent"}
+          />
+        </ThemeIcon>
       </div>
     </div>
   );

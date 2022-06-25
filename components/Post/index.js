@@ -1,7 +1,16 @@
-import { Avatar, Badge, Divider, Image, Stack, Text } from "@mantine/core";
+import {
+  Avatar,
+  Badge,
+  Button,
+  Divider,
+  Group,
+  Image,
+  Stack,
+  Text,
+} from "@mantine/core";
 import { data } from "autoprefixer";
 import React from "react";
-import { CalendarMinus, Eye, ThumbUp } from "tabler-icons-react";
+import { CalendarMinus, Edit, Eye, ThumbUp } from "tabler-icons-react";
 
 export default function Post({ data }) {
   return (
@@ -59,7 +68,17 @@ function LeftMenu({ data }) {
 function MainPost({ data }) {
   return (
     <div className="relative px-2 py-2 text-title text-opacity-90">
-      <p className="text-xs opacity-80 mb-2">แกไขล่าสุด : 1 พฤภาคม 2022</p>
+      <Group position="apart" pb="xs">
+        <p className="text-xs opacity-80 mb-2">แก้ไขล่าสุด : 1 พฤภาคม 2022</p>
+        <Button
+          leftIcon={<Edit size={14} />}
+          className="bg-content text-accent hover:bg-content hover:opacity-75"
+          variant="default"
+          size="xs"
+        >
+          แก้ไข
+        </Button>
+      </Group>
       <Image src={data?.postImageURL} />
       <h1 className="text-lg mt-4 font-bold">{data.header}</h1>
       <p className="text-base">{data.body}</p>

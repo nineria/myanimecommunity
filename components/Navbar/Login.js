@@ -12,6 +12,7 @@ import {
   PasswordInput,
   Stack,
   Title,
+  useMantineTheme,
 } from "@mantine/core";
 import Link from "next/link";
 import React, { useContext, useState } from "react";
@@ -25,15 +26,17 @@ export default function Login() {
     <div className="flex flex-row justify-end w-full gap-2">
       <Modal
         size="md"
+        overlayColor="#333"
         opened={openedLogin}
         onClose={() => setOpenedLogin(false)}
         title={<Logo />}
       >
         {/* Modal content */}
+
         {openedLogin && <LoginPopUp />}
       </Modal>
       <Button
-        className="bg-content hover:bg-content hover:opacity-75"
+        className="bg-content text-accent hover:bg-content hover:opacity-75"
         variant="default"
         onClick={() => setOpenedLogin(true)}
       >
@@ -41,6 +44,7 @@ export default function Login() {
       </Button>
       <Modal
         size="md"
+        overlayColor="#333"
         opened={openedRegister}
         onClose={() => setOpenedRegister(false)}
         title={<Logo />}
@@ -49,7 +53,7 @@ export default function Login() {
         {openedRegister && <RegisterPopUp />}
       </Modal>
       <Button
-        className="bg-background text-title hover:bg-foreground hover:opacity-75"
+        className="bg-background text-accent hover:bg-foreground hover:opacity-75"
         variant="default"
         onClick={() => setOpenedRegister(true)}
       >
@@ -65,7 +69,7 @@ function Logo() {
       <div className=" font-bold cursor-pointer text-xl">
         <span className="text-[#4C6EF5]">My</span>
         <span className="text-content">A</span>
-        <span className="text-white">nimeCommunity</span>
+        <span className="text-title">nimeCommunity</span>
       </div>
     </Link>
   );
@@ -109,7 +113,7 @@ export function LoginPopUp() {
       <Center>
         <div
           onClick={signInWithGoogle}
-          className="bg-white py-2 px-4 rounded-sm cursor-pointer hover:opacity-75 group"
+          className="bg-white shadow-md border-[1px] border-gray-300 py-2 px-4 rounded-sm cursor-pointer hover:opacity-75 group"
         >
           <div className="flex flex-row gap-2 items-center">
             <Image src={googleLogo} width="30px" />
@@ -179,7 +183,7 @@ export function RegisterPopUp() {
       <Center>
         <div
           onClick={signInWithGoogle}
-          className="bg-white py-2 px-4 rounded-sm cursor-pointer hover:opacity-75 group"
+          className="bg-white shadow-md border-[1px] border-gray-300 py-2 px-4 rounded-sm cursor-pointer hover:opacity-75 group"
         >
           <div className="flex flex-row gap-2 items-center">
             <Image src={googleLogo} width="30px" />

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Animate } from "react-simple-animate";
 import {
   AlertOctagon,
@@ -30,10 +30,12 @@ import {
   Center,
   Image,
   Text,
+  useMantineColorScheme,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Footer } from "@components/Footer";
 import PageNotFound from "./404";
+import { useThemeContext } from "@lib/useTheme";
 
 export default function UserProfilePage() {
   const { user, username } = useContext(UserContext); // User data
