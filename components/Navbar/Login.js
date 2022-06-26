@@ -1,4 +1,3 @@
-import { UserContext } from "@lib/context";
 import { auth, googleAuthProvider } from "@lib/firebase";
 import {
   Button,
@@ -12,10 +11,11 @@ import {
   PasswordInput,
   Stack,
   Title,
-  useMantineTheme,
 } from "@mantine/core";
 import Link from "next/link";
-import React, { useContext, useState } from "react";
+import WebsiteRulePage from "pages/websiteRule";
+import PrivacyPolicyPage from "pages/privacyPolicy";
+import React, { useState } from "react";
 import { Mail } from "tabler-icons-react";
 
 export default function Login() {
@@ -96,19 +96,17 @@ export function LoginPopUp() {
       <InputWrapper id="input-demo" required label="รหัสผ่าน">
         <PasswordInput placeholder="รหัสผ่านของคุณ" id="your-password" />
       </InputWrapper>
-      <Group position="apart">
-        <Link href="/register">
-          <p className="text-sm hover:underline cursor-pointer">
-            ไม่มีบัญชีงั้นเหรอ? ลงทะเบียน
-          </p>
-        </Link>
-        <Link href="/enter">
-          <a className="bg-content text-accent px-2 py-1 rounded-sm hover:opacity-75">
-            เข้าสู่ระบบ
-          </a>
-        </Link>
-      </Group>
       <Checkbox label="จดจำฉันไว้ในครั้งถัดไป" />
+      <Link href="/">
+        <Button
+          size="sm"
+          fullWidth
+          className="bg-content hover:bg-content hover:opacity-75"
+        >
+          เข้าสู่ระบบ
+        </Button>
+      </Link>
+      <Center>หรือ</Center>
       <Center>
         <div
           onClick={signInWithGoogle}
@@ -129,6 +127,9 @@ export function RegisterPopUp() {
   const signInWithGoogle = async () => {
     await auth.signInWithPopup(googleAuthProvider);
   };
+
+  const [openedWebsiteRule, setOpenedWebsiteRule] = useState(false);
+  const [openedPrivacyPolicy, setOpenedPrivacyPolicy] = useState(false);
 
   const googleLogo =
     "https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png";
@@ -157,27 +158,69 @@ export function RegisterPopUp() {
         <PasswordInput placeholder="ยืนยันรหัสผ่านของคุณ" id="your-password" />
       </InputWrapper>
       <Stack>
+        <Modal
+          size="xl"
+          overlayColor="#333"
+          opened={openedWebsiteRule}
+          onClose={() => setOpenedWebsiteRule(false)}
+          title={<Logo />}
+        >
+          {/* Modal content */}
+
+          {openedWebsiteRule && <WebsiteRulePage />}
+        </Modal>
         <Checkbox
           size="xs"
-          label="ยอมรับ กฎ กติกา และมารยาท ของ MyAnimeCommu"
+          label={
+            <div>
+              ยอมรับ{" "}
+              <span
+                onClick={() => setOpenedWebsiteRule(true)}
+                className="text-content cursor-pointer hover:underline"
+              >
+                กฎ กติกา และมารยาท
+              </span>{" "}
+              ของ MyAnimeCommunity
+            </div>
+          }
         />
+
+        <Modal
+          size="xl"
+          overlayColor="#333"
+          opened={openedPrivacyPolicy}
+          onClose={() => setOpenedPrivacyPolicy(false)}
+          title={<Logo />}
+        >
+          {/* Modal content */}
+
+          {openedPrivacyPolicy && <PrivacyPolicyPage />}
+        </Modal>
         <Checkbox
           size="xs"
-          label="ยอมรับ นโยบายเกี่ยวกับข้อมูลส่วนบุคคล ของ MyAnimeCommunity"
+          label={
+            <div>
+              ยอมรับ{" "}
+              <span
+                onClick={() => setOpenedPrivacyPolicy(true)}
+                className="text-content cursor-pointer hover:underline"
+              >
+                นโยบายเกี่ยวกับข้อมูลส่วนบุคคล
+              </span>{" "}
+              ของ MyAnimeCommunity
+            </div>
+          }
         />
       </Stack>
-      <Group position="apart">
-        <Link href="/enter">
-          <p className="text-sm hover:underline cursor-pointer">
-            มีบัญชีอยู่แล้ว? เข้าสู่ระบบ
-          </p>
-        </Link>
-        <Link href="/enter">
-          <a className="bg-content text-accent px-2 py-1 rounded-sm hover:opacity-75">
-            ลงทะเบียน
-          </a>
-        </Link>
-      </Group>
+      <Link href="/">
+        <Button
+          size="sm"
+          fullWidth
+          className="bg-content hover:bg-content hover:opacity-75"
+        >
+          ลงทะเบียน
+        </Button>
+      </Link>
       <Center>หรือ</Center>
       <Center>
         <div

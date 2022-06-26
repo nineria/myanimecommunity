@@ -11,28 +11,7 @@ import {
 } from "tabler-icons-react";
 import { UserContext } from "@lib/context";
 import Navbar from "@components/Navbar";
-import {
-  Container,
-  Divider,
-  Group,
-  Paper,
-  ThemeIcon,
-  Title,
-  List,
-  Badge,
-  Button,
-  Avatar,
-  Modal,
-  Textarea,
-  Checkbox,
-  Stack,
-  Space,
-  Center,
-  Image,
-  Text,
-  useMantineColorScheme,
-  Card,
-} from "@mantine/core";
+import { Container, Stack } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Footer } from "@components/Footer";
 import PageNotFound from "./404";
