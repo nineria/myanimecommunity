@@ -11,6 +11,8 @@ My Anime Community website purpose is to bring together people who like anime. T
 <img src="./public/image/website-2.png">
 <img src="./public/image/website-3.png">
 <img src="./public/image/website-4.png">
+<img src="./public/image/website-5.png">
+<img src="./public/image/website-6.png">
 </div>
 
 ## Stack
