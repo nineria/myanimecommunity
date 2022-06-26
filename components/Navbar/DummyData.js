@@ -5,6 +5,7 @@ import {
   MoodSuprised,
   Settings,
   Users,
+  ZoomQuestion,
 } from "tabler-icons-react";
 
 export const settingMenuProperty = [
@@ -17,6 +18,11 @@ export const settingMenuProperty = [
     name: "ตั้งค่า",
     link: "/setting",
     icon: <Settings size={14} />,
+  },
+  {
+    name: "คำถามที่พบบ่อย",
+    link: "/faq",
+    icon: <ZoomQuestion size={14} />,
   },
 ];
 
