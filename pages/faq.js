@@ -5,7 +5,6 @@ import {
   Accordion,
   createStyles,
   Card,
-  Text,
   Stack,
   Breadcrumbs,
   Anchor,
@@ -13,7 +12,6 @@ import {
 import Navbar from "@components/Navbar";
 import { useThemeContext } from "@lib/useTheme";
 import { Footer } from "@components/Footer";
-import { Plus } from "tabler-icons-react";
 
 const useStyles = createStyles((theme, _params, getRef) => ({
   icon: { ref: getRef("icon") },
@@ -209,6 +207,7 @@ export default function FaqPage() {
                 <a
                   href="https://www.markdownguide.org/basic-syntax/"
                   target="_blank"
+                  rel="noreferrer"
                 >
                   วิธีการเขียน Markdown
                 </a>
@@ -226,6 +225,7 @@ export default function FaqPage() {
                 <a
                   href="https://support.microsoft.com/en-us/windows/windows-keyboard-tips-and-tricks-588e0b72-0fff-6d3f-aeee-6e5116097942"
                   target="_blank"
+                  rel="noreferrer"
                 >
                   รายการอีโมติคอนทั้งหมดสามารถดูได้ที่นี่
                 </a>
@@ -297,27 +297,31 @@ export default function FaqPage() {
     },
   ];
 
-  const FirstFaqLists = FirstFaqListData.map((data) => (
-    <>
+  const FirstFaqLists = FirstFaqListData.map((data, index) => (
+    <div key={index}>
       <Title order={4} mt="lg" mb="xs">
         {data.title}
       </Title>
       <Accordion iconPosition="left" initialItem={0} classNames={classes}>
-        {data.description.map((item) => (
-          <Accordion.Item label={item.label}>{item.content}</Accordion.Item>
+        {data.description.map((item, index) => (
+          <Accordion.Item key={index} label={item.label}>
+            {item.content}
+          </Accordion.Item>
         ))}
       </Accordion>
-    </>
+    </div>
   ));
 
-  const FaqLists = FaqListData.map((data) => (
-    <Card className="bg-foreground">
+  const FaqLists = FaqListData.map((data, index) => (
+    <Card key={index} className="bg-foreground">
       <Title order={4} mt="lg" mb="xs">
         {data.title}
       </Title>
       <Accordion iconPosition="left" initialItem={0} classNames={classes}>
-        {data.description.map((item) => (
-          <Accordion.Item label={item.label}>{item.content}</Accordion.Item>
+        {data.description.map((item, index) => (
+          <Accordion.Item key={index} label={item.label}>
+            {item.content}
+          </Accordion.Item>
         ))}
       </Accordion>
     </Card>
