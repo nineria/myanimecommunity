@@ -7,11 +7,9 @@
 My Anime Community website purpose is to bring together people who like anime. They can come in and talk and exchange knowledge about anime, manga or light novels.
 
 ### Home page
-
 <img src="./public/image/website-1.png">
 
 ### All Posts
-
 <img src="./public/image/website-2.png">
 
 ### Post
@@ -23,8 +21,12 @@ My Anime Community website purpose is to bring together people who like anime. T
 ### Profile
 <img src="./public/image/website-5.png">
 
-### Information
+### Statistics
 <img src="./public/image/website-6.png">
+
+### Setting (Theme)
+<img src="./public/image/website-7.png">
+
 
 ## Stack
 
