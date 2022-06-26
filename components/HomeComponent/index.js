@@ -1,9 +1,10 @@
 import HomePost from "@components/HomePost";
 import AddPost from "@components/HomePost/Add";
 import { UserContext } from "@lib/context";
-import { Container, Modal } from "@mantine/core";
+import { Button, Container, Modal } from "@mantine/core";
 import { useContext, useState } from "react";
 import { Animate } from "react-simple-animate";
+import { FilePlus, Plus } from "tabler-icons-react";
 
 export default function HomeComponent() {
   const { user, username } = useContext(UserContext);
@@ -65,7 +66,7 @@ export default function HomeComponent() {
             <div className="">
               <div className="flex flex-col gap-2">
                 {/* Add home post */}
-                <div>
+                <div className="flex flex-row justify-between w-full bg-foreground rounded-sm p-1 shadow-md">
                   <Modal
                     size="lg"
                     overlayColor="#333"
@@ -79,9 +80,14 @@ export default function HomeComponent() {
                       handlePostDataChange={HandlePostDataChange}
                     />
                   </Modal>
-                  <div className="bg-content w-fit px-3 rounded-sm cursor-pointer hover:translate-y-[1px] hover:opacity-75 md:text-base text-sm text-[#fff]">
-                    <div onClick={() => setOpened(true)}>สร้าง +</div>
-                  </div>
+                  <Button
+                    onClick={() => setOpened(true)}
+                    className="bg-content text-accent hover:bg-content hover:opacity-75"
+                    variant="default"
+                    size="xs"
+                  >
+                    สร้างโพสต์ +
+                  </Button>
                 </div>
                 {/* Display home post */}
                 <div className="flex flex-col gap-2">
@@ -97,19 +103,5 @@ export default function HomeComponent() {
         )}
       </div>
     </Container>
-  );
-}
-
-function CreateHomePost({ HandleOpenMenu, openMenu }) {
-  return (
-    <div className="bg-content w-fit px-3 rounded-sm cursor-pointer hover:translate-y-[1px] hover:opacity-75 md:text-base text-sm text-[#fff]">
-      <div
-        onClick={() => {
-          HandleOpenMenu(!openMenu);
-        }}
-      >
-        สร้าง +
-      </div>
-    </div>
   );
 }

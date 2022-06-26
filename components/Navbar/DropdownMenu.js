@@ -36,7 +36,7 @@ export default function UserMenu({ user, isBusy, signOut }) {
             </div>
           </a>
         </Link>
-        <Menu withArrow placement="end">
+        <Menu withArrow placement="end" shadow="md">
           {/* Setting */}
           <Menu.Label>การตั้งค่า</Menu.Label>
           {settingMenuProperty &&

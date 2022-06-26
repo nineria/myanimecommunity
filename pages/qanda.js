@@ -73,8 +73,8 @@ export default function QAndAPage() {
         <Container size="lg">
           <Stack spacing="xs">
             <Breadcrumbs separator="→">{items}</Breadcrumbs>
-
             {/* Announcement */}
+
             {/* Menu Controller */}
             <PostsMenuController layout={layout} setLayout={setLayout} />
             {/* Posts */}

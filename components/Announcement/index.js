@@ -18,7 +18,7 @@ export default function Announcement({ type, title, content }) {
   }, []);
 
   return (
-    <div>
+    <div className="shadow-md">
       {onClose ? (
         <Animate
           play

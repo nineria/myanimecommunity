@@ -109,7 +109,6 @@ export function LoginPopUp() {
         </Link>
       </Group>
       <Checkbox label="จดจำฉันไว้ในครั้งถัดไป" />
-      <Center>หรือ</Center>
       <Center>
         <div
           onClick={signInWithGoogle}

@@ -4,7 +4,7 @@ import { LayoutGrid, ListDetails } from "tabler-icons-react";
 
 export default function PostsMenuController({ layout, setLayout }) {
   return (
-    <div className="flex flex-row justify-between w-full bg-foreground rounded-sm p-1">
+    <div className="flex flex-row justify-between w-full bg-foreground rounded-sm p-1 shadow-md">
       <Button
         className="bg-content text-accent hover:bg-content hover:opacity-75"
         variant="default"

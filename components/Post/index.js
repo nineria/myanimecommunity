@@ -1,14 +1,4 @@
-import {
-  Avatar,
-  Badge,
-  Button,
-  Divider,
-  Group,
-  Image,
-  Stack,
-  Text,
-} from "@mantine/core";
-import { data } from "autoprefixer";
+import { Avatar, Badge, Button, Group, Image, Text } from "@mantine/core";
 import React from "react";
 import { CalendarMinus, Edit, Eye, ThumbUp } from "tabler-icons-react";
 
@@ -18,7 +8,7 @@ export default function Post({ data }) {
       {/* Left menu */}
       <div className="flex flex-row ">
         <LeftMenu data={data} />
-        <div className="px-[0.5px] bg-white opacity-50"></div>
+        <div className="px-[0.5px] bg-white opacity-50" />
         <MainPost data={data} />
       </div>
     </div>
@@ -26,6 +16,18 @@ export default function Post({ data }) {
 }
 
 function LeftMenu({ data }) {
+  const ranks = data.rank.map((item, index) => (
+    <Badge
+      radius="sm"
+      variant="filled"
+      color={item.color}
+      rightSection={item.icon}
+      key={index}
+    >
+      {item.name}
+    </Badge>
+  ));
+
   return (
     <div className="px-2 py-4">
       <div className="flex flex-col items-center w-[100px] ">
@@ -34,19 +36,7 @@ function LeftMenu({ data }) {
         <p className="text-title text-xs">Admin</p>
       </div>
       {/* Ranks */}
-      <div className="flex flex-col gap-1 mt-4">
-        {data.rank.map((item, index) => (
-          <Badge
-            radius="sm"
-            variant="filled"
-            color={item.color}
-            rightSection={item.icon}
-            key={index}
-          >
-            {item.name}
-          </Badge>
-        ))}
-      </div>
+      <div className="flex flex-col gap-1 mt-4">{ranks}</div>
       <div className="flex flex-col mt-4 text-title text-opacity-80">
         <div className="flex flex-row items-center text-xs gap-2">
           <CalendarMinus size={14} />

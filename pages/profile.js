@@ -31,14 +31,167 @@ import {
   Image,
   Text,
   useMantineColorScheme,
+  Card,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Footer } from "@components/Footer";
 import PageNotFound from "./404";
 import { useThemeContext } from "@lib/useTheme";
+import UserCardImage from "@components/ProfileComponent/UserCardImage";
+import StatsSegments from "@components/ProfileComponent/StatsSegments";
+import { StatsGridIcons } from "@components/ProfileComponent/StatsGridIcons";
+import { TableReviews } from "@components/ProfileComponent/TableReviews";
+import { TableSort } from "@components/ProfileComponent/TableSort";
 
 export default function UserProfilePage() {
-  const { user, username } = useContext(UserContext); // User data
+  const { user, username } = useContext(UserContext);
+
+  const [userInfo, setUserInfo] = useState({
+    image: "https://i.imgur.com/T8MOpCp_d.webp?maxwidth=760&fidelity=grand",
+    avatar: user?.photoURL || "",
+    username: username || "Username",
+    name: user?.displayName || "Name",
+    ranks: [
+      {
+        color: "red",
+        label: "อัศวิน",
+      },
+      {
+        color: "yellow",
+        label: "ผู้ดูแลระบบ",
+      },
+      {
+        color: "gray",
+        label: "ผู้เฒ่า",
+      },
+      {
+        color: "cyan",
+        label: "นายทุน",
+      },
+    ],
+    stats: [
+      {
+        value: "34K",
+        label: "ถูกใจ",
+      },
+      {
+        value: "187",
+        label: "โพสต์",
+      },
+      {
+        value: "1.6K",
+        label: "คอมเมนต์",
+      },
+    ],
+  });
+
+  // Multiple Percentage Calculator
+  // p = ( x / y ) * 100
+  // Ex 100 (10 / 73) * 100
+
+  const [userStatsSegments, setUserStatsSegments] = useState({
+    total: "73",
+    diff: 18,
+    data: [
+      {
+        label: "โพสต์",
+        count: "10",
+        part: 13.6986,
+        color: "#7952B3",
+      },
+      {
+        label: "คอมเมนต์",
+        count: "56",
+        part: 76.7123,
+        color: "#343A40",
+      },
+      {
+        label: "รีวิว",
+        count: "7",
+        part: 9.589,
+        color: "#FFC107",
+      },
+    ],
+  });
+
+  const [userStatsGridIcons, setUserStatsGridIcons] = useState({
+    data: [
+      {
+        title: "โพสต์",
+        value: "10",
+        diff: 34,
+      },
+      {
+        title: "คอมเมนต์",
+        value: "56",
+        diff: -13,
+      },
+      {
+        title: "รีวิว",
+        value: "7",
+        diff: 100,
+      },
+    ],
+  });
+
+  const [userTablePostReviews, setUserTablePostReviews] = useState({
+    data: [
+      {
+        title: "มีข้อสงสัยเกี่ยวกับตอนจบในอนิเมะ Jujutsu Kaisen ครับ",
+        author: "nineria",
+        date: "13/05/2022",
+        reviews: {
+          positive: 2223,
+          negative: 259,
+        },
+      },
+      {
+        title: "อนิเมะที่ดังและครองใจคนดูทุกเพศทุกวัย",
+        author: "nineria",
+        date: "13/05/2022",
+        reviews: {
+          positive: 5677,
+          negative: 1265,
+        },
+      },
+      {
+        title: "หนังที่ใช้เวลาเพียงแค่ 10 นาที น้ำตาแตก",
+        author: "nineria",
+        date: "13/05/2022",
+        reviews: {
+          positive: 3487,
+          negative: 1845,
+        },
+      },
+      {
+        title: "อัศวินแห่ง “สวนหลวง” กับสาว “ผักสวนครัว”",
+        author: "nineria",
+        date: "13/05/2022",
+        reviews: {
+          positive: 8576,
+          negative: 663,
+        },
+      },
+      {
+        title: "พาทุกคนมาไปยิ้มแก้มปริกับความน่ารักสาวแฟนเช่า",
+        author: "nineria",
+        date: "13/05/2022",
+        reviews: {
+          positive: 6631,
+          negative: 993,
+        },
+      },
+      {
+        title: "สปอยอนิเมะภรรยาของผมยังไงก็น่ารักภาค 1",
+        author: "nineria",
+        date: "13/05/2022",
+        reviews: {
+          positive: 1492,
+          negative: 1847,
+        },
+      },
+    ],
+  });
 
   const postDummy = [
     // Dummy data (Temporary)
@@ -131,12 +284,6 @@ export default function UserProfilePage() {
       "Catch up on what’s been cookin’ at Smashing and explore some of the most popular community resources.",
   };
 
-  const rankProps = ["ผู้ดูแลระบบ", "ผู้เฒ่า", "นายทุน", "อัศวิน"];
-
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const [opened, setOpened] = useState(false);
-
   return (
     <>
       <div className="bg-background text-accent min-h-[1024px]">
@@ -151,284 +298,17 @@ export default function UserProfilePage() {
               }}
               end={{ transform: "translateY(0%)", opacity: "1" }}
             >
-              <div className="flex flex-col justify-between mt-2 text-title text-opacity-80">
-                <Group className="bg-foreground rounded-t-sm py-2 px-4 font-bold w-full">
-                  <User size={18} />
-                  {user?.displayName} ({username || "username"})
-                </Group>
-                {/* Background Image */}
-                <div className="h-56 bg-[#25262b] -z-10 overflow-hidden">
-                  <Image
-                    className="-translate-y-1/2 "
-                    src="https://i.pinimg.com/originals/d2/e2/80/d2e280b67f661783fb70ba721c6f2b8e.png" // Temporary
-                  />
-                </div>
-
-                {/* Button -> Edit bg-image, Report user */}
-                <div className="fixed top-12 right-2">
-                  <div className="flex flex-col gap-2 text-accent">
-                    <div className="text-sm justify-end flex flex-row items-center gap-1 cursor-pointer hover:opacity-75">
-                      <Edit size={16} /> แก้ไขรูปภาพพื้นหลัง
-                    </div>
-
-                    <Modal
-                      opened={opened}
-                      onClose={() => setOpened(false)}
-                      title="เหตุผลที่รายงาน!"
-                    >
-                      <Stack>
-                        <Checkbox label="ชื่อผู้ใช้ไม่เหมาะสม" />
-                        <Checkbox label="ใช้วาจาไม่เหมาะสม / ทัศนคติเชิงลบ" />
-                        <Checkbox label="โฆษณาขายของ / การสแปมข้อความ" />
-                        <Checkbox label="คำพูดแสดงถึงความเกลียดชัง" />
-                        <Checkbox label="เนื้อหามีการอัพเดท" />
-                        <Textarea placeholder="โปรดระบุ" label="อื่นๆ" />
-                      </Stack>
-                      <Space />
-                      <Center mt="md">
-                        <Group>
-                          <div
-                            onClick={() => setOpened(false)}
-                            className="text-base bg-content w-fit px-4 py-1 text-accent rounded-sm cursor-pointer hover:opacity-75"
-                          >
-                            ยกเลิก
-                          </div>
-                          <div
-                            onClick={() => setOpened(false)}
-                            className="text-base text-title bg-foreground w-fit px-4 py-1 rounded-sm cursor-pointer hover:opacity-75"
-                          >
-                            ส่งเรื่อง
-                          </div>
-                        </Group>
-                      </Center>
-                    </Modal>
-                    <div
-                      onClick={() => setOpened(true)}
-                      className="text-sm justify-end flex flex-row items-center gap-1 cursor-pointer hover:opacity-75 rounded-sm"
-                    >
-                      <AlertOctagon size={16} /> รายงานผู้ใช้
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex flex-col pb-4 bg-foreground rounded-b-sm">
-                  <div className="fixed top-32 bg-foreground text-title text-opacity-80 bg-opacity-70 rounded-sm ml-4">
-                    <div className="flex flex-row px-3 my-2">
-                      {/* Profile image */}
-                      <Avatar
-                        name={user?.displayName || "username"}
-                        src={user?.photoURL}
-                        size="xxl"
-                        radius="xs"
-                      />
-                      {/* Button Edit -> User profile image */}
-                      <div className="flex flex-col justify-end gap-2 pl-4 pb-2">
-                        <p className="text-3xl font-bold">{username}</p>
-                        <Button
-                          variant="outline"
-                          className="text-title border-title text-opacity-80 border-opacity-80"
-                          compact
-                        >
-                          แก้ไขรูปภาพประจำตัว
-                        </Button>
-                        <Group spacing="xs">
-                          {rankProps &&
-                            rankProps.map((item, index) => (
-                              <Badge
-                                key={index}
-                                variant="filled"
-                                color="yellow"
-                              >
-                                {item}
-                              </Badge>
-                            ))}
-                        </Group>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div>
-                    <div className="w-full px-4">
-                      {/* Description */}
-                      <div className="flex flex-col gap-2">
-                        <Divider
-                          my="xs"
-                          label="คำอธิบายตัวเอง"
-                          labelPosition="center"
-                        />
-                        <Paper
-                          shadow="xs"
-                          p="md"
-                          className="bg-background text-title text-opacity-80"
-                        >
-                          <Text>{paperProps.date}</Text>
-                          <Title order={3}>{paperProps.title}</Title>
-                          <Text>{paperProps.content}</Text>
-                          <div className="bg-foreground text-title text-opacity-80 text-sm text-center py-1 rounded-sm hover:opacity-75 cursor-pointer mt-4">
-                            แก้ไขคำอธิบายตัวเอง
-                          </div>
-                        </Paper>
-                        <Divider
-                          my="xs"
-                          label="รายละเอียด"
-                          labelPosition="center"
-                        />
-                        {/* Information */}
-                        <List spacing="xs" size="sm">
-                          {socialProps &&
-                            socialProps.map((item, index) => (
-                              <List.Item
-                                key={index}
-                                className="text-title text-opacity-80"
-                                icon={
-                                  <ThemeIcon
-                                    className="bg-background"
-                                    size={24}
-                                    radius="xl"
-                                  >
-                                    {item.icon}
-                                  </ThemeIcon>
-                                }
-                              >
-                                {item.name}
-                              </List.Item>
-                            ))}
-                        </List>
-
-                        <div className="bg-background text-title text-opacity-80 text-sm text-center py-1 rounded-sm hover:opacity-75 cursor-pointer mt-4">
-                          แก้ไขรายละเอียด
-                        </div>
-
-                        <Divider
-                          my="xs"
-                          label="แนวที่ชอบ"
-                          labelPosition="center"
-                        />
-                        {/* Favorite tag */}
-                        <Group spacing="xs">
-                          {typeProps &&
-                            typeProps.map((item, index) => (
-                              <Badge
-                                key={index}
-                                variant="gradient"
-                                gradient={{
-                                  from: item.color.from,
-                                  to: item.color.to,
-                                  deg: 105,
-                                }}
-                              >
-                                {item.name}
-                              </Badge>
-                            ))}
-                        </Group>
-                        <div className="bg-background text-title text-opacity-80 text-sm text-center py-1 rounded-sm hover:opacity-75 cursor-pointer mt-4">
-                          แก้ไขแนวที่ชอบ
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Stat -> Post, Like, Comment */}
-                {/* <div className="flex flex-row justify-around w-full bg-[#25262b] rounded-md pb-4 mt-2 p-4">
-              <Flex justifyContent="space-around" w="full">
-                <Stat textAlign="center">
-                  <StatLabel>โพสต์</StatLabel>
-                  <StatNumber>25</StatNumber>
-                  <StatHelpText>
-                    <StatArrow type="increase" />
-                    10.25%
-                  </StatHelpText>
-                </Stat>
-                <Stat textAlign="center">
-                  <StatLabel>ถูกใจ</StatLabel>
-                  <StatNumber>26K</StatNumber>
-                  <StatHelpText>
-                    <StatArrow type="increase" />
-                    58.29%
-                  </StatHelpText>
-                </Stat>
-                <Stat textAlign="center">
-                  <StatLabel>คอมเมนต์</StatLabel>
-                  <StatNumber>2.1K</StatNumber>
-                  <StatHelpText>
-                    <StatArrow type="decrease" />
-                    1.26%
-                  </StatHelpText>
-                </Stat>
-              </Flex>
-            </div> */}
-
-                {/* Created post, Liked post, My comment */}
-                {/* <div className="w-full bg-[#25262b] rounded-md pb-4 my-2">
-              <Tabs isFitted variant="enclosed">
-                <TabList>
-                  <Tab>โพสต์ของฉัน</Tab>
-                  <Tab>โพสต์ที่ชื่นชอบ</Tab>
-                  <Tab>คอมเมนต์</Tab>
-                </TabList>
-                <TabPanels>
-                  <TabPanel>
-                    {postDummy.map((item, key) => (
-                      <LinkBox
-                        borderWidth="1px"
-                        borderRadius="sm"
-                        overflow="hidden"
-                        key={key}
-                        my="1"
-                      >
-                        <Flex gap="2">
-                          <Flex
-                            flexDir="column"
-                            backgroundColor="#323436"
-                            minWidth="100px"
-                            maxWidth="100px"
-                            py="2"
-                          >
-                            <Avatar
-                              margin="auto"
-                              name={user?.displayName || "username"}
-                              src={user?.photoURL}
-                              bg="white"
-                            />
-                            <Text textAlign="center" color="yellow.400">
-                              {username || "username"}
-                            </Text>
-                            <Text
-                              textAlign="center"
-                              fontSize="xs"
-                              color="#ec5555"
-                            >
-                              Admin
-                            </Text>
-                          </Flex>
-                          <Flex flexDir="column" pt="2">
-                            <Text fontSize="x-small" color="#bbb">
-                              {item.postTime}
-                            </Text>
-                            <Heading size="md" noOfLines={1}>
-                              <LinkOverlay href="#">{item.header}</LinkOverlay>
-                            </Heading>
-                            <Text
-                              fontSize="sm"
-                              overflow="hidden"
-                              h="10"
-                              noOfLines={3}
-                            >
-                              {item.body}
-                            </Text>
-                          </Flex>
-                        </Flex>
-                      </LinkBox>
-                    ))}
-                    <div className="bg-[#37383a] text-center py-1 rounded-md hover:opacity-75 cursor-pointer mt-2">
-                      โหลดข้อมูลเพิ่มเติม...
-                    </div>
-                  </TabPanel>
-                </TabPanels>
-              </Tabs>
-            </div> */}
-              </div>
+              <Stack spacing="xs">
+                <UserCardImage data={userInfo} />
+                <StatsGridIcons data={userStatsGridIcons.data} />
+                <StatsSegments
+                  total={userStatsSegments.total}
+                  diff={userStatsSegments.diff}
+                  data={userStatsSegments.data}
+                />
+                <TableReviews data={userTablePostReviews.data} />
+                {/* <TableSort data={tmpData} /> */}
+              </Stack>
             </Animate>
           </Container>
         ) : (
