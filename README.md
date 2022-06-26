@@ -31,9 +31,10 @@ My Anime Community website purpose is to bring together people who like anime. T
 ## Stack
 
 - [Next.js](https://nextjs.org/) - The React Framework for Production
-- [Chakra UI](https://chakra-ui.com/) - Chakra UI is a simple, modular and accessible component library
 - [Firebase](https://firebase.google.com/) - Cross-platform SDKs documentation help you build and ship apps on Android, iOS and Website
-
+- [Mantine](https://mantine.dev/) - Mantine core library includes all essential components: inputs, buttons, modals, popovers, typography elements, layout management, etc.
+- [React Simple Animate](https://react-simple-animate.vercel.app/) - UI Animation Made Simple
+- [Tabler Icons](https://github.com/tabler/tabler-icons) - Pixel-perfect icons for web design
 ## Project structure
 
 ```
