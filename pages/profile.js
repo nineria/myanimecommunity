@@ -113,7 +113,7 @@ export default function UserProfilePage() {
     ],
   });
 
-  const [userTablePostReviews, setUserTablePostReviews] = useState({
+  const userTablePostReviews = {
     data: [
       {
         title: "มีข้อสงสัยเกี่ยวกับตอนจบในอนิเมะ Jujutsu Kaisen ครับ",
@@ -170,7 +170,7 @@ export default function UserProfilePage() {
         },
       },
     ],
-  });
+  };
 
   const postDummy = [
     // Dummy data (Temporary)

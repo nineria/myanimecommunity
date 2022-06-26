@@ -40,17 +40,28 @@ export default function UserCardImage({ data }) {
       <Card.Section
         sx={{
           backgroundImage: `url(${data.image})`,
-          height: 240,
+          height: 260,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       />
+      <div className="fixed top-2 right-0 p-[2px] bg-foreground rounded-l-md">
+        <Button
+          className="border-none mr-2 text-title hover:bg-content hover:text-accent"
+          compact
+          variant="default"
+          rightIcon={<AlertTriangle size={20} />}
+          onClick={() => setOpened(true)}
+        >
+          แจ้งรายงาน
+        </Button>
+      </div>
       <Avatar
         src={data.avatar}
         size={120}
         radius={120}
         mx="auto"
-        mt={-60}
+        mt={-90}
         className="border-2 border-foreground"
       />
       <Stack spacing="sm">
@@ -87,7 +98,7 @@ function ReportUser({ opened, setOpened }) {
           <Checkbox label="โฆษณาขายของ / การสแปมข้อความ" />
           <Checkbox label="คำพูดแสดงถึงความเกลียดชัง" />
           <Checkbox label="เนื้อหามีการอัพเดท" />
-          <Textarea placeholder="โปรดระบุ" label="อื่นๆ" />
+          <Textarea placeholder="โปรดระบุ" label="อื่นๆ" minRows={2} autosize />
         </Stack>
         <Space />
         <Group position="center" mt="sm">
@@ -107,29 +118,15 @@ function ReportUser({ opened, setOpened }) {
           </Button>
         </Group>
       </Modal>
-      <Grid mt="sm">
-        <Grid.Col sm={12} md={6}>
-          <Button
-            fullWidth
-            className="bg-content text-accent hover:bg-content hover:opacity-75"
-            variant="default"
-            rightIcon={<AlertTriangle size={20} />}
-            onClick={() => setOpened(true)}
-          >
-            รายงานผู้ใช้
-          </Button>
-        </Grid.Col>
-        <Grid.Col sm={12} md={6}>
-          <Button
-            fullWidth
-            className="bg-black/30 text-accent hover:bg-black/30 hover:opacity-75"
-            variant="default"
-            rightIcon={<Edit size={20} />}
-          >
-            แก้ไขรายละเอียด
-          </Button>
-        </Grid.Col>
-      </Grid>
+
+      <Button
+        fullWidth
+        className="bg-black/30 text-accent hover:bg-black/30 hover:opacity-75"
+        variant="default"
+        rightIcon={<Edit size={20} />}
+      >
+        แก้ไขรายละเอียด
+      </Button>
     </>
   );
 }
