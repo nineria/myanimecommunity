@@ -11,9 +11,7 @@ import {
   Breadcrumbs,
   Container,
   Pagination,
-  Space,
   Stack,
-  useMantineColorScheme,
 } from "@mantine/core";
 import React, { useContext, useEffect, useState } from "react";
 import { CurrencyBitcoin, Flag3, Old } from "tabler-icons-react";
@@ -47,14 +45,14 @@ export default function PostPage() {
   const dummy = {
     tag: ["คำถาม", "สปอย"],
     title: "มีข้อสงสัยเกี่ยวกับตอนจบในอนิเมะ Jujutsu Kaisen ครับ",
-    header: "มีข้อสงสัยเกี่ยวกับตอนจบในอนิเมะ Jujutsu Kaisen ครับ",
-    body: "ขอออกตัวไว้ก่อนว่าผมอาจจะเก็บรายละเอียดไม่ครบก็ได้ คือผมไม่เข้าใจบทสนทนาตอนจบของฟุชิงุโระกับคุงิซากิที่พูดถึงการที่ไม่ให้อิตาโดริรู้เรื่องการสั่นพ้อง (Resonance) ว่าทำไมถึงไม่อยากให้รู้หรอครับ แล้วการสั่นพ้องที่หมายถึงนี่ใช่การสั่นพ้องเดียวกันกับความสามารถของคุงิซากิรึเปล่า รบกวนด้วยนะครับ ขอบคุณครับ",
+    image:
+      "https://www.anime-internet.com/content/images/size/w2000/2021/09/tileburnedin.jpg",
+    content: `<h1>มีข้อสงสัยเกี่ยวกับตอนจบในอนิเมะ Jujutsu Kaisen ครับ</h1> 
+    <p>ขอออกตัวไว้ก่อนว่าผมอาจจะเก็บรายละเอียดไม่ครบก็ได้ คือผมไม่เข้าใจบทสนทนาตอนจบของฟุชิงุโระกับคุงิซากิที่พูดถึงการที่ไม่ให้อิตาโดริรู้เรื่องการสั่นพ้อง (Resonance) ว่าทำไมถึงไม่อยากให้รู้หรอครับ แล้วการสั่นพ้องที่หมายถึงนี่ใช่การสั่นพ้องเดียวกันกับความสามารถของคุงิซากิรึเปล่า รบกวนด้วยนะครับ ขอบคุณครับ</p>`,
     credit:
-      "https://clubsister.com/entertainment/review-jujutsu-kaisen-on-netflix",
+      "https://clubsister.com/entertainment/review-jujutsu-kaisen-on-netfli, https://clubsister.com/entertainment/review-jujutsu-kaisen-on-netfli",
     username: username,
     photoURL: user?.photoURL,
-    postImageURL:
-      "https://www.anime-internet.com/content/images/size/w2000/2021/09/tileburnedin.jpg",
 
     rank: [
       {

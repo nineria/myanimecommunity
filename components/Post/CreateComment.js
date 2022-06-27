@@ -1,8 +1,11 @@
+import MarkdownPreview from "@components/MarkdownPreview";
 import { Avatar, Button, Tabs, Text, Textarea } from "@mantine/core";
-import React from "react";
-import { Markdown } from "tabler-icons-react";
+import React, { useState } from "react";
+import { Markdown as MarkdownIcon } from "tabler-icons-react";
 
 export default function CreateComment({ data }) {
+  const [markdown, setMarkdown] = useState(``);
+
   return (
     <div className="bg-foreground ">
       <div className="flex flex-row">
@@ -16,21 +19,18 @@ export default function CreateComment({ data }) {
                   minRows={1}
                   autosize
                   placeholder="เขียนความคิดเห็น…"
+                  value={markdown}
+                  onChange={(e) => setMarkdown(e.target.value)}
                 />
               </Tabs.Tab>
               <Tabs.Tab label="ตัวอย่าง">
-                สั่นพ้องในที่นี้คือการที่ยูจิกินนิ้วของสุคุนะเข้าไป
-                จึงทำให้มีเหล่าวิญญาณคำสาปออกมาเพ่นพ่านมากมายค่ะ
-                ยูจิไปปลุกราชาคำสาปอย่างสุคุนะขึ้นมา
-                จึงทำให้พลังคำสาปตื่นขึ้นมาด้วย
-                เมงุมิไม่อยากให้ยูจิรู้เรื่องนี้เพราะอาจจะทำให้ยูจิโทษตัวเองว่าเรื่องทั้งหมดที่มันเกิดขึ้น
-                ความตายมั้งหมดที่มันเกิดขึ้น มันเป็นเพราะเค้า
-                เมงุมิเลยบอกโนบาระว่าอย่าให้ยูจิรู้เรื่องนี้เด็ดขาดค่ะ
+                <MarkdownPreview markdown={markdown} />
               </Tabs.Tab>
             </Tabs>
+
             <div className="flex flex-row justify-between mt-2">
               <div className="flex flex-row gap-1 items-center">
-                <Markdown size={16} />
+                <MarkdownIcon size={16} />
                 <Text size="xs">
                   รองรับการเขียนด้วย{" "}
                   <span>
