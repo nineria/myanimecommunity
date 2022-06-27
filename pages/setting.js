@@ -24,7 +24,7 @@ export default function SettingPage() {
     if (localData === "red-light") toggleColorScheme("light");
     else toggleColorScheme("dark");
     setTheme(localData);
-  }, []);
+  }, [setTheme]);
 
   return (
     <>

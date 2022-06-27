@@ -73,7 +73,7 @@ export default function EditPost({ postData }) {
       onClose={() => setOpened(false)}
     >
       <Stack>
-        <Text align="center">ลบแท็ก "{item}" หรือไม่?</Text>
+        <Text align="center">{`ลบแท็ก \"${item}\" หรือไม่?`}</Text>
         <Group grow>
           <Button
             className="bg-content hover:bg-content hover:opacity-75"

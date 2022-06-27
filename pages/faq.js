@@ -70,7 +70,7 @@ export default function FaqPage() {
       setTheme("red");
     }
     setTheme(localData);
-  }, []);
+  }, [setTheme]);
 
   const items = [{ title: "หน้าหลัก", href: "/" }].map((item, index) => (
     <Anchor size="sm" color="dimmed" href={item.href} key={index}>

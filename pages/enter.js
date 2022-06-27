@@ -127,7 +127,7 @@ export default function Enter(props) {
       setTheme("red");
     }
     setTheme(localData);
-  }, []);
+  }, [setTheme]);
 
   // 1. user signed out <SignInButton />
   // 2. user signed in, but missing username <UsernameForm />
@@ -210,7 +210,7 @@ function UsernameForm() {
 
   useEffect(() => {
     checkUsername(formValue);
-  }, [formValue]);
+  }, [formValue, checkUsername]);
 
   // Hit the database for username match after each debounced change
   // useCallback is required for debounce to work

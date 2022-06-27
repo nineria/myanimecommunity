@@ -82,7 +82,8 @@ export default function UserProfile({ user, username }) {
           <div className="h-56 bg-[#25262b] -z-10 overflow-hidden">
             <Image
               className="-translate-y-1/2 "
-              src="https://i.pinimg.com/originals/d2/e2/80/d2e280b67f661783fb70ba721c6f2b8e.png" // Temporary
+              src="https://i.pinimg.com/originals/d2/e2/80/d2e280b67f661783fb70ba721c6f2b8e.png"
+              alt="background image" // Temporary
             />
           </div>
 

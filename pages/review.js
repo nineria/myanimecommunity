@@ -30,7 +30,7 @@ export default function ReviewPage() {
     if (localData === "red-light") toggleColorScheme("light");
     else toggleColorScheme("dark");
     setTheme(localData);
-  }, []);
+  }, [setTheme]);
 
   const items = [
     { title: "หน้าหลัก", href: "/" },

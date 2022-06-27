@@ -22,7 +22,7 @@ export default function WebsiteRule() {
       setTheme("red");
     }
     setTheme(localData);
-  }, []);
+  }, [setTheme]);
 
   return (
     <Card className="bg-foreground text-title">

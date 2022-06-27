@@ -19,10 +19,9 @@ export default function MarkdownPreview({ markdown }) {
       prose-td:text-title
       "
     >
-      <ReactMarkdown
-        children={markdown}
-        rehypePlugins={[rehypeRaw, remarkGfm]}
-      />
+      <ReactMarkdown rehypePlugins={[rehypeRaw, remarkGfm]}>
+        {markdown}
+      </ReactMarkdown>
     </div>
   );
 }

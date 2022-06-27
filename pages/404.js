@@ -13,7 +13,7 @@ export default function PageNotFound() {
       setTheme("red");
     }
     setTheme(localData);
-  }, []);
+  }, [setTheme]);
 
   return (
     <div className="h-screen bg-background">

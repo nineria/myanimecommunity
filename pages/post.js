@@ -30,7 +30,7 @@ export default function PostPage() {
       setTheme("red");
     }
     setTheme(localData);
-  }, []);
+  }, [setTheme]);
 
   const items = [
     { title: "หน้าหลัก", href: "/" },

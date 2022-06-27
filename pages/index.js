@@ -39,7 +39,7 @@ export default function HomePage(props) {
       setTheme("red");
     }
     setTheme(localData);
-  }, []);
+  }, [setTheme]);
 
   const getMorePosts = async () => {
     setLoading(true);

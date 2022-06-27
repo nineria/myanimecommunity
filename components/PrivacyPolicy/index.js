@@ -1,16 +1,5 @@
-import { Footer } from "@components/Footer";
-import Navbar from "@components/Navbar";
 import { useThemeContext } from "@lib/useTheme";
-import {
-  Anchor,
-  Breadcrumbs,
-  Card,
-  Container,
-  Group,
-  List,
-  Stack,
-  Title,
-} from "@mantine/core";
+import { Card, List, Stack, Title } from "@mantine/core";
 import React, { useEffect } from "react";
 
 export default function PrivacyPolicy() {
@@ -23,7 +12,7 @@ export default function PrivacyPolicy() {
       setTheme("red");
     }
     setTheme(localData);
-  }, []);
+  }, [setTheme]);
 
   return (
     <Card className="bg-foreground text-title">

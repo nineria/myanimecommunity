@@ -98,7 +98,12 @@ export function LoginPopUp() {
           className="bg-white w-[200px] text-black border-[1px] border-gray-300 hover:bg-white hover:opacity-75"
           onClick={signInWithGoogle}
         >
-          <Image src="/google-logo.png" width="15px" className="mr-2" />
+          <Image
+            src="/google-logo.png"
+            alt="google"
+            width="15px"
+            className="mr-2"
+          />
           Google
         </Button>
         <Button
@@ -107,7 +112,12 @@ export function LoginPopUp() {
           radius="lg"
           className="bg-white w-[200px] text-black border-[1px] border-gray-300 hover:bg-white hover:opacity-75"
         >
-          <Image src="/facebook-logo.png" width="15px" className="mr-2" />
+          <Image
+            src="/facebook-logo.png"
+            alt="facebook"
+            width="15px"
+            className="mr-2"
+          />
           Facebook
         </Button>
       </Group>
@@ -153,7 +163,12 @@ export function RegisterPopUp() {
           className="bg-white w-[200px] text-black border-[1px] border-gray-300 hover:bg-white hover:opacity-75"
           onClick={signInWithGoogle}
         >
-          <Image src="/google-logo.png" width="15px" className="mr-2" />
+          <Image
+            src="/google-logo.png"
+            alt="google"
+            width="15px"
+            className="mr-2"
+          />
           Google
         </Button>
         <Button
@@ -162,7 +177,12 @@ export function RegisterPopUp() {
           radius="lg"
           className="bg-white w-[200px] text-black border-[1px] border-gray-300 hover:bg-white hover:opacity-75"
         >
-          <Image src="/facebook-logo.png" width="15px" className="mr-2" />
+          <Image
+            src="/facebook-logo.png"
+            alt="facebook"
+            width="15px"
+            className="mr-2"
+          />
           Facebook
         </Button>
       </Group>

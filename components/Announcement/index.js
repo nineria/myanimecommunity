@@ -15,7 +15,7 @@ export default function Announcement({ type, title, content }) {
       setTheme("red");
     }
     setTheme(localData);
-  }, []);
+  }, [setTheme]);
 
   return (
     <div className="shadow-md">

@@ -89,7 +89,7 @@ function MainPost({ data }) {
           แก้ไข
         </Button>
       </Group>
-      <Image radius="sm" src={data.image} mb="sm" />
+      <Image radius="sm" src={data.image} alt={data.title} mb="sm" />
       <MarkdownPreview markdown={data.content} />
       <p className="absolute bottom-2 right-2 font-bold uppercase opacity-5 text-[8vw] text-right tracking-tighter">
         question

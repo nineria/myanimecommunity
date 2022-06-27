@@ -16,7 +16,7 @@ export default function PostLayoutComponent() {
       setTheme("red");
     }
     setTheme(localData);
-  }, []);
+  }, [setTheme]);
 
   const property = [
     {

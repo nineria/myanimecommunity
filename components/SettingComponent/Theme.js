@@ -24,7 +24,7 @@ export default function ThemeComponent() {
     if (localData === "red-light") toggleColorScheme("light");
     else toggleColorScheme("dark");
     setTheme(localData);
-  }, []);
+  }, [setTheme]);
 
   const handleChangeTheme = (value) => {
     if (value === "red-light") toggleColorScheme("light");
