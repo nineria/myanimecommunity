@@ -247,7 +247,7 @@ function TermAndService() {
         <span className="text-content underline cursor-pointer">
           กฎ กติกา และมารยาท
         </span>{" "}
-        ของเว็บไซต์ MyAnimeCommu
+        ของเว็บไซต์ MyAnimeCommunity
         <p>เพื่อรักษาบรรยากาศการพูดคุยของชุมชนคนรักอนิเมะ</p>
       </span>
     </div>
