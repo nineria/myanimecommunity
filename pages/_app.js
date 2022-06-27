@@ -22,7 +22,7 @@ function MyApp({ Component, pageProps }) {
     if (localData === "red-light") toggleColorScheme("light");
     else toggleColorScheme("dark");
     setTheme(localData);
-  }, [setTheme]);
+  }, [setTheme, toggleColorScheme]);
 
   return (
     <UserContext.Provider value={userData}>
