@@ -31,7 +31,7 @@ function LeftMenu({ data }) {
       radius="sm"
       variant="filled"
       color={item.color}
-      rightSection={item.icon}
+      rightSection={item.icon} // Issue
       key={index}
     >
       {item.name}

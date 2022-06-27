@@ -8,7 +8,7 @@ import UserMenu from "./DropdownMenu";
 import Login from "../LoginRegister";
 import NavbarMenu from "./NavbarMenu";
 import { navbarProperty } from "./DummyData";
-import DropdownLoginRegisterMenu from "./DropdownLoginRegisterMenu";
+import LoginRegisterSmallScreen from "./LoginRegisterSmallScreen";
 import { Container } from "@mantine/core";
 
 export default function Navbar({ page, isBusy = false }) {
@@ -46,7 +46,7 @@ export default function Navbar({ page, isBusy = false }) {
                 className="justify-end gap-2 text-white"
                 onClick={() => setToggle(!toggle)}
               >
-                <DropdownLoginRegisterMenu
+                <LoginRegisterSmallScreen
                   login="/enter"
                   register="/register"
                   toggle={toggle}

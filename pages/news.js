@@ -6,19 +6,10 @@ import React, { useState } from "react";
 import { Anchor, Breadcrumbs, Container, Stack } from "@mantine/core";
 import { Footer } from "@components/Footer";
 
-export default function NewsPage() {
-  const [layout, setLayout] = useState("grid");
-
-  const items = [
-    { title: "หน้าหลัก", href: "/" },
-    { title: "โพสต์ทั้งหมด", href: "/posts" },
-  ].map((item, index) => (
-    <Anchor size="sm" color="dimmed" href={item.href} key={index}>
-      {item.title}
-    </Anchor>
-  ));
-
-  const property = [
+// This gets called on every request
+export async function getServerSideProps() {
+  // Fetch data from external API
+  const data = await [
     {
       imageUrl:
         "https://www.matichon.co.th/wp-content/uploads/2019/07/JAPAN-FIRE2.jpg",
@@ -52,6 +43,21 @@ export default function NewsPage() {
       postType: "NEWS",
     },
   ];
+  // Pass data to the page via props
+  return { props: { data } };
+}
+
+export default function NewsPage({ data }) {
+  const [layout, setLayout] = useState("grid");
+
+  const items = [
+    { title: "หน้าหลัก", href: "/" },
+    { title: "โพสต์ทั้งหมด", href: "/posts" },
+  ].map((item, index) => (
+    <Anchor size="sm" color="dimmed" href={item.href} key={index}>
+      {item.title}
+    </Anchor>
+  ));
 
   return (
     <>
@@ -69,7 +75,7 @@ export default function NewsPage() {
             {/* Menu Controller */}
             <PostsMenuController layout={layout} setLayout={setLayout} />
             {/* Posts */}
-            <PostLayout property={property} layout={layout} />
+            <PostLayout property={data} layout={layout} />
           </Stack>
         </Container>
       </div>

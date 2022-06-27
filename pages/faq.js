@@ -58,27 +58,10 @@ const useStyles = createStyles((theme, _params, getRef) => ({
   },
 }));
 
-export default function FaqPage() {
-  const { classes } = useStyles();
-
-  const { setTheme } = useThemeContext();
-
-  useEffect(() => {
-    const localData = localStorage.getItem("themes");
-    if (localData == null) {
-      localStorage.setItem("themes", "red");
-      setTheme("red");
-    }
-    setTheme(localData);
-  }, [setTheme]);
-
-  const items = [{ title: "หน้าหลัก", href: "/" }].map((item, index) => (
-    <Anchor size="sm" color="dimmed" href={item.href} key={index}>
-      {item.title}
-    </Anchor>
-  ));
-
-  const FirstFaqListData = [
+// This gets called on every request
+export async function getServerSideProps() {
+  // Fetch data from external API
+  const data = await [
     {
       title: "ปัญหาการเข้าสู่ระบบและการลงทะเบียน",
       description: [
@@ -120,6 +103,29 @@ export default function FaqPage() {
       ],
     },
   ];
+  // Pass data to the page via props
+  return { props: { data } };
+}
+
+export default function FaqPage({ data }) {
+  const { classes } = useStyles();
+
+  const { setTheme } = useThemeContext();
+
+  useEffect(() => {
+    const localData = localStorage.getItem("themes");
+    if (localData == null) {
+      localStorage.setItem("themes", "red");
+      setTheme("red");
+    }
+    setTheme(localData);
+  }, [setTheme]);
+
+  const items = [{ title: "หน้าหลัก", href: "/" }].map((item, index) => (
+    <Anchor size="sm" color="dimmed" href={item.href} key={index}>
+      {item.title}
+    </Anchor>
+  ));
 
   const FaqListData = [
     {
@@ -297,7 +303,7 @@ export default function FaqPage() {
     },
   ];
 
-  const FirstFaqLists = FirstFaqListData.map((data, index) => (
+  const FirstFaqLists = data.map((data, index) => (
     <div key={index}>
       <Title order={4} mt="lg" mb="xs">
         {data.title}

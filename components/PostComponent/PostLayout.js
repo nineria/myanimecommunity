@@ -4,6 +4,16 @@ import React from "react";
 import { Animate } from "react-simple-animate";
 
 export default function PostLayout({ property, layout }) {
+  const postGrids = property.map((data, index) => (
+    <Grid.Col key={index} sm={6} md={6} lg={4}>
+      <Card layout={layout} property={data} />
+    </Grid.Col>
+  ));
+
+  const postStacks = property.map((data, index) => (
+    <Card layout={layout} key={index} property={data} />
+  ));
+
   return (
     <Animate
       play
@@ -11,21 +21,9 @@ export default function PostLayout({ property, layout }) {
       end={{ transform: "translateY(0%)", opacity: "1" }}
     >
       {layout === "grid" ? (
-        <Grid gutter="xs">
-          {property &&
-            property.map((data, index) => (
-              <Grid.Col key={index} sm={6} md={6} lg={4}>
-                <Card layout={layout} property={data} />
-              </Grid.Col>
-            ))}
-        </Grid>
+        <Grid gutter="xs">{postGrids}</Grid>
       ) : (
-        <Stack spacing={8}>
-          {property &&
-            property.map((data, index) => (
-              <Card layout={layout} key={index} property={data} />
-            ))}
-        </Stack>
+        <Stack spacing={8}>{postStacks}</Stack>
       )}
     </Animate>
   );

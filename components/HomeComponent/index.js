@@ -51,6 +51,10 @@ export default function HomeComponent() {
     },
   ];
 
+  const posts = postDummy.map((item, index) => (
+    <HomePost dummyData={item} key={index} />
+  ));
+
   return (
     <Container size="lg">
       <div className={` mt-2 text-white w-full`}>
@@ -90,11 +94,7 @@ export default function HomeComponent() {
                   </Button>
                 </div>
                 {/* Display home post */}
-                <div className="flex flex-col gap-2">
-                  {postDummy.map((item, index) => (
-                    <HomePost dummyData={item} key={index} />
-                  ))}
-                </div>
+                <div className="flex flex-col gap-2">{posts}</div>
               </div>
             </div>
           </Animate>

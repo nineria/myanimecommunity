@@ -14,34 +14,10 @@ import React, { useEffect, useState } from "react";
 import { useThemeContext } from "@lib/useTheme";
 import { Footer } from "@components/Footer";
 
-export default function ReviewPage() {
-  const [layout, setLayout] = useState("grid");
-
-  const { setTheme } = useThemeContext();
-
-  const { toggleColorScheme } = useMantineColorScheme();
-
-  useEffect(() => {
-    const localData = localStorage.getItem("themes");
-    if (localData == null) {
-      localStorage.setItem("themes", "red");
-      setTheme("red");
-    }
-    if (localData === "red-light") toggleColorScheme("light");
-    else toggleColorScheme("dark");
-    setTheme(localData);
-  }, [setTheme, toggleColorScheme]);
-
-  const items = [
-    { title: "หน้าหลัก", href: "/" },
-    { title: "โพสต์ทั้งหมด", href: "/posts" },
-  ].map((item, index) => (
-    <Anchor size="sm" color="dimmed" href={item.href} key={index}>
-      {item.title}
-    </Anchor>
-  ));
-
-  const property = [
+// This gets called on every request
+export async function getServerSideProps() {
+  // Fetch data from external API
+  const data = await [
     {
       imageUrl:
         "https://www.anime-internet.com/content/images/size/w2000/2021/09/tileburnedin.jpg",
@@ -91,6 +67,37 @@ export default function ReviewPage() {
     },
   ];
 
+  // Pass data to the page via props
+  return { props: { data } };
+}
+
+export default function ReviewPage({ data }) {
+  const [layout, setLayout] = useState("grid");
+
+  const { setTheme } = useThemeContext();
+
+  const { toggleColorScheme } = useMantineColorScheme();
+
+  useEffect(() => {
+    const localData = localStorage.getItem("themes");
+    if (localData == null) {
+      localStorage.setItem("themes", "red");
+      setTheme("red");
+    }
+    if (localData === "red-light") toggleColorScheme("light");
+    else toggleColorScheme("dark");
+    setTheme(localData);
+  }, [setTheme, toggleColorScheme]);
+
+  const items = [
+    { title: "หน้าหลัก", href: "/" },
+    { title: "โพสต์ทั้งหมด", href: "/posts" },
+  ].map((item, index) => (
+    <Anchor size="sm" color="dimmed" href={item.href} key={index}>
+      {item.title}
+    </Anchor>
+  ));
+
   // Announcement property
   const AnmProperty = {
     type: "warning",
@@ -116,7 +123,7 @@ export default function ReviewPage() {
             {/* Menu Controller */}
             <PostsMenuController layout={layout} setLayout={setLayout} />
             {/* Posts */}
-            <PostLayout property={property} layout={layout} />
+            <PostLayout property={data} layout={layout} />
           </Stack>
         </Container>
       </div>

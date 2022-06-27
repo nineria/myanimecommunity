@@ -16,59 +16,48 @@ import StatsSegments from "@components/ProfileComponent/StatsSegments";
 import { StatsGridIcons } from "@components/ProfileComponent/StatsGridIcons";
 import { TableSort } from "@components/ProfileComponent/TableSort";
 
-export default function UserProfilePage() {
-  const { user, username } = useContext(UserContext);
-
-  const [userInfo, setUserInfo] = useState();
-
-  // Multiple Percentage Calculator
-  // p = ( x / y ) * 100
-  // Ex 100 (10 / 73) * 100
-
-  const [userStatsSegments, setUserStatsSegments] = useState();
-
-  const [userTablePost, setUserTablePost] = useState();
-
-  useEffect(() => {
-    setUserInfo({
-      image: "https://i.imgur.com/T8MOpCp_d.webp?maxwidth=760&fidelity=grand",
-      avatar: user?.photoURL || "",
-      username: username || "Username",
-      name: user?.displayName || "Name",
-      ranks: [
-        {
-          color: "red",
-          label: "อัศวิน",
-        },
-        {
-          color: "yellow",
-          label: "ผู้ดูแลระบบ",
-        },
-        {
-          color: "gray",
-          label: "ผู้เฒ่า",
-        },
-        {
-          color: "cyan",
-          label: "นายทุน",
-        },
-      ],
-      stats: [
-        {
-          value: 34200,
-          label: "ถูกใจ",
-        },
-        {
-          value: 187,
-          label: "โพสต์",
-        },
-        {
-          value: 1657,
-          label: "คอมเมนต์",
-        },
-      ],
-    });
-    setUserStatsSegments({
+// This gets called on every request
+export async function getServerSideProps() {
+  // Fetch data from external API
+  const data = await {
+    image: "https://i.imgur.com/T8MOpCp_d.webp?maxwidth=760&fidelity=grand",
+    avatar:
+      "https://lh3.googleusercontent.com/a-/AOh14GgpcOtIZr-xUa4-CbVz-hDFAoiDBSjOg4W6NUNmsg=s96-c",
+    username: "Ninelie Nananai",
+    name: "violet",
+    ranks: [
+      {
+        color: "red",
+        label: "อัศวิน",
+      },
+      {
+        color: "yellow",
+        label: "ผู้ดูแลระบบ",
+      },
+      {
+        color: "gray",
+        label: "ผู้เฒ่า",
+      },
+      {
+        color: "cyan",
+        label: "นายทุน",
+      },
+    ],
+    stats: [
+      {
+        value: 34200,
+        label: "ถูกใจ",
+      },
+      {
+        value: 187,
+        label: "โพสต์",
+      },
+      {
+        value: 1657,
+        label: "คอมเมนต์",
+      },
+    ],
+    statsSegments: {
       total: 73,
       diff: 18,
       data: [
@@ -94,72 +83,80 @@ export default function UserProfilePage() {
           color: "#4fcdf7",
         },
       ],
-    });
-    setUserTablePost({
-      data: [
-        {
-          title: "มีข้อสงสัยเกี่ยวกับตอนจบในอนิเมะ Jujutsu Kaisen ครับ",
-          author: "nineria",
-          date: "07/09/2022",
-          view: 2482,
-          reviews: {
-            positive: 2223,
-            negative: 259,
-          },
+    },
+    posts: [
+      {
+        title: "มีข้อสงสัยเกี่ยวกับตอนจบในอนิเมะ Jujutsu Kaisen ครับ",
+        author: "nineria",
+        date: "07/09/2022",
+        view: 2482,
+        reviews: {
+          positive: 2223,
+          negative: 259,
         },
-        {
-          title: "อนิเมะที่ดังและครองใจคนดูทุกเพศทุกวัย",
-          author: "nineria",
-          date: "23/05/2022",
-          view: 6942,
-          reviews: {
-            positive: 5677,
-            negative: 1265,
-          },
+      },
+      {
+        title: "อนิเมะที่ดังและครองใจคนดูทุกเพศทุกวัย",
+        author: "nineria",
+        date: "23/05/2022",
+        view: 6942,
+        reviews: {
+          positive: 5677,
+          negative: 1265,
         },
-        {
-          title: "หนังที่ใช้เวลาเพียงแค่ 10 นาที น้ำตาแตก",
-          author: "nineria",
-          date: "12/05/2022",
-          view: 5332,
-          reviews: {
-            positive: 3487,
-            negative: 1845,
-          },
+      },
+      {
+        title: "หนังที่ใช้เวลาเพียงแค่ 10 นาที น้ำตาแตก",
+        author: "nineria",
+        date: "12/05/2022",
+        view: 5332,
+        reviews: {
+          positive: 3487,
+          negative: 1845,
         },
-        {
-          title: "อัศวินแห่ง “สวนหลวง” กับสาว “ผักสวนครัว”",
-          author: "nineria",
-          date: "13/01/2022",
-          view: 9239,
-          reviews: {
-            positive: 8576,
-            negative: 663,
-          },
+      },
+      {
+        title: "อัศวินแห่ง “สวนหลวง” กับสาว “ผักสวนครัว”",
+        author: "nineria",
+        date: "13/01/2022",
+        view: 9239,
+        reviews: {
+          positive: 8576,
+          negative: 663,
         },
-        {
-          title: "พาทุกคนมาไปยิ้มแก้มปริกับความน่ารักสาวแฟนเช่า",
-          author: "nineria",
-          date: "13/07/2022",
-          view: 7624,
-          reviews: {
-            positive: 6631,
-            negative: 993,
-          },
+      },
+      {
+        title: "พาทุกคนมาไปยิ้มแก้มปริกับความน่ารักสาวแฟนเช่า",
+        author: "nineria",
+        date: "13/07/2022",
+        view: 7624,
+        reviews: {
+          positive: 6631,
+          negative: 993,
         },
-        {
-          title: "สปอยอนิเมะภรรยาของผมยังไงก็น่ารักภาค 1",
-          author: "nineria",
-          date: "01/05/2022",
-          view: 3339,
-          reviews: {
-            positive: 1492,
-            negative: 1847,
-          },
+      },
+      {
+        title: "สปอยอนิเมะภรรยาของผมยังไงก็น่ารักภาค 1",
+        author: "nineria",
+        date: "01/05/2022",
+        view: 3339,
+        reviews: {
+          positive: 1492,
+          negative: 1847,
         },
-      ],
-    });
-  }, [user, username]);
+      },
+    ],
+  };
+  // Pass data to the page via props
+  return { props: { data } };
+}
+
+export default function UserProfilePage({ data }) {
+  const { user, username } = useContext(UserContext);
+
+  // Multiple Percentage Calculator
+  // p = ( x / y ) * 100
+  // Ex 100 (10 / 73) * 100
 
   const typeProps = [
     {
@@ -233,15 +230,15 @@ export default function UserProfilePage() {
               end={{ transform: "translateY(0%)", opacity: "1" }}
             >
               <Stack spacing="xs">
-                <UserCardImage data={userInfo} />
-                <StatsGridIcons data={userStatsSegments.data} />
+                <UserCardImage data={data} />
+                <StatsGridIcons data={data.statsSegments.data} />
                 <StatsSegments
-                  total={userStatsSegments.total}
-                  diff={userStatsSegments.diff}
-                  data={userStatsSegments.data}
+                  total={data.statsSegments.total}
+                  diff={data.statsSegments.diff}
+                  data={data.statsSegments.data}
                 />
                 {/* <TableReviews data={userTablePostReviews.data} /> */}
-                <TableSort data={userTablePost.data} />
+                <TableSort data={data.posts} />
               </Stack>
             </Animate>
           </Container>

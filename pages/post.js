@@ -17,7 +17,95 @@ import React, { useContext, useEffect, useState } from "react";
 import { CurrencyBitcoin, Flag3, Old } from "tabler-icons-react";
 import PageNotFound from "./404";
 
-export default function PostPage() {
+// This gets called on every request
+export async function getServerSideProps() {
+  // Fetch data from external API
+  const data = await {
+    tag: ["คำถาม", "สปอย"],
+    title: "มีข้อสงสัยเกี่ยวกับตอนจบในอนิเมะ Jujutsu Kaisen ครับ",
+    image:
+      "https://www.anime-internet.com/content/images/size/w2000/2021/09/tileburnedin.jpg",
+    content: `<h1>มีข้อสงสัยเกี่ยวกับตอนจบในอนิเมะ Jujutsu Kaisen ครับ</h1> 
+    <p>ขอออกตัวไว้ก่อนว่าผมอาจจะเก็บรายละเอียดไม่ครบก็ได้ คือผมไม่เข้าใจบทสนทนาตอนจบของฟุชิงุโระกับคุงิซากิที่พูดถึงการที่ไม่ให้อิตาโดริรู้เรื่องการสั่นพ้อง (Resonance) ว่าทำไมถึงไม่อยากให้รู้หรอครับ แล้วการสั่นพ้องที่หมายถึงนี่ใช่การสั่นพ้องเดียวกันกับความสามารถของคุงิซากิรึเปล่า รบกวนด้วยนะครับ ขอบคุณครับ</p>`,
+    credit:
+      "https://clubsister.com/entertainment/review-jujutsu-kaisen-on-netfli, https://clubsister.com/entertainment/review-jujutsu-kaisen-on-netfli",
+
+    username: "violet",
+    photoURL:
+      "https://lh3.googleusercontent.com/a-/AOh14GgpcOtIZr-xUa4-CbVz-hDFAoiDBSjOg4W6NUNmsg=s96-c",
+
+    rank: [
+      {
+        name: "นายทุน",
+        color: "yellow",
+      },
+      {
+        name: "ผู้เฒ่า",
+        color: "gray",
+      },
+      {
+        name: "อัศวิน",
+        color: "red",
+      },
+    ],
+    genres: [
+      "Action",
+      "Adventure",
+      "Comedy",
+      "Drama",
+      "Fantasy",
+      "Girls Love",
+      "Gourmet",
+      "Horror",
+      "Mystery",
+      "Romance",
+      "Sci-Fi",
+      "Slice of Life",
+      "Sports",
+      "Supernatural",
+      "Suspense",
+      "Boys Love",
+    ],
+    comments: {
+      tag: ["คำถาม", "สปอย"],
+      body: "สั่นพ้องในที่นี้คือการที่ยูจิกินนิ้วของสุคุนะเข้าไป จึงทำให้มีเหล่าวิญญาณคำสาปออกมาเพ่นพ่านมากมายค่ะ ยูจิไปปลุกราชาคำสาปอย่างสุคุนะขึ้นมา จึงทำให้พลังคำสาปตื่นขึ้นมาด้วย เมงุมิไม่อยากให้ยูจิรู้เรื่องนี้เพราะอาจจะทำให้ยูจิโทษตัวเองว่าเรื่องทั้งหมดที่มันเกิดขึ้น ความตายมั้งหมดที่มันเกิดขึ้น มันเป็นเพราะเค้า เมงุมิเลยบอกโนบาระว่าอย่าให้ยูจิรู้เรื่องนี้เด็ดขาดค่ะ",
+      credit:
+        "https://clubsister.com/entertainment/review-jujutsu-kaisen-on-netflix",
+      username: "violet",
+      photoURL:
+        "https://lh3.googleusercontent.com/a-/AOh14GgpcOtIZr-xUa4-CbVz-hDFAoiDBSjOg4W6NUNmsg=s96-c",
+
+      userLike: [
+        "newMember",
+        "ผู้ใหญ่หมู่10",
+        "อย่าโอนนนน",
+        "XtreamMan",
+        "Tonyกะต๊าก",
+        "ILIOEYOU",
+        "DekDoyy",
+      ],
+      rank: [
+        {
+          name: "นายทุน",
+          color: "yellow",
+        },
+        {
+          name: "ผู้เฒ่า",
+          color: "gray",
+        },
+        {
+          name: "อัศวิน",
+          color: "red",
+        },
+      ],
+    },
+  };
+
+  // Pass data to the page via props
+  return { props: { data } };
+}
+
+export default function PostPage({ data }) {
   const { user, username } = useContext(UserContext);
   const [activePage, setPage] = useState(1);
 
@@ -42,90 +130,6 @@ export default function PostPage() {
     </Anchor>
   ));
 
-  const dummy = {
-    tag: ["คำถาม", "สปอย"],
-    title: "มีข้อสงสัยเกี่ยวกับตอนจบในอนิเมะ Jujutsu Kaisen ครับ",
-    image:
-      "https://www.anime-internet.com/content/images/size/w2000/2021/09/tileburnedin.jpg",
-    content: `<h1>มีข้อสงสัยเกี่ยวกับตอนจบในอนิเมะ Jujutsu Kaisen ครับ</h1> 
-    <p>ขอออกตัวไว้ก่อนว่าผมอาจจะเก็บรายละเอียดไม่ครบก็ได้ คือผมไม่เข้าใจบทสนทนาตอนจบของฟุชิงุโระกับคุงิซากิที่พูดถึงการที่ไม่ให้อิตาโดริรู้เรื่องการสั่นพ้อง (Resonance) ว่าทำไมถึงไม่อยากให้รู้หรอครับ แล้วการสั่นพ้องที่หมายถึงนี่ใช่การสั่นพ้องเดียวกันกับความสามารถของคุงิซากิรึเปล่า รบกวนด้วยนะครับ ขอบคุณครับ</p>`,
-    credit:
-      "https://clubsister.com/entertainment/review-jujutsu-kaisen-on-netfli, https://clubsister.com/entertainment/review-jujutsu-kaisen-on-netfli",
-    username: username,
-    photoURL: user?.photoURL,
-
-    rank: [
-      {
-        name: "นายทุน",
-        icon: <CurrencyBitcoin size={14} />,
-        color: "yellow",
-      },
-      {
-        name: "ผู้เฒ่า",
-        icon: <Old size={14} />,
-        color: "gray",
-      },
-      {
-        name: "อัศวิน",
-        icon: <Flag3 size={14} />,
-        color: "red",
-      },
-    ],
-    genres: [
-      "Action",
-      "Adventure",
-      "Comedy",
-      "Drama",
-      "Fantasy",
-      "Girls Love",
-      "Gourmet",
-      "Horror",
-      "Mystery",
-      "Romance",
-      "Sci-Fi",
-      "Slice of Life",
-      "Sports",
-      "Supernatural",
-      "Suspense",
-      "Boys Love",
-    ],
-  };
-
-  const dummyComment = {
-    tag: ["คำถาม", "สปอย"],
-    body: "สั่นพ้องในที่นี้คือการที่ยูจิกินนิ้วของสุคุนะเข้าไป จึงทำให้มีเหล่าวิญญาณคำสาปออกมาเพ่นพ่านมากมายค่ะ ยูจิไปปลุกราชาคำสาปอย่างสุคุนะขึ้นมา จึงทำให้พลังคำสาปตื่นขึ้นมาด้วย เมงุมิไม่อยากให้ยูจิรู้เรื่องนี้เพราะอาจจะทำให้ยูจิโทษตัวเองว่าเรื่องทั้งหมดที่มันเกิดขึ้น ความตายมั้งหมดที่มันเกิดขึ้น มันเป็นเพราะเค้า เมงุมิเลยบอกโนบาระว่าอย่าให้ยูจิรู้เรื่องนี้เด็ดขาดค่ะ",
-    credit:
-      "https://clubsister.com/entertainment/review-jujutsu-kaisen-on-netflix",
-    username: username,
-    photoURL: user?.photoURL,
-    userLike: [
-      "newMember",
-      "ผู้ใหญ่หมู่10",
-      "อย่าโอนนนน",
-      "XtreamMan",
-      "Tonyกะต๊าก",
-      "ILIOEYOU",
-      "DekDoyy",
-    ],
-    rank: [
-      {
-        name: "นายทุน",
-        icon: <CurrencyBitcoin size={14} />,
-        color: "yellow",
-      },
-      {
-        name: "ผู้เฒ่า",
-        icon: <Old size={14} />,
-        color: "gray",
-      },
-      {
-        name: "อัศวิน",
-        icon: <Flag3 size={14} />,
-        color: "red",
-      },
-    ],
-  };
-
   return (
     <>
       <div className="bg-background min-h-[1024px] mb-[235px] pb-10">
@@ -134,7 +138,7 @@ export default function PostPage() {
           {user && user ? (
             <Stack spacing="xs">
               <Breadcrumbs separator="→">{items}</Breadcrumbs>
-              <Top data={dummy} />
+              <Top data={data} />
               <Pagination
                 total={2}
                 size="sm"
@@ -143,16 +147,16 @@ export default function PostPage() {
               />
               {activePage === 1 ? (
                 <Stack spacing="xs">
-                  <Post data={dummy} />
-                  <Comment data={dummyComment} />
+                  <Post data={data} />
+                  <Comment data={data.comments} />
                 </Stack>
               ) : (
                 <Stack spacing="xs">
-                  <Comment data={dummyComment} />
-                  <Comment data={dummyComment} />
-                  <Comment data={dummyComment} />
-                  <Comment data={dummyComment} />
-                  <Comment data={dummyComment} />
+                  <Comment data={data.comments} />
+                  <Comment data={data.comments} />
+                  <Comment data={data.comments} />
+                  <Comment data={data.comments} />
+                  <Comment data={data.comments} />
                 </Stack>
               )}
 
@@ -162,7 +166,7 @@ export default function PostPage() {
                 page={activePage}
                 onChange={setPage}
               />
-              {user && <CreateComment data={dummyComment} />}
+              {user && <CreateComment data={data.comments} />}
             </Stack>
           ) : (
             <PageNotFound />
