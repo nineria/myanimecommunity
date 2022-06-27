@@ -1,7 +1,7 @@
 import HomePost from "@components/HomePost";
 import AddPost from "@components/HomePost/Add";
 import { UserContext } from "@lib/context";
-import { Button, Container, Modal } from "@mantine/core";
+import { Button, Container, Modal, Skeleton } from "@mantine/core";
 import { useContext, useState } from "react";
 import { Animate } from "react-simple-animate";
 import { FilePlus, Plus } from "tabler-icons-react";
@@ -10,6 +10,8 @@ export default function HomeComponent() {
   const { user, username } = useContext(UserContext);
 
   const [opened, setOpened] = useState(false);
+
+  const [loading, setLoading] = useState(true);
 
   const [postData, setPostData] = useState({
     title: "",
@@ -26,6 +28,10 @@ export default function HomeComponent() {
   const HandlePostDataChange = (data) => {
     setPostData(data);
   };
+
+  setTimeout(function () {
+    setLoading(false);
+  }, 500);
 
   const postDummy = [
     {
@@ -99,7 +105,9 @@ export default function HomeComponent() {
             </div>
           </Animate>
         ) : (
-          <HomePost dummyData={postDummy[0]} />
+          <Skeleton visible={loading}>
+            <HomePost dummyData={postDummy[0]} />
+          </Skeleton>
         )}
       </div>
     </Container>

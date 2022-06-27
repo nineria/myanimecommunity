@@ -3,6 +3,7 @@ import Navbar from "@components/Navbar";
 import Post from "@components/Post";
 import Comment from "@components/Post/Comment";
 import CreateComment from "@components/Post/CreateComment";
+import TestComment from "@components/Post/TestComment";
 import Top from "@components/Post/Top";
 import { UserContext } from "@lib/context";
 import { useThemeContext } from "@lib/useTheme";
@@ -11,6 +12,7 @@ import {
   Breadcrumbs,
   Container,
   Pagination,
+  Skeleton,
   Stack,
 } from "@mantine/core";
 import React, { useContext, useEffect, useState } from "react";
@@ -101,13 +103,44 @@ export async function getServerSideProps() {
     },
   };
 
+  const comment = await [
+    {
+      postedAt: "10 minutes ago",
+      body: '<p>I use <a href="https://heroku.com/" rel="noopener noreferrer" target="_blank">Heroku</a> to host my Node.js application, but MongoDB add-on appears to be too <strong>expensive</strong>. I consider switching to <a href="https://www.digitalocean.com/" rel="noopener noreferrer" target="_blank">Digital Ocean</a> VPS to save some cash.</p>',
+      author: {
+        name: "Jacob Warnhalter",
+        image:
+          "https://images.unsplash.com/photo-1624298357597-fd92dfbec01d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=250&q=80",
+      },
+    },
+    {
+      postedAt: "10 minutes ago",
+      body: '<p>I use <a href="https://heroku.com/" rel="noopener noreferrer" target="_blank">Heroku</a> to host my Node.js application, but MongoDB add-on appears to be too <strong>expensive</strong>. I consider switching to <a href="https://www.digitalocean.com/" rel="noopener noreferrer" target="_blank">Digital Ocean</a> VPS to save some cash.</p>',
+      author: {
+        name: "Jacob Warnhalter",
+        image:
+          "https://images.unsplash.com/photo-1624298357597-fd92dfbec01d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=250&q=80",
+      },
+    },
+    {
+      postedAt: "10 minutes ago",
+      body: '<p>I use <a href="https://heroku.com/" rel="noopener noreferrer" target="_blank">Heroku</a> to host my Node.js application, but MongoDB add-on appears to be too <strong>expensive</strong>. I consider switching to <a href="https://www.digitalocean.com/" rel="noopener noreferrer" target="_blank">Digital Ocean</a> VPS to save some cash.</p>',
+      author: {
+        name: "Jacob Warnhalter",
+        image:
+          "https://images.unsplash.com/photo-1624298357597-fd92dfbec01d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=250&q=80",
+      },
+    },
+  ];
+
   // Pass data to the page via props
-  return { props: { data } };
+  return { props: { data, comment } };
 }
 
-export default function PostPage({ data }) {
+export default function PostPage({ data, comment }) {
   const { user, username } = useContext(UserContext);
   const [activePage, setPage] = useState(1);
+  const [loading, setLoading] = useState(true);
 
   const { setTheme } = useThemeContext();
 
@@ -130,6 +163,20 @@ export default function PostPage({ data }) {
     </Anchor>
   ));
 
+  setTimeout(function () {
+    setLoading(false);
+  }, 500);
+
+  const comments = comment.map((item, index) => (
+    <Skeleton key={index} visible={loading}>
+      <TestComment
+        postedAt={item.postedAt}
+        body={item.body}
+        author={item.author}
+      />
+    </Skeleton>
+  ));
+
   return (
     <>
       <div className="bg-background min-h-[1024px] mb-[235px] pb-10">
@@ -147,8 +194,12 @@ export default function PostPage({ data }) {
               />
               {activePage === 1 ? (
                 <Stack spacing="xs">
-                  <Post data={data} />
-                  <Comment data={data.comments} />
+                  <Skeleton visible={loading}>
+                    <Post data={data} />
+                  </Skeleton>
+                  <Skeleton visible={loading}>
+                    <Comment data={data.comments} />
+                  </Skeleton>
                 </Stack>
               ) : (
                 <Stack spacing="xs">
@@ -166,7 +217,11 @@ export default function PostPage({ data }) {
                 page={activePage}
                 onChange={setPage}
               />
-              {user && <CreateComment data={data.comments} />}
+              {user && (
+                <Skeleton visible={loading}>
+                  <CreateComment data={data} />
+                </Skeleton>
+              )}
             </Stack>
           ) : (
             <PageNotFound />

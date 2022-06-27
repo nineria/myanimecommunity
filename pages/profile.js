@@ -8,7 +8,7 @@ import {
 } from "tabler-icons-react";
 import { UserContext } from "@lib/context";
 import Navbar from "@components/Navbar";
-import { Container, Stack } from "@mantine/core";
+import { Container, Skeleton, Stack } from "@mantine/core";
 import { Footer } from "@components/Footer";
 import PageNotFound from "./404";
 import UserCardImage from "@components/ProfileComponent/UserCardImage";
@@ -153,10 +153,15 @@ export async function getServerSideProps() {
 
 export default function UserProfilePage({ data }) {
   const { user, username } = useContext(UserContext);
+  const [loading, setLoading] = useState(true);
 
   // Multiple Percentage Calculator
   // p = ( x / y ) * 100
   // Ex 100 (10 / 73) * 100
+
+  setTimeout(function () {
+    setLoading(false);
+  }, 500);
 
   const typeProps = [
     {
@@ -230,15 +235,23 @@ export default function UserProfilePage({ data }) {
               end={{ transform: "translateY(0%)", opacity: "1" }}
             >
               <Stack spacing="xs">
-                <UserCardImage data={data} />
-                <StatsGridIcons data={data.statsSegments.data} />
-                <StatsSegments
-                  total={data.statsSegments.total}
-                  diff={data.statsSegments.diff}
-                  data={data.statsSegments.data}
-                />
+                <Skeleton visible={loading}>
+                  <UserCardImage data={data} />
+                </Skeleton>
+                <Skeleton visible={loading}>
+                  <StatsGridIcons data={data.statsSegments.data} />
+                </Skeleton>
+                <Skeleton visible={loading}>
+                  <StatsSegments
+                    total={data.statsSegments.total}
+                    diff={data.statsSegments.diff}
+                    data={data.statsSegments.data}
+                  />
+                </Skeleton>
                 {/* <TableReviews data={userTablePostReviews.data} /> */}
-                <TableSort data={data.posts} />
+                <Skeleton visible={loading}>
+                  <TableSort data={data.posts} />
+                </Skeleton>
               </Stack>
             </Animate>
           </Container>

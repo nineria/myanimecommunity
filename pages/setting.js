@@ -1,11 +1,11 @@
 import Navbar from "@components/Navbar";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Theme from "@components/SettingComponent/Theme";
 import { UserContext } from "@lib/context";
 import { useThemeContext } from "@lib/useTheme";
 import PageNotFound from "./404.js";
 import { Animate } from "react-simple-animate";
-import { Container, useMantineColorScheme } from "@mantine/core";
+import { Container, Skeleton, useMantineColorScheme } from "@mantine/core";
 import { Footer } from "@components/Footer/index.js";
 
 // This gets called on every request
@@ -80,6 +80,8 @@ export async function getServerSideProps() {
 export default function SettingPage({ samplePost, localTheme }) {
   const { user } = useContext(UserContext);
 
+  const [loading, setLoading] = useState(true);
+
   const { setTheme } = useThemeContext();
 
   const { toggleColorScheme } = useMantineColorScheme();
@@ -95,6 +97,10 @@ export default function SettingPage({ samplePost, localTheme }) {
     setTheme(localData);
   }, [setTheme, toggleColorScheme]);
 
+  setTimeout(function () {
+    setLoading(false);
+  }, 500);
+
   return (
     <>
       <div className="bg-background text-accent min-h-[1024px] mb-[235px] pb-10">
@@ -108,7 +114,9 @@ export default function SettingPage({ samplePost, localTheme }) {
               start={{ transform: "translateY(1%)", opacity: "0" }}
               end={{ transform: "translateY(0%)", opacity: "1" }}
             >
-              <Theme samplePost={samplePost} localTheme={localTheme} />
+              <Skeleton visible={loading}>
+                <Theme samplePost={samplePost} localTheme={localTheme} />
+              </Skeleton>
             </Animate>
           </Container>
         ) : (

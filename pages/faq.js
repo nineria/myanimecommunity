@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Title,
@@ -8,6 +8,7 @@ import {
   Stack,
   Breadcrumbs,
   Anchor,
+  Skeleton,
 } from "@mantine/core";
 import Navbar from "@components/Navbar";
 import { useThemeContext } from "@lib/useTheme";
@@ -110,6 +111,8 @@ export async function getServerSideProps() {
 export default function FaqPage({ data }) {
   const { classes } = useStyles();
 
+  const [loading, setLoading] = useState(true);
+
   const { setTheme } = useThemeContext();
 
   useEffect(() => {
@@ -120,12 +123,6 @@ export default function FaqPage({ data }) {
     }
     setTheme(localData);
   }, [setTheme]);
-
-  const items = [{ title: "หน้าหลัก", href: "/" }].map((item, index) => (
-    <Anchor size="sm" color="dimmed" href={item.href} key={index}>
-      {item.title}
-    </Anchor>
-  ));
 
   const FaqListData = [
     {
@@ -303,6 +300,10 @@ export default function FaqPage({ data }) {
     },
   ];
 
+  setTimeout(function () {
+    setLoading(false);
+  }, 500);
+
   const FirstFaqLists = data.map((data, index) => (
     <div key={index}>
       <Title order={4} mt="lg" mb="xs">
@@ -338,14 +339,15 @@ export default function FaqPage({ data }) {
       <Navbar isBusy />
       <Container size="lg">
         <Stack spacing="xs">
-          <Breadcrumbs separator="→">{items}</Breadcrumbs>
-          <Card className="bg-foreground">
-            <Title order={2} align="center">
-              คำถามที่พบบ่อย
-            </Title>
-            {FirstFaqLists}
-          </Card>
-          {FaqLists}
+          <Skeleton visible={loading}>
+            <Card className="bg-foreground">
+              <Title order={2} align="center">
+                คำถามที่พบบ่อย
+              </Title>
+              {FirstFaqLists}
+            </Card>
+          </Skeleton>
+          <Skeleton visible={loading}>{FaqLists}</Skeleton>
         </Stack>
       </Container>
       <Footer />
