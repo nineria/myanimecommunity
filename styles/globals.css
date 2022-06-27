@@ -85,7 +85,3 @@ body {
   -webkit-background-clip: text;
   color: transparent;
 }
-/* width */
-::-webkit-scrollbar {
-  width: 0px;
-}

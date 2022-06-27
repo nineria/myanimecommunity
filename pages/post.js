@@ -234,11 +234,7 @@ export default function PostPage({ data, comment }) {
                 />
               </Paper>
 
-              {user && (
-                <Skeleton visible={loading}>
-                  <CreateComment data={data} />
-                </Skeleton>
-              )}
+              {user && <CreateComment data={data} />}
             </Stack>
           ) : (
             <PageNotFound />

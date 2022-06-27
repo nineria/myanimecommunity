@@ -67,7 +67,7 @@ export default function CreateComment({ data }) {
   );
 
   return (
-    <div className="bg-foreground ">
+    <div className="bg-foreground">
       <div className="flex flex-row">
         <LeftMenu data={data} />
         <div className="px-[0.5px] bg-white opacity-50"></div>
@@ -91,6 +91,8 @@ export default function CreateComment({ data }) {
                   }}
                 /> */}
                 <RichTextEditor
+                  sticky={true}
+                  stickyOffset={55}
                   value={value}
                   onChange={onChange}
                   placeholder="พิมพ์ @ หรือ # เพื่อแท็กผู้คน และ แนวอนิเมะที่ชอบ"
@@ -115,7 +117,6 @@ export default function CreateComment({ data }) {
                 {/* <MarkdownPreview markdown={value} /> */}
               </Tabs.Tab>
             </Tabs>
-
             <div className="flex flex-row justify-between mt-2">
               <div className="flex flex-row gap-1 items-center mt-2 text-title">
                 <Text size="xs">
