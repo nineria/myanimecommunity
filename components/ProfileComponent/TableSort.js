@@ -8,30 +8,15 @@ import {
   Text,
   Center,
   TextInput,
+  Card,
+  Anchor,
+  Progress,
 } from "@mantine/core";
 import { Selector, ChevronDown, ChevronUp, Search } from "tabler-icons-react";
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles(() => ({
   th: {
     padding: "0 !important",
-  },
-
-  control: {
-    width: "100%",
-    padding: `${theme.spacing.xs}px ${theme.spacing.md}px`,
-
-    "&:hover": {
-      backgroundColor:
-        theme.colorScheme === "dark"
-          ? theme.colors.dark[6]
-          : theme.colors.gray[0],
-    },
-  },
-
-  icon: {
-    width: 21,
-    height: 21,
-    borderRadius: 21,
   },
 }));
 
@@ -40,12 +25,12 @@ function Th({ children, reversed, sorted, onSort }) {
   const Icon = sorted ? (reversed ? ChevronUp : ChevronDown) : Selector;
   return (
     <th className={classes.th}>
-      <UnstyledButton onClick={onSort} className={classes.control}>
+      <UnstyledButton onClick={onSort} className="w-full p-2 hover:bg-black/10">
         <Group position="apart">
-          <Text weight={500} size="sm">
+          <Text weight={500} size="sm" className="text-title">
             {children}
           </Text>
-          <Center className={classes.icon}>
+          <Center className="w-[21px] h-[21px]">
             <Icon size={14} />
           </Center>
         </Group>
@@ -56,9 +41,10 @@ function Th({ children, reversed, sorted, onSort }) {
 
 function filterData(data, search) {
   const keys = Object.keys(data[0]);
-  const query = search.toLowerCase().trim();
+  const query = search.toLocaleLowerCase().trim();
+
   return data.filter((item) =>
-    keys.some((key) => item[key].toLowerCase().includes(query))
+    keys.some((key) => item[key].toString().toLocaleLowerCase().includes(query))
   );
 }
 
@@ -70,10 +56,10 @@ function sortData(data, payload) {
   return filterData(
     [...data].sort((a, b) => {
       if (payload.reversed) {
-        return b[payload.sortBy].localeCompare(a[payload.sortBy]);
+        return b[payload.sortBy].toString().localeCompare(a[payload.sortBy]);
       }
 
-      return a[payload.sortBy].localeCompare(b[payload.sortBy]);
+      return a[payload.sortBy].toString().localeCompare(b[payload.sortBy]);
     }),
     payload.search
   );
@@ -84,6 +70,8 @@ export function TableSort({ data }) {
   const [sortedData, setSortedData] = useState(data);
   const [sortBy, setSortBy] = useState(null);
   const [reverseSortDirection, setReverseSortDirection] = useState(false);
+
+  const { classes, theme } = useStyles();
 
   const setSorting = (field) => {
     const reversed = field === sortBy ? !reverseSortDirection : false;
@@ -100,67 +88,129 @@ export function TableSort({ data }) {
     );
   };
 
-  const rows = sortedData.data.map((row) => (
-    <tr key={row.name}>
-      <td>{row.name}</td>
-      <td>{row.email}</td>
-      <td>{row.company}</td>
-    </tr>
-  ));
+  const rows = sortedData.map((row) => {
+    const totalReviews = row.reviews.negative + row.reviews.positive;
+    const positiveReviews = (row.reviews.positive / totalReviews) * 100;
+    const negativeReviews = (row.reviews.negative / totalReviews) * 100;
+
+    return (
+      <tr key={row.title}>
+        <td>
+          <Anchor size="sm" onClick={(event) => event.preventDefault()}>
+            {row.title}
+          </Anchor>
+        </td>
+        <td>{row.date}</td>
+        <td>
+          <Anchor size="sm" onClick={(event) => event.preventDefault()}>
+            {row.author}
+          </Anchor>
+        </td>
+        <td>{Intl.NumberFormat().format(row.view)}</td>
+        <td>
+          <Group position="apart">
+            <Text size="xs" color="teal" weight={700}>
+              {positiveReviews.toFixed(0)}%
+            </Text>
+            <Text size="xs" color="red" weight={700}>
+              {negativeReviews.toFixed(0)}%
+            </Text>
+          </Group>
+          <Progress
+            classNames={{ bar: classes.progressBar }}
+            sections={[
+              {
+                value: positiveReviews,
+                color:
+                  theme.colorScheme === "dark"
+                    ? theme.colors.teal[9]
+                    : theme.colors.teal[6],
+              },
+              {
+                value: negativeReviews,
+                color:
+                  theme.colorScheme === "dark"
+                    ? theme.colors.red[9]
+                    : theme.colors.red[6],
+              },
+            ]}
+          />
+        </td>
+      </tr>
+    );
+  });
 
   return (
-    <ScrollArea>
-      <TextInput
-        placeholder="Search by any field"
-        mb="md"
-        icon={<Search size={14} />}
-        value={search}
-        onChange={handleSearchChange}
-      />
-      <Table
-        horizontalSpacing="md"
-        verticalSpacing="xs"
-        sx={{ tableLayout: "fixed", minWidth: 700 }}
-      >
-        <thead>
-          <tr>
-            <Th
-              sorted={sortBy === "name"}
-              reversed={reverseSortDirection}
-              onSort={() => setSorting("name")}
-            >
-              Name
-            </Th>
-            <Th
-              sorted={sortBy === "email"}
-              reversed={reverseSortDirection}
-              onSort={() => setSorting("email")}
-            >
-              Email
-            </Th>
-            <Th
-              sorted={sortBy === "company"}
-              reversed={reverseSortDirection}
-              onSort={() => setSorting("company")}
-            >
-              Company
-            </Th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.length > 0 ? (
-            rows
-          ) : (
+    <Card p="md" radius="sm" className="bg-foreground">
+      <ScrollArea>
+        <Text size="xl" weight={700} mb="sm">
+          การจัดการโพสต์
+        </Text>
+        <TextInput
+          placeholder="Search by any field"
+          mb="md"
+          icon={<Search size={14} />}
+          value={search}
+          onChange={handleSearchChange}
+        />
+        <Table
+          highlightOnHover
+          horizontalSpacing="md"
+          verticalSpacing="xs"
+          sx={{ minWidth: 800 }}
+        >
+          <thead>
             <tr>
-              <td colSpan={Object.keys(data[0]).length}>
-                <Text weight={500} align="center">
-                  Nothing found
+              <Th
+                sorted={sortBy === "title"}
+                reversed={reverseSortDirection}
+                onSort={() => setSorting("title")}
+              >
+                ชื่อ
+              </Th>
+              <Th
+                sorted={sortBy === "date"}
+                reversed={reverseSortDirection}
+                onSort={() => setSorting("date")}
+              >
+                วันที่
+              </Th>
+              <Th
+                sorted={sortBy === "author"}
+                reversed={reverseSortDirection}
+                onSort={() => setSorting("author")}
+              >
+                ผู้เขียน
+              </Th>
+              <Th
+                sorted={sortBy === "view"}
+                reversed={reverseSortDirection}
+                onSort={() => setSorting("view")}
+              >
+                เข้าชม
+              </Th>
+              <th>
+                <Text weight={500} size="sm" className="text-title">
+                  ความนิยม
                 </Text>
-              </td>
+              </th>
             </tr>
-          )}
-        </tbody>
-      </Table>
-    </ScrollArea>
+          </thead>
+          <tbody>
+            {rows.length > 0 ? (
+              rows
+            ) : (
+              <tr>
+                <td colSpan={Object.keys(data[0]).length}>
+                  <Text weight={500} align="center">
+                    Nothing found
+                  </Text>
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </Table>
+      </ScrollArea>
+    </Card>
   );
 }

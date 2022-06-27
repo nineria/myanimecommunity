@@ -8,20 +8,21 @@ import {
   SimpleGrid,
 } from "@mantine/core";
 import { ArrowUpRight, ArrowDownRight } from "tabler-icons-react";
+import { kFormatter } from "@components/Calculator";
 
 export function StatsGridIcons({ data }) {
   const stats = data.map((stat) => {
     const DiffIcon = stat.diff > 0 ? ArrowUpRight : ArrowDownRight;
 
     return (
-      <Paper p="md" radius="sm" key={stat.title} className="bg-foreground">
+      <Paper p="md" radius="sm" key={stat.label} className="bg-foreground">
         <Group position="apart">
           <div>
             <Text color="dimmed" transform="uppercase" weight={700} size="xs">
-              {stat.title}
+              {stat.label}
             </Text>
             <Text weight={700} size="xl">
-              {stat.value}
+              {kFormatter(stat.count)}
             </Text>
           </div>
           <ThemeIcon

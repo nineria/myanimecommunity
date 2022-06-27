@@ -1,3 +1,4 @@
+import { kFormatter } from "@components/Calculator";
 import {
   Avatar,
   Badge,
@@ -21,7 +22,7 @@ export default function UserCardImage({ data }) {
   const stats = data.stats.map((stat) => (
     <div key={stat.label}>
       <Text align="center" size="lg" weight={500}>
-        {stat.value}
+        {kFormatter(stat.value)}
       </Text>
       <Text align="center" size="sm" color="dimmed">
         {stat.label}

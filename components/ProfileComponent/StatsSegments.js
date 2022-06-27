@@ -9,6 +9,7 @@ import {
   SimpleGrid,
 } from "@mantine/core";
 import { ArrowUpRight, DeviceAnalytics } from "tabler-icons-react";
+import { kFormatter } from "@components/Calculator";
 
 const useStyles = createStyles((theme) => ({
   statCount: {
@@ -18,8 +19,6 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export default function StatsSegments({ total, diff, data }) {
-  const { classes } = useStyles();
-
   const segments = data.map((segment) => ({
     value: segment.part,
     color: segment.color,
@@ -37,7 +36,8 @@ export default function StatsSegments({ total, diff, data }) {
       </Text>
 
       <Group position="apart" align="flex-end" spacing={0}>
-        <Text weight={700}>{stat.count}</Text>
+        {/* <Text weight={700}>{numFormatter(stat.count)}</Text> */}
+        <Text weight={700}>{kFormatter(stat.count)}</Text>
         <Text color={stat.color} weight={700} size="sm" className="leading-4">
           {stat.part}%
         </Text>
@@ -50,7 +50,7 @@ export default function StatsSegments({ total, diff, data }) {
       <Group position="apart">
         <Group align="flex-end" spacing="xs">
           <Text size="xl" weight={700}>
-            ทั้งหมด {total}
+            ทั้งหมด {kFormatter(total)}
           </Text>
           <Text
             color="teal"
