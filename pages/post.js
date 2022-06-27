@@ -12,6 +12,7 @@ import {
   Breadcrumbs,
   Container,
   Pagination,
+  Paper,
   Skeleton,
   Stack,
 } from "@mantine/core";
@@ -27,7 +28,7 @@ export async function getServerSideProps() {
     title: "มีข้อสงสัยเกี่ยวกับตอนจบในอนิเมะ Jujutsu Kaisen ครับ",
     image:
       "https://www.anime-internet.com/content/images/size/w2000/2021/09/tileburnedin.jpg",
-    content: `<h1>มีข้อสงสัยเกี่ยวกับตอนจบในอนิเมะ Jujutsu Kaisen ครับ</h1> 
+    content: `<img src="https://www.anime-internet.com/content/images/size/w2000/2021/09/tileburnedin.jpg"/><h3>มีข้อสงสัยเกี่ยวกับตอนจบในอนิเมะ Jujutsu Kaisen ครับ</h3> 
     <p>ขอออกตัวไว้ก่อนว่าผมอาจจะเก็บรายละเอียดไม่ครบก็ได้ คือผมไม่เข้าใจบทสนทนาตอนจบของฟุชิงุโระกับคุงิซากิที่พูดถึงการที่ไม่ให้อิตาโดริรู้เรื่องการสั่นพ้อง (Resonance) ว่าทำไมถึงไม่อยากให้รู้หรอครับ แล้วการสั่นพ้องที่หมายถึงนี่ใช่การสั่นพ้องเดียวกันกับความสามารถของคุงิซากิรึเปล่า รบกวนด้วยนะครับ ขอบคุณครับ</p>`,
     credit:
       "https://clubsister.com/entertainment/review-jujutsu-kaisen-on-netfli, https://clubsister.com/entertainment/review-jujutsu-kaisen-on-netfli",
@@ -186,12 +187,20 @@ export default function PostPage({ data, comment }) {
             <Stack spacing="xs">
               <Breadcrumbs separator="→">{items}</Breadcrumbs>
               <Top data={data} />
-              <Pagination
-                total={2}
-                size="sm"
-                page={activePage}
-                onChange={setPage}
-              />
+              <Paper p="xs" className="shadow-md bg-foreground">
+                <Pagination
+                  total={10}
+                  size="sm"
+                  page={activePage}
+                  onChange={setPage}
+                  withEdges
+                  classNames={{
+                    item: "text-title",
+                    dots: "text-content",
+                    active: "bg-content text-[#fff]",
+                  }}
+                />
+              </Paper>
               {activePage === 1 ? (
                 <Stack spacing="xs">
                   <Skeleton visible={loading}>
@@ -210,13 +219,21 @@ export default function PostPage({ data, comment }) {
                   <Comment data={data.comments} />
                 </Stack>
               )}
+              <Paper p="xs" className="shadow-md bg-foreground">
+                <Pagination
+                  total={10}
+                  size="sm"
+                  page={activePage}
+                  onChange={setPage}
+                  withEdges
+                  classNames={{
+                    item: "text-title",
+                    dots: "text-content",
+                    active: "bg-content text-[#fff]",
+                  }}
+                />
+              </Paper>
 
-              <Pagination
-                total={2}
-                size="sm"
-                page={activePage}
-                onChange={setPage}
-              />
               {user && (
                 <Skeleton visible={loading}>
                   <CreateComment data={data} />

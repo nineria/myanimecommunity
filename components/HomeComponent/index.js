@@ -83,6 +83,12 @@ export default function HomeComponent() {
                     opened={opened}
                     onClose={() => setOpened(false)}
                     title="สร้างโพสต์ - หน้าหลัก"
+                    centered
+                    classNames={{
+                      modal: "bg-foreground",
+                      overlay: "bg-[#444]",
+                      title: "text-title",
+                    }}
                   >
                     <AddPost
                       setOpened={setOpened}
@@ -92,7 +98,7 @@ export default function HomeComponent() {
                   </Modal>
                   <Button
                     onClick={() => setOpened(true)}
-                    className="bg-content text-accent hover:bg-content hover:opacity-75"
+                    className="bg-content text-[#fff] hover:bg-content hover:opacity-75"
                     variant="default"
                     size="xs"
                   >

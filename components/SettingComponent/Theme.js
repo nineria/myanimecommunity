@@ -48,7 +48,7 @@ export default function ThemeComponent({ samplePost, localTheme }) {
   const SelectItem = forwardRef(({ label, description, color, value }, ref) => (
     <div
       ref={ref}
-      className="hover:bg-content px-4 rounded-sm cursor-pointer"
+      className="hover:bg-content text-title px-2 cursor-pointer"
       onClick={() => handleChangeTheme(value)}
     >
       <Group noWrap>
@@ -106,6 +106,13 @@ export default function ThemeComponent({ samplePost, localTheme }) {
                 .toLowerCase()
                 .includes(value.toLowerCase().trim())
             }
+            classNames={{
+              dropdown: "bg-foreground",
+              nothingFound: "bg-foreground text-title",
+              wrapper: "your-wrapper-class",
+              invalid: "your-invalid-class",
+              input: "bg-background text-title",
+            }}
           />
         </div>
       </div>

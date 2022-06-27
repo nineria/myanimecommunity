@@ -26,10 +26,15 @@ export default function LoginRegister() {
   return (
     <div className="flex flex-row justify-end w-full gap-2">
       <Modal
+        centered
         size="md"
-        overlayColor="#333"
         opened={openedLogin}
         onClose={() => setOpenedLogin(false)}
+        classNames={{
+          modal: "bg-foreground",
+          overlay: "bg-[#444]",
+          title: "text-title",
+        }}
         title={
           <Text size="lg" weight={500}>
             เข้าสู่ระบบ
@@ -41,19 +46,25 @@ export default function LoginRegister() {
         {openedLogin && <LoginPopUp />}
       </Modal>
       <Button
-        className="bg-content text-accent hover:bg-content hover:opacity-75"
+        className="bg-content text-[#fff] hover:bg-content hover:opacity-75"
         variant="default"
         onClick={() => setOpenedLogin(true)}
       >
         เข้าสู่ระบบ
       </Button>
       <Modal
+        centered
         size="md"
         overlayColor="#333"
         opened={openedRegister}
         onClose={() => setOpenedRegister(false)}
+        classNames={{
+          modal: "bg-foreground",
+          overlay: "bg-[#444]",
+          title: "text-title",
+        }}
         title={
-          <Text size="lg" weight={500}>
+          <Text size="lg" weight={500} className="text-title">
             ลงทะเบียน
           </Text>
         }
@@ -62,7 +73,7 @@ export default function LoginRegister() {
         {openedRegister && <RegisterPopUp />}
       </Modal>
       <Button
-        className="bg-background text-accent hover:bg-background hover:opacity-75"
+        className="bg-background text-title hover:bg-background hover:opacity-75"
         variant="default"
         onClick={() => setOpenedRegister(true)}
       >
@@ -127,12 +138,21 @@ export function LoginPopUp() {
           icon={<Mail size={20} />}
           id="input-demo"
           placeholder="อีเมลของคุณ"
+          classNames={{
+            input: "bg-accent bg-opacity-50",
+          }}
         />
       </InputWrapper>
       <InputWrapper id="input-demo" required label="รหัสผ่าน">
-        <PasswordInput placeholder="รหัสผ่านของคุณ" id="your-password" />
+        <PasswordInput
+          placeholder="รหัสผ่านของคุณ"
+          id="your-password"
+          classNames={{
+            input: "bg-accent bg-opacity-50",
+          }}
+        />
       </InputWrapper>
-      <Checkbox label="จดจำฉันไว้ในครั้งถัดไป" />
+      <Checkbox label="จดจำฉันไว้ในครั้งถัดไป" className="content-checkbox" />
       <Link href="/">
         <Button
           size="sm"
@@ -189,10 +209,22 @@ export function RegisterPopUp() {
       <Divider label="หรือดำเนินการต่อด้วยอีเมล" labelPosition="center" />
       <Group grow>
         <InputWrapper id="input-demo" required label="ชื่อจริง">
-          <Input id="input-demo" placeholder="ชื่อจริงของคุณ" />
+          <Input
+            id="input-demo"
+            placeholder="ชื่อจริงของคุณ"
+            classNames={{
+              input: "bg-accent bg-opacity-50",
+            }}
+          />
         </InputWrapper>
         <InputWrapper id="input-demo" required label="นามสกุล">
-          <Input id="input-demo" placeholder="นามสกุลของคุณ" />
+          <Input
+            id="input-demo"
+            placeholder="นามสกุลของคุณ"
+            classNames={{
+              input: "bg-accent bg-opacity-50",
+            }}
+          />
         </InputWrapper>
       </Group>
       <InputWrapper id="input-demo" required label="อีเมล (Email)">
@@ -200,13 +232,28 @@ export function RegisterPopUp() {
           icon={<Mail size={20} />}
           id="input-demo"
           placeholder="อีเมลของคุณ"
+          classNames={{
+            input: "bg-accent bg-opacity-50",
+          }}
         />
       </InputWrapper>
       <InputWrapper id="input-demo" required label="รหัสผ่าน">
-        <PasswordInput placeholder="รหัสผ่านของคุณ" id="your-password" />
+        <PasswordInput
+          placeholder="รหัสผ่านของคุณ"
+          id="your-password"
+          classNames={{
+            input: "bg-accent bg-opacity-50",
+          }}
+        />
       </InputWrapper>
       <InputWrapper id="input-demo" required label="ยืนยันรหัสผ่าน">
-        <PasswordInput placeholder="ยืนยันรหัสผ่านของคุณ" id="your-password" />
+        <PasswordInput
+          placeholder="ยืนยันรหัสผ่านของคุณ"
+          id="your-password"
+          classNames={{
+            input: "bg-accent bg-opacity-50",
+          }}
+        />
       </InputWrapper>
       <Stack>
         <Modal

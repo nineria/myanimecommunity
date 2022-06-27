@@ -147,7 +147,7 @@ export function TableSort({ data }) {
           การจัดการโพสต์
         </Text>
         <TextInput
-          placeholder="Search by any field"
+          placeholder="ค้นหา"
           mb="md"
           icon={<Search size={14} />}
           value={search}

@@ -12,9 +12,10 @@
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
-    "@mantine/core": "^4.2.10",
-    "@mantine/hooks": "^4.2.10",
+    "@mantine/core": "^4.2.11",
+    "@mantine/hooks": "^4.2.11",
     "@mantine/next": "^4.2.10",
+    "@mantine/rte": "^4.2.11",
     "@tailwindcss/typography": "^0.5.2",
     "firebase": "^9.8.2",
     "lodash.debounce": "^4.0.8",

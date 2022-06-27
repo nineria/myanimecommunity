@@ -43,12 +43,18 @@ export default function EditPost(props) {
             <Grid.Col sm={2}>
               <Input
                 placeholder="/review"
+                classNames={{
+                  input: "bg-accent bg-opacity-50",
+                }}
                 {...form.getInputProps("titleLink")}
               />
             </Grid.Col>
             <Grid.Col sm={10}>
               <Input
                 placeholder="หัวข้อโพสต์"
+                classNames={{
+                  input: "bg-accent bg-opacity-50",
+                }}
                 {...form.getInputProps("title")}
               />
             </Grid.Col>
@@ -65,12 +71,18 @@ export default function EditPost(props) {
             <Grid.Col sm={2}>
               <Input
                 placeholder="/review"
+                classNames={{
+                  input: "bg-accent bg-opacity-50",
+                }}
                 {...form.getInputProps("headerLink")}
               />
             </Grid.Col>
             <Grid.Col sm={10}>
               <Input
                 placeholder="หัวข้อโพสต์"
+                classNames={{
+                  input: "bg-accent bg-opacity-50",
+                }}
                 {...form.getInputProps("header")}
               />
             </Grid.Col>
@@ -84,6 +96,9 @@ export default function EditPost(props) {
             placeholder="เขียนรายละเอียด"
             autosize
             minRows={3}
+            classNames={{
+              input: "bg-accent bg-opacity-50",
+            }}
             {...form.getInputProps("body")}
           />
         </InputWrapper>
@@ -92,22 +107,17 @@ export default function EditPost(props) {
         <Group mt="md" position="apart">
           <Group spacing="xs" position="left">
             <Button
-              size="xs"
               onClick={() => props.setOpened(false)}
               className="bg-gray-500 hover:bg-gray-500 hover:opacity-75"
             >
               ยกเลิก
             </Button>
-            <Button
-              size="xs"
-              className="bg-red-500 hover:bg-red-500 hover:opacity-75"
-            >
+            <Button className="bg-red-500 hover:bg-red-500 hover:opacity-75">
               ลบโพสต์
             </Button>
           </Group>
           <Button
             type="submit"
-            size="xs"
             className="bg-green-500 hover:bg-green-500 hover:opacity-75"
           >
             ยืนยัน

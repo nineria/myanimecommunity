@@ -3,14 +3,14 @@ import {
   Badge,
   Button,
   Group,
-  Image,
   Modal,
   Text,
+  TypographyStylesProvider,
 } from "@mantine/core";
 import React, { useState } from "react";
 import { CalendarMinus, Edit, Eye, ThumbUp } from "tabler-icons-react";
-import MarkdownPreview from "@components/MarkdownPreview";
 import EditPost from "./EditPost";
+import RichTextEditor from "@components/RichText";
 
 export default function Post({ data }) {
   return (
@@ -67,7 +67,7 @@ function LeftMenu({ data }) {
 function MainPost({ data }) {
   const [opened, setOpened] = useState(false);
   return (
-    <div className="relative px-2 py-2 text-title text-opacity-90 w-full">
+    <div className="relative px-4 py-2 text-title text-opacity-90 w-full">
       <Group position="apart" pb="xs">
         <p className="text-xs opacity-80 mb-2">แก้ไขล่าสุด : 1 พฤภาคม 2022</p>
         <Modal
@@ -82,16 +82,19 @@ function MainPost({ data }) {
         <Button
           onClick={() => setOpened(true)}
           leftIcon={<Edit size={14} />}
-          className="bg-content text-accent hover:bg-content hover:opacity-75"
+          className="bg-content text-[#fff] hover:bg-content hover:opacity-75"
           variant="default"
           size="xs"
         >
           แก้ไข
         </Button>
       </Group>
-      <Image radius="sm" src={data.image} alt={data.title} mb="sm" />
-      <MarkdownPreview markdown={data.content} />
-      <p className="absolute bottom-2 right-2 font-bold uppercase opacity-5 text-[8vw] text-right tracking-tighter">
+      <TypographyStylesProvider>
+        <div dangerouslySetInnerHTML={{ __html: data.content }} />
+      </TypographyStylesProvider>
+      {/* <RichTextEditor className="!p-0 !m-none" readOnly value={data.content} /> */}
+
+      <p className="absolute bottom-2 right-2 font-bold uppercase opacity-[0.03] text-[8vw] text-right tracking-tighter">
         question
       </p>
       <p className="text-xs mt-20">

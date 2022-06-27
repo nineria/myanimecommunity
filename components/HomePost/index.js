@@ -30,13 +30,13 @@ export default function HomePost({ dummyData, isDisabled = false }) {
   return (
     <div className="rounded-sm shadow-md">
       <div
-        className={`bg-content flex flex-row justify-between items-center transition-all py-1 px-3 font-bold md:text-base text-sm text-accent ${
+        className={`bg-content flex flex-row justify-between items-center transition-all py-1 px-3 font-bold md:text-base text-sm text-[#fff] ${
           toggle === true ? "rounded-t-sm" : "rounded-sm"
         }`}
       >
         {/* Title */}
         <Link href={postData?.titleLink || "/"}>
-          <a className="truncate text-accent max-w-[600px] cursor-pointer hover:underline">
+          <a className="truncate text-[#fff] max-w-[600px] cursor-pointer hover:underline">
             {postData?.title || "หัวข้อหลัก"}
           </a>
         </Link>
@@ -50,6 +50,12 @@ export default function HomePost({ dummyData, isDisabled = false }) {
                 opened={opened}
                 onClose={() => setOpened(false)}
                 title="แก้ไขโพสต์ - หน้าหลัก"
+                centered
+                classNames={{
+                  modal: "bg-foreground",
+                  overlay: "bg-[#444]",
+                  title: "text-title",
+                }}
               >
                 <EditPost
                   setOpened={setOpened}

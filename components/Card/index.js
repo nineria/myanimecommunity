@@ -47,7 +47,7 @@ export default function Card({ property, layout }) {
               </div>
             </div>
             <div className="absolute bottom-1 right-2">
-              <h1 className="text-6xl font-bold opacity-5 uppercase">
+              <h1 className="text-6xl text-title font-bold opacity-5 uppercase">
                 {data.postType}
               </h1>
             </div>

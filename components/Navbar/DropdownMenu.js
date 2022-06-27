@@ -36,7 +36,17 @@ export default function UserMenu({ user, isBusy, signOut }) {
             </div>
           </a>
         </Link>
-        <Menu withArrow placement="end" shadow="md">
+        <Menu
+          withArrow
+          placement="end"
+          shadow="md"
+          classNames={{
+            root: "bg-foreground",
+            body: "bg-foreground border-background",
+            itemHovered: "bg-content text-title",
+            arrow: "bg-foreground border-background",
+          }}
+        >
           {/* Setting */}
           <Menu.Label>การตั้งค่า</Menu.Label>
           {settingMenuProperty &&

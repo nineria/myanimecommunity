@@ -88,10 +88,16 @@ function ReportUser({ opened, setOpened }) {
   return (
     <>
       <Modal
+        size="md"
         opened={opened}
         onClose={() => setOpened(false)}
         title="เหตุผลที่รายงาน!"
-        overlayColor="#333"
+        centered
+        classNames={{
+          modal: "bg-foreground",
+          overlay: "bg-[#444]",
+          title: "text-title",
+        }}
       >
         <Stack>
           <Checkbox label="ชื่อผู้ใช้ไม่เหมาะสม" />
@@ -104,14 +110,14 @@ function ReportUser({ opened, setOpened }) {
         <Space />
         <Group position="center" mt="sm">
           <Button
-            className="bg-content text-accent hover:bg-content hover:opacity-75"
+            className="bg-content text-[#fff] hover:bg-content hover:opacity-75"
             variant="default"
             onClick={() => setOpened(false)}
           >
             ยกเลิก
           </Button>
           <Button
-            className="bg-black/30 text-accent hover:bg-black/30 hover:opacity-75"
+            className="bg-background text-title hover:bg-background hover:opacity-75"
             variant="default"
             onClick={() => setOpened(false)}
           >
@@ -122,7 +128,7 @@ function ReportUser({ opened, setOpened }) {
 
       <Button
         fullWidth
-        className="bg-black/30 text-accent hover:bg-black/30 hover:opacity-75"
+        className="bg-black/30 text-[#fff] hover:bg-black/30 hover:opacity-75"
         variant="default"
         rightIcon={<Edit size={20} />}
       >

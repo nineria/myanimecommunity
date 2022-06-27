@@ -91,22 +91,17 @@ export default function AddPost(props) {
         <Group mt="md" position="apart">
           <Group spacing="xs" position="left">
             <Button
-              size="xs"
               onClick={() => props.setOpened(false)}
               className="bg-gray-500 hover:bg-gray-500 hover:opacity-75"
             >
               ยกเลิก
             </Button>
-            <Button
-              size="xs"
-              className="bg-red-500 hover:bg-red-500 hover:opacity-75"
-            >
+            <Button className="bg-red-500 hover:bg-red-500 hover:opacity-75">
               ลบโพสต์
             </Button>
           </Group>
           <Button
             type="submit"
-            size="xs"
             className="bg-green-500 hover:bg-green-500 hover:opacity-75"
           >
             ยืนยัน

@@ -84,7 +84,7 @@ function MainPost({ data }) {
       <p className="text-xs opacity-80 mb-2">แกไขล่าสุด : 1 พฤภาคม 2022</p>
       <h1 className="text-lg mt-4 font-bold">{data?.header}</h1>
       <p className="text-base">{data?.body}</p>
-      <p className="absolute bottom-2 right-2 leading-none font-bold uppercase opacity-5 text-[8vw] text-right tracking-tighter">
+      <p className="absolute bottom-2 right-2 leading-none font-bold uppercase opacity-[0.03] text-[8vw] text-right tracking-tighter">
         Answer
       </p>
 
