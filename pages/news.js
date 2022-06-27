@@ -55,7 +55,7 @@ export default function NewsPage() {
 
   return (
     <>
-      <div className="bg-background text-white min-h-[1024px]">
+      <div className="bg-background text-white min-h-[1024px] mb-[235px] pb-10">
         <Navbar page="/news" />
         <Container size="lg">
           <Stack spacing="xs">

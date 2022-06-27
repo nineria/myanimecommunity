@@ -3,6 +3,7 @@ import {
   Button,
   Center,
   Checkbox,
+  Divider,
   Group,
   Image,
   Input,
@@ -10,15 +11,15 @@ import {
   Modal,
   PasswordInput,
   Stack,
-  Title,
+  Text,
 } from "@mantine/core";
 import Link from "next/link";
-import WebsiteRulePage from "pages/websiteRule";
-import PrivacyPolicyPage from "pages/privacyPolicy";
+import WebsiteRulePage from "@components/WebsiteRule";
+import PrivacyPolicyPage from "@components/PrivacyPolicy";
 import React, { useState } from "react";
 import { Mail } from "tabler-icons-react";
 
-export default function Login() {
+export default function LoginRegister() {
   const [openedLogin, setOpenedLogin] = useState(false);
   const [openedRegister, setOpenedRegister] = useState(false);
 
@@ -29,7 +30,11 @@ export default function Login() {
         overlayColor="#333"
         opened={openedLogin}
         onClose={() => setOpenedLogin(false)}
-        title={<Logo />}
+        title={
+          <Text size="lg" weight={500}>
+            เข้าสู่ระบบ
+          </Text>
+        }
       >
         {/* Modal content */}
 
@@ -47,13 +52,17 @@ export default function Login() {
         overlayColor="#333"
         opened={openedRegister}
         onClose={() => setOpenedRegister(false)}
-        title={<Logo />}
+        title={
+          <Text size="lg" weight={500}>
+            ลงทะเบียน
+          </Text>
+        }
       >
         {/* Modal content */}
         {openedRegister && <RegisterPopUp />}
       </Modal>
       <Button
-        className="bg-background text-accent hover:bg-foreground hover:opacity-75"
+        className="bg-background text-accent hover:bg-background hover:opacity-75"
         variant="default"
         onClick={() => setOpenedRegister(true)}
       >
@@ -80,12 +89,29 @@ export function LoginPopUp() {
     await auth.signInWithPopup(googleAuthProvider);
   };
 
-  const googleLogo =
-    "https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png";
-
   return (
     <Stack spacing="xl">
-      <Title order={4}>เข้าสู่ระบบ!</Title>
+      <Group grow>
+        <Button
+          size="sm"
+          radius="lg"
+          className="bg-white w-[200px] text-black border-[1px] border-gray-300 hover:bg-white hover:opacity-75"
+          onClick={signInWithGoogle}
+        >
+          <Image src="/google-logo.png" width="15px" className="mr-2" />
+          Google
+        </Button>
+        <Button
+          disabled
+          size="sm"
+          radius="lg"
+          className="bg-white w-[200px] text-black border-[1px] border-gray-300 hover:bg-white hover:opacity-75"
+        >
+          <Image src="/facebook-logo.png" width="15px" className="mr-2" />
+          Facebook
+        </Button>
+      </Group>
+      <Divider label="หรือดำเนินการต่อด้วยอีเมล" labelPosition="center" />
       <InputWrapper id="input-demo" required label="อีเมล (Email)">
         <Input
           icon={<Mail size={20} />}
@@ -106,19 +132,6 @@ export function LoginPopUp() {
           เข้าสู่ระบบ
         </Button>
       </Link>
-      <Center>หรือ</Center>
-      <Center>
-        <div
-          onClick={signInWithGoogle}
-          className="bg-white shadow-md border-[1px] border-gray-300 py-2 px-4 rounded-sm cursor-pointer hover:opacity-75 group"
-        >
-          <div className="flex flex-row gap-2 items-center">
-            <Image src={googleLogo} width="30px" />
-
-            <p className="text-black">ลงชื่อเข้าใช้ด้วย Google</p>
-          </div>
-        </div>
-      </Center>
     </Stack>
   );
 }
@@ -131,11 +144,29 @@ export function RegisterPopUp() {
   const [openedWebsiteRule, setOpenedWebsiteRule] = useState(false);
   const [openedPrivacyPolicy, setOpenedPrivacyPolicy] = useState(false);
 
-  const googleLogo =
-    "https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png";
   return (
     <Stack spacing="xl">
-      <Title order={4}>แนะนำตัวกันหน่อย!</Title>
+      <Group grow>
+        <Button
+          size="sm"
+          radius="lg"
+          className="bg-white w-[200px] text-black border-[1px] border-gray-300 hover:bg-white hover:opacity-75"
+          onClick={signInWithGoogle}
+        >
+          <Image src="/google-logo.png" width="15px" className="mr-2" />
+          Google
+        </Button>
+        <Button
+          disabled
+          size="sm"
+          radius="lg"
+          className="bg-white w-[200px] text-black border-[1px] border-gray-300 hover:bg-white hover:opacity-75"
+        >
+          <Image src="/facebook-logo.png" width="15px" className="mr-2" />
+          Facebook
+        </Button>
+      </Group>
+      <Divider label="หรือดำเนินการต่อด้วยอีเมล" labelPosition="center" />
       <Group grow>
         <InputWrapper id="input-demo" required label="ชื่อจริง">
           <Input id="input-demo" placeholder="ชื่อจริงของคุณ" />
@@ -221,19 +252,6 @@ export function RegisterPopUp() {
           ลงทะเบียน
         </Button>
       </Link>
-      <Center>หรือ</Center>
-      <Center>
-        <div
-          onClick={signInWithGoogle}
-          className="bg-white shadow-md border-[1px] border-gray-300 py-2 px-4 rounded-sm cursor-pointer hover:opacity-75 group"
-        >
-          <div className="flex flex-row gap-2 items-center">
-            <Image src={googleLogo} width="30px" />
-
-            <p className="text-black">ลงชื่อเข้าใช้ด้วย Google</p>
-          </div>
-        </div>
-      </Center>
     </Stack>
   );
 }

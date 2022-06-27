@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Text, Container, ActionIcon, Group, Divider } from "@mantine/core";
 import { BrandTwitter, BrandYoutube, BrandInstagram } from "tabler-icons-react";
 import MyAniLogo from "@components/Navbar/MyAniLogo";
 import Link from "next/link";
 
 export function Footer() {
-  const data = [
+  const [data, setData] = useState([
     {
       title: "ชุมชนคนรักอนิเมะ",
       links: [
@@ -69,14 +69,13 @@ export function Footer() {
         },
       ],
     },
-  ];
+  ]);
 
   const groups = data.map((group) => {
     const links = group.links.map((link, index) => (
       <Text
         key={index}
         className={`flex mt-1 flex-col text-sm text-title opacity-50 text-right`}
-        component="a"
         href={link.link}
         onClick={(event) => event.preventDefault()}
       >
@@ -99,7 +98,7 @@ export function Footer() {
   });
 
   return (
-    <footer className=" pt-8 ">
+    <footer className="fixed bottom-0 pt-8 bg-foreground mt-10 h-[235px] -z-10 w-full border-t-2 border-content">
       <Container size="lg" className="flex md:justify-between justify-center">
         <div className="w-[250px] md:text-left text-center">
           <div className="text-3xl font-bold">

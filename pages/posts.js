@@ -133,7 +133,7 @@ export default function PostsPage() {
 
   return (
     <>
-      <div className="bg-background text-white pb-4 min-h-[1024px]">
+      <div className="bg-background text-white min-h-[1024px] mb-[235px] pb-10">
         <Navbar page="/posts" />
 
         <Container size="lg">

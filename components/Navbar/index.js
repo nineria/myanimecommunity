@@ -5,7 +5,7 @@ import { auth } from "@lib/firebase";
 import { useState } from "react";
 import MyAniLogo from "./MyAniLogo";
 import UserMenu from "./DropdownMenu";
-import Login from "./Login";
+import Login from "../LoginRegister";
 import NavbarMenu from "./NavbarMenu";
 import { navbarProperty } from "./DummyData";
 import DropdownLoginRegisterMenu from "./DropdownLoginRegisterMenu";

@@ -28,7 +28,7 @@ export default function SettingPage() {
 
   return (
     <>
-      <div className="bg-background text-accent min-h-[1024px]">
+      <div className="bg-background text-accent min-h-[1024px] mb-[235px] pb-10">
         <Navbar page="/setting" isBusy />
         {user && user ? (
           <Container size="lg">

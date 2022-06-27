@@ -328,7 +328,7 @@ export default function FaqPage() {
   ));
 
   return (
-    <>
+    <div className="bg-background text-accent min-h-[1024px] mb-[235px] pb-10">
       <Navbar isBusy />
       <Container size="lg">
         <Stack spacing="xs">
@@ -343,6 +343,6 @@ export default function FaqPage() {
         </Stack>
       </Container>
       <Footer />
-    </>
+    </div>
   );
 }

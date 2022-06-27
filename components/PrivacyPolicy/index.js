@@ -13,7 +13,7 @@ import {
 } from "@mantine/core";
 import React, { useEffect } from "react";
 
-export default function PrivacyPolicyPage() {
+export default function PrivacyPolicy() {
   const { setTheme } = useThemeContext();
 
   useEffect(() => {

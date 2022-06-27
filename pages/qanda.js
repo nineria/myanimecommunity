@@ -68,7 +68,7 @@ export default function QAndAPage() {
 
   return (
     <>
-      <div className="bg-background text-white min-h-[1024px]">
+      <div className="bg-background text-white min-h-[1024px] mb-[235px] pb-10">
         <Navbar page="/qanda" />
         <Container size="lg">
           <Stack spacing="xs">

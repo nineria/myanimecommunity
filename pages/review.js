@@ -101,7 +101,7 @@ export default function ReviewPage() {
 
   return (
     <>
-      <div className="bg-background text-white min-h-[1024px]">
+      <div className="bg-background text-white min-h-[1024px] mb-[235px] pb-10">
         <Navbar page="/review" />
         <Container size="lg">
           <Stack spacing="xs">

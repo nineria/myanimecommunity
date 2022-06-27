@@ -1,16 +1,10 @@
-import { Button, Menu, Modal } from "@mantine/core";
-import Link from "next/link";
-import React, { useState } from "react";
-import { DeviceGamepad, Login, Settings, UserPlus } from "tabler-icons-react";
-import { LoginPopUp, RegisterPopUp } from "./Login";
+import { Menu } from "@mantine/core";
+import React from "react";
+import { LoginPopUp } from "../LoginRegister";
 
-export default function DropdownLoginRegisterMenu({ login, register, toggle }) {
-  const [openedLogin, setOpenedLogin] = useState(false);
-  const [openedRegister, setOpenedRegister] = useState(false);
-
+export default function DropdownLoginRegisterMenu() {
   return (
     <Menu withArrow placement="end" size="xl" p="sm">
-      {/* Pages */}
       <LoginPopUp />
     </Menu>
   );

@@ -17,6 +17,7 @@ import {
 } from "@mantine/core";
 import React, { useContext, useEffect, useState } from "react";
 import { CurrencyBitcoin, Flag3, Old } from "tabler-icons-react";
+import PageNotFound from "./404";
 
 export default function PostPage() {
   const { user, username } = useContext(UserContext);
@@ -129,42 +130,45 @@ export default function PostPage() {
 
   return (
     <>
-      <div className="bg-background min-h-[1024px]">
+      <div className="bg-background min-h-[1024px] mb-[235px] pb-10">
         <Navbar />
         <Container size="lg" py="xs">
-          <Stack spacing="xs">
-            <Breadcrumbs separator="→">{items}</Breadcrumbs>
-            <Top data={dummy} />
-            <Pagination
-              total={2}
-              size="sm"
-              page={activePage}
-              onChange={setPage}
-            />
-            {activePage === 1 ? (
-              <Stack spacing="xs">
-                <Post data={dummy} />
-                <Comment data={dummyComment} />
-              </Stack>
-            ) : (
-              <Stack spacing="xs">
-                <Comment data={dummyComment} />
-                <Comment data={dummyComment} />
-                <Comment data={dummyComment} />
-                <Comment data={dummyComment} />
-                <Comment data={dummyComment} />
-              </Stack>
-            )}
+          {user && user ? (
+            <Stack spacing="xs">
+              <Breadcrumbs separator="→">{items}</Breadcrumbs>
+              <Top data={dummy} />
+              <Pagination
+                total={2}
+                size="sm"
+                page={activePage}
+                onChange={setPage}
+              />
+              {activePage === 1 ? (
+                <Stack spacing="xs">
+                  <Post data={dummy} />
+                  <Comment data={dummyComment} />
+                </Stack>
+              ) : (
+                <Stack spacing="xs">
+                  <Comment data={dummyComment} />
+                  <Comment data={dummyComment} />
+                  <Comment data={dummyComment} />
+                  <Comment data={dummyComment} />
+                  <Comment data={dummyComment} />
+                </Stack>
+              )}
 
-            <Pagination
-              total={2}
-              size="sm"
-              page={activePage}
-              onChange={setPage}
-            />
-            {user && <CreateComment data={dummyComment} />}
-          </Stack>
-          <Space h="xl" />
+              <Pagination
+                total={2}
+                size="sm"
+                page={activePage}
+                onChange={setPage}
+              />
+              {user && <CreateComment data={dummyComment} />}
+            </Stack>
+          ) : (
+            <PageNotFound />
+          )}
         </Container>
       </div>
       <Footer />

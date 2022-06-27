@@ -1,4 +1,5 @@
 import { Footer } from "@components/Footer";
+
 import HomeComponent from "@components/HomeComponent";
 import Navbar from "@components/Navbar";
 import { firestore, fromMillis, postToJSON } from "@lib/firebase";
@@ -66,7 +67,7 @@ export default function HomePage(props) {
 
   return (
     <>
-      <div className="bg-background min-h-[1024px]">
+      <div className="bg-background min-h-[1024px] mb-[235px] pb-10">
         <Navbar />
         <HomeComponent />
       </div>

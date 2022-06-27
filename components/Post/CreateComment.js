@@ -31,7 +31,19 @@ export default function CreateComment({ data }) {
             <div className="flex flex-row justify-between mt-2">
               <div className="flex flex-row gap-1 items-center">
                 <Markdown size={16} />
-                <Text size="xs">รองรับการเขียนด้วย Markdown</Text>
+                <Text size="xs">
+                  รองรับการเขียนด้วย{" "}
+                  <span>
+                    <a
+                      href="https://www.markdownguide.org/basic-syntax/"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="hover:underline text-content"
+                    >
+                      Markdown
+                    </a>
+                  </span>
+                </Text>
               </div>
               <Button
                 className="bg-content text-accent hover:bg-content hover:opacity-75"
