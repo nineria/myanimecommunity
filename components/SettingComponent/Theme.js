@@ -15,16 +15,23 @@ export default function ThemeComponent() {
 
   const { toggleColorScheme } = useMantineColorScheme();
 
+  const handleToggleColorScheme = useCallback(() => {
+    const localData = localStorage.getItem("themes");
+    if (localData === "red-light") toggleColorScheme("light");
+    else toggleColorScheme("dark");
+  }, [toggleColorScheme]);
+
   useEffect(() => {
     const localData = localStorage.getItem("themes");
     if (localData == null) {
       localStorage.setItem("themes", "red");
       setTheme("red");
     }
-    if (localData === "red-light") toggleColorScheme("light");
-    else toggleColorScheme("dark");
+
+    handleToggleColorScheme();
+
     setTheme(localData);
-  }, [setTheme]);
+  }, [setTheme, handleToggleColorScheme]);
 
   const handleChangeTheme = (value) => {
     if (value === "red-light") toggleColorScheme("light");

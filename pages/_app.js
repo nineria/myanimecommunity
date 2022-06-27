@@ -3,15 +3,31 @@ import { UserContext } from "../lib/context";
 import { useUserData } from "../lib/hooks";
 import ThemeProvider, { useThemeContext } from "@lib/useTheme";
 import { ColorSchemeProvider, MantineProvider } from "@mantine/core";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 function MyApp({ Component, pageProps }) {
   const userData = useUserData();
   const [colorScheme, setColorScheme] = useState("dark");
-  const toggleColorScheme = (value) =>
-    setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
+
+  // const toggleColorScheme = (value) =>
+  //   setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
+
+  const toggleColorScheme = useCallback(
+    (value) => {
+      setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
+    },
+    [colorScheme]
+  );
 
   const { setTheme } = useThemeContext();
+
+  const handleToggleColorScheme = useCallback(
+    (localData) => {
+      if (localData === "red-light") toggleColorScheme("light");
+      else toggleColorScheme("dark");
+    },
+    [toggleColorScheme]
+  );
 
   useEffect(() => {
     const localData = localStorage.getItem("themes");
@@ -19,10 +35,9 @@ function MyApp({ Component, pageProps }) {
       localStorage.setItem("themes", "red");
       setTheme("red");
     }
-    if (localData === "red-light") toggleColorScheme("light");
-    else toggleColorScheme("dark");
+    handleToggleColorScheme(localData);
     setTheme(localData);
-  }, [setTheme, toggleColorScheme]);
+  }, [setTheme, handleToggleColorScheme]);
 
   return (
     <UserContext.Provider value={userData}>
