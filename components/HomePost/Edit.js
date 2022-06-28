@@ -19,6 +19,7 @@ export default function EditPost(props) {
     data = values;
     props.handlePostDataChange(values);
     props.setOpened(false);
+    console.log(data);
   };
 
   const form = useForm({

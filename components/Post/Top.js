@@ -16,7 +16,7 @@ export default function Top({ data }) {
     </Badge>
   ));
 
-  const genres = data.genres.map((item, index) => (
+  const genres = data.genre.map((item, index) => (
     <Badge key={index} color="gray" size="xs" radius="sm" variant="filled">
       {item}
     </Badge>

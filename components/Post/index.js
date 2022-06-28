@@ -4,13 +4,13 @@ import {
   Button,
   Group,
   Modal,
+  Notification,
   Text,
   TypographyStylesProvider,
 } from "@mantine/core";
 import React, { useState } from "react";
-import { CalendarMinus, Edit, Eye, ThumbUp } from "tabler-icons-react";
+import { CalendarMinus, Edit, Eye, ThumbUp, X } from "tabler-icons-react";
 import EditPost from "./EditPost";
-import RichTextEditor from "@components/RichText";
 
 export default function Post({ data }) {
   return (
@@ -71,13 +71,17 @@ function MainPost({ data }) {
       <Group position="apart" pb="xs">
         <p className="text-xs opacity-80 mb-2">แก้ไขล่าสุด : 1 พฤภาคม 2022</p>
         <Modal
-          size="lg"
-          overlayColor="#333"
+          size="xl"
+          classNames={{
+            modal: "bg-foreground",
+            overlay: "bg-[#444]",
+            title: "text-title",
+          }}
           opened={opened}
           onClose={() => setOpened(false)}
           title="แก้ไขโพสต์"
         >
-          <EditPost postData={data} />
+          <EditPost postData={data} setOpened={setOpened} />
         </Modal>
         <Button
           onClick={() => setOpened(true)}

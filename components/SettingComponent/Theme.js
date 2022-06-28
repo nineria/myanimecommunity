@@ -48,7 +48,7 @@ export default function ThemeComponent({ samplePost, localTheme }) {
   const SelectItem = forwardRef(({ label, description, color, value }, ref) => (
     <div
       ref={ref}
-      className="hover:bg-content text-title px-2 cursor-pointer"
+      className="hover:bg-content text-title hover:text-[#fff] px-2 cursor-pointer"
       onClick={() => handleChangeTheme(value)}
     >
       <Group noWrap>
@@ -79,16 +79,18 @@ export default function ThemeComponent({ samplePost, localTheme }) {
       {/* Header */}
       <Group className="py-2 px-4 font-bold w-full text-title">
         <Settings size={18} />
-        <h1 className="font-bold">การตั้งค่า</h1>
+        <Text size="lg" className="font-bold ">
+          การตั้งค่า
+        </Text>
       </Group>
       <Divider className="opacity-50" />
       {/* Theme */}
       <div className="px-4 py-2 flex flex-row justify-between items-center">
         <div className="w-full text-title">
-          <h1>ธีมของเว็บไซต์</h1>
-          <h2 className="text-sm opacity-60">
+          <Text className="font-bold ">การตั้งค่า</Text>
+          <Text size="xs" className="font-bold opacity-50">
             ธีมปัจจุบัน : {filtered && filtered[0]?.label}
-          </h2>
+          </Text>
         </div>
         {/* Select Theme */}
         <div className="w-[50%]">

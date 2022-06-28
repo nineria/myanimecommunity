@@ -18,7 +18,7 @@ export default function NavbarMenu({ page, menu }) {
                 item.path === page ? "border-content" : "border-transparent"
               }`}
             >
-              <div className="truncate text-title opacity-80 font-bold cursor-pointer hover:text-title hover:opacity-50">
+              <div className="truncate text-title font-bold cursor-pointer hover:text-title hover:opacity-75">
                 {item.name}
               </div>
             </div>

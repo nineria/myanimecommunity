@@ -5,7 +5,6 @@ import {
   Button,
   Card,
   Checkbox,
-  Grid,
   Group,
   Modal,
   Space,
@@ -48,7 +47,7 @@ export default function UserCardImage({ data }) {
       />
       <div className="fixed top-2 right-0 p-[2px] bg-foreground rounded-l-md">
         <Button
-          className="border-none mr-2 text-title hover:bg-content hover:text-accent"
+          className="border-none mr-2 text-title hover:bg-content hover:text-[#fff]"
           compact
           variant="default"
           rightIcon={<AlertTriangle size={20} />}
@@ -95,17 +94,50 @@ function ReportUser({ opened, setOpened }) {
         centered
         classNames={{
           modal: "bg-foreground",
-          overlay: "bg-[#444]",
+          overlay: "bg-background",
           title: "text-title",
         }}
       >
         <Stack>
-          <Checkbox label="ชื่อผู้ใช้ไม่เหมาะสม" />
-          <Checkbox label="ใช้วาจาไม่เหมาะสม / ทัศนคติเชิงลบ" />
-          <Checkbox label="โฆษณาขายของ / การสแปมข้อความ" />
-          <Checkbox label="คำพูดแสดงถึงความเกลียดชัง" />
-          <Checkbox label="เนื้อหามีการอัพเดท" />
-          <Textarea placeholder="โปรดระบุ" label="อื่นๆ" minRows={2} autosize />
+          <Checkbox
+            label="ชื่อผู้ใช้ไม่เหมาะสม"
+            classNames={{
+              input: "bg-black/20",
+            }}
+          />
+          <Checkbox
+            classNames={{
+              input: "bg-black/20",
+            }}
+            label="ใช้วาจาไม่เหมาะสม / ทัศนคติเชิงลบ"
+          />
+          <Checkbox
+            classNames={{
+              input: "bg-black/20",
+            }}
+            label="โฆษณาขายของ / การสแปมข้อความ"
+          />
+          <Checkbox
+            classNames={{
+              input: "bg-black/20",
+            }}
+            label="คำพูดแสดงถึงความเกลียดชัง"
+          />
+          <Checkbox
+            classNames={{
+              input: "bg-black/20",
+            }}
+            label="เนื้อหามีการอัพเดท"
+          />
+          <Textarea
+            classNames={{
+              input: "bg-accent bg-opacity-50",
+            }}
+            placeholder="โปรดระบุ"
+            label="อื่นๆ"
+            minRows={2}
+            autosize
+          />
         </Stack>
         <Space />
         <Group position="center" mt="sm">

@@ -79,14 +79,13 @@ export default function HomeComponent() {
                 <div className="flex flex-row justify-between w-full bg-foreground rounded-sm p-1 shadow-md">
                   <Modal
                     size="lg"
-                    overlayColor="#333"
                     opened={opened}
                     onClose={() => setOpened(false)}
                     title="สร้างโพสต์ - หน้าหลัก"
                     centered
                     classNames={{
                       modal: "bg-foreground",
-                      overlay: "bg-[#444]",
+                      overlay: "bg-background",
                       title: "text-title",
                     }}
                   >

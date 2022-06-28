@@ -4,6 +4,8 @@ import { useUserData } from "../lib/hooks";
 import ThemeProvider, { useThemeContext } from "@lib/useTheme";
 import { ColorSchemeProvider, MantineProvider } from "@mantine/core";
 import { useCallback, useEffect, useState } from "react";
+import { ModalsProvider } from "@mantine/modals";
+import { NotificationsProvider } from "@mantine/notifications";
 
 function MyApp({ Component, pageProps }) {
   const userData = useUserData();
@@ -51,7 +53,11 @@ function MyApp({ Component, pageProps }) {
             withGlobalStyles
             withNormalizeCSS
           >
-            <Component {...pageProps} />
+            <NotificationsProvider>
+              <ModalsProvider>
+                <Component {...pageProps} />
+              </ModalsProvider>
+            </NotificationsProvider>
           </MantineProvider>
         </ColorSchemeProvider>
       </ThemeProvider>

@@ -1,7 +1,6 @@
 import { auth, googleAuthProvider } from "@lib/firebase";
 import {
   Button,
-  Center,
   Checkbox,
   Divider,
   Group,
@@ -32,7 +31,7 @@ export default function LoginRegister() {
         onClose={() => setOpenedLogin(false)}
         classNames={{
           modal: "bg-foreground",
-          overlay: "bg-[#444]",
+          overlay: "bg-background",
           title: "text-title",
         }}
         title={
@@ -60,7 +59,7 @@ export default function LoginRegister() {
         onClose={() => setOpenedRegister(false)}
         classNames={{
           modal: "bg-foreground",
-          overlay: "bg-[#444]",
+          overlay: "bg-background",
           title: "text-title",
         }}
         title={

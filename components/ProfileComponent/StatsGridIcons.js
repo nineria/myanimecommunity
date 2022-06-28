@@ -52,7 +52,11 @@ export function StatsGridIcons({ data }) {
   });
 
   return (
-    <SimpleGrid cols={3} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>
+    <SimpleGrid
+      cols={3}
+      breakpoints={[{ maxWidth: "sm", cols: 1 }]}
+      spacing="xs"
+    >
       {stats}
     </SimpleGrid>
   );

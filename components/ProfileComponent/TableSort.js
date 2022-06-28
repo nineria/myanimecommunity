@@ -123,14 +123,14 @@ export function TableSort({ data }) {
                 value: positiveReviews,
                 color:
                   theme.colorScheme === "dark"
-                    ? theme.colors.teal[9]
+                    ? theme.colors.teal[8]
                     : theme.colors.teal[6],
               },
               {
                 value: negativeReviews,
                 color:
                   theme.colorScheme === "dark"
-                    ? theme.colors.red[9]
+                    ? theme.colors.red[8]
                     : theme.colors.red[6],
               },
             ]}
@@ -151,6 +151,9 @@ export function TableSort({ data }) {
           mb="md"
           icon={<Search size={14} />}
           value={search}
+          classNames={{
+            input: "bg-accent bg-opacity-50",
+          }}
           onChange={handleSearchChange}
         />
         <Table

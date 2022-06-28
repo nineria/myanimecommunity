@@ -80,16 +80,6 @@ export default function CreateComment({ data }) {
               }}
             >
               <Tabs.Tab label="เขียน">
-                {/* <Textarea
-                  minRows={1}
-                  autosize
-                  placeholder="เขียนความคิดเห็น…"
-                  value={markdown}
-                  onChange={(e) => setMarkdown(e.target.value)}
-                  classNames={{
-                    filledVariant: "text-title bg-background",
-                  }}
-                /> */}
                 <RichTextEditor
                   sticky={true}
                   stickyOffset={55}

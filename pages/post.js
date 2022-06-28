@@ -17,7 +17,7 @@ import {
   Stack,
 } from "@mantine/core";
 import React, { useContext, useEffect, useState } from "react";
-import { CurrencyBitcoin, Flag3, Old } from "tabler-icons-react";
+import { X } from "tabler-icons-react";
 import PageNotFound from "./404";
 
 // This gets called on every request
@@ -51,7 +51,7 @@ export async function getServerSideProps() {
         color: "red",
       },
     ],
-    genres: [
+    genre: [
       "Action",
       "Adventure",
       "Comedy",
@@ -139,7 +139,7 @@ export async function getServerSideProps() {
 }
 
 export default function PostPage({ data, comment }) {
-  const { user, username } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [activePage, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
 

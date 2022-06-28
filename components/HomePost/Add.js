@@ -18,6 +18,7 @@ export default function AddPost(props) {
     data = values;
     props.handlePostDataChange(values);
     props.setOpened(false);
+    console.log(data);
   };
 
   const form = useForm({

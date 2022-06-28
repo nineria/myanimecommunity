@@ -46,14 +46,13 @@ export default function HomePost({ dummyData, isDisabled = false }) {
             <div>
               <Modal
                 size="lg"
-                overlayColor="#333"
                 opened={opened}
                 onClose={() => setOpened(false)}
                 title="แก้ไขโพสต์ - หน้าหลัก"
                 centered
                 classNames={{
                   modal: "bg-foreground",
-                  overlay: "bg-[#444]",
+                  overlay: "bg-background",
                   title: "text-title",
                 }}
               >
