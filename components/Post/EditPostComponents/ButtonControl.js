@@ -21,6 +21,7 @@ export function ButtonControl({ setOpened }) {
           ลบโพสต์
         </Button>
       </Group>
+
       <Button
         type="submit"
         size="xs"

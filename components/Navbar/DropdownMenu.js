@@ -66,7 +66,7 @@ export default function UserMenu({ user, isBusy, signOut }) {
             accessMenuProperty.map((item, index) => (
               <Link href={item.link} key={index}>
                 <Menu.Item
-                  className="hover:bg-content hover:text-title"
+                  className="hover:bg-content hover:text-[#fff]"
                   icon={item.icon}
                 >
                   {item.name}
@@ -78,7 +78,7 @@ export default function UserMenu({ user, isBusy, signOut }) {
           <Menu.Item
             icon={<Logout size={14} />}
             onClick={signOut}
-            className="hover:bg-content hover:text-title"
+            className="hover:bg-content hover:text-[#fff]"
             color="red"
           >
             ออกจากระบบ

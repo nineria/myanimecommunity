@@ -8,65 +8,41 @@ import {
   Stack,
   Text,
 } from "@mantine/core";
-import React, { useRef } from "react";
-import { Plus, Tag, X } from "tabler-icons-react";
+import React, { useState } from "react";
+import { Tag, X } from "tabler-icons-react";
 import { useModals } from "@mantine/modals";
 
 export default function TagHeader({ data, setData }) {
   const modals = useModals();
 
-  const inputRef = useRef(null);
+  const [tmpTags, setTmpTags] = useState([]);
 
-  const handleTag = (type, tag, item, index) => {
-    switch (type) {
-      case "delete":
-        switch (tag) {
-          case "tag":
-            data.tag.splice(index, 1);
-            setData(data);
-            console.log(data.tag);
-            break;
-          case "genre":
-            data.genre.splice(index, 1);
-            setData(data);
-            console.log(data.genre);
-            break;
-        }
-        break;
-      case "add":
-        switch (tag) {
-          case "tag":
-            data.tag.push(item);
-            setData(data);
-            console.log(data.tag);
-            break;
-          case "genre":
-            data.genre.push(item);
-            setData(data);
-            console.log(data.genre);
-            break;
-        }
-        break;
-    }
-  };
-
-  const openDeleteModal = (item, index, tag) => {
+  const openDeleteModal = (item, index) => {
     const handleOnClick = () => {
-      handleTag("delete", tag, item, index);
+      data.tag.splice(index, 1);
+      setData(data);
+      console.log(data.tag);
       modals.closeModal(id);
     };
     const id = modals.openModal({
-      title: "ลบ Tag",
+      title: (
+        <Text size="sm">
+          คุณต้องการลบ
+          <Badge key={index} variant="outline" mx="xs">
+            {item}
+          </Badge>
+          หรือไม่?
+        </Text>
+      ),
       zIndex: "999",
       centered: true,
       classNames: {
         modal: "bg-foreground",
         overlay: "bg-background",
       },
+      size: "sm",
       children: (
         <Stack size="xs">
-          <Text size="sm">{`คุณต้องการลบ Tag \"${item}\" หรือไม่?`}</Text>
-
           <Group position="right">
             <Button
               className="bg-background text-title hover:bg-background hover:opacity-75"
@@ -86,52 +62,10 @@ export default function TagHeader({ data, setData }) {
     });
   };
 
-  const openAddTagModal = (tag) => {
-    const handleOnClick = () => {
-      handleTag("add", tag, inputRef.current.value);
-      modals.closeModal(id);
-    };
-    const id = modals.openModal({
-      title: "เพิ่ม Tag",
-      zIndex: "999",
-      centered: true,
-      classNames: {
-        modal: "bg-foreground",
-        overlay: "bg-background",
-      },
-      children: (
-        <Stack size="xs">
-          <Input
-            ref={inputRef}
-            icon={<Tag size={20} />}
-            classNames={{
-              input: "bg-accent bg-opacity-50",
-            }}
-            placeholder="ชื่อ Tag"
-          />
-          <Group position="right">
-            <Button
-              className="bg-accent text-title hover:bg-accent hover:opacity-50"
-              onClick={() => modals.closeModal(id)}
-            >
-              ยกเลิก
-            </Button>
-            <Button
-              className="bg-red-500 hover:bg-red-500 hover:opacity-75"
-              onClick={() => handleOnClick()}
-            >
-              เพิ่ม
-            </Button>
-          </Group>
-        </Stack>
-      ),
-    });
-  };
-
-  const removeButton = (item, index, tag) => {
+  const removeButton = (item, index) => {
     return (
       <ActionIcon size="xs" color="blue" radius="xl" variant="transparent">
-        <X size={10} onClick={() => openDeleteModal(item, index, tag)} />
+        <X size={10} onClick={() => openDeleteModal(item, index)} />
       </ActionIcon>
     );
   };
@@ -142,21 +76,55 @@ export default function TagHeader({ data, setData }) {
         key={index}
         variant="outline"
         sx={{ paddingRight: 3 }}
-        rightSection={removeButton(item, index, "tag")}
+        rightSection={removeButton(item, index)}
       >
         {item}
       </Badge>
     );
   });
+
+  const handleKeyDown = (e) => {
+    if (e.key !== "Enter") return;
+
+    const value = e.target.value;
+
+    if (!value.trim()) return;
+
+    data.tag.push(value);
+
+    setData(data);
+    setTmpTags([...tmpTags, value]);
+
+    console.log(data.tag);
+
+    e.target.value = "";
+    e.preventDefault();
+  };
+
   return (
-    <InputWrapper label="Tag หัวข้อโพสต์" description="เช่น คำถาม, สปอย, รีวิว">
-      <Group spacing="xs">
+    <InputWrapper
+      label={
+        <Group spacing="xs">
+          <Tag size={14} /> ประเภทของโพสต์
+        </Group>
+      }
+      description="เช่น คำถาม, สปอย, รีวิว"
+    >
+      <Group
+        spacing="4px"
+        className="bg-accent bg-opacity-50 border-title border-opacity-20 border-[1px] rounded-md p-1"
+      >
         {tags}
-        <Badge variant="outline" sx={{ padding: 0 }}>
-          <ActionIcon size="xs" color="blue" radius="xl" variant="transparent">
-            <Plus size={10} onClick={() => openAddTagModal("tag")} />
-          </ActionIcon>
-        </Badge>
+        <Input
+          icon={<Tag size={14} />}
+          placeholder="เพิ่ม"
+          onKeyDown={handleKeyDown}
+          className=""
+          classNames={{
+            input: "bg-accent bg-opacity-50 max-w-[100px]  border-none",
+          }}
+          size="xs"
+        />
       </Group>
     </InputWrapper>
   );
