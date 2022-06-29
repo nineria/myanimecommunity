@@ -74,7 +74,7 @@ function MainPost({ data }) {
           size="xl"
           classNames={{
             modal: "bg-foreground",
-            overlay: "bg-[#444]",
+            overlay: "bg-background",
             title: "text-title",
           }}
           opened={opened}

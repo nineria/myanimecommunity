@@ -95,8 +95,6 @@ export default function TagHeader({ data, setData }) {
     setData(data);
     setTmpTags([...tmpTags, value]);
 
-    console.log(data.tag);
-
     e.target.value = "";
     e.preventDefault();
   };
@@ -121,7 +119,7 @@ export default function TagHeader({ data, setData }) {
           onKeyDown={handleKeyDown}
           className=""
           classNames={{
-            input: "bg-accent bg-opacity-50 max-w-[100px]  border-none",
+            input: "bg-transparent bg-opacity-50 max-w-[100px]  border-none",
           }}
           size="xs"
         />

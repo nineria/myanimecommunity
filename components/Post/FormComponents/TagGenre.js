@@ -93,8 +93,6 @@ export default function TagGenre({ data, setData }) {
     setData(data);
     setTags([...tags, value]);
 
-    console.log(data.genre);
-
     e.target.value = "";
     e.preventDefault();
   };
@@ -119,7 +117,7 @@ export default function TagGenre({ data, setData }) {
           onKeyDown={handleKeyDown}
           className=""
           classNames={{
-            input: "bg-accent bg-opacity-50 max-w-[100px] border-none",
+            input: "bg-transparent bg-opacity-50 max-w-[100px] border-none",
           }}
           size="xs"
         />
