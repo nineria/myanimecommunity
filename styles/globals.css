@@ -29,7 +29,6 @@ body {
   --background: 35 32 32;
   --foreground: 58 53 53;
 }
-
 .theme-navy {
   --accent: 27 38 44;
   --title: 249 247 247;
@@ -37,7 +36,6 @@ body {
   --background: 27 38 44;
   --foreground: 50 71 82;
 }
-
 .theme-pinky {
   --accent: 50 50 50;
   --title: 253 239 244;
@@ -56,24 +54,38 @@ body {
 /* LIGHT THEME */
 .theme-red-light {
   --accent: 255 255 255;
-  --title: 44 44 44;
+  --title: 24 26 29;
   --content: 236 85 85;
   --background: 211 211 211;
   --foreground: 255 255 255;
 }
 .theme-tiger-light {
-  --accent: 244 244 244;
-  --title: 44 44 44;
+  --accent: 44 44 44;
+  --title: 244 244 244;
   --content: 255 115 21;
-  --background: 35 32 32;
-  --foreground: 58 53 53;
+  --background: 211 211 211;
+  --foreground: 255 255 255;
 }
 .theme-navy-light {
-  --accent: 249 247 247;
-  --title: 44 44 44;
+  --accent: 44 44 44;
+  --title: 249 247 247;
   --content: 51 130 184;
-  --background: 27 38 44;
-  --foreground: 50 71 82;
+  --background: 211 211 211;
+  --foreground: 255 255 255;
+}
+.theme-pinky {
+  --accent: 253 239 244;
+  --title: 50 50 50;
+  --content: 255 93 141;
+  --background: 211 211 211;
+  --foreground: 255 255 255;
+}
+.theme-punk {
+  --accent: 238 238 238;
+  --title: 34 40 49;
+  --content: 0 173 181;
+  --background: 211 211 211;
+  --foreground: 255 255 255;
 }
 
 .clip-image-text {

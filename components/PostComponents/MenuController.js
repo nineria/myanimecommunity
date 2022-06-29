@@ -1,4 +1,4 @@
-import AddPost from "@components/Post/AddPost";
+import Add from "@components/PostComponents/Add";
 import {
   Box,
   Button,
@@ -25,7 +25,7 @@ export default function PostsMenuController({ layout, setLayout }) {
         onClose={() => setOpened(false)}
         title="สร้างโพสต์"
       >
-        <AddPost setOpened={setOpened} />
+        <Add setOpened={setOpened} />
       </Modal>
       <Button
         onClick={() => setOpened(true)}

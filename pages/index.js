@@ -1,6 +1,6 @@
 import { Footer } from "@components/Footer";
 
-import HomeComponent from "@components/HomeComponent";
+import HomeComponents from "@components/HomeComponents";
 import Navbar from "@components/Navbar";
 import { firestore, fromMillis, postToJSON } from "@lib/firebase";
 import { useThemeContext } from "@lib/useTheme";
@@ -69,7 +69,7 @@ export default function HomePage(props) {
     <>
       <div className="bg-background min-h-[1024px] mb-[235px] pb-10">
         <Navbar />
-        <HomeComponent />
+        <HomeComponents />
       </div>
       <Footer />
     </>

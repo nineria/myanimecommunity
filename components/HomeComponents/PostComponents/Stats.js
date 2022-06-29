@@ -1,6 +1,6 @@
 import React from "react";
 
-function ContentStat({ children }) {
+function Stats({ children }) {
   const posts = React.Children.map(children, (child) =>
     child.type.displayName === "Posts" ? child : null
   );
@@ -31,14 +31,14 @@ function ContentStat({ children }) {
 
 const Posts = ({ children }) => children;
 Posts.displayName = "Posts";
-ContentStat.Posts = Posts;
+Stats.Posts = Posts;
 
 const Comments = ({ children }) => children;
 Comments.displayName = "Comments";
-ContentStat.Comments = Comments;
+Stats.Comments = Comments;
 
 const EditDate = ({ children }) => children;
 EditDate.displayName = "EditDate";
-ContentStat.EditDate = EditDate;
+Stats.EditDate = EditDate;
 
-export default ContentStat;
+export default Stats;

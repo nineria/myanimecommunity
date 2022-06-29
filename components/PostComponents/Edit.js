@@ -1,7 +1,7 @@
 import { Divider, Stack } from "@mantine/core";
 import { useForm } from "@mantine/hooks";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TagHeader from "./FormComponents/TagHeader";
 import TagGenre from "./FormComponents/TagGenre";
 import { PostHeader, RefCredit, TermAndService } from "./FormComponents";
@@ -9,16 +9,12 @@ import PostImage from "./FormComponents/PostImage";
 import PostContent from "./FormComponents/PostContent";
 import { ButtonControl } from "./FormComponents/ButtonControl";
 
-export default function AddPost({ setOpened }) {
-  const [data, setData] = useState({
-    tag: [],
-    title: "",
-    image: "",
-    content: ``,
-    credit: "",
-    genre: [],
-    comments: {},
-  });
+export default function Edit({ postData, setOpened }) {
+  const [data, setData] = useState(postData);
+
+  useEffect(() => {
+    setData(postData); // This is be executed when `loading` state changes
+  }, [postData]);
 
   const HandleChange = (values) => {
     setData(values);

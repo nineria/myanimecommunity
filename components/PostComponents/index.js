@@ -4,15 +4,19 @@ import {
   Button,
   Group,
   Modal,
-  Notification,
   Text,
   TypographyStylesProvider,
 } from "@mantine/core";
 import React, { useState } from "react";
-import { CalendarMinus, Edit, Eye, ThumbUp, X } from "tabler-icons-react";
-import EditPost from "./EditPost";
+import {
+  CalendarMinus,
+  Edit as EditIcon,
+  Eye,
+  ThumbUp,
+} from "tabler-icons-react";
+import Edit from "./Edit";
 
-export default function Post({ data }) {
+export default function PostComponents({ data }) {
   return (
     <div className="bg-foreground rounded-sm">
       {/* Left menu */}
@@ -81,11 +85,11 @@ function MainPost({ data }) {
           onClose={() => setOpened(false)}
           title="แก้ไขโพสต์"
         >
-          <EditPost postData={data} setOpened={setOpened} />
+          <Edit postData={data} setOpened={setOpened} />
         </Modal>
         <Button
           onClick={() => setOpened(true)}
-          leftIcon={<Edit size={14} />}
+          leftIcon={<EditIcon size={14} />}
           className="bg-content text-[#fff] hover:bg-content hover:opacity-75"
           variant="default"
           size="xs"

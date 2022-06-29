@@ -1,6 +1,6 @@
 import Navbar from "@components/Navbar";
-import PostLayout from "@components/PostComponent/PostLayout";
-import PostsMenuController from "@components/PostComponent/MenuController";
+import PostLayout from "@components/PostComponents/PostLayout";
+import PostsMenuController from "@components/PostComponents/MenuController";
 import React, { useEffect, useState } from "react";
 import { useThemeContext } from "@lib/useTheme";
 import {

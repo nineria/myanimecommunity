@@ -1,12 +1,12 @@
 import Navbar from "@components/Navbar";
 import React, { useContext, useEffect, useState } from "react";
-import Theme from "@components/SettingComponent/Theme";
 import { UserContext } from "@lib/context";
 import { useThemeContext } from "@lib/useTheme";
 import PageNotFound from "./404.js";
 import { Animate } from "react-simple-animate";
 import { Container, Skeleton, useMantineColorScheme } from "@mantine/core";
 import { Footer } from "@components/Footer/index.js";
+import SettingComponents from "@components/SettingComponent/index.js";
 
 // This gets called on every request
 export async function getServerSideProps() {
@@ -104,18 +104,21 @@ export default function SettingPage({ samplePost, localTheme }) {
   return (
     <>
       <div className="bg-background text-accent min-h-[1024px] mb-[235px] pb-10">
+        {/* Navar */}
         <Navbar page="/setting" isBusy />
+        {/* Check user and Setting*/}
         {user && user ? (
           <Container size="lg">
-            {/* Option menu */}
-            {/* Theme */}
             <Animate
               play
               start={{ transform: "translateY(1%)", opacity: "0" }}
               end={{ transform: "translateY(0%)", opacity: "1" }}
             >
               <Skeleton visible={loading}>
-                <Theme samplePost={samplePost} localTheme={localTheme} />
+                <SettingComponents
+                  samplePost={samplePost}
+                  localTheme={localTheme}
+                />
               </Skeleton>
             </Animate>
           </Container>
@@ -123,6 +126,7 @@ export default function SettingPage({ samplePost, localTheme }) {
           <PageNotFound />
         )}
       </div>
+      {/* Footer */}
       <Footer />
     </>
   );

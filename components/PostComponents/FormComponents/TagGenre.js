@@ -1,69 +1,22 @@
-import {
-  ActionIcon,
-  Badge,
-  Button,
-  Group,
-  Input,
-  InputWrapper,
-  Stack,
-  Text,
-} from "@mantine/core";
+import { ActionIcon, Badge, Group, Input, InputWrapper } from "@mantine/core";
 import React, { useState } from "react";
 import { Tag, X } from "tabler-icons-react";
 import { useModals } from "@mantine/modals";
 
 export default function TagGenre({ data, setData }) {
-  const modals = useModals();
+  const [tags, setTags] = useState([]); // Used to update page
 
-  const openDeleteModal = (item, index) => {
-    const handleOnClick = () => {
-      data.genre.splice(index, 1);
-      setData(data);
-      console.log(data.genre);
-      modals.closeModal(id);
-    };
-    const id = modals.openModal({
-      title: (
-        <Text size="sm">
-          คุณต้องการลบ
-          <Badge key={index} variant="outline" mx="xs">
-            {item}
-          </Badge>
-          หรือไม่?
-        </Text>
-      ),
-      zIndex: "999",
-      centered: true,
-      classNames: {
-        modal: "bg-foreground",
-        overlay: "bg-background",
-      },
-      size: "sm",
-      children: (
-        <Stack size="xs">
-          <Group position="right">
-            <Button
-              className="bg-background text-title hover:bg-background hover:opacity-75"
-              onClick={() => modals.closeModal(id)}
-            >
-              ยกเลิก
-            </Button>
-            <Button
-              className="bg-red-500 hover:bg-red-500 hover:opacity-75"
-              onClick={() => handleOnClick()}
-            >
-              ลบ
-            </Button>
-          </Group>
-        </Stack>
-      ),
-    });
+  const handleRemoveTag = (item, index) => {
+    data.genre.splice(index, 1);
+    setData(data);
+    setTags([...tags, item]);
+    console.log(data.genre);
   };
 
   const removeButton = (item, index) => {
     return (
       <ActionIcon size="xs" color="blue" radius="xl" variant="transparent">
-        <X size={10} onClick={() => openDeleteModal(item, index)} />
+        <X size={10} onClick={() => handleRemoveTag(item, index)} />
       </ActionIcon>
     );
   };
@@ -78,8 +31,6 @@ export default function TagGenre({ data, setData }) {
       {item}
     </Badge>
   ));
-
-  const [tags, setTags] = useState([]);
 
   const handleKeyDown = (e) => {
     if (e.key !== "Enter") return;

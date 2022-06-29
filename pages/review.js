@@ -1,7 +1,7 @@
 import Announcement from "@components/Announcement";
 import Navbar from "@components/Navbar";
-import PostLayout from "@components/PostComponent/PostLayout";
-import PostsMenuController from "@components/PostComponent/MenuController";
+import PostLayout from "@components/PostComponents/PostLayout";
+import PostsMenuController from "@components/PostComponents/MenuController";
 import {
   Anchor,
   Breadcrumbs,

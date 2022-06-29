@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { ChevronUp, Messages, Edit, SquareX } from "tabler-icons-react";
+import React, { useState } from "react";
+import { ChevronUp, Edit as EditIcon } from "tabler-icons-react";
 import Link from "next/link";
 import { useContext } from "react";
 import { UserContext } from "@lib/context";
-import EditPost from "./Edit";
-import { Animate } from "react-simple-animate";
-import Content from "./Content";
+import Edit from "./Edit";
+import Status from "./PostComponents/Status";
 import { Modal } from "@mantine/core";
 
-export default function HomePost({ dummyData, isDisabled = false }) {
+export default function Post({ dummyData, disabled = false }) {
   const { user } = useContext(UserContext);
 
   const [toggle, setTogle] = useState(true);
@@ -56,15 +55,17 @@ export default function HomePost({ dummyData, isDisabled = false }) {
                   title: "text-title",
                 }}
               >
-                <EditPost
+                <Edit
                   setOpened={setOpened}
                   postData={postData}
                   handlePostDataChange={HandlePostDataChange}
                 />
               </Modal>
 
-              <Edit
-                onClick={() => setOpened(true)}
+              <EditIcon
+                onClick={() => {
+                  disabled ? null : setOpened(true);
+                }}
                 className="hover:translate-y-[1px] hover:opacity-75 cursor-pointer"
               />
             </div>
@@ -82,7 +83,7 @@ export default function HomePost({ dummyData, isDisabled = false }) {
       {/* Post */}
       <div className="flex flex-col bg-[#aaa] gap-[1px]">
         {toggle ? (
-          <Content
+          <Status
             header={postData?.header || "หัวข้อย่อย"}
             headerLink={postData?.headerLink || "/"}
             body={postData?.body || "เนื้อหา"}

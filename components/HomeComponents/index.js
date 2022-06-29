@@ -1,10 +1,9 @@
-import HomePost from "@components/HomePost";
-import AddPost from "@components/HomePost/Add";
+import Post from "./Post";
+import Add from "@components/HomeComponents/Add";
 import { UserContext } from "@lib/context";
 import { Button, Container, Modal, Skeleton } from "@mantine/core";
 import { useContext, useState } from "react";
 import { Animate } from "react-simple-animate";
-import { FilePlus, Plus } from "tabler-icons-react";
 
 export default function HomeComponent() {
   const { user, username } = useContext(UserContext);
@@ -21,9 +20,9 @@ export default function HomeComponent() {
     body: "",
   });
 
-  const HandleOpenMenu = () => {
-    return setOpenMenu(!openMenu);
-  };
+  // const HandleOpenMenu = () => {
+  //   return setOpenMenu(!openMenu);
+  // };
 
   const HandlePostDataChange = (data) => {
     setPostData(data);
@@ -58,7 +57,7 @@ export default function HomeComponent() {
   ];
 
   const posts = postDummy.map((item, index) => (
-    <HomePost dummyData={item} key={index} />
+    <Post dummyData={item} key={index} />
   ));
 
   return (
@@ -73,45 +72,43 @@ export default function HomeComponent() {
             }}
             end={{ transform: "translateY(0%)", opacity: "1" }}
           >
-            <div className="">
-              <div className="flex flex-col gap-2">
-                {/* Add home post */}
-                <div className="flex flex-row justify-between w-full bg-foreground rounded-sm p-1 shadow-md">
-                  <Modal
-                    size="lg"
-                    opened={opened}
-                    onClose={() => setOpened(false)}
-                    title="สร้างโพสต์ - หน้าหลัก"
-                    centered
-                    classNames={{
-                      modal: "bg-foreground",
-                      overlay: "bg-background",
-                      title: "text-title",
-                    }}
-                  >
-                    <AddPost
-                      setOpened={setOpened}
-                      postData={postData}
-                      handlePostDataChange={HandlePostDataChange}
-                    />
-                  </Modal>
-                  <Button
-                    onClick={() => setOpened(true)}
-                    className="bg-content text-[#fff] hover:bg-content hover:opacity-75"
-                    variant="default"
-                    size="xs"
-                  >
-                    สร้างโพสต์ +
-                  </Button>
-                </div>
-                {/* Display home post */}
-                <div className="flex flex-col gap-2">{posts}</div>
+            <div className="flex flex-col gap-2">
+              {/* Add home post */}
+              <div className="flex flex-row justify-between w-full bg-foreground rounded-sm p-1 shadow-md">
+                <Modal
+                  size="lg"
+                  opened={opened}
+                  onClose={() => setOpened(false)}
+                  title="สร้างโพสต์ - หน้าหลัก"
+                  centered
+                  classNames={{
+                    modal: "bg-foreground",
+                    overlay: "bg-background",
+                    title: "text-title",
+                  }}
+                >
+                  <Add
+                    setOpened={setOpened}
+                    postData={postData}
+                    handlePostDataChange={HandlePostDataChange}
+                  />
+                </Modal>
+                <Button
+                  onClick={() => setOpened(true)}
+                  className="bg-content text-[#fff] hover:bg-content hover:opacity-75"
+                  variant="default"
+                  size="xs"
+                >
+                  สร้างโพสต์ +
+                </Button>
               </div>
+              {/* Display home post */}
+              <div className="flex flex-col gap-2">{posts}</div>
             </div>
           </Animate>
         ) : (
           <Skeleton visible={loading}>
-            <HomePost dummyData={postDummy[0]} />
+            <Post dummyData={postDummy[0]} />
           </Skeleton>
         )}
       </div>

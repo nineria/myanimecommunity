@@ -1,16 +1,9 @@
-import HomePost from "@components/HomePost";
 import { useThemeContext } from "@lib/useTheme";
-import {
-  Divider,
-  Group,
-  Select,
-  Text,
-  useMantineColorScheme,
-} from "@mantine/core";
-import React, { forwardRef, useCallback, useEffect, useState } from "react";
-import { Settings } from "tabler-icons-react";
+import { Group, Select, Text, useMantineColorScheme } from "@mantine/core";
+import React, { forwardRef, useCallback, useEffect } from "react";
+import ResultSample from "./ThemeComponents/ResultSample";
 
-export default function ThemeComponent({ samplePost, localTheme }) {
+export default function Themes(props) {
   const { theme, setTheme } = useThemeContext();
 
   const { toggleColorScheme } = useMantineColorScheme();
@@ -41,7 +34,7 @@ export default function ThemeComponent({ samplePost, localTheme }) {
     setTheme(value);
   };
 
-  const filtered = localTheme.filter((employee) => {
+  const filtered = props.localTheme.filter((employee) => {
     return employee.value === theme;
   });
 
@@ -77,13 +70,7 @@ export default function ThemeComponent({ samplePost, localTheme }) {
   return (
     <div className="bg-foreground my-2 w-full rounded-sm shadow-md">
       {/* Header */}
-      <Group className="py-2 px-4 font-bold w-full text-title">
-        <Settings size={18} />
-        <Text size="lg" className="font-bold ">
-          การตั้งค่า
-        </Text>
-      </Group>
-      <Divider className="opacity-50" />
+
       {/* Theme */}
       <div className="px-4 py-2 flex flex-row justify-between items-center">
         <div className="w-full text-title">
@@ -97,7 +84,7 @@ export default function ThemeComponent({ samplePost, localTheme }) {
           <Select
             placeholder="เลือกธีม"
             itemComponent={SelectItem}
-            data={localTheme}
+            data={props.localTheme}
             searchable
             value={theme}
             maxDropdownHeight={400}
@@ -119,21 +106,7 @@ export default function ThemeComponent({ samplePost, localTheme }) {
         </div>
       </div>
       {/* Option menu result changed example */}
-      <div className="bg-foreground px-4 py-2">
-        <OptionMenuExample samplePost={samplePost} />
-      </div>
-    </div>
-  );
-}
-
-function OptionMenuExample({ samplePost }) {
-  const samplePosts = samplePost.map((item, index) => (
-    <HomePost dummyData={item} key={index} isDisabled={true} />
-  ));
-
-  return (
-    <div className="bg-background p-4 rounded-sm">
-      <div className="flex flex-col gap-2">{samplePosts}</div>
+      <ResultSample samplePost={props.samplePost} />
     </div>
   );
 }

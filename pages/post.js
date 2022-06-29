@@ -1,10 +1,10 @@
 import { Footer } from "@components/Footer";
 import Navbar from "@components/Navbar";
-import Post from "@components/Post";
-import Comment from "@components/Post/Comment";
-import CreateComment from "@components/Post/CreateComment";
-import TestComment from "@components/Post/TestComment";
-import Top from "@components/Post/Top";
+import PostComponents from "@components/PostComponents";
+import Comment from "@components/PostComponents/Comment";
+import CreateComment from "@components/PostComponents/CreateComment";
+import TestComment from "@components/PostComponents/TestComment";
+import Top from "@components/PostComponents/Top";
 import { UserContext } from "@lib/context";
 import { useThemeContext } from "@lib/useTheme";
 import {
@@ -17,7 +17,6 @@ import {
   Stack,
 } from "@mantine/core";
 import React, { useContext, useEffect, useState } from "react";
-import { X } from "tabler-icons-react";
 import PageNotFound from "./404";
 
 // This gets called on every request
@@ -204,7 +203,7 @@ export default function PostPage({ data, comment }) {
               {activePage === 1 ? (
                 <Stack spacing="xs">
                   <Skeleton visible={loading}>
-                    <Post data={data} />
+                    <PostComponents data={data} />
                   </Skeleton>
                   <Skeleton visible={loading}>
                     <Comment data={data.comments} />

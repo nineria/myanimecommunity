@@ -1,15 +1,5 @@
-import { Footer } from "@components/Footer";
-import Navbar from "@components/Navbar";
 import { useThemeContext } from "@lib/useTheme";
-import {
-  Anchor,
-  Breadcrumbs,
-  Card,
-  Container,
-  List,
-  Stack,
-  Title,
-} from "@mantine/core";
+import { Card, List, Stack, Title } from "@mantine/core";
 import React, { useEffect } from "react";
 
 export default function WebsiteRule() {

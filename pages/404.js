@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Blockquote, Stack, useMantineColorScheme } from "@mantine/core";
+import { Blockquote, Button, Center, Stack } from "@mantine/core";
 import Link from "next/link";
 import { useThemeContext } from "@lib/useTheme";
 
@@ -16,21 +16,26 @@ export default function PageNotFound() {
   }, [setTheme]);
 
   return (
-    <div className="h-screen bg-background">
+    <div className="min-h-[1024px] bg-background">
       <Stack align="center">
         <h1 className="clip-image-text md:text-[20vw] text-[43vw]">404</h1>
-        <Stack align="center" className="bg-foreground lg:p-8 p-4 rounded-sm">
+        <div className="bg-foreground lg:p-8 p-4 rounded-sm ">
           <Blockquote cite="– อ๊ะ! ไม่พบหน้าเว็บไซต์ที่ร้องขอ">
             <p className="text-title md:text-xl text-sm">
               การเดินทางนับพันไมล์ เริ่มต้นได้ด้วยก้าวเดียวเสมอ
             </p>
           </Blockquote>
-          <Link href="/">
-            <a className="bg-content md:text-base text-xs text-accent px-2 py-1 w-fit rounded-sm hover:opacity-75">
-              กลับหน้าหลัก
-            </a>
-          </Link>
-        </Stack>
+          <Center>
+            <Link href="/">
+              <Button
+                className="bg-content  text-[#fff] hover:bg-content hover:opacity-75"
+                variant="default"
+              >
+                กลับหน้าหลัก
+              </Button>
+            </Link>
+          </Center>
+        </div>
       </Stack>
     </div>
   );

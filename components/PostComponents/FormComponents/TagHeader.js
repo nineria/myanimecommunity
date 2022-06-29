@@ -1,71 +1,21 @@
-import {
-  ActionIcon,
-  Badge,
-  Button,
-  Group,
-  Input,
-  InputWrapper,
-  Stack,
-  Text,
-} from "@mantine/core";
+import { ActionIcon, Badge, Group, Input, InputWrapper } from "@mantine/core";
 import React, { useState } from "react";
 import { Tag, X } from "tabler-icons-react";
-import { useModals } from "@mantine/modals";
 
 export default function TagHeader({ data, setData }) {
-  const modals = useModals();
-
   const [tmpTags, setTmpTags] = useState([]);
 
-  const openDeleteModal = (item, index) => {
-    const handleOnClick = () => {
-      data.tag.splice(index, 1);
-      setData(data);
-      console.log(data.tag);
-      modals.closeModal(id);
-    };
-    const id = modals.openModal({
-      title: (
-        <Text size="sm">
-          คุณต้องการลบ
-          <Badge key={index} variant="outline" mx="xs">
-            {item}
-          </Badge>
-          หรือไม่?
-        </Text>
-      ),
-      zIndex: "999",
-      centered: true,
-      classNames: {
-        modal: "bg-foreground",
-        overlay: "bg-background",
-      },
-      size: "sm",
-      children: (
-        <Stack size="xs">
-          <Group position="right">
-            <Button
-              className="bg-background text-title hover:bg-background hover:opacity-75"
-              onClick={() => modals.closeModal(id)}
-            >
-              ยกเลิก
-            </Button>
-            <Button
-              className="bg-red-500 hover:bg-red-500 hover:opacity-75"
-              onClick={() => handleOnClick()}
-            >
-              ลบ
-            </Button>
-          </Group>
-        </Stack>
-      ),
-    });
+  const handleRemoveTag = (item, index) => {
+    data.tag.splice(index, 1);
+    setData(data);
+    setTmpTags([...tmpTags, item]);
+    console.log(data.tag);
   };
 
   const removeButton = (item, index) => {
     return (
       <ActionIcon size="xs" color="blue" radius="xl" variant="transparent">
-        <X size={10} onClick={() => openDeleteModal(item, index)} />
+        <X size={10} onClick={() => handleRemoveTag(item, index)} />
       </ActionIcon>
     );
   };
