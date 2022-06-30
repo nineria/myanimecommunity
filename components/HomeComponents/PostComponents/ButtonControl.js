@@ -1,5 +1,6 @@
-import { Button, Group } from "@mantine/core";
 import React from "react";
+// Components
+import { Button, Group } from "@mantine/core";
 
 export default function ButtonControl({ setOpened }) {
   return (

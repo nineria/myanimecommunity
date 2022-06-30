@@ -1,3 +1,5 @@
+import React, { useRef, useState } from "react";
+// Components
 import {
   Button,
   Collapse,
@@ -9,7 +11,6 @@ import {
   Stack,
   Text,
 } from "@mantine/core";
-import React, { useRef, useState } from "react";
 
 export default function PostImage(props) {
   const inputImageRef = useRef(null);

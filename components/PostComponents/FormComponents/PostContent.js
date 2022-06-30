@@ -1,5 +1,6 @@
-import { InputWrapper, Tabs } from "@mantine/core";
 import React, { useState } from "react";
+// Components
+import { InputWrapper, Tabs } from "@mantine/core";
 import RichTextEditor from "@components/RichText";
 
 const handleImageUpload = (image) =>

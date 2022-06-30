@@ -1,5 +1,7 @@
-import { Badge, Title } from "@mantine/core";
 import React from "react";
+// Components
+import { Badge, Title } from "@mantine/core";
+// Icons
 import { User } from "tabler-icons-react";
 
 export default function Top({ data }) {

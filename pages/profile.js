@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Animate } from "react-simple-animate";
 import {
   BrandGithub,
@@ -11,10 +11,10 @@ import Navbar from "@components/Navbar";
 import { Container, Skeleton, Stack } from "@mantine/core";
 import { Footer } from "@components/Footer";
 import PageNotFound from "./404";
-import UserCardImage from "@components/ProfileComponent/UserCardImage";
-import StatsSegments from "@components/ProfileComponent/StatsSegments";
-import { StatsGridIcons } from "@components/ProfileComponent/StatsGridIcons";
-import { TableSort } from "@components/ProfileComponent/TableSort";
+import UserCardImage from "@components/ProfileComponents/UserCardImage";
+import StatsSegments from "@components/ProfileComponents/StatsSegments";
+import { StatsGridIcons } from "@components/ProfileComponents/StatsGridIcons";
+import { TableSort } from "@components/ProfileComponents/TableSort";
 
 // This gets called on every request
 export async function getServerSideProps() {

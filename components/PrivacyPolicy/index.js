@@ -1,6 +1,8 @@
-import { useThemeContext } from "@lib/useTheme";
-import { Card, List, Stack, Title } from "@mantine/core";
 import React, { useEffect } from "react";
+// Context
+import { useThemeContext } from "@lib/useTheme";
+// Components
+import { Card, List, Stack, Title } from "@mantine/core";
 
 export default function PrivacyPolicy() {
   const { setTheme } = useThemeContext();

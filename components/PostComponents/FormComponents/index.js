@@ -1,5 +1,6 @@
-import { Button, Group, Input, InputWrapper, Textarea } from "@mantine/core";
 import React from "react";
+// Components
+import { Input, InputWrapper, Textarea } from "@mantine/core";
 
 export function PostHeader(props) {
   return (

@@ -1,11 +1,14 @@
+import { useContext, useState } from "react";
+// Context
+import { UserContext } from "@lib/context";
+// Components
 import Post from "./Post";
 import Add from "@components/HomeComponents/Add";
-import { UserContext } from "@lib/context";
 import { Button, Container, Modal, Skeleton } from "@mantine/core";
-import { useContext, useState } from "react";
+// Icons
 import { Animate } from "react-simple-animate";
 
-export default function HomeComponent() {
+export default function HomeComponents() {
   const { user, username } = useContext(UserContext);
 
   const [opened, setOpened] = useState(false);

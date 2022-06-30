@@ -1,3 +1,5 @@
+import React, { useState } from "react";
+// Components
 import {
   Avatar,
   Badge,
@@ -7,14 +9,14 @@ import {
   Text,
   TypographyStylesProvider,
 } from "@mantine/core";
-import React, { useState } from "react";
+import Edit from "./Edit";
+// Icons
 import {
   CalendarMinus,
   Edit as EditIcon,
   Eye,
   ThumbUp,
 } from "tabler-icons-react";
-import Edit from "./Edit";
 
 export default function PostComponents({ data }) {
   return (

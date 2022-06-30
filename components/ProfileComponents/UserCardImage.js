@@ -1,4 +1,5 @@
-import { kFormatter } from "@components/Calculator";
+import React, { useState } from "react";
+// Components
 import {
   Avatar,
   Badge,
@@ -12,8 +13,10 @@ import {
   Text,
   Textarea,
 } from "@mantine/core";
-import React, { useState } from "react";
+// Icons
 import { AlertTriangle, Edit } from "tabler-icons-react";
+// Tools
+import { kFormatter } from "@components/Calculator";
 
 export default function UserCardImage({ data }) {
   const [opened, setOpened] = useState(false);

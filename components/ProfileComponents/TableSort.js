@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+// Components
 import {
   createStyles,
   Table,
@@ -12,6 +13,7 @@ import {
   Anchor,
   Progress,
 } from "@mantine/core";
+// Icons
 import { Selector, ChevronDown, ChevronUp, Search } from "tabler-icons-react";
 
 const useStyles = createStyles(() => ({

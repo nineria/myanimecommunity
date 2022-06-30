@@ -1,19 +1,8 @@
-import {
-  Avatar,
-  Badge,
-  Button,
-  Divider,
-  Group,
-  Image,
-  Stack,
-  Tabs,
-  Text,
-  Textarea,
-  ThemeIcon,
-} from "@mantine/core";
-import { data } from "autoprefixer";
 import React from "react";
-import { CalendarMinus, Eye, Markdown, ThumbUp } from "tabler-icons-react";
+// Components
+import { Avatar, Text } from "@mantine/core";
+// Icons
+import { CalendarMinus, ThumbUp } from "tabler-icons-react";
 
 export default function Comment({ data }) {
   return (

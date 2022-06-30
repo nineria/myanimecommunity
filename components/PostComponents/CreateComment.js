@@ -1,7 +1,7 @@
 // import MarkdownPreview from "@components/MarkdownPreview";
-import { Avatar, Button, Tabs, Text, Textarea } from "@mantine/core";
 import React, { useMemo, useState } from "react";
-import { Markdown as MarkdownIcon } from "tabler-icons-react";
+// Components
+import { Avatar, Button, Tabs, Text } from "@mantine/core";
 import RichTextEditor from "@components/RichText";
 
 const people = [

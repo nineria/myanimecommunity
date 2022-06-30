@@ -1,5 +1,6 @@
-import { InputWrapper, Textarea } from "@mantine/core";
 import React from "react";
+// Components
+import { InputWrapper, Textarea } from "@mantine/core";
 
 export default function Content(props) {
   return (

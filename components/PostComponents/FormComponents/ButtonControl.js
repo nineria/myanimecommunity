@@ -1,8 +1,10 @@
-import { Button, Group, Stack, Text } from "@mantine/core";
 import React from "react";
+// Components
+import { Button, Group, Stack, Text } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
-import { Check } from "tabler-icons-react";
 import { useModals } from "@mantine/modals";
+// Icons
+import { Check } from "tabler-icons-react";
 
 export function ButtonControl({ setOpened }) {
   const modals = useModals();

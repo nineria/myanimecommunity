@@ -1,5 +1,7 @@
-import { ActionIcon, Badge, Group, Input, InputWrapper } from "@mantine/core";
 import React, { useState } from "react";
+// Components
+import { ActionIcon, Badge, Group, Input, InputWrapper } from "@mantine/core";
+// Icons
 import { Tag, X } from "tabler-icons-react";
 
 export default function TagHeader({ data, setData }) {

@@ -1,7 +1,9 @@
-import Link from "next/link";
 import React from "react";
-import { Messages } from "tabler-icons-react";
+import Link from "next/link";
+// Components
 import Stats from "./Stats";
+// Icons
+import { Messages } from "tabler-icons-react";
 
 export default function Status({ header, headerLink, body }) {
   return (

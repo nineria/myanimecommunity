@@ -1,6 +1,8 @@
+import React, { useState } from "react";
+// Components
 import Card from "@components/Card";
 import { Grid, Skeleton, Stack } from "@mantine/core";
-import React, { useState } from "react";
+// Icons
 import { Animate } from "react-simple-animate";
 
 export default function PostLayout({ property, layout }) {

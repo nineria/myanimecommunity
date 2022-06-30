@@ -1,5 +1,6 @@
-import Post from "@components/HomeComponents/Post";
 import React from "react";
+// Components
+import Post from "@components/HomeComponents/Post";
 
 export default function ResultSample({ samplePost }) {
   const samplePosts = samplePost.map((item, index) => (

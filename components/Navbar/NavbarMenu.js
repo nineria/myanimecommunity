@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+// Animate
 import { Animate } from "react-simple-animate";
 
 export default function NavbarMenu({ page, menu }) {

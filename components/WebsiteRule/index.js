@@ -1,6 +1,7 @@
+import React, { useEffect } from "react";
+// Components
 import { useThemeContext } from "@lib/useTheme";
 import { Card, List, Stack, Title } from "@mantine/core";
-import React, { useEffect } from "react";
 
 export default function WebsiteRule() {
   const { setTheme } = useThemeContext();

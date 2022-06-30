@@ -1,4 +1,8 @@
+import React, { useState } from "react";
+import Link from "next/link";
+// Context
 import { auth, googleAuthProvider } from "@lib/firebase";
+// Components
 import {
   Button,
   Checkbox,
@@ -12,10 +16,9 @@ import {
   Stack,
   Text,
 } from "@mantine/core";
-import Link from "next/link";
 import WebsiteRulePage from "@components/WebsiteRule";
 import PrivacyPolicyPage from "@components/PrivacyPolicy";
-import React, { useState } from "react";
+// Icons
 import { Mail } from "tabler-icons-react";
 
 export default function LoginRegister() {

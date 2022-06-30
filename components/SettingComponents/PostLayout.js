@@ -1,8 +1,11 @@
-import PostsMenuController from "@components/Post/MenuController";
-import { useThemeContext } from "@lib/useTheme";
 import React, { useEffect, useState } from "react";
-import { Settings } from "tabler-icons-react";
+// Context
+import { useThemeContext } from "@lib/useTheme";
+// Components
+import PostsMenuController from "@components/Post/MenuController";
 import PostLayout from "@components/Post/PostLayout";
+// Icons
+import { Settings } from "tabler-icons-react";
 
 export default function PostLayoutComponent({ data }) {
   const [layout, setLayout] = useState("grid");

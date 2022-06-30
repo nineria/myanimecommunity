@@ -1,6 +1,8 @@
-import { AspectRatio, Badge, Image } from "@mantine/core";
-import Link from "next/link";
 import React, { useState } from "react";
+import Link from "next/link";
+// Components
+import { AspectRatio, Badge, Image } from "@mantine/core";
+// Icons
 import { Clock, Star, ThumbUp } from "tabler-icons-react";
 
 export default function Card({ property, layout }) {

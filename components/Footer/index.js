@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import Link from "next/link";
+// Components
 import { Text, Container, ActionIcon, Group, Divider } from "@mantine/core";
+// Icons, Logo
 import { BrandTwitter, BrandYoutube, BrandInstagram } from "tabler-icons-react";
 import MyAniLogo from "@components/Navbar/MyAniLogo";
-import Link from "next/link";
 
 export function Footer() {
   const [data, setData] = useState([

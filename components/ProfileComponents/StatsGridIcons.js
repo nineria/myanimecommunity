@@ -1,13 +1,9 @@
 import React from "react";
-import {
-  createStyles,
-  Group,
-  Paper,
-  Text,
-  ThemeIcon,
-  SimpleGrid,
-} from "@mantine/core";
+// Components
+import { Group, Paper, Text, ThemeIcon, SimpleGrid } from "@mantine/core";
+// Icons
 import { ArrowUpRight, ArrowDownRight } from "tabler-icons-react";
+// Tools
 import { kFormatter } from "@components/Calculator";
 
 export function StatsGridIcons({ data }) {

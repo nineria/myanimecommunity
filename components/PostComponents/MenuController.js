@@ -1,3 +1,5 @@
+import React, { useState } from "react";
+// Components
 import Add from "@components/PostComponents/Add";
 import {
   Box,
@@ -7,7 +9,7 @@ import {
   Modal,
   SegmentedControl,
 } from "@mantine/core";
-import React, { useState } from "react";
+// Icons
 import { LayoutGrid, ListDetails } from "tabler-icons-react";
 
 export default function PostsMenuController({ layout, setLayout }) {

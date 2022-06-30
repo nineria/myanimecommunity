@@ -1,12 +1,12 @@
-import Navbar from "@components/Navbar";
-import React, { useContext, useEffect, useState } from "react";
-import { UserContext } from "@lib/context";
-import { useThemeContext } from "@lib/useTheme";
-import PageNotFound from "./404.js";
-import { Animate } from "react-simple-animate";
 import { Container, Skeleton, useMantineColorScheme } from "@mantine/core";
+import SettingComponents from "@components/SettingComponents/index.js";
+import React, { useContext, useEffect, useState } from "react";
 import { Footer } from "@components/Footer/index.js";
-import SettingComponents from "@components/SettingComponent/index.js";
+import { useThemeContext } from "@lib/useTheme";
+import { Animate } from "react-simple-animate";
+import { UserContext } from "@lib/context";
+import Navbar from "@components/Navbar";
+import PageNotFound from "./404.js";
 
 // This gets called on every request
 export async function getServerSideProps() {

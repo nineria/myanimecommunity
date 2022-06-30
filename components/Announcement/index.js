@@ -1,5 +1,7 @@
-import { useThemeContext } from "@lib/useTheme";
 import React, { useEffect, useState } from "react";
+// Context
+import { useThemeContext } from "@lib/useTheme";
+// Icons
 import { Animate } from "react-simple-animate";
 import { AlertCircle, X } from "tabler-icons-react";
 

@@ -1,11 +1,13 @@
-import React, { useState } from "react";
-import { ChevronUp, Edit as EditIcon } from "tabler-icons-react";
+import React, { useState, useContext } from "react";
 import Link from "next/link";
-import { useContext } from "react";
+// Context
 import { UserContext } from "@lib/context";
+// Components
 import Edit from "./Edit";
 import Status from "./PostComponents/Status";
 import { Modal } from "@mantine/core";
+// Icons
+import { ChevronUp, Edit as EditIcon } from "tabler-icons-react";
 
 export default function Post({ dummyData, disabled = false }) {
   const { user } = useContext(UserContext);

@@ -1,22 +1,10 @@
 import React from "react";
-import {
-  createStyles,
-  Progress,
-  Box,
-  Text,
-  Group,
-  Paper,
-  SimpleGrid,
-} from "@mantine/core";
+// Components
+import { Progress, Box, Text, Group, Paper, SimpleGrid } from "@mantine/core";
+// Icons
 import { ArrowUpRight, DeviceAnalytics } from "tabler-icons-react";
+// Tools
 import { kFormatter } from "@components/Calculator";
-
-const useStyles = createStyles((theme) => ({
-  statCount: {
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-    lineHeight: 1.3,
-  },
-}));
 
 export default function StatsSegments({ total, diff, data }) {
   const segments = data.map((segment) => ({
@@ -36,7 +24,6 @@ export default function StatsSegments({ total, diff, data }) {
       </Text>
 
       <Group position="apart" align="flex-end" spacing={0}>
-        {/* <Text weight={700}>{numFormatter(stat.count)}</Text> */}
         <Text weight={700}>{kFormatter(stat.count)}</Text>
         <Text color={stat.color} weight={700} size="sm" className="leading-4">
           {stat.part}%

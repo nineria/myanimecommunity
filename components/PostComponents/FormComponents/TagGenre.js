@@ -1,7 +1,8 @@
-import { ActionIcon, Badge, Group, Input, InputWrapper } from "@mantine/core";
 import React, { useState } from "react";
+// Components
+import { ActionIcon, Badge, Group, Input, InputWrapper } from "@mantine/core";
+// Icons
 import { Tag, X } from "tabler-icons-react";
-import { useModals } from "@mantine/modals";
 
 export default function TagGenre({ data, setData }) {
   const [tags, setTags] = useState([]); // Used to update page

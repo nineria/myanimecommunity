@@ -1,9 +1,10 @@
-import { Avatar, Group, Indicator, Menu, Text } from "@mantine/core";
-
-import Link from "next/link";
 import React from "react";
-import { Logout } from "tabler-icons-react";
+import Link from "next/link";
+// Components
+import { Avatar, Group, Indicator, Menu, Text } from "@mantine/core";
 import { settingMenuProperty, accessMenuProperty } from "./DummyData";
+// Icons
+import { Logout } from "tabler-icons-react";
 
 export default function UserMenu({ user, isBusy, signOut }) {
   return (
