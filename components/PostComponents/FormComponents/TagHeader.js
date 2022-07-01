@@ -8,10 +8,10 @@ export default function TagHeader({ data, setData }) {
   const [tmpTags, setTmpTags] = useState([]);
 
   const handleRemoveTag = (item, index) => {
-    data.tag.splice(index, 1);
+    data.splice(index, 1);
     setData(data);
     setTmpTags([...tmpTags, item]);
-    console.log(data.tag);
+    console.log(data);
   };
 
   const removeButton = (item, index) => {
@@ -22,7 +22,7 @@ export default function TagHeader({ data, setData }) {
     );
   };
 
-  const tags = data.tag.map((item, index) => {
+  const tags = data.map((item, index) => {
     return (
       <Badge
         key={index}
@@ -42,7 +42,7 @@ export default function TagHeader({ data, setData }) {
 
     if (!value.trim()) return;
 
-    data.tag.push(value);
+    data.push(value);
 
     setData(data);
     setTmpTags([...tmpTags, value]);

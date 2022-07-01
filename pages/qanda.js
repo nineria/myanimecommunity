@@ -12,38 +12,17 @@ import {
 } from "@mantine/core";
 import { Footer } from "@components/Footer";
 
-// This gets called on every request
-export async function getServerSideProps() {
-  // Fetch data from external API
-  const data = await [
-    {
-      imageUrl:
-        "https://www.anime-internet.com/content/images/size/w2000/2021/09/tileburnedin.jpg",
-      title:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, ea?",
-      date: "1 เดือน",
-      like: "25K",
-      star: "4.5",
-      badges: [
-        {
-          name: "อนิเมะ",
-          color: "red",
-        },
-        {
-          name: "คำถาม",
-          color: "yellow",
-        },
-        {
-          name: "คำถาม",
-          color: "green",
-        },
-      ],
-      postType: "ANIME",
-    },
-  ];
+// Max post to query per page
+const LIMIT = 10;
 
-  // Pass data to the page via props
-  return { props: { data } };
+export async function getServerSideProps(context) {
+  const postsQuery = firestore.collectionGroup("posts").limit(LIMIT);
+
+  const posts = (await postsQuery.get()).docs.map(postToJSON);
+
+  return {
+    props: { posts }, // will be passed to the page component as props
+  };
 }
 
 export default function QAndAPage({ data }) {

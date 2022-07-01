@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // Components
 import { InputWrapper, Tabs } from "@mantine/core";
 import RichTextEditor from "@components/RichText";
@@ -20,8 +20,13 @@ const handleImageUpload = (image) =>
       .catch(() => reject(new Error("Upload failed")));
   });
 
-export default function PostContent() {
-  const [value, onChange] = useState("");
+export default function PostContent({ content, setContent }) {
+  const [value, onChange] = useState(content);
+
+  const handleOnChange = () => {
+    onChange(value);
+    setContent(value);
+  };
 
   return (
     <InputWrapper
@@ -38,8 +43,8 @@ export default function PostContent() {
           <RichTextEditor
             sticky={true}
             stickyOffset={-55}
-            value={value}
-            onChange={onChange}
+            value={content}
+            onChange={handleOnChange}
             placeholder="รายระเอียดเนื้อหาของโพตส์ เช่น รูปภาพ หรือ วิดีโอ รวมไปถึง Link ต่างๆ"
             onImageUpload={handleImageUpload}
             classNames={{

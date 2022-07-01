@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 // Hooks
 import { useForm } from "@mantine/hooks";
 // Components
@@ -9,58 +9,78 @@ import { PostHeader, RefCredit, TermAndService } from "./FormComponents";
 import PostImage from "./FormComponents/PostImage";
 import PostContent from "./FormComponents/PostContent";
 import { ButtonControl } from "./FormComponents/ButtonControl";
+import { UserContext } from "@lib/context";
+import kebabCase from "lodash.kebabcase";
+import { auth, firestore, serverTimestamp } from "@lib/firebase";
 
 export default function Add({ setOpened }) {
-  const [data, setData] = useState({
-    tag: [],
-    title: "",
-    image: "",
-    content: ``,
-    credit: "",
-    genre: [],
-    comments: {},
-  });
+  const [tags, setTags] = useState([]);
+  const [genres, setGenres] = useState([]);
+  const [content, setContent] = useState("");
 
-  const HandleChange = (values) => {
-    setData(values);
-    console.log(values);
+  const { username } = useContext(UserContext);
+  // Validate length
+  // const isValid = title.length > 3 && title.length < 100;
+
+  const HandleChange = async (values) => {
+    const uid = auth.currentUser.uid;
+    const ref = firestore
+      .collection("users")
+      .doc(uid)
+      .collection("posts")
+      .doc(encodeURI(kebabCase(values.title)));
+
+    const data = {
+      slug: encodeURI(kebabCase(values.title)),
+      tag: tags,
+      genre: genres,
+      title: values.title,
+      image: values.image,
+      content: content,
+      credit: values.credit,
+      username: username,
+      updatedAt: serverTimestamp(),
+      createdAt: serverTimestamp(),
+      stars: values.stars,
+      likes: values.likes,
+      uid: uid,
+    };
+
+    console.log(data);
+    await ref.set(data);
   };
 
   const form = useForm({
     initialValues: {
-      tag: data.tag,
-      title: data.title,
-      image: data.image,
-      content: data.content,
-      credit: data.credit,
-      username: data.username,
-      photoURL: data.photoURL,
-      rank: data.rank,
-      genre: data.genre,
+      slug: "",
+      tag: [],
+      genre: [],
+      title: "",
+      image: "",
+      content: "",
+      credit: "",
+      username: "",
+      updatedAt: "",
+      createdAt: "",
+      stars: 0,
+      likes: 0,
+      uid: "",
     },
   });
 
   return (
     <form onSubmit={form.onSubmit((values) => HandleChange(values))}>
       <Stack>
-        {/* Post tag */}
-        <TagHeader data={data} setData={setData} />
-        {/* Post genre */}
-        <TagGenre data={data} setData={setData} />
-        {/* Header */}
+        <TagHeader data={tags} setData={setTags} />
+        <TagGenre data={genres} setData={setGenres} />
         <PostHeader {...form.getInputProps("title")} />
         <Divider />
-        {/* Image */}
         <PostImage {...form.getInputProps("image")} />
-        {/* Post content editor */}
-        <PostContent />
+        <PostContent content={content} setContent={setContent} />
         <Divider />
-        {/* Reference, Credit */}
         <RefCredit {...form.getInputProps("credit")} />
         <Divider />
-        {/* Term And Service */}
         <TermAndService />
-        {/* Button control group */}
         <ButtonControl setOpened={setOpened} />
       </Stack>
     </form>

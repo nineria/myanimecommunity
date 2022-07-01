@@ -9,13 +9,13 @@ import { PostHeader, RefCredit, TermAndService } from "./FormComponents";
 import PostImage from "./FormComponents/PostImage";
 import PostContent from "./FormComponents/PostContent";
 import { ButtonControl } from "./FormComponents/ButtonControl";
+import { serverTimestamp } from "@lib/firebase";
 
 export default function Edit({ postData, setOpened }) {
   const [data, setData] = useState(postData);
-
-  useEffect(() => {
-    setData(postData); // This is be executed when `loading` state changes
-  }, [postData]);
+  const [tags, setTags] = useState([...postData.tag]);
+  const [genres, setGenres] = useState([...postData.genre]);
+  const [content, setContent] = useState(postData.content);
 
   const HandleChange = (values) => {
     setData(values);
@@ -25,38 +25,31 @@ export default function Edit({ postData, setOpened }) {
   const form = useForm({
     initialValues: {
       tag: data.tag,
+      genre: data.genre,
       title: data.title,
       image: data.image,
       content: data.content,
       credit: data.credit,
-      username: data.username,
-      photoURL: data.photoURL,
-      rank: data.rank,
-      genre: data.genre,
+      updatedAt: serverTimestamp(),
+      createdAt: data.createdAt,
+      stars: data.stars,
+      likes: data.likes,
     },
   });
 
   return (
     <form onSubmit={form.onSubmit((values) => HandleChange(values))}>
       <Stack>
-        {/* Post tag */}
-        <TagHeader data={data} setData={setData} />
-        {/* Post genre */}
-        <TagGenre data={data} setData={setData} />
-        {/* Header */}
+        <TagHeader data={tags} setData={setTags} />
+        <TagGenre data={genres} setData={setGenres} />
         <PostHeader {...form.getInputProps("title")} />
         <Divider />
-        {/* Image */}
         <PostImage {...form.getInputProps("image")} />
-        {/* Post content editor */}
-        <PostContent />
+        <PostContent content={content} setContent={setContent} />
         <Divider />
-        {/* Reference, Credit */}
         <RefCredit {...form.getInputProps("credit")} />
         <Divider />
-        {/* Term And Service */}
         <TermAndService />
-        {/* Button control group */}
         <ButtonControl setOpened={setOpened} />
       </Stack>
     </form>

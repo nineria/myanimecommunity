@@ -6,14 +6,14 @@ import { ArrowUpRight, DeviceAnalytics } from "tabler-icons-react";
 // Tools
 import { kFormatter } from "@components/Calculator";
 
-export default function StatsSegments({ total, diff, data }) {
-  const segments = data.map((segment) => ({
+export default function StatsSegments({ user }) {
+  const segments = user.stats.map((segment) => ({
     value: segment.part,
     color: segment.color,
     label: segment.part > 10 ? `${segment.part}%` : null,
   }));
 
-  const descriptions = data.map((stat) => (
+  const descriptions = user.stats.map((stat) => (
     <Box
       key={stat.label}
       sx={{ borderBottomColor: stat.color }}
@@ -24,7 +24,7 @@ export default function StatsSegments({ total, diff, data }) {
       </Text>
 
       <Group position="apart" align="flex-end" spacing={0}>
-        <Text weight={700}>{kFormatter(stat.count)}</Text>
+        <Text weight={700}>{kFormatter(stat.value)}</Text>
         <Text color={stat.color} weight={700} size="sm" className="leading-4">
           {stat.part}%
         </Text>
@@ -37,7 +37,7 @@ export default function StatsSegments({ total, diff, data }) {
       <Group position="apart">
         <Group align="flex-end" spacing="xs">
           <Text size="xl" weight={700}>
-            ทั้งหมด {kFormatter(total)}
+            ทั้งหมด {kFormatter(0)}
           </Text>
           <Text
             color="teal"
@@ -45,7 +45,7 @@ export default function StatsSegments({ total, diff, data }) {
             size="sm"
             weight={700}
           >
-            <span>{diff}%</span>
+            <span>0%</span>
             <ArrowUpRight size={16} style={{ marginBottom: 4 }} />
           </Text>
         </Group>

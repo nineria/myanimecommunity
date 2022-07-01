@@ -1,3 +1,5 @@
+import { UserContext } from "@lib/context";
+import { useContext } from "react";
 import {
   MoodConfuzed,
   MoodCrazyHappy,
@@ -7,24 +9,6 @@ import {
   Users,
   ZoomQuestion,
 } from "tabler-icons-react";
-
-export const settingMenuProperty = [
-  {
-    name: "โปรไฟล์",
-    link: "/profile",
-    icon: <Users size={14} />,
-  },
-  {
-    name: "ตั้งค่า",
-    link: "/setting",
-    icon: <Settings size={14} />,
-  },
-  {
-    name: "คำถามที่พบบ่อย",
-    link: "/faq",
-    icon: <ZoomQuestion size={14} />,
-  },
-];
 
 export const accessMenuProperty = [
   {

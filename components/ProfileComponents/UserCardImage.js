@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // Components
 import {
   Avatar,
@@ -18,21 +18,16 @@ import { AlertTriangle, Edit } from "tabler-icons-react";
 // Tools
 import { kFormatter } from "@components/Calculator";
 
-export default function UserCardImage({ data }) {
+export default function UserCardImage({ user, posts }) {
   const [opened, setOpened] = useState(false);
 
-  const stats = data.stats.map((stat) => (
-    <div key={stat.label}>
-      <Text align="center" size="lg" weight={500}>
-        {kFormatter(stat.value)}
-      </Text>
-      <Text align="center" size="sm" color="dimmed">
-        {stat.label}
-      </Text>
-    </div>
-  ));
+  const [totalLikes, setTotalLike] = useState(0);
 
-  const ranks = data.ranks.map((rank) => (
+  useEffect(() => {
+    posts.map((item) => setTotalLike(totalLikes + item.likes));
+  }, [posts, totalLikes]);
+
+  const ranks = user.ranks.map((rank) => (
     <Badge key={rank.label} variant="outline" color={rank.color} size="lg">
       {rank.label}
     </Badge>
@@ -42,7 +37,7 @@ export default function UserCardImage({ data }) {
     <Card p="md" radius="sm" className="bg-foreground">
       <Card.Section
         sx={{
-          backgroundImage: `url(${data.image})`,
+          backgroundImage: `url(${user.image})`,
           height: 260,
           backgroundSize: "cover",
           backgroundPosition: "center",
@@ -60,7 +55,7 @@ export default function UserCardImage({ data }) {
         </Button>
       </div>
       <Avatar
-        src={data.avatar}
+        src={user.avatar}
         size={120}
         radius={120}
         mx="auto"
@@ -70,15 +65,38 @@ export default function UserCardImage({ data }) {
       <Stack spacing="sm">
         <div className="block">
           <Text align="center" size="lg" mt="sm" weight={500}>
-            {data.username}
+            {user.firstName} {user.lastName}
           </Text>
           <Text align="center" weight={500}>
-            ({data.name})
+            ({user.username})
           </Text>
         </div>
         <Group position="center">{ranks}</Group>
         <Group mt="md" position="center" spacing={50}>
-          {stats}
+          <div>
+            <Text align="center" size="lg" weight={500}>
+              {kFormatter(totalLikes)}
+            </Text>
+            <Text align="center" size="sm" color="dimmed">
+              ถูกใจ
+            </Text>
+          </div>
+          <div>
+            <Text align="center" size="lg" weight={500}>
+              {kFormatter(posts.length)}
+            </Text>
+            <Text align="center" size="sm" color="dimmed">
+              โพสต์
+            </Text>
+          </div>
+          <div>
+            <Text align="center" size="lg" weight={500}>
+              {kFormatter(0)}
+            </Text>
+            <Text align="center" size="sm" color="dimmed">
+              คอมเมนต์
+            </Text>
+          </div>
         </Group>
         <ReportUser opened={opened} setOpened={setOpened} />
       </Stack>

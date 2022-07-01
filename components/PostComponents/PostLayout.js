@@ -5,22 +5,22 @@ import { Grid, Skeleton, Stack } from "@mantine/core";
 // Icons
 import { Animate } from "react-simple-animate";
 
-export default function PostLayout({ property, layout }) {
+export default function PostLayout({ posts, layout }) {
   const [loading, setLoading] = useState(true);
 
   setTimeout(function () {
     setLoading(false);
   }, 500);
 
-  const postGrids = property.map((data, index) => (
+  const postGrids = posts.map((data, index) => (
     <Grid.Col key={index} sm={6} md={6} lg={4}>
       <Skeleton visible={loading}>
-        <Card layout={layout} property={data} />
+        <Card layout={layout} posts={data} />
       </Skeleton>
     </Grid.Col>
   ));
 
-  const postStacks = property.map((data, index) => (
+  const postStacks = posts.map((data, index) => (
     <Card layout={layout} key={index} property={data} />
   ));
 

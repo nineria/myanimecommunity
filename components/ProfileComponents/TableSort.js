@@ -69,24 +69,30 @@ function sortData(data, payload) {
 
 export function TableSort({ data }) {
   const [search, setSearch] = useState("");
-  const [sortedData, setSortedData] = useState(data);
+  const [sortedData, setSortedData] = useState(data.posts);
   const [sortBy, setSortBy] = useState(null);
   const [reverseSortDirection, setReverseSortDirection] = useState(false);
 
   const { classes, theme } = useStyles();
 
+  console.log(data.posts.length);
+
   const setSorting = (field) => {
     const reversed = field === sortBy ? !reverseSortDirection : false;
     setReverseSortDirection(reversed);
     setSortBy(field);
-    setSortedData(sortData(data, { sortBy: field, reversed, search }));
+    setSortedData(sortData(data.posts, { sortBy: field, reversed, search }));
   };
 
   const handleSearchChange = (event) => {
     const { value } = event.currentTarget;
     setSearch(value);
     setSortedData(
-      sortData(data, { sortBy, reversed: reverseSortDirection, search: value })
+      sortData(data.posts, {
+        sortBy,
+        reversed: reverseSortDirection,
+        search: value,
+      })
     );
   };
 
@@ -206,7 +212,7 @@ export function TableSort({ data }) {
               rows
             ) : (
               <tr>
-                <td colSpan={Object.keys(data[0]).length}>
+                <td colSpan={Object.keys(data.posts[0]).length}>
                   <Text weight={500} align="center">
                     Nothing found
                   </Text>

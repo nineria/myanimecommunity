@@ -5,6 +5,7 @@ import { Badge, Title } from "@mantine/core";
 import { User } from "tabler-icons-react";
 
 export default function Top({ data }) {
+  console.log(data.tag);
   const tags = data.tag.map((item, index) => (
     <Badge
       key={index}

@@ -8,10 +8,10 @@ export default function TagGenre({ data, setData }) {
   const [tags, setTags] = useState([]); // Used to update page
 
   const handleRemoveTag = (item, index) => {
-    data.genre.splice(index, 1);
+    data.splice(index, 1);
     setData(data);
     setTags([...tags, item]);
-    console.log(data.genre);
+    console.log(data);
   };
 
   const removeButton = (item, index) => {
@@ -22,7 +22,7 @@ export default function TagGenre({ data, setData }) {
     );
   };
 
-  const genres = data.genre.map((item, index) => (
+  const genres = data.map((item, index) => (
     <Badge
       key={index}
       variant="outline"
@@ -40,7 +40,7 @@ export default function TagGenre({ data, setData }) {
 
     if (!value.trim()) return;
 
-    data.genre.push(value);
+    data.push(value);
 
     setData(data);
     setTags([...tags, value]);

@@ -13,7 +13,7 @@ import { navbarProperty } from "./DummyData";
 import LoginRegisterSmallScreen from "./LoginRegisterSmallScreen";
 
 export default function Navbar({ page, isBusy = false }) {
-  const { user, username } = useContext(UserContext); // User data
+  const { user, username, userData } = useContext(UserContext); // User data
 
   const [toggle, setToggle] = useState(false);
 
@@ -62,7 +62,7 @@ export default function Navbar({ page, isBusy = false }) {
               onClick={() => setToggle(!toggle)}
             >
               <UserMenu
-                user={user}
+                user={userData}
                 isBusy={isBusy}
                 toggle={toggle}
                 signOut={signOut}

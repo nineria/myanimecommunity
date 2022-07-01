@@ -6,8 +6,8 @@ import { ArrowUpRight, ArrowDownRight } from "tabler-icons-react";
 // Tools
 import { kFormatter } from "@components/Calculator";
 
-export function StatsGridIcons({ data }) {
-  const stats = data.map((stat) => {
+export function StatsGridIcons({ user }) {
+  const stats = user.stats.map((stat) => {
     const DiffIcon = stat.diff > 0 ? ArrowUpRight : ArrowDownRight;
 
     return (
@@ -18,7 +18,7 @@ export function StatsGridIcons({ data }) {
               {stat.label}
             </Text>
             <Text weight={700} size="xl">
-              {kFormatter(stat.count)}
+              {kFormatter(stat.value)}
             </Text>
           </div>
           <ThemeIcon

@@ -26,7 +26,7 @@ export default function PageNotFound() {
             </p>
           </Blockquote>
           <Center>
-            <Link href="/">
+            <Link href="/enter">
               <Button
                 className="bg-content  text-[#fff] hover:bg-content hover:opacity-75"
                 variant="default"

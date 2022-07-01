@@ -15,6 +15,7 @@ import {
   CalendarMinus,
   Edit as EditIcon,
   Eye,
+  Star,
   ThumbUp,
 } from "tabler-icons-react";
 
@@ -32,17 +33,27 @@ export default function PostComponents({ data }) {
 }
 
 function LeftMenu({ data }) {
-  const ranks = data.rank.map((item, index) => (
-    <Badge
-      radius="sm"
-      variant="filled"
-      color={item.color}
-      rightSection={item.icon} // Issue
-      key={index}
-    >
-      {item.name}
-    </Badge>
-  ));
+  const updatedAt =
+    typeof data?.updatedAt === "number"
+      ? new Date(data.updatedAt)
+      : data.updatedAt.toDate();
+
+  const date = updatedAt.toLocaleDateString("th-th", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+  // const ranks = data.rank.map((item, index) => (
+  //   <Badge
+  //     radius="sm"
+  //     variant="filled"
+  //     color={item.color}
+  //     rightSection={item.icon} // Issue
+  //     key={index}
+  //   >
+  //     {item.name}
+  //   </Badge>
+  // ));
 
   return (
     <div className="px-2 py-4">
@@ -51,19 +62,19 @@ function LeftMenu({ data }) {
         <Text color="red">{data.username}</Text>
         <p className="text-title text-xs">Admin</p>
       </div>
-      <div className="flex flex-col gap-1 mt-4">{ranks}</div>
+      {/* <div className="flex flex-col gap-1 mt-4">{ranks}</div> */}
       <div className="flex flex-col mt-4 text-title text-opacity-80">
         <div className="flex flex-row items-center text-xs gap-2">
           <CalendarMinus size={14} />
-          <p>: 15/08/2018</p>
+          <p>: {date}</p>
         </div>
         <div className="flex flex-row items-center text-xs gap-2">
-          <Eye size={14} />
-          <p>: 12.5K</p>
+          <Star size={14} />
+          <p>: {data.stars}</p>
         </div>
         <div className="flex flex-row items-center text-xs gap-2">
           <ThumbUp size={14} />
-          <p>: 182K</p>
+          <p>: {data.likes}</p>
         </div>
       </div>
     </div>
@@ -72,10 +83,21 @@ function LeftMenu({ data }) {
 
 function MainPost({ data }) {
   const [opened, setOpened] = useState(false);
+  const updatedAt =
+    typeof data?.updatedAt === "number"
+      ? new Date(data.updatedAt)
+      : data.updatedAt.toDate();
+
+  const date = updatedAt.toLocaleDateString("th-th", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+
   return (
     <div className="relative px-4 py-2 text-title text-opacity-90 w-full">
       <Group position="apart" pb="xs">
-        <p className="text-xs opacity-80 mb-2">แก้ไขล่าสุด : 1 พฤภาคม 2022</p>
+        <p className="text-xs opacity-80 mb-2">แก้ไขล่าสุด : {date}</p>
         <Modal
           size="xl"
           classNames={{

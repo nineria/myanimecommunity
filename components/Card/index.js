@@ -4,28 +4,42 @@ import Link from "next/link";
 import { AspectRatio, Badge, Image } from "@mantine/core";
 // Icons
 import { Clock, Star, ThumbUp } from "tabler-icons-react";
+import { kFormatter } from "@components/Calculator";
 
-export default function Card({ property, layout }) {
-  const [data, setData] = useState(property);
+export default function Card({ posts, layout }) {
+  const [data, setData] = useState(posts);
 
-  const badges = data.badges.map((badge) => (
+  const createdAt =
+    typeof posts?.createdAt === "number"
+      ? new Date(posts.createdAt)
+      : posts.createdAt.toDate();
+
+  const date = createdAt.toLocaleDateString("th-th", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+
+  const badges = data.tag.map((badge) => (
     <Badge
-      key={badge.name}
-      color={badge.color}
+      key={badge}
+      color={
+        badge === "คำถาม" ? (badge === "สปอย" ? "gray" : "blue") : "yellow"
+      }
       radius="sm"
       variant="filled"
       className="shadow-md"
     >
-      {badge.name}
+      {badge}
     </Badge>
   ));
 
   return (
-    <Link href="/post">
+    <Link href={`posts/${posts.username}/${posts.slug}`}>
       {layout === "grid" ? (
         <AspectRatio ratio={16 / 9}>
           <div className="relative flex flex-col rounded-sm shadow-md cursor-pointer hover:brightness-90">
-            <Image className="h-full" src={data.imageUrl} alt={data.title} />
+            <Image className="h-full" src={data.image} alt={data.title} />
             <div className="absolute bottom-14 left-2 flex flex-row gap-1 z-10 text-sm">
               {badges}
             </div>
@@ -36,15 +50,15 @@ export default function Card({ property, layout }) {
               <div className="flex flex-row justify-start gap-4 text-sm">
                 <div className="flex flex-row gap-1 items-center">
                   <Clock size={14} className="text-content" />
-                  <p className="opacity-80">{data.date}</p>
+                  <p className="opacity-80">{date}</p>
                 </div>
                 <div className="flex flex-row gap-1 items-center">
                   <ThumbUp size={14} className="text-content" />
-                  <p className="opacity-80">{data.like}</p>
+                  <p className="opacity-80">{kFormatter(posts.likes)}</p>
                 </div>
                 <div className="flex flex-row gap-1 items-center">
                   <Star size={14} className="text-content" />
-                  <p className="opacity-80">{data.star}</p>
+                  <p className="opacity-80">{kFormatter(posts.stars)}</p>
                 </div>
               </div>
             </div>

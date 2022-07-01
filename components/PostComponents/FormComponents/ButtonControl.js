@@ -6,7 +6,7 @@ import { useModals } from "@mantine/modals";
 // Icons
 import { Check } from "tabler-icons-react";
 
-export function ButtonControl({ setOpened }) {
+export function ButtonControl({ setOpened, disabled }) {
   const modals = useModals();
 
   const openModal = () => {
@@ -78,6 +78,7 @@ export function ButtonControl({ setOpened }) {
       <Button
         type="submit"
         size="xs"
+        disabled={disabled}
         className="bg-green-500 hover:bg-green-500 hover:opacity-75"
         onClick={() => openModal()}
       >
