@@ -21,8 +21,6 @@ export async function getServerSideProps(context) {
 }
 
 export default function PostsPage(props) {
-  const [posts, setPosts] = useState(props.posts);
-
   const [layout, setLayout] = useState("grid");
 
   const items = [
@@ -57,7 +55,7 @@ export default function PostsPage(props) {
             {/* Menu Controller */}
             <PostsMenuController layout={layout} setLayout={setLayout} />
             {/* Posts */}
-            <PostLayout posts={posts} layout={layout} />
+            <PostLayout posts={props.posts} layout={layout} />
           </Stack>
         </Container>
       </div>

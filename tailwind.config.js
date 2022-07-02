@@ -20,6 +20,9 @@ module.exports = {
           `rgba(var(--edge) / var(${opacityVariable}))`,
       },
     },
+    fontFamily: {
+      display: ["Prompt", "sans-serif"],
+    },
   },
   plugins: [require("@tailwindcss/typography")],
 };

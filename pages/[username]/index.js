@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Animate } from "react-simple-animate";
 import {
   BrandGithub,
@@ -39,7 +39,16 @@ export async function getServerSideProps({ query }) {
 export default function UserProfilePage({ user, posts }) {
   // const { userData } = useContext(UserContext);
 
-  console.log(posts);
+  // const [totalLikes, setTotalLike] = useState(0);
+
+  // useEffect(() => {
+  //   let total = 0;
+  //   const setTotal = () => {
+  //     posts.map((item) => (total = total + item.likes));
+  //   };
+  //   setTotal();
+  //   setTotalLike(total);
+  // }, [posts]);
 
   // Multiple Percentage Calculator
   // p = ( x / y ) * 100

@@ -5,12 +5,19 @@ import { Badge, Title } from "@mantine/core";
 import { User } from "tabler-icons-react";
 
 export default function Top({ data }) {
-  console.log(data.tag);
   const tags = data.tag.map((item, index) => (
     <Badge
       key={index}
       variant="gradient"
-      gradient={{ from: "orange", to: "red" }}
+      gradient={
+        item === "คำถาม"
+          ? { from: "indigo", to: "cyan" }
+          : item === "รีวิว"
+          ? { from: "teal", to: "lime" }
+          : item === "สปอย"
+          ? { from: "orange", to: "red" }
+          : { from: "gray", to: "gray" }
+      }
       radius="sm"
       color="red"
       className="min-w-fit"

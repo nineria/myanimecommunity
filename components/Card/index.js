@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 // Components
 import { AspectRatio, Badge, Image } from "@mantine/core";
@@ -9,12 +9,16 @@ import { kFormatter } from "@components/Calculator";
 export default function Card({ posts, layout }) {
   const [data, setData] = useState(posts);
 
-  const createdAt =
-    typeof posts?.createdAt === "number"
-      ? new Date(posts.createdAt)
-      : posts.createdAt.toDate();
+  useEffect(() => {
+    setData(posts);
+  }, [posts]);
 
-  const date = createdAt.toLocaleDateString("th-th", {
+  const createdAt =
+    typeof data?.createdAt === "number"
+      ? new Date(data.createdAt)
+      : data?.createdAt.toDate();
+
+  const date = createdAt?.toLocaleDateString("th-th", {
     year: "numeric",
     month: "short",
     day: "numeric",
@@ -23,11 +27,17 @@ export default function Card({ posts, layout }) {
   const badges = data.tag.map((badge) => (
     <Badge
       key={badge}
-      color={
-        badge === "คำถาม" ? (badge === "สปอย" ? "gray" : "blue") : "yellow"
+      gradient={
+        badge === "คำถาม"
+          ? { from: "indigo", to: "cyan" }
+          : badge === "รีวิว"
+          ? { from: "teal", to: "lime" }
+          : badge === "สปอย"
+          ? { from: "orange", to: "red" }
+          : { from: "gray", to: "gray" }
       }
       radius="sm"
-      variant="filled"
+      variant="gradient"
       className="shadow-md"
     >
       {badge}
@@ -35,11 +45,15 @@ export default function Card({ posts, layout }) {
   ));
 
   return (
-    <Link href={`posts/${posts.username}/${posts.slug}`}>
+    <Link href={`posts/${data.username}/${data.slug}`}>
       {layout === "grid" ? (
         <AspectRatio ratio={16 / 9}>
           <div className="relative flex flex-col rounded-sm shadow-md cursor-pointer hover:brightness-90">
-            <Image className="h-full" src={data.image} alt={data.title} />
+            <Image
+              className="w-full h-full"
+              src={data.image}
+              alt={data.title}
+            />
             <div className="absolute bottom-14 left-2 flex flex-row gap-1 z-10 text-sm">
               {badges}
             </div>
@@ -54,17 +68,23 @@ export default function Card({ posts, layout }) {
                 </div>
                 <div className="flex flex-row gap-1 items-center">
                   <ThumbUp size={14} className="text-content" />
-                  <p className="opacity-80">{kFormatter(posts.likes)}</p>
+                  <p className="opacity-80">{kFormatter(data.likes)}</p>
                 </div>
                 <div className="flex flex-row gap-1 items-center">
                   <Star size={14} className="text-content" />
-                  <p className="opacity-80">{kFormatter(posts.stars)}</p>
+                  <p className="opacity-80">{kFormatter(data.stars)}</p>
                 </div>
               </div>
             </div>
             <div className="absolute bottom-1 right-2">
-              <h1 className="text-6xl text-title font-bold opacity-5 uppercase">
-                {data.postType}
+              <h1 className="text-6xl font-bold opacity-5 uppercase">
+                {data.tag[0] === "คำถาม"
+                  ? "QUESTION"
+                  : data.tag[0] === "รีวิว"
+                  ? "REVIEW"
+                  : data.tag[0] === "สปอย"
+                  ? "SPOILER"
+                  : "OTHER"}
               </h1>
             </div>
           </div>
@@ -72,10 +92,10 @@ export default function Card({ posts, layout }) {
       ) : (
         <div>
           <div className="md:flex md:visible hidden w-full">
-            <ScreenLarge data={data} />
+            <ScreenLarge data={data} badges={badges} date={date} />
           </div>
           <div className="md:hidden visible w-full">
-            <ScreenSmall data={data} />
+            <ScreenSmall data={data} badges={badges} date={date} />
           </div>
         </div>
       )}
@@ -83,24 +103,12 @@ export default function Card({ posts, layout }) {
   );
 }
 
-function ScreenSmall({ data }) {
-  const badges = data.badges.map((badge) => (
-    <Badge
-      key={badge.name}
-      color={badge.color}
-      radius="sm"
-      variant="filled"
-      className="shadow-md"
-    >
-      {badge.name}
-    </Badge>
-  ));
-
+function ScreenSmall({ data, badges, date }) {
   return (
     <AspectRatio ratio={16 / 9}>
       <div className="relative flex flex-col rounded-sm shadow-md cursor-pointer hover:brightness-90">
-        <Image className="h-full" src={data.imageUrl} alt={data.title} />
-        <div className="absolute bottom-14 left-2 flex flex-row gap-1 z-10 text-sm ">
+        <Image className="w-full h-full" src={data.image} alt={data.title} />
+        <div className="absolute bottom-14 left-2 flex flex-row gap-1 z-10 text-sm">
           {badges}
         </div>
         <div className="absolute bottom-0 left-0 right-0 bg-foreground px-2 py-2 text-title h-[65px]">
@@ -110,21 +118,27 @@ function ScreenSmall({ data }) {
           <div className="flex flex-row justify-start gap-4 text-sm">
             <div className="flex flex-row gap-1 items-center">
               <Clock size={14} className="text-content" />
-              <p className="opacity-80">{data.date}</p>
+              <p className="opacity-80">{date}</p>
             </div>
             <div className="flex flex-row gap-1 items-center">
               <ThumbUp size={14} className="text-content" />
-              <p className="opacity-80">{data.like}</p>
+              <p className="opacity-80">{kFormatter(data.likes)}</p>
             </div>
             <div className="flex flex-row gap-1 items-center">
               <Star size={14} className="text-content" />
-              <p className="opacity-80">{data.star}</p>
+              <p className="opacity-80">{kFormatter(data.stars)}</p>
             </div>
           </div>
         </div>
         <div className="absolute bottom-1 right-2">
           <h1 className="text-6xl font-bold opacity-5 uppercase">
-            {data.postType}
+            {data.tag[0] === "คำถาม"
+              ? "QUESTION"
+              : data.tag[0] === "รีวิว"
+              ? "REVIEW"
+              : data.tag[0] === "สปอย"
+              ? "SPOILER"
+              : "OTHER"}
           </h1>
         </div>
       </div>
@@ -132,22 +146,11 @@ function ScreenSmall({ data }) {
   );
 }
 
-function ScreenLarge({ data }) {
-  const badges = data.badges.map((badge) => (
-    <Badge
-      key={badge.name}
-      color={badge.color}
-      radius="sm"
-      variant="filled"
-      className="shadow-md"
-    >
-      {badge.name}
-    </Badge>
-  ));
+function ScreenLarge({ data, badges, date }) {
   return (
     <div className="flex flex-row rounded-sm shadow-md w-full cursor-pointer hover:brightness-90">
       <div className="w-[300px] h-[100px] overflow-hidden ">
-        <Image className="rounded-sm" src={data.imageUrl} alt={data.title} />
+        <Image className="rounded-sm" src={data.image} alt={data.title} />
       </div>
 
       <div className="relative flex flex-col gap-2 justify-center bg-foreground px-2 py-2 text-title w-full">
@@ -158,7 +161,7 @@ function ScreenLarge({ data }) {
         <div className="flex flex-row justify-start gap-4 text-title text-sm">
           <div className="flex flex-row gap-1 items-center">
             <Clock size={20} className="text-content" />
-            <p className="opacity-80">{data.date}</p>
+            <p className="opacity-80">{date}</p>
           </div>
           <div className="flex flex-row gap-1 items-center">
             <ThumbUp size={20} className="text-content" />
@@ -171,7 +174,13 @@ function ScreenLarge({ data }) {
         </div>
         <div className="absolute right-2 bottom-2">
           <h1 className="text-8xl font-bold opacity-5 uppercase">
-            {data.postType}
+            {data.tag[0] === "คำถาม"
+              ? "QUESTION"
+              : data.tag[0] === "รีวิว"
+              ? "REVIEW"
+              : data.tag[0] === "สปอย"
+              ? "SPOILER"
+              : "OTHER"}
           </h1>
         </div>
       </div>

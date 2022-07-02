@@ -11,7 +11,6 @@ export default function TagGenre({ data, setData }) {
     data.splice(index, 1);
     setData(data);
     setTags([...tags, item]);
-    console.log(data);
   };
 
   const removeButton = (item, index) => {

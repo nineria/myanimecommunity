@@ -21,13 +21,6 @@ const handleImageUpload = (image) =>
   });
 
 export default function PostContent({ content, setContent }) {
-  const [value, onChange] = useState(content);
-
-  const handleOnChange = () => {
-    onChange(value);
-    setContent(value);
-  };
-
   return (
     <InputWrapper
       label="เนื้อหา"
@@ -44,7 +37,7 @@ export default function PostContent({ content, setContent }) {
             sticky={true}
             stickyOffset={-55}
             value={content}
-            onChange={handleOnChange}
+            onChange={setContent}
             placeholder="รายระเอียดเนื้อหาของโพตส์ เช่น รูปภาพ หรือ วิดีโอ รวมไปถึง Link ต่างๆ"
             onImageUpload={handleImageUpload}
             classNames={{
@@ -58,7 +51,7 @@ export default function PostContent({ content, setContent }) {
         <Tabs.Tab label="ตัวอย่าง">
           <RichTextEditor
             readOnly
-            value={value}
+            value={content}
             classNames={{
               root: "bg-black/10 text-title border-[#fff] border-opacity-20",
             }}

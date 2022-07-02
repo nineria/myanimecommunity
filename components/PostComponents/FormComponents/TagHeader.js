@@ -11,7 +11,6 @@ export default function TagHeader({ data, setData }) {
     data.splice(index, 1);
     setData(data);
     setTmpTags([...tmpTags, item]);
-    console.log(data);
   };
 
   const removeButton = (item, index) => {

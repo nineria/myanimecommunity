@@ -53,7 +53,7 @@ export default function StatsSegments({ user }) {
       </Group>
 
       <Text color="dimmed" size="sm">
-        จำนวน โพสต์, คอมเมนต์, รีวิว เมื่อเทียบกับเดือนก่อน
+        จำนวน ถูกใจ, โพสต์, คอมเมนต์, เมื่อเทียบกับเดือนก่อน
       </Text>
 
       <Progress

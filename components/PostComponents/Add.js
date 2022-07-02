@@ -46,7 +46,6 @@ export default function Add({ setOpened }) {
       uid: uid,
     };
 
-    console.log(data);
     await ref.set(data);
   };
 

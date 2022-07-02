@@ -2,59 +2,96 @@ import React from "react";
 // Components
 import { Button, Group, Stack, Text } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
-import { useModals } from "@mantine/modals";
+// import { useModals } from "@mantine/modals";
 // Icons
-import { Check } from "tabler-icons-react";
+import { Check, X } from "tabler-icons-react";
 
 export function ButtonControl({ setOpened, disabled }) {
-  const modals = useModals();
+  // const modals = useModals();
 
-  const openModal = () => {
-    const handleOnClick = () => {
-      showNotification({
-        color: "teal",
-        title: "บันทึกการเปลี่ยนแปลงเรียบร้อย",
-        icon: <Check size={18} />,
-        classNames: {
-          root: "bg-foreground",
-        },
-      });
-      setOpened(false);
-      modals.closeModal(id);
-    };
-    const id = modals.openModal({
-      title: (
-        <Text size="sm">
-          การดำเนินการต่อไปนี้จะไม่สามารถกลับมาแก้ไขได้
-          ต้องการดำเนินการต่อหรือไม่?
-        </Text>
-      ),
-      zIndex: "999",
-      centered: true,
+  // const openModal = () => {
+  //   const handleOnClick = () => {
+  //     showNotification({
+  //       color: "teal",
+  //       title: "บันทึกการเปลี่ยนแปลงเรียบร้อย",
+  //       icon: <Check size={18} />,
+  //       classNames: {
+  //         root: "bg-foreground",
+  //       },
+  //     });
+  //     setOpened(false);
+  //     modals.closeModal(id);
+  //   };
+  //   const id = modals.openModal({
+  //     title: (
+  //       <Text size="sm">
+  //         การดำเนินการต่อไปนี้จะไม่สามารถกลับมาแก้ไขได้
+  //         ต้องการดำเนินการต่อหรือไม่?
+  //       </Text>
+  //     ),
+  //     zIndex: "999",
+  //     centered: true,
+  //     classNames: {
+  //       modal: "bg-foreground",
+  //       overlay: "bg-background",
+  //     },
+  //     size: "sm",
+  //     children: (
+  //       <Stack size="xs">
+  //         <Group position="right">
+  //           <Button
+  //             className="bg-background text-title hover:bg-background hover:opacity-75"
+  //             onClick={() => modals.closeModal(id)}
+  //           >
+  //             ยกเลิก
+  //           </Button>
+  //           <Button
+  //             type="submit"
+  //             className="bg-green-500 hover:bg-green-500 hover:opacity-75"
+  //             onClick={() => handleOnClick()}
+  //           >
+  //             ตกลง
+  //           </Button>
+  //         </Group>
+  //       </Stack>
+  //     ),
+  //   });
+  // };
+
+  const handleOnClick = () => {
+    showNotification({
+      color: "teal",
+      title: "บันทึกการเปลี่ยนแปลงเรียบร้อย",
+      icon: <Check size={18} />,
       classNames: {
-        modal: "bg-foreground",
-        overlay: "bg-background",
+        root: "bg-foreground border-teal-400",
       },
-      size: "sm",
-      children: (
-        <Stack size="xs">
-          <Group position="right">
-            <Button
-              className="bg-background text-title hover:bg-background hover:opacity-75"
-              onClick={() => modals.closeModal(id)}
-            >
-              ยกเลิก
-            </Button>
-            <Button
-              className="bg-green-500 hover:bg-green-500 hover:opacity-75"
-              onClick={() => handleOnClick()}
-            >
-              ตกลง
-            </Button>
-          </Group>
-        </Stack>
-      ),
     });
+    setOpened(false);
+  };
+
+  const handleCancel = () => {
+    showNotification({
+      color: "yellow",
+      title: "ยกเลิกการแก้ไขแล้ว",
+      icon: <X size={18} />,
+      classNames: {
+        root: "bg-foreground border-yellow-400",
+      },
+    });
+    setOpened(false);
+  };
+
+  const handleDelete = () => {
+    showNotification({
+      color: "red",
+      title: "ลบโพสต์แล้ว",
+      icon: <X size={18} />,
+      classNames: {
+        root: "bg-foreground border-red-400",
+      },
+    });
+    setOpened(false);
   };
 
   return (
@@ -62,7 +99,7 @@ export function ButtonControl({ setOpened, disabled }) {
       <Group spacing="xs" position="left">
         <Button
           size="xs"
-          onClick={() => setOpened(false)}
+          onClick={() => handleCancel()}
           className="bg-gray-500 hover:bg-gray-500 hover:opacity-75"
         >
           ยกเลิก
@@ -70,6 +107,7 @@ export function ButtonControl({ setOpened, disabled }) {
         <Button
           size="xs"
           className="bg-red-500 hover:bg-red-500 hover:opacity-75"
+          onClick={() => handleDelete()}
         >
           ลบโพสต์
         </Button>
@@ -80,7 +118,7 @@ export function ButtonControl({ setOpened, disabled }) {
         size="xs"
         disabled={disabled}
         className="bg-green-500 hover:bg-green-500 hover:opacity-75"
-        onClick={() => openModal()}
+        onClick={() => handleOnClick()}
       >
         ยืนยัน
       </Button>

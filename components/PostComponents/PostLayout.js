@@ -21,7 +21,7 @@ export default function PostLayout({ posts, layout }) {
   ));
 
   const postStacks = posts.map((data, index) => (
-    <Card layout={layout} key={index} property={data} />
+    <Card key={index} layout={layout} posts={data} />
   ));
 
   return (

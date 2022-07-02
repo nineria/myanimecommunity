@@ -24,8 +24,13 @@ export default function UserCardImage({ user, posts }) {
   const [totalLikes, setTotalLike] = useState(0);
 
   useEffect(() => {
-    posts.map((item) => setTotalLike(totalLikes + item.likes));
-  }, [posts, totalLikes]);
+    let total = 0;
+    const setTotal = () => {
+      posts.map((item) => (total = total + item.likes));
+    };
+    setTotal();
+    setTotalLike(total);
+  }, [posts]);
 
   const ranks = user.ranks.map((rank) => (
     <Badge key={rank.label} variant="outline" color={rank.color} size="lg">
@@ -71,7 +76,7 @@ export default function UserCardImage({ user, posts }) {
             ({user.username})
           </Text>
         </div>
-        <Group position="center">{ranks}</Group>
+        {ranks && <Group position="center">{ranks}</Group>}
         <Group mt="md" position="center" spacing={50}>
           <div>
             <Text align="center" size="lg" weight={500}>

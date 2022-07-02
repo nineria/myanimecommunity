@@ -15,7 +15,7 @@ import {
   Skeleton,
   Stack,
 } from "@mantine/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export async function getStaticProps({ params }) {
   const { username, slug } = params;
@@ -65,7 +65,7 @@ export async function getStaticPaths() {
 export default function PostPage(props) {
   const postRef = firestore.doc(props.path);
   const [realtimePost] = useDocumentData(postRef);
-
+  const [date, setDate] = useState("");
   const post = realtimePost || props.post;
 
   const [activePage, setPage] = useState(1);
@@ -87,7 +87,7 @@ export default function PostPage(props) {
   const items = [
     { title: "หน้าหลัก", href: "/" },
     { title: "โพสต์ทั้งหมด", href: "/posts" },
-    { title: "Q&A ถามตอบ", href: "/qanda" },
+    { title: decodeURI(post.slug), href: "#" },
   ].map((item, index) => (
     <Anchor size="sm" color="dimmed" href={item.href} key={index}>
       {item.title}
@@ -133,7 +133,7 @@ export default function PostPage(props) {
             {activePage === 1 ? (
               <Stack spacing="xs">
                 <Skeleton visible={loading}>
-                  <PostComponents data={post} />
+                  <PostComponents post={post} postRef={postRef} />
                 </Skeleton>
                 <Skeleton visible={loading}>
                   {/* <Comment data={data.comments} /> */}

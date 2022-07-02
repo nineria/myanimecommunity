@@ -58,7 +58,9 @@ export default function Enter(props) {
       {/* <Metatags title="Enter" description="Sign up for this amazing app!" /> */}
       {user ? (
         !username ? (
-          <UsernameForm />
+          <div className="min-h-[1024px] flex flex-col justify-center">
+            <UsernameForm />
+          </div>
         ) : (
           <div>
             <Navbar />
@@ -141,7 +143,6 @@ function UsernameForm() {
         if (username.length >= 3) {
           const ref = firestore.doc(`usernames/${username}`);
           const { exists } = await ref.get();
-          console.log("Firestore read executed!");
           setIsValid(!exists);
           setLoading(false);
         }
@@ -149,12 +150,14 @@ function UsernameForm() {
     []
   );
 
+  const displayName = user?.displayName.split(" ") || "";
+
   const form = useForm({
     initialValues: {
-      firstName: "",
-      lastName: "",
+      firstName: displayName[0],
+      lastName: displayName[1],
       username: "",
-      avatar: "",
+      avatar: user?.photoURL || "",
       image: "",
       email: user?.email || "",
       password: "",
@@ -189,6 +192,7 @@ function UsernameForm() {
           value: 0,
         },
       ],
+      rule: "สมาชิก",
     },
   });
 
@@ -197,27 +201,29 @@ function UsernameForm() {
 
   return (
     !username && (
-      <section className="bg-background">
+      <section>
         <Container size="sm">
           <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
             <Card>
               <Stack spacing="sm">
                 <Logo />
                 <Title order={3}>สร้างบัญชี</Title>
-                <Button
-                  size="sm"
-                  radius="lg"
-                  className="bg-white w-[200px] text-black border-[1px] border-gray-300 hover:bg-white hover:opacity-75"
-                  onClick={signInWithGoogle}
-                >
-                  <Image
-                    src="/google-logo.png"
-                    alt="google"
-                    width="15px"
-                    className="mr-2"
-                  />
-                  Google
-                </Button>
+                <Group position="center">
+                  <Button
+                    size="sm"
+                    radius="lg"
+                    className="bg-white w-[200px] text-black border-[1px] border-gray-300 hover:bg-white hover:opacity-75"
+                    onClick={signInWithGoogle}
+                  >
+                    <Image
+                      src="/google-logo.png"
+                      alt="google"
+                      width="15px"
+                      className="mr-2"
+                    />
+                    Google
+                  </Button>
+                </Group>
 
                 <Divider
                   label="หรือดำเนินการต่อด้วยอีเมล"
@@ -284,7 +290,7 @@ function UsernameForm() {
                       </Button>
                     </Grid.Col>
                   </Grid>
-                  <Collapse in={openedAvatar}>
+                  <Collapse in={openedAvatar} mt="xs">
                     {avatarRef.current?.value ? (
                       <Stack spacing="xs">
                         <Center m="sm">
@@ -323,7 +329,7 @@ function UsernameForm() {
                       </Button>
                     </Grid.Col>
                   </Grid>
-                  <Collapse in={openedImage}>
+                  <Collapse in={openedImage} mt="xs">
                     {imageRef.current?.value ? (
                       <Stack spacing="xs">
                         <Image
@@ -441,14 +447,14 @@ function UsernameForm() {
                 </Button>
               </Stack>
             </Card>
-            <h3>Debug State</h3>
+            {/* <h3>Debug State</h3>
             <div>
               Username: {formUsername}
               <br />
               Loading: {loading.toString()}
               <br />
               Username Valid: {isValid.toString()}
-            </div>
+            </div> */}
           </form>
         </Container>
       </section>
