@@ -49,16 +49,16 @@ function LeftMenu({ post }) {
     getUser(post.username);
   }, [post.username]);
 
-  // const createdAt =
-  //   typeof post?.createdAt === "number"
-  //     ? new Date(post.createdAt)
-  //     : post.createdAt?.toDate();
+  const createdAt =
+    typeof post?.createdAt === "number"
+      ? new Date(post.createdAt)
+      : post.createdAt?.toDate();
 
-  // const date = createdAt?.toLocaleDateString("th-th", {
-  //   year: "numeric",
-  //   month: "short",
-  //   day: "numeric",
-  // });
+  const date = createdAt?.toLocaleDateString("th-th", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
 
   return (
     <div className="px-2 py-4">
@@ -94,7 +94,7 @@ function LeftMenu({ post }) {
       <div className="flex flex-col mt-4 text-title text-opacity-80">
         <div className="flex flex-row items-center text-xs gap-2">
           <CalendarMinus size={14} />
-          {/* <p>: {date}</p> */}
+          <p>: {date}</p>
         </div>
         <div className="flex flex-row items-center text-xs gap-2">
           <Star size={14} />
