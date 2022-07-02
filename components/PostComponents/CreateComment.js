@@ -1,35 +1,13 @@
 // import MarkdownPreview from "@components/MarkdownPreview";
-import React, { useContext, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 // Components
 import { Avatar, Button, Tabs, Text } from "@mantine/core";
 import RichTextEditor from "@components/RichText";
 import { UserContext } from "@lib/context";
 import { auth, firestore, serverTimestamp } from "@lib/firebase";
 import kebabCase from "lodash.kebabcase";
-
-// const people = [
-//   { id: 1, value: "Nineria" },
-//   { id: 2, value: "hunter" },
-// ];
-
-// const tags = [
-//   { id: 1, value: "Action" },
-//   { id: 2, value: "Adventure" },
-//   { id: 3, value: "Comedy" },
-//   { id: 4, value: "Drama" },
-//   { id: 5, value: "Fantasy" },
-//   { id: 6, value: "Girls Love" },
-//   { id: 7, value: "Gourmet" },
-//   { id: 8, value: "Horror" },
-//   { id: 9, value: "Mystery" },
-//   { id: 10, value: "Romance" },
-//   { id: 11, value: "Sci-Fi" },
-//   { id: 12, value: "Slice of Life" },
-//   { id: 13, value: "Sports" },
-//   { id: 14, value: "Supernatural" },
-//   { id: 15, value: "Suspense" },
-//   { id: 16, value: "Boys Love" },
-// ];
+import { showNotification } from "@mantine/notifications";
+import { Check } from "tabler-icons-react";
 
 const handleImageUpload = (image) =>
   new Promise((resolve, reject) => {
@@ -74,22 +52,16 @@ export default function CreateComment({ post }) {
     };
 
     await ref.set(data);
-  };
 
-  // const mentions = useMemo(
-  //   () => ({
-  //     allowedChars: /^[A-Za-z\sÅÄÖåäö]*$/,
-  //     mentionDenotationChars: ["@", "#"],
-  //     source: (searchTerm, renderList, mentionChar) => {
-  //       const list = mentionChar === "@" ? people : tags;
-  //       const includesSearchTerm = list.filter((item) =>
-  //         item.value.toLowerCase().includes(searchTerm.toLowerCase())
-  //       );
-  //       renderList(includesSearchTerm);
-  //     },
-  //   }),
-  //   []
-  // );
+    showNotification({
+      color: "teal",
+      title: `${userData?.username} ได้เขียนคอมเมต์แล้ว`,
+      icon: <Check size={18} />,
+      classNames: {
+        root: "bg-foreground border-teal-400",
+      },
+    });
+  };
 
   return (
     <div className="bg-foreground">
@@ -106,12 +78,16 @@ export default function CreateComment({ post }) {
             >
               <Tabs.Tab label="เขียน">
                 <RichTextEditor
+                  controls={[
+                    ["bold", "italic", "underline", "link"],
+                    ["h3", "h4"],
+                    ["image", "video"],
+                  ]}
                   sticky={true}
                   stickyOffset={55}
                   value={value}
                   onChange={onChange}
                   placeholder="คุณกำลังคิดอะไรอยู่"
-                  // mentions={mentions}
                   onImageUpload={handleImageUpload}
                   classNames={{
                     root: "bg-black/10 text-title border-[#fff] border-opacity-20",
@@ -129,7 +105,6 @@ export default function CreateComment({ post }) {
                     root: "bg-black/10 text-title border-[#fff] border-opacity-20",
                   }}
                 />
-                {/* <MarkdownPreview markdown={value} /> */}
               </Tabs.Tab>
             </Tabs>
             <div className="flex flex-row justify-between mt-2">
