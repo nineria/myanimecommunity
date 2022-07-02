@@ -16,6 +16,8 @@ import {
   Stack,
 } from "@mantine/core";
 import React, { useEffect, useState } from "react";
+import CreateComment from "@components/PostComponents/CreateComment";
+import Comment from "@components/PostComponents/Comment";
 
 export async function getStaticProps({ params }) {
   const { username, slug } = params;
@@ -27,7 +29,14 @@ export async function getStaticProps({ params }) {
 
   if (userDoc) {
     const postRef = userDoc.ref.collection("posts").doc(slug);
+
     post = postToJSON(await postRef.get());
+
+    // try {
+    //   comments = postToJSON(await commentsRef.get());
+    // } catch (error) {
+    //   comments = null;
+    // }
 
     path = postRef.path;
   }
@@ -64,24 +73,36 @@ export async function getStaticPaths() {
 
 export default function PostPage(props) {
   const postRef = firestore.doc(props.path);
+
   const [realtimePost] = useDocumentData(postRef);
+
   const post = realtimePost || props.post;
 
   const [activePage, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
 
-  // const { setTheme } = useThemeContext();
+  const [comments, setComments] = useState();
 
-  // useEffect(() => {
-  //   const localData = localStorage.getItem("themes");
-  //   if (localData == null) {
-  //     localStorage.setItem("themes", "red");
-  //     setTheme("red");
-  //   }
-  //   setTheme(localData);
-  // }, [setTheme]);
+  useEffect(() => {
+    const commentsRef = async () => {
+      const userDoc = await getUserWithUsername(post.username);
+      const commentsRef = await userDoc.ref
+        .collection("posts")
+        .doc(post.slug)
+        .collection("comments")
+        .get();
 
-  // console.log(username);
+      commentsRef = await JSON.stringify(
+        commentsRef.docs.map((doc) => doc.data())
+      );
+
+      commentsRef = JSON.parse(commentsRef);
+
+      setComments(commentsRef);
+    };
+
+    commentsRef();
+  }, [post]);
 
   const items = [
     { title: "หน้าหลัก", href: "/" },
@@ -97,76 +118,72 @@ export default function PostPage(props) {
     setLoading(false);
   }, 500);
 
-  //   const comments = comment.map((item, index) => (
-  //     <Skeleton key={index} visible={loading}>
-  //       <TestComment
-  //         postedAt={item.postedAt}
-  //         body={item.body}
-  //         author={item.author}
-  //       />
-  //     </Skeleton>
-  //   ));
+  console.log(comments);
 
   return (
     <div className="bg-background min-h-[1024px] mb-[235px] pb-10">
-      <AuthCheck>
-        <Navbar />
-        <Container size="lg" py="xs">
-          <Stack spacing="xs">
-            <Breadcrumbs separator="→">{items}</Breadcrumbs>
-            <Top data={post} />
-            <Paper p="xs" className="shadow-md bg-foreground">
-              <Pagination
-                total={10}
-                size="sm"
-                page={activePage}
-                onChange={setPage}
-                withEdges
-                classNames={{
-                  item: "text-title",
-                  dots: "text-content",
-                  active: "bg-content text-[#fff]",
-                }}
-              />
-            </Paper>
-            {activePage === 1 ? (
+      <Navbar />
+      <Container size="lg" py="xs">
+        <Stack spacing="xs">
+          <Breadcrumbs separator="→">{items}</Breadcrumbs>
+          <Top data={post} />
+          <Paper p="xs" className="shadow-md bg-foreground">
+            <Pagination
+              total={10}
+              size="sm"
+              page={activePage}
+              onChange={setPage}
+              withEdges
+              classNames={{
+                item: "text-title",
+                dots: "text-content",
+                active: "bg-content text-[#fff]",
+              }}
+            />
+          </Paper>
+          {activePage === 1 ? (
+            <Stack spacing="xs">
+              <Skeleton visible={loading}>
+                <PostComponents post={post} postRef={postRef} />
+              </Skeleton>
               <Stack spacing="xs">
-                <Skeleton visible={loading}>
-                  <PostComponents post={post} postRef={postRef} />
-                </Skeleton>
-                <Skeleton visible={loading}>
-                  {/* <Comment data={data.comments} /> */}
-                </Skeleton>
+                {comments &&
+                  comments.map((item, index) => (
+                    <Skeleton key={index} visible={loading}>
+                      <Comment data={item} />
+                    </Skeleton>
+                  ))}
               </Stack>
-            ) : (
-              <Stack spacing="xs">
-                {/* <Comment data={data.comments} />
+            </Stack>
+          ) : (
+            <Stack spacing="xs">
+              {/* <Comment data={data.comments} />
                 <Comment data={data.comments} />
                 <Comment data={data.comments} />
                 <Comment data={data.comments} />
                 <Comment data={data.comments} /> */}
-              </Stack>
-            )}
-            <Paper p="xs" className="shadow-md bg-foreground">
-              <Pagination
-                total={10}
-                size="sm"
-                page={activePage}
-                onChange={setPage}
-                withEdges
-                classNames={{
-                  item: "text-title",
-                  dots: "text-content",
-                  active: "bg-content text-[#fff]",
-                }}
-              />
-            </Paper>
-
-            {/* {user && <CreateComment data={posts} />} */}
-          </Stack>
-        </Container>
-        <Footer />
-      </AuthCheck>
+            </Stack>
+          )}
+          <Paper p="xs" className="shadow-md bg-foreground">
+            <Pagination
+              total={10}
+              size="sm"
+              page={activePage}
+              onChange={setPage}
+              withEdges
+              classNames={{
+                item: "text-title",
+                dots: "text-content",
+                active: "bg-content text-[#fff]",
+              }}
+            />
+          </Paper>
+          <AuthCheck>
+            <CreateComment post={post} />
+          </AuthCheck>
+        </Stack>
+      </Container>
+      <Footer />
     </div>
   );
 }

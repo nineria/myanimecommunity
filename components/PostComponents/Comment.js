@@ -1,13 +1,13 @@
 import React from "react";
 // Components
-import { Avatar, Text } from "@mantine/core";
+import { Avatar, Stack, Text, ThemeIcon } from "@mantine/core";
 // Icons
 import { CalendarMinus, ThumbUp } from "tabler-icons-react";
+import RichTextEditor from "@components/RichText";
 
 export default function Comment({ data }) {
   return (
     <div className="bg-foreground rounded-sm">
-      {/* Left menu */}
       <div className="flex flex-row ">
         <LeftMenu data={data} />
         <div className="px-[0.5px] bg-white opacity-50"></div>
@@ -19,81 +19,72 @@ export default function Comment({ data }) {
 }
 
 function LeftMenu({ data }) {
+  const timestamp = new Date(data.createdAt.seconds * 1000);
+
+  const date = timestamp?.toLocaleDateString("th-th", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+
   return (
     <div className="px-2 py-4 mt-2">
       <div className="flex flex-col items-center w-[100px] ">
-        <Avatar radius="xl" size="lg" src={data.photoURL} alt={data.username} />
-        <Text color="red">{data.username}</Text>
-        <p className="text-title text-xs">Admin</p>
+        <Avatar radius="xl" size="lg" src={data?.avatar} alt={data?.username} />
+        <Text color="red">{data?.username}</Text>
       </div>
       <div className="flex flex-col mt-4 text-title text-opacity-80">
         <div className="flex flex-row items-center text-xs gap-2">
           <CalendarMinus size={14} />
-          <p>: 15/08/2018</p>
+          <p>: {date}</p>
         </div>
         <div className="flex flex-row items-center text-xs gap-2">
           <ThumbUp size={14} />
-          <p>: 15</p>
+          <p>: {data.likes}</p>
         </div>
       </div>
     </div>
   );
 }
 
-// function BottomComponent() {
-//   return (
-//     <div className="p-2 text-title">
-//       {/* <div className="flex flex-row gap-4">
-//         <div className="bg-background px-4 py-1 ml-2 rounded-t-sm">เขียน</div>
-//         <div>ตัวอย่าง</div>
-//       </div>
-//       <div className="bg-background rounded-sm p-2">Whtie comment</div> */}
-//       <Tabs variant="outline">
-//         <Tabs.Tab label="เขียน">
-//           <Textarea minRows={1} placeholder="เขียนความคิดเห็น…" />
-//           <div className="flex flex-row justify-between mt-2">
-//             <div className="flex flex-row gap-1 items-center ">
-//               <Markdown size={16} />
-//               <Text size="xs">รองรับการเขียนด้วย Markdown</Text>
-//             </div>
-//             <button className="bg-content px-2 rounded-sm hover:opacity-75">
-//               โพสต์
-//             </button>
-//           </div>
-//         </Tabs.Tab>
-//         <Tabs.Tab label="ตัวอย่าง">Second tab content</Tabs.Tab>
-//       </Tabs>
-//     </div>
-//   );
-// }
-
 function MainPost({ data }) {
+  const timestamp = new Date(data.updatedAt.seconds * 1000);
+
+  const date = timestamp?.toLocaleDateString("th-th", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+
   return (
-    <div className="relative px-2 py-2 text-title text-opacity-90">
-      <p className="text-xs opacity-80 mb-2">แกไขล่าสุด : 1 พฤภาคม 2022</p>
-      <h1 className="text-lg mt-4 font-bold">{data?.header}</h1>
-      <p className="text-base">{data?.body}</p>
-      <p className="absolute bottom-2 right-2 leading-none font-bold uppercase opacity-[0.03] text-[8vw] text-right tracking-tighter">
+    <div className="relative px-2 py-2 text-title text-opacity-90 w-full">
+      <p className="text-xs opacity-80 mb-2">แกไขล่าสุด : {date}</p>
+      <RichTextEditor
+        readOnly
+        value={data?.content}
+        classNames={{ root: "bg-foreground border-none text-title" }}
+      />
+      <p className="absolute bottom-2 right-4 leading-none font-bold uppercase opacity-[0.03] text-[8vw] text-right tracking-tighter">
         Answer
       </p>
 
-      {/* <p className="absolute bottom-4 text-xs">
+      <p className="absolute bottom-4 text-xs">
         <div className="flex items-center text-content gap-1 mb-2 border-[1px] border-title border-opacity-10 p-1 rounded-sm">
           <ThemeIcon radius="md" size="xs" color="gray">
             <ThumbUp />
           </ThemeIcon>
-          {data?.userLike.map((item, index) => (
+          {/* {data?.userLike.map((item, index) => (
             <span
               key={index}
               className="hover:opacity-75 hover:underline cursor-pointer"
             >
               {item},
             </span>
-          ))}
+          ))} */}
         </div>
-        อ้างอิง / แหล่งที่มา :{" "}
-        <a className="text-content hover:underline">{data?.credit}</a>
-      </p> */}
+        {/* อ้างอิง / แหล่งที่มา :{" "}
+        <a className="text-content hover:underline">{data?.credit}</a> */}
+      </p>
     </div>
   );
 }

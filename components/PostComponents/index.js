@@ -162,7 +162,7 @@ function MainPost({ post, postRef }) {
       />
       {/* <RichTextEditor className="!p-0 !m-none" readOnly value={data.content} /> */}
 
-      <p className="absolute bottom-2 right-2 font-bold uppercase opacity-[0.03] text-[8vw] text-right tracking-tighter">
+      <p className="absolute bottom-2 right-4 font-bold uppercase opacity-[0.03] text-[8vw] text-right tracking-tighter">
         {post.tag[0] === "คำถาม"
           ? "QUESTION"
           : post.tag[0] === "รีวิว"
