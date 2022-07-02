@@ -32,6 +32,7 @@ import { useForm } from "@mantine/hooks";
 import { Mail } from "tabler-icons-react";
 import Link from "next/link";
 import { Footer } from "@components/Footer";
+import Logo from "@components/Logo";
 
 export default function Enter(props) {
   const { user, username } = useContext(UserContext);
@@ -286,7 +287,7 @@ function UsernameForm() {
                           setOpenAvatar((e) => !e);
                         }}
                       >
-                        แสดง
+                        {openedAvatar === false ? "แสดง" : "ซ่อน"}
                       </Button>
                     </Grid.Col>
                   </Grid>
@@ -325,7 +326,7 @@ function UsernameForm() {
                           setOpenImage((e) => !e);
                         }}
                       >
-                        แสดง
+                        {openedImage === false ? "แสดง" : "ซ่อน"}
                       </Button>
                     </Grid.Col>
                   </Grid>
@@ -471,16 +472,4 @@ function UsernameMessage({ username, isValid, loading }) {
   else if (username && !isValid)
     return <p className="text-danger">ชื่อผู้ใช้นั้นถูกใช้แล้ว!</p>;
   else return <p></p>;
-}
-
-function Logo() {
-  return (
-    <Link href="/">
-      <div className=" font-bold cursor-pointer text-3xl">
-        <span className="text-[#4C6EF5]">My</span>
-        <span className="text-content">A</span>
-        <span className="text-title">nimeCommunity</span>
-      </div>
-    </Link>
-  );
 }

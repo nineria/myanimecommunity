@@ -1,13 +1,15 @@
 // import MarkdownPreview from "@components/MarkdownPreview";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 // Components
-import { Avatar, Button, Tabs, Text } from "@mantine/core";
+import { Avatar, Button, Modal, Tabs, Text } from "@mantine/core";
+import WebsiteRulePage from "@components/WebsiteRule";
 import RichTextEditor from "@components/RichText";
 import { UserContext } from "@lib/context";
 import { auth, firestore, serverTimestamp } from "@lib/firebase";
 import kebabCase from "lodash.kebabcase";
 import { showNotification } from "@mantine/notifications";
 import { Check } from "tabler-icons-react";
+import Logo from "@components/Logo";
 
 const handleImageUpload = (image) =>
   new Promise((resolve, reject) => {
@@ -29,6 +31,8 @@ const handleImageUpload = (image) =>
 export default function CreateComment({ post }) {
   const { userData } = useContext(UserContext);
   const [value, onChange] = useState("");
+
+  const [openedWebsiteRule, setOpenedWebsiteRule] = useState(false);
 
   const HandleSubmit = async () => {
     const uid = auth.currentUser.uid;
@@ -108,13 +112,32 @@ export default function CreateComment({ post }) {
               </Tabs.Tab>
             </Tabs>
             <div className="flex flex-row justify-between mt-2">
-              <div className="flex flex-row gap-1 items-center mt-2 text-title">
-                <Text size="xs">
-                  โปรดปฏิบัติตาม{" "}
-                  <span className="text-content">กฎ กติกา และมารยาท</span>{" "}
-                  ของเว็บไซต์ MyAnimeCommunity อย่างเคร่งครัด
-                  เพื่อรักษาบรรยากาศการพูดคุยของชุมชนคนรักอนิเมะ
-                </Text>
+              <Modal
+                size="1000px"
+                mx="sm"
+                overlayColor="#333"
+                opened={openedWebsiteRule}
+                onClose={() => setOpenedWebsiteRule(false)}
+                title={<Logo />}
+                classNames={{
+                  modal: "bg-foreground",
+                  overlay: "bg-background",
+                  title: "text-title",
+                }}
+              >
+                {openedWebsiteRule && <WebsiteRulePage />}
+              </Modal>
+              <div className="flex flex-row gap-1 items-center mt-2 text-title text-xs">
+                <div>
+                  ยอมรับ{" "}
+                  <span
+                    onClick={() => setOpenedWebsiteRule(true)}
+                    className="text-content cursor-pointer hover:underline"
+                  >
+                    กฎ กติกา และมารยาท
+                  </span>{" "}
+                  ของ MyAnimeCommunity
+                </div>
               </div>
               <Button
                 className="bg-content text-[#fff] hover:bg-content hover:opacity-75"

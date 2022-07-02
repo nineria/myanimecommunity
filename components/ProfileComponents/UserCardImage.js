@@ -17,9 +17,11 @@ import {
 import { AlertTriangle, Edit } from "tabler-icons-react";
 // Tools
 import { kFormatter } from "@components/Calculator";
+import EditProfile from "./EditProfile";
 
 export default function UserCardImage({ user, posts }) {
   const [opened, setOpened] = useState(false);
+  const [editOpened, setEditOpened] = useState(false);
 
   const [totalLikes, setTotalLike] = useState(0);
 
@@ -31,12 +33,6 @@ export default function UserCardImage({ user, posts }) {
     setTotal();
     setTotalLike(total);
   }, [posts]);
-
-  const ranks = user.ranks.map((rank) => (
-    <Badge key={rank.label} variant="outline" color={rank.color} size="lg">
-      {rank.label}
-    </Badge>
-  ));
 
   return (
     <Card p="md" radius="sm" className="bg-foreground">
@@ -76,7 +72,19 @@ export default function UserCardImage({ user, posts }) {
             ({user.username})
           </Text>
         </div>
-        {ranks && <Group position="center">{ranks}</Group>}
+        <Group position="center">
+          {user &&
+            user.ranks.map((rank) => (
+              <Badge
+                key={rank.label}
+                variant="outline"
+                color={rank.color}
+                size="lg"
+              >
+                {rank.label}
+              </Badge>
+            ))}
+        </Group>
         <Group mt="md" position="center" spacing={50}>
           <div>
             <Text align="center" size="lg" weight={500}>
@@ -104,6 +112,30 @@ export default function UserCardImage({ user, posts }) {
           </div>
         </Group>
         <ReportUser opened={opened} setOpened={setOpened} />
+
+        <Modal
+          size="xl"
+          opened={editOpened}
+          onClose={() => setEditOpened(false)}
+          title="แก้ไขข้อมูลส่วนตัว!"
+          centered
+          classNames={{
+            modal: "bg-foreground",
+            overlay: "bg-background",
+            title: "text-title",
+          }}
+        >
+          {editOpened && <EditProfile user={user} setOpened={setEditOpened} />}
+        </Modal>
+        <Button
+          fullWidth
+          className="bg-black/30 text-[#fff] hover:bg-black/30 hover:opacity-75"
+          variant="default"
+          rightIcon={<Edit size={20} />}
+          onClick={() => setEditOpened(true)}
+        >
+          แก้ไขรายละเอียด
+        </Button>
       </Stack>
     </Card>
   );
@@ -183,15 +215,6 @@ function ReportUser({ opened, setOpened }) {
           </Button>
         </Group>
       </Modal>
-
-      <Button
-        fullWidth
-        className="bg-black/30 text-[#fff] hover:bg-black/30 hover:opacity-75"
-        variant="default"
-        rightIcon={<Edit size={20} />}
-      >
-        แก้ไขรายละเอียด
-      </Button>
     </>
   );
 }
