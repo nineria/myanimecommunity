@@ -28,10 +28,10 @@ export default function Add({ setOpened }) {
       .collection("users")
       .doc(uid)
       .collection("posts")
-      .doc(encodeURI(kebabCase(values.title)));
+      .doc(kebabCase(values.title));
 
     const data = {
-      slug: encodeURI(kebabCase(values.title)),
+      slug: kebabCase(values.title),
       tag: tags,
       genre: genres,
       title: values.title,

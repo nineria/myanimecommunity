@@ -8,19 +8,16 @@ import {
   Image,
   Modal,
   Text,
-  TypographyStylesProvider,
 } from "@mantine/core";
 import Edit from "./Edit";
 // Icons
 import {
   CalendarMinus,
   Edit as EditIcon,
-  Eye,
   Star,
   ThumbUp,
 } from "tabler-icons-react";
-import { auth, firestore, getUserWithUsername } from "@lib/firebase";
-import { useDocumentData } from "react-firebase-hooks/firestore";
+import { getUserWithUsername } from "@lib/firebase";
 import AuthCheck from "@components/AuthCheck";
 import { UserContext } from "@lib/context";
 import RichTextEditor from "@components/RichText";
@@ -42,16 +39,6 @@ export default function PostComponents({ post, postRef }) {
 
 function LeftMenu({ post }) {
   const [user, setUser] = useState();
-  const createdAt =
-    typeof post?.createdAt === "number"
-      ? new Date(post.createdAt)
-      : post.createdAt.toDate();
-
-  const date = createdAt.toLocaleDateString("th-th", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
 
   useEffect(() => {
     const getUser = async (post) => {
@@ -61,6 +48,17 @@ function LeftMenu({ post }) {
 
     getUser(post.username);
   }, [post.username]);
+
+  // const createdAt =
+  //   typeof post?.createdAt === "number"
+  //     ? new Date(post.createdAt)
+  //     : post.createdAt?.toDate();
+
+  // const date = createdAt?.toLocaleDateString("th-th", {
+  //   year: "numeric",
+  //   month: "short",
+  //   day: "numeric",
+  // });
 
   return (
     <div className="px-2 py-4">
@@ -96,7 +94,7 @@ function LeftMenu({ post }) {
       <div className="flex flex-col mt-4 text-title text-opacity-80">
         <div className="flex flex-row items-center text-xs gap-2">
           <CalendarMinus size={14} />
-          <p>: {date}</p>
+          {/* <p>: {date}</p> */}
         </div>
         <div className="flex flex-row items-center text-xs gap-2">
           <Star size={14} />
