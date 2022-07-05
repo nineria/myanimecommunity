@@ -9,6 +9,9 @@ export default function Content(props) {
         placeholder="เขียนรายละเอียด"
         autosize
         minRows={3}
+        classNames={{
+          input: "bg-accent bg-opacity-50",
+        }}
         {...props.body}
       />
     </InputWrapper>

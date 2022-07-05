@@ -10,10 +10,22 @@ export default function Header(props) {
     >
       <Grid grow>
         <Grid.Col sm={2}>
-          <Input placeholder="/post" {...props.headerLink} />
+          <Input
+            classNames={{
+              input: "bg-accent bg-opacity-50",
+            }}
+            placeholder="/post"
+            {...props.headerLink}
+          />
         </Grid.Col>
         <Grid.Col sm={10}>
-          <Input placeholder="หัวข้อโพสต์" {...props.header} />
+          <Input
+            classNames={{
+              input: "bg-accent bg-opacity-50",
+            }}
+            placeholder="หัวข้อโพสต์"
+            {...props.header}
+          />
         </Grid.Col>
       </Grid>
     </InputWrapper>

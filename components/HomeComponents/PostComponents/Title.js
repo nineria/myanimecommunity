@@ -10,10 +10,22 @@ export default function Title(props) {
     >
       <Grid grow>
         <Grid.Col sm={2}>
-          <Input placeholder="/review" {...props.titleLink} />
+          <Input
+            classNames={{
+              input: "bg-accent bg-opacity-50",
+            }}
+            placeholder="/review"
+            {...props.titleLink}
+          />
         </Grid.Col>
         <Grid.Col sm={10}>
-          <Input placeholder="หัวข้อโพสต์" {...props.title} />
+          <Input
+            classNames={{
+              input: "bg-accent bg-opacity-50",
+            }}
+            placeholder="หัวข้อโพสต์"
+            {...props.title}
+          />
         </Grid.Col>
       </Grid>
     </InputWrapper>
