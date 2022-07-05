@@ -24,6 +24,7 @@ import { showNotification } from "@mantine/notifications";
 import { Check, X } from "tabler-icons-react";
 import { deleteDoc } from "firebase/firestore";
 import { useModals } from "@mantine/modals";
+import { useRouter } from "next/router";
 
 const handleImageUpload = (image) =>
   new Promise((resolve, reject) => {

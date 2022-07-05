@@ -12,8 +12,11 @@ import Title from "./PostComponents/Title";
 // Icons
 import { Check } from "tabler-icons-react";
 import { firestore, getUserWithUsername, serverTimestamp } from "@lib/firebase";
+import { useRouter } from "next/router";
 
 export default function Edit(props) {
+  const router = useRouter();
+
   const [posts, setPosts] = useState(props.postData);
 
   const [postRef, setPostRef] = useState();
@@ -55,6 +58,8 @@ export default function Edit(props) {
     });
 
     props.setOpened(false);
+
+    router.reload();
   };
 
   const form = useForm({
