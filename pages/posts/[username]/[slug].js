@@ -152,13 +152,7 @@ export default function PostPage(props) {
               </Stack>
             </Stack>
           ) : (
-            <Stack spacing="xs">
-              {/* <Comment data={data.comments} />
-                <Comment data={data.comments} />
-                <Comment data={data.comments} />
-                <Comment data={data.comments} />
-                <Comment data={data.comments} /> */}
-            </Stack>
+            <Stack spacing="xs"></Stack>
           )}
           <Paper p="xs" className="shadow-md bg-foreground">
             <Pagination

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 // Components
 import {
   Avatar,
@@ -14,9 +14,11 @@ import { CalendarMinus, Edit, ThumbUp } from "tabler-icons-react";
 import RichTextEditor from "@components/RichText";
 import { getUserWithUsername } from "@lib/firebase";
 import EditComment from "./EditComment";
+import { UserContext } from "@lib/context";
 
 export default function Comment({ post, comment, setComments }) {
   const [commentRef, setCommentRef] = useState();
+  const [username] = useContext(UserContext);
 
   useEffect(() => {
     const getComments = async () => {
@@ -115,17 +117,18 @@ function MainPost({ comment, commentRef }) {
         ) : (
           <p className="text-xs opacity-80 mb-2">แกไขล่าสุด : {date}</p>
         )}
-
-        <Button
-          onClick={() => setOpened(true)}
-          compact
-          leftIcon={<Edit size={14} />}
-          className="bg-foreground z-10 text-title hover:bg-content hover:text-[#fff]"
-          variant="default"
-          size="xs"
-        >
-          แก้ไข
-        </Button>
+        {username === comment.username ? (
+          <Button
+            onClick={() => setOpened(true)}
+            compact
+            leftIcon={<Edit size={14} />}
+            className="bg-foreground z-10 text-title hover:bg-content hover:text-[#fff]"
+            variant="default"
+            size="xs"
+          >
+            แก้ไข
+          </Button>
+        ) : null}
       </Group>
       <RichTextEditor
         readOnly

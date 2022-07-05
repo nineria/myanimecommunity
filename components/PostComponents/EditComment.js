@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 // Hooks
 import { useForm } from "@mantine/hooks";
 // Components
@@ -25,6 +25,7 @@ import { Check, X } from "tabler-icons-react";
 import { deleteDoc } from "firebase/firestore";
 import { useModals } from "@mantine/modals";
 import { useRouter } from "next/router";
+import { UserContext } from "@lib/context";
 
 const handleImageUpload = (image) =>
   new Promise((resolve, reject) => {
