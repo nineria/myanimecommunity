@@ -15,8 +15,6 @@ export default function HomeComponents({ homePosts }) {
 
   const [loading, setLoading] = useState(true);
 
-  const [postData, setPostData] = useState(homePosts);
-
   // const HandleOpenMenu = () => {
   //   return setOpenMenu(!openMenu);
   // };
@@ -38,10 +36,6 @@ export default function HomeComponents({ homePosts }) {
       body: "โพสต์รวบรวมรีวิวอนิเมะก่อนไปรับชม และเรื่องย่อต่างๆ พร้อมข้อมูลจำเพราะของตัวละคร ฯลฯ",
     },
   ];
-
-  const posts = postData.map((item, index) => (
-    <Post key={index} dummyData={item} />
-  ));
 
   return (
     <Container size="lg">
@@ -85,7 +79,12 @@ export default function HomeComponents({ homePosts }) {
                 </div>
               ) : null}
               {/* Display home post */}
-              <div className="flex flex-col gap-2">{posts}</div>
+              <div className="flex flex-col gap-2">
+                {homePosts &&
+                  homePosts.map((item, index) => (
+                    <Post key={index} dummyData={item} />
+                  ))}
+              </div>
             </div>
           </Animate>
         ) : (

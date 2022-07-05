@@ -13,9 +13,13 @@ import Title from "./PostComponents/Title";
 import { Check } from "tabler-icons-react";
 import { auth, firestore, serverTimestamp } from "@lib/firebase";
 import { UserContext } from "@lib/context";
+import { useRouter } from "next/router";
 
 export default function Add({ setOpened }) {
   const { username } = useContext(UserContext);
+
+  const router = useRouter();
+
   const HandleChange = async (values) => {
     const uid = auth.currentUser.uid;
     const ref = firestore
@@ -49,7 +53,10 @@ export default function Add({ setOpened }) {
     setOpened(false);
 
     await ref.set(data);
+
+    router.reload();
   };
+
   const form = useForm({
     initialValues: {
       title: "",

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Link from "next/link";
 // Context
 import { UserContext } from "@lib/context";
@@ -8,29 +8,19 @@ import Status from "./PostComponents/Status";
 import { Modal } from "@mantine/core";
 // Icons
 import { ChevronUp, Edit as EditIcon } from "tabler-icons-react";
+import { getUserWithUsername } from "@lib/firebase";
 
 export default function Post({ dummyData, disabled = false }) {
-  const [post, setPost] = useState(dummyData);
   const { user } = useContext(UserContext);
 
   const [toggle, setTogle] = useState(true);
 
-  const [openMenu, setOpenMenu] = useState(false);
-
   const [opened, setOpened] = useState(false);
 
-  const HandleOpenMenu = () => {
-    return setOpenMenu(!openMenu);
-  };
-
-  const HandlePostDataChange = (data) => {
-    post = data;
-  };
-
   const updatedAt =
-    typeof post?.updatedAt === "number"
-      ? new Date(post.updatedAt)
-      : post.updatedAt?.toDate();
+    typeof dummyData?.updatedAt === "number"
+      ? new Date(dummyData.updatedAt)
+      : dummyData.updatedAt?.toDate();
 
   const date = updatedAt?.toLocaleDateString("th-th", {
     year: "numeric",
@@ -46,9 +36,9 @@ export default function Post({ dummyData, disabled = false }) {
         }`}
       >
         {/* Title */}
-        <Link href={post?.titleLink || "/"}>
+        <Link href={dummyData?.titleLink || "/"}>
           <a className="truncate text-[#fff] max-w-[600px] cursor-pointer hover:underline">
-            {post?.title || "หัวข้อหลัก"}
+            {dummyData?.title || "หัวข้อหลัก"}
           </a>
         </Link>
         {/* Edit button */}
@@ -67,11 +57,7 @@ export default function Post({ dummyData, disabled = false }) {
                   title: "text-title",
                 }}
               >
-                <Edit
-                  setOpened={setOpened}
-                  postData={post}
-                  handlePostDataChange={HandlePostDataChange}
-                />
+                <Edit setOpened={setOpened} postData={dummyData} />
               </Modal>
 
               <EditIcon
@@ -96,9 +82,9 @@ export default function Post({ dummyData, disabled = false }) {
       <div className="flex flex-col bg-[#aaa] gap-[1px]">
         {toggle ? (
           <Status
-            header={post?.header || "หัวข้อย่อย"}
-            headerLink={post?.headerLink || "/"}
-            body={post?.body || "เนื้อหา"}
+            header={dummyData?.header || "หัวข้อย่อย"}
+            headerLink={dummyData?.headerLink || "/"}
+            body={dummyData?.body || "เนื้อหา"}
             date={date}
           />
         ) : null}

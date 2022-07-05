@@ -12,8 +12,10 @@ import { ButtonControl } from "./FormComponents/ButtonControl";
 import { UserContext } from "@lib/context";
 import kebabCase from "lodash.kebabcase";
 import { auth, firestore, serverTimestamp } from "@lib/firebase";
+import { useRouter } from "next/router";
 
 export default function Add({ setOpened }) {
+  const router = useRouter();
   const [tags, setTags] = useState([]);
   const [genres, setGenres] = useState([]);
   const [content, setContent] = useState("");
@@ -47,6 +49,8 @@ export default function Add({ setOpened }) {
     };
 
     await ref.set(data);
+
+    router.reload();
   };
 
   const form = useForm({

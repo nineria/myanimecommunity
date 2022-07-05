@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 export function ButtonControl({ setOpened, postRef, disabled }) {
   const modals = useModals();
   const router = useRouter();
+
   const handleOnClick = () => {
     showNotification({
       color: "teal",

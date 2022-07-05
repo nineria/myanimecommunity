@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // Hooks
 import { useForm } from "@mantine/hooks";
 // Components
@@ -11,14 +11,40 @@ import TermAndService from "./PostComponents/TermAndService";
 import Title from "./PostComponents/Title";
 // Icons
 import { Check } from "tabler-icons-react";
+import { firestore, getUserWithUsername, serverTimestamp } from "@lib/firebase";
 
 export default function Edit(props) {
-  const data = props.postData;
+  const [posts, setPosts] = useState(props.postData);
 
-  const HandleChange = (values) => {
-    data = values;
-    props.handlePostDataChange(values);
-    props.setOpened(false);
+  const [postRef, setPostRef] = useState();
+
+  useEffect(() => {
+    const getPost = async () => {
+      const userDoc = await getUserWithUsername(posts.username);
+      const postRef = await userDoc.ref.collection("homePosts").doc(posts.slug);
+
+      setPostRef(postRef);
+    };
+
+    getPost();
+  }, []);
+
+  const HandleChange = async (values) => {
+    const ref = firestore
+      .collection("users")
+      .doc(posts.uid)
+      .collection("homePosts")
+      .doc(posts.slug);
+
+    const data = {
+      title: values.title,
+      titleLink: values.titleLink,
+      header: values.header,
+      headerLink: values.headerLink,
+      body: values.body,
+      updatedAt: serverTimestamp(),
+    };
+
     showNotification({
       color: "teal",
       title: "แก้ไขโพสต์หลักแล้ว",
@@ -27,16 +53,19 @@ export default function Edit(props) {
         root: "bg-foreground",
       },
     });
-    console.log(data);
+
+    props.setOpened(false);
+
+    await ref.set(data);
   };
 
   const form = useForm({
     initialValues: {
-      title: data.title,
-      titleLink: data.titleLink,
-      header: data.header,
-      headerLink: data.headerLink,
-      body: data.body,
+      title: posts.title,
+      titleLink: posts.titleLink,
+      header: posts.header,
+      headerLink: posts.headerLink,
+      body: posts.body,
     },
   });
 
@@ -60,7 +89,7 @@ export default function Edit(props) {
 
         <TermAndService />
         {/* Button form Control */}
-        <ButtonControl setOpened={props.setOpened} />
+        <ButtonControl setOpened={props.setOpened} postRef={postRef} />
       </Stack>
     </form>
   );
