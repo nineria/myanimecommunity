@@ -146,7 +146,8 @@ function MainPost({ post, postRef }) {
           <Button
             onClick={() => setOpened(true)}
             leftIcon={<EditIcon size={14} />}
-            className="bg-content text-[#fff] hover:bg-content hover:opacity-75"
+            compact
+            className="bg-foreground text-title hover:bg-content hover:text-[#fff]"
             variant="default"
             size="xs"
           >
@@ -162,7 +163,7 @@ function MainPost({ post, postRef }) {
       />
       {/* <RichTextEditor className="!p-0 !m-none" readOnly value={data.content} /> */}
 
-      <p className="absolute bottom-2 right-4 font-bold uppercase opacity-[0.03] text-[8vw] text-right tracking-tighter">
+      <p className="absolute bottom-2 select-none right-4 font-bold uppercase opacity-[0.03] text-[8vw] text-right tracking-tighter">
         {post.tag[0] === "คำถาม"
           ? "QUESTION"
           : post.tag[0] === "รีวิว"

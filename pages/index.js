@@ -8,27 +8,26 @@ import { useThemeContext } from "@lib/useTheme";
 import { useState, useEffect } from "react";
 
 // Max post to query per page
-const LIMIT = 1;
+const LIMIT = 10;
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps() {
   const postsQuery = firestore
-    .collectionGroup("posts")
-    .where("published", "==", true)
-    .orderBy("createdAt", "desc")
+    .collectionGroup("homePosts")
+    .orderBy("createdAt", "asc")
     .limit(LIMIT);
 
-  const posts = (await postsQuery.get()).docs.map(postToJSON);
+  const homePosts = (await postsQuery.get()).docs.map(postToJSON);
 
   return {
-    props: { posts }, // will be passed to the page component as props
+    props: { homePosts }, // will be passed to the page component as props
   };
 }
 
 export default function HomePage(props) {
-  const [posts, setPosts] = useState(props.posts);
-  const [loading, setLoading] = useState(false);
+  const [posts, setPosts] = useState(props.homePosts);
+  // const [loading, setLoading] = useState(false);
 
-  const [postsEnd, setPostsEnd] = useState(false);
+  // const [postsEnd, setPostsEnd] = useState(false);
 
   const { setTheme } = useThemeContext();
 
@@ -41,35 +40,35 @@ export default function HomePage(props) {
     setTheme(localData);
   }, [setTheme]);
 
-  const getMorePosts = async () => {
-    setLoading(true);
-    const last = posts[posts.length - 1];
+  // const getMorePosts = async () => {
+  //   setLoading(true);
+  //   const last = posts[posts.length - 1];
 
-    const cursor =
-      typeof last.createdAt === "number"
-        ? fromMillis(last.createdAt)
-        : last.createdAt;
+  //   const cursor =
+  //     typeof last.createdAt === "number"
+  //       ? fromMillis(last.createdAt)
+  //       : last.createdAt;
 
-    const query = firestore
-      .collectionGroup("posts")
-      .where("published", "==", true)
-      .orderBy("createdAt", "desc")
-      .startAfter(cursor)
-      .limit(LIMIT);
+  //   const query = firestore
+  //     .collectionGroup("posts")
+  //     .where("published", "==", true)
+  //     .orderBy("createdAt", "desc")
+  //     .startAfter(cursor)
+  //     .limit(LIMIT);
 
-    const newPosts = (await query.get()).docs.map((doc) => doc.data());
+  //   const newPosts = (await query.get()).docs.map((doc) => doc.data());
 
-    setPosts(posts.concat(newPosts));
-    setLoading(false);
+  //   setPosts(posts.concat(newPosts));
+  //   setLoading(false);
 
-    if (newPosts.length < LIMIT) setPostsEnd(true);
-  };
+  //   if (newPosts.length < LIMIT) setPostsEnd(true);
+  // };
 
   return (
     <>
       <div className="bg-background min-h-[1024px] mb-[235px] pb-10">
         <Navbar />
-        <HomeComponents />
+        <HomeComponents homePosts={posts} />
       </div>
       <Footer />
     </>

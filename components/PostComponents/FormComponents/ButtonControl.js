@@ -5,59 +5,12 @@ import { showNotification } from "@mantine/notifications";
 // import { useModals } from "@mantine/modals";
 // Icons
 import { Check, X } from "tabler-icons-react";
+import { useModals } from "@mantine/modals";
+import { useRouter } from "next/router";
 
-export function ButtonControl({ setOpened, disabled }) {
-  // const modals = useModals();
-
-  // const openModal = () => {
-  //   const handleOnClick = () => {
-  //     showNotification({
-  //       color: "teal",
-  //       title: "บันทึกการเปลี่ยนแปลงเรียบร้อย",
-  //       icon: <Check size={18} />,
-  //       classNames: {
-  //         root: "bg-foreground",
-  //       },
-  //     });
-  //     setOpened(false);
-  //     modals.closeModal(id);
-  //   };
-  //   const id = modals.openModal({
-  //     title: (
-  //       <Text size="sm">
-  //         การดำเนินการต่อไปนี้จะไม่สามารถกลับมาแก้ไขได้
-  //         ต้องการดำเนินการต่อหรือไม่?
-  //       </Text>
-  //     ),
-  //     zIndex: "999",
-  //     centered: true,
-  //     classNames: {
-  //       modal: "bg-foreground",
-  //       overlay: "bg-background",
-  //     },
-  //     size: "sm",
-  //     children: (
-  //       <Stack size="xs">
-  //         <Group position="right">
-  //           <Button
-  //             className="bg-background text-title hover:bg-background hover:opacity-75"
-  //             onClick={() => modals.closeModal(id)}
-  //           >
-  //             ยกเลิก
-  //           </Button>
-  //           <Button
-  //             type="submit"
-  //             className="bg-green-500 hover:bg-green-500 hover:opacity-75"
-  //             onClick={() => handleOnClick()}
-  //           >
-  //             ตกลง
-  //           </Button>
-  //         </Group>
-  //       </Stack>
-  //     ),
-  //   });
-  // };
-
+export function ButtonControl({ setOpened, postRef, disabled }) {
+  const modals = useModals();
+  const router = useRouter();
   const handleOnClick = () => {
     showNotification({
       color: "teal",
@@ -83,20 +36,68 @@ export function ButtonControl({ setOpened, disabled }) {
   };
 
   const handleDelete = () => {
-    showNotification({
-      color: "red",
-      title: "ลบโพสต์แล้ว",
-      icon: <X size={18} />,
+    const handleOnClick = () => {
+      postRef.delete();
+
+      showNotification({
+        color: "red",
+        title: "ลบโพสต์แล้ว",
+        icon: <X size={18} />,
+        classNames: {
+          root: "bg-foreground border-red-400",
+        },
+      });
+      modals.closeModal(id);
+      setOpened(false);
+
+      router.push("/posts");
+    };
+    const id = modals.openModal({
+      title: (
+        <Stack>
+          <Text size="sm">คุณต้องการลบโพสต์นี้หรือไม่?</Text>
+          <Text size="xs">การดำเนินการต่อไปนี้จะไม่สามารถกลับมาแก้ไขได้</Text>
+        </Stack>
+      ),
+      zIndex: "999",
+      centered: true,
       classNames: {
-        root: "bg-foreground border-red-400",
+        modal: "bg-foreground",
+        overlay: "bg-background",
       },
+      size: "sm",
+      children: (
+        <Stack size="xs">
+          <Group position="right">
+            <Button
+              className="bg-background text-title hover:bg-background hover:opacity-75"
+              onClick={() => modals.closeModal(id)}
+            >
+              ยกเลิก
+            </Button>
+            <Button
+              type="submit"
+              className="bg-red-500 hover:bg-red-500 hover:opacity-75"
+              onClick={() => handleOnClick()}
+            >
+              ยืนยัน
+            </Button>
+          </Group>
+        </Stack>
+      ),
     });
-    setOpened(false);
   };
 
   return (
     <Group mt="md" position="apart">
-      <Group spacing="xs" position="left">
+      <Button
+        size="xs"
+        className="bg-red-500 hover:bg-red-500 hover:opacity-75"
+        onClick={() => handleDelete()}
+      >
+        ลบ
+      </Button>
+      <Group spacing="xs" position="right">
         <Button
           size="xs"
           onClick={() => handleCancel()}
@@ -105,23 +106,15 @@ export function ButtonControl({ setOpened, disabled }) {
           ยกเลิก
         </Button>
         <Button
+          type="submit"
           size="xs"
-          className="bg-red-500 hover:bg-red-500 hover:opacity-75"
-          onClick={() => handleDelete()}
+          disabled={disabled}
+          className="bg-green-500 hover:bg-green-500 hover:opacity-75"
+          onClick={() => handleOnClick()}
         >
-          ลบโพสต์
+          ยืนยัน
         </Button>
       </Group>
-
-      <Button
-        type="submit"
-        size="xs"
-        disabled={disabled}
-        className="bg-green-500 hover:bg-green-500 hover:opacity-75"
-        onClick={() => handleOnClick()}
-      >
-        ยืนยัน
-      </Button>
     </Group>
   );
 }

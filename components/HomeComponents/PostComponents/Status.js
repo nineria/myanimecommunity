@@ -5,7 +5,7 @@ import Stats from "./Stats";
 // Icons
 import { Messages } from "tabler-icons-react";
 
-export default function Status({ header, headerLink, body }) {
+export default function Status({ header, headerLink, body, date }) {
   return (
     <div className="flex lg:flex-row flex-col gap-2 lg:justify-between lg:items-center px-3 py-2 text-content bg-foreground overflow-hidden">
       <div className="flex gap-2">
@@ -34,7 +34,7 @@ export default function Status({ header, headerLink, body }) {
       <Stats>
         <Stats.Posts>25</Stats.Posts>
         <Stats.Comments>3.6K</Stats.Comments>
-        <Stats.EditDate>28/5/2565</Stats.EditDate>
+        <Stats.EditDate>{date}</Stats.EditDate>
       </Stats>
     </div>
   );

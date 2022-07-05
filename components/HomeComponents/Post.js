@@ -10,6 +10,7 @@ import { Modal } from "@mantine/core";
 import { ChevronUp, Edit as EditIcon } from "tabler-icons-react";
 
 export default function Post({ dummyData, disabled = false }) {
+  const [post, setPost] = useState(dummyData);
   const { user } = useContext(UserContext);
 
   const [toggle, setTogle] = useState(true);
@@ -18,15 +19,24 @@ export default function Post({ dummyData, disabled = false }) {
 
   const [opened, setOpened] = useState(false);
 
-  const postData = dummyData;
-
   const HandleOpenMenu = () => {
     return setOpenMenu(!openMenu);
   };
 
   const HandlePostDataChange = (data) => {
-    postData = data;
+    post = data;
   };
+
+  const updatedAt =
+    typeof post?.updatedAt === "number"
+      ? new Date(post.updatedAt)
+      : post.updatedAt?.toDate();
+
+  const date = updatedAt?.toLocaleDateString("th-th", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
 
   return (
     <div className="rounded-sm shadow-md">
@@ -36,9 +46,9 @@ export default function Post({ dummyData, disabled = false }) {
         }`}
       >
         {/* Title */}
-        <Link href={postData?.titleLink || "/"}>
+        <Link href={post?.titleLink || "/"}>
           <a className="truncate text-[#fff] max-w-[600px] cursor-pointer hover:underline">
-            {postData?.title || "หัวข้อหลัก"}
+            {post?.title || "หัวข้อหลัก"}
           </a>
         </Link>
         {/* Edit button */}
@@ -59,7 +69,7 @@ export default function Post({ dummyData, disabled = false }) {
               >
                 <Edit
                   setOpened={setOpened}
-                  postData={postData}
+                  postData={post}
                   handlePostDataChange={HandlePostDataChange}
                 />
               </Modal>
@@ -86,9 +96,10 @@ export default function Post({ dummyData, disabled = false }) {
       <div className="flex flex-col bg-[#aaa] gap-[1px]">
         {toggle ? (
           <Status
-            header={postData?.header || "หัวข้อย่อย"}
-            headerLink={postData?.headerLink || "/"}
-            body={postData?.body || "เนื้อหา"}
+            header={post?.header || "หัวข้อย่อย"}
+            headerLink={post?.headerLink || "/"}
+            body={post?.body || "เนื้อหา"}
+            date={date}
           />
         ) : null}
       </div>

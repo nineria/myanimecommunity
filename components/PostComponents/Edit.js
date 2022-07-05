@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 // Hooks
 import { useForm } from "@mantine/hooks";
 // Components
@@ -9,17 +9,10 @@ import { PostHeader, RefCredit, TermAndService } from "./FormComponents";
 import PostImage from "./FormComponents/PostImage";
 import PostContent from "./FormComponents/PostContent";
 import { ButtonControl } from "./FormComponents/ButtonControl";
-import { auth, firestore, serverTimestamp } from "@lib/firebase";
+import { serverTimestamp } from "@lib/firebase";
 import AuthCheck from "@components/AuthCheck";
-import { useDocumentData } from "react-firebase-hooks/firestore";
-import { useRouter } from "next/router";
 
 export default function Edit({ post, postRef, setOpened }) {
-  // const [data, setData] = useState(postData);
-  // const [tags, setTags] = useState([...postData.tag]);
-  // const [genres, setGenres] = useState([...postData.genre]);
-  // const [content, setContent] = useState(postData.content);
-
   return (
     <AuthCheck>
       {post && <PostForm post={post} postRef={postRef} setOpened={setOpened} />}
@@ -69,7 +62,7 @@ function PostForm({ post, postRef, setOpened }) {
           <RefCredit {...form.getInputProps("credit")} />
           <Divider />
           <TermAndService />
-          <ButtonControl setOpened={setOpened} />
+          <ButtonControl setOpened={setOpened} postRef={postRef} />
         </Stack>
       </form>
     </AuthCheck>

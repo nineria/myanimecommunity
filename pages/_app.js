@@ -6,6 +6,7 @@ import { ColorSchemeProvider, MantineProvider } from "@mantine/core";
 import { useCallback, useEffect, useState } from "react";
 import { ModalsProvider } from "@mantine/modals";
 import { NotificationsProvider } from "@mantine/notifications";
+import AuthCheck from "@components/AuthCheck";
 
 function MyApp({ Component, pageProps }) {
   const userData = useUserData();

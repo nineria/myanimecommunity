@@ -1,5 +1,5 @@
 // import MarkdownPreview from "@components/MarkdownPreview";
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useState } from "react";
 // Components
 import { Avatar, Button, Modal, Tabs, Text } from "@mantine/core";
 import WebsiteRulePage from "@components/WebsiteRule";

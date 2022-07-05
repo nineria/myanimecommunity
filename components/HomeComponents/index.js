@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 // Context
 import { UserContext } from "@lib/context";
 // Components
@@ -8,20 +8,14 @@ import { Button, Container, Modal, Skeleton } from "@mantine/core";
 // Icons
 import { Animate } from "react-simple-animate";
 
-export default function HomeComponents() {
-  const { user, username } = useContext(UserContext);
+export default function HomeComponents({ homePosts }) {
+  const { user, userData } = useContext(UserContext);
 
   const [opened, setOpened] = useState(false);
 
   const [loading, setLoading] = useState(true);
 
-  const [postData, setPostData] = useState({
-    title: "",
-    titleLink: "",
-    header: "",
-    headerLink: "",
-    body: "",
-  });
+  const [postData, setPostData] = useState(homePosts);
 
   // const HandleOpenMenu = () => {
   //   return setOpenMenu(!openMenu);
@@ -37,20 +31,6 @@ export default function HomeComponents() {
 
   const postDummy = [
     {
-      title: "อัพเดทข่าวสาร",
-      titleLink: "/news",
-      header: "ข่าวสารอนิเมะอนิเมะ & ประกาศจากเว็บไซต์",
-      headerLink: "/news",
-      body: "โพสต์รวบรวมอนิเมะเปิดตัวใหม่ และข่าวสารต่างๆ เกี่ยวกับอนิเมะ",
-    },
-    {
-      title: "รีวิว อนิเมะ มังงะ สปอย",
-      titleLink: "/review",
-      header: "รีวิวอนิเมะเปิดตัวใหม่ และข้อมูลที่เกี่ยวข้อง",
-      headerLink: "/news",
-      body: "โพสต์รวบรวมรีวิวอนิเมะก่อนไปรับชม และเรื่องย่อต่างๆ พร้อมข้อมูลจำเพราะของตัวละคร ฯลฯ",
-    },
-    {
       title: "Q&A ถาม-ตอบ ข้อสงสัยต่างๆ",
       titleLink: "/qAndA",
       header: "โพสต์ ถาม-ตอบ ข้อสงสัยเกี่ยวกับ อนิเมะ มังงะ",
@@ -59,8 +39,8 @@ export default function HomeComponents() {
     },
   ];
 
-  const posts = postDummy.map((item, index) => (
-    <Post dummyData={item} key={index} />
+  const posts = postData.map((item, index) => (
+    <Post key={index} dummyData={item} />
   ));
 
   return (
@@ -77,34 +57,33 @@ export default function HomeComponents() {
           >
             <div className="flex flex-col gap-2">
               {/* Add home post */}
-              <div className="flex flex-row justify-between w-full bg-foreground rounded-sm p-1 shadow-md">
-                <Modal
-                  size="lg"
-                  opened={opened}
-                  onClose={() => setOpened(false)}
-                  title="สร้างโพสต์ - หน้าหลัก"
-                  centered
-                  classNames={{
-                    modal: "bg-foreground",
-                    overlay: "bg-background",
-                    title: "text-title",
-                  }}
-                >
-                  <Add
-                    setOpened={setOpened}
-                    postData={postData}
-                    handlePostDataChange={HandlePostDataChange}
-                  />
-                </Modal>
-                <Button
-                  onClick={() => setOpened(true)}
-                  className="bg-content text-[#fff] hover:bg-content hover:opacity-75"
-                  variant="default"
-                  size="xs"
-                >
-                  สร้างโพสต์ +
-                </Button>
-              </div>
+              {userData?.rule === "ผู้ดูแลระบบ" ? (
+                <div className="flex flex-row justify-between w-full bg-foreground rounded-sm p-1 shadow-md">
+                  <Modal
+                    size="lg"
+                    opened={opened}
+                    onClose={() => setOpened(false)}
+                    title="สร้างโพสต์ - หน้าหลัก"
+                    centered
+                    classNames={{
+                      modal: "bg-foreground",
+                      overlay: "bg-background",
+                      title: "text-title",
+                    }}
+                  >
+                    <Add setOpened={setOpened} />
+                  </Modal>
+
+                  <Button
+                    onClick={() => setOpened(true)}
+                    className="bg-content text-[#fff] hover:bg-content hover:opacity-75"
+                    variant="default"
+                    size="xs"
+                  >
+                    สร้างโพสต์ +
+                  </Button>
+                </div>
+              ) : null}
               {/* Display home post */}
               <div className="flex flex-col gap-2">{posts}</div>
             </div>

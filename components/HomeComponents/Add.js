@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 // Hooks
 import { useForm } from "@mantine/hooks";
 // Components
@@ -11,14 +11,32 @@ import TermAndService from "./PostComponents/TermAndService";
 import Title from "./PostComponents/Title";
 // Icons
 import { Check } from "tabler-icons-react";
+import { auth, firestore, serverTimestamp } from "@lib/firebase";
+import { UserContext } from "@lib/context";
 
-export default function Add(props) {
-  const data = props.postData;
+export default function Add({ setOpened }) {
+  const { username } = useContext(UserContext);
+  const HandleChange = async (values) => {
+    const uid = auth.currentUser.uid;
+    const ref = firestore
+      .collection("users")
+      .doc(uid)
+      .collection("homePosts")
+      .doc();
 
-  const HandleChange = (values) => {
-    data = values;
-    props.handlePostDataChange(values);
-    props.setOpened(false);
+    const data = {
+      uid: uid,
+      slug: ref.id,
+      username: username,
+      title: values.title,
+      titleLink: values.titleLink,
+      header: values.header,
+      headerLink: values.headerLink,
+      body: values.body,
+      updatedAt: serverTimestamp(),
+      createdAt: serverTimestamp(),
+    };
+
     showNotification({
       color: "teal",
       title: "สร้างโพสต์แล้ว",
@@ -27,16 +45,18 @@ export default function Add(props) {
         root: "bg-foreground",
       },
     });
-    console.log(data);
-  };
 
+    setOpened(false);
+
+    await ref.set(data);
+  };
   const form = useForm({
     initialValues: {
-      title: data.title,
-      titleLink: data.titleLink,
-      header: data.header,
-      headerLink: data.headerLink,
-      body: data.body,
+      title: "",
+      titleLink: "",
+      header: "",
+      headerLink: "",
+      body: "",
     },
   });
 
@@ -60,7 +80,7 @@ export default function Add(props) {
 
         <TermAndService />
         {/* Button form Control */}
-        <ButtonControl setOpened={props.setOpened} />
+        <ButtonControl setOpened={setOpened} />
       </Stack>
     </form>
   );

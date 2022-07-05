@@ -84,24 +84,22 @@ export default function PostPage(props) {
   const [comments, setComments] = useState();
 
   useEffect(() => {
-    const commentsRef = async () => {
+    const getComments = async () => {
       const userDoc = await getUserWithUsername(post.username);
-      const commentsRef = await userDoc.ref
+      const comments = await userDoc.ref
         .collection("posts")
         .doc(post.slug)
         .collection("comments")
         .get();
 
-      commentsRef = await JSON.stringify(
-        commentsRef.docs.map((doc) => doc.data())
-      );
+      comments = await JSON.stringify(comments.docs.map((doc) => doc.data()));
 
-      commentsRef = JSON.parse(commentsRef);
+      comments = JSON.parse(comments);
 
-      setComments(commentsRef);
+      setComments(comments);
     };
 
-    commentsRef();
+    getComments();
   }, [post]);
 
   const items = [
@@ -117,8 +115,6 @@ export default function PostPage(props) {
   setTimeout(function () {
     setLoading(false);
   }, 500);
-
-  console.log(comments);
 
   return (
     <div className="bg-background min-h-[1024px] mb-[235px] pb-10">
@@ -150,7 +146,7 @@ export default function PostPage(props) {
                 {comments &&
                   comments.map((item, index) => (
                     <Skeleton key={index} visible={loading}>
-                      <Comment data={item} />
+                      <Comment post={post} comment={item} />
                     </Skeleton>
                   ))}
               </Stack>
