@@ -31,7 +31,7 @@ export default function Comment({ post, comment, setComments }) {
     };
 
     getComments();
-  }, [post]);
+  }, [post, comment]);
 
   return (
     <div className="bg-foreground rounded-sm">

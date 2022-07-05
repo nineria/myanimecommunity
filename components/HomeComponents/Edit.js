@@ -27,7 +27,7 @@ export default function Edit(props) {
     };
 
     getPost();
-  }, []);
+  }, [posts]);
 
   const HandleChange = async (values) => {
     const ref = firestore
