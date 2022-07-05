@@ -36,14 +36,14 @@ export default function Edit(props) {
       .collection("homePosts")
       .doc(posts.slug);
 
-    const data = {
+    await ref.update({
       title: values.title,
       titleLink: values.titleLink,
       header: values.header,
       headerLink: values.headerLink,
       body: values.body,
       updatedAt: serverTimestamp(),
-    };
+    });
 
     showNotification({
       color: "teal",
@@ -55,8 +55,6 @@ export default function Edit(props) {
     });
 
     props.setOpened(false);
-
-    await ref.set(data);
   };
 
   const form = useForm({
