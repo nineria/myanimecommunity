@@ -79,6 +79,7 @@ export default function ButtonControl({ setOpened, postRef }) {
   return (
     <Group mt="md" position="apart">
       <Button
+        size="xs"
         className="bg-red-500 hover:bg-red-500 hover:opacity-75"
         onClick={() => handleDelete()}
       >
@@ -86,12 +87,14 @@ export default function ButtonControl({ setOpened, postRef }) {
       </Button>
       <Group spacing="xs" position="right">
         <Button
+          size="xs"
           onClick={() => handleCancel()}
           className="bg-gray-500 hover:bg-gray-500 hover:opacity-75"
         >
           ยกเลิก
         </Button>
         <Button
+          size="xs"
           type="submit"
           className="bg-green-500 hover:bg-green-500 hover:opacity-75"
         >

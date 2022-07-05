@@ -1,6 +1,15 @@
 import React from "react";
 // Components
-import { Input, InputWrapper, Textarea } from "@mantine/core";
+import {
+  Button,
+  Group,
+  Input,
+  InputWrapper,
+  Stack,
+  Textarea,
+} from "@mantine/core";
+import { useModals } from "@mantine/modals";
+import WebsiteRule from "@components/WebsiteRule";
 
 export function PostHeader(props) {
   return (
@@ -32,20 +41,5 @@ export function RefCredit(props) {
         {...props}
       />
     </InputWrapper>
-  );
-}
-
-export function TermAndService() {
-  return (
-    <div className="flex flex-row items-center gap-2 text-xs">
-      <span className="w-4/5">
-        ผู้ดูแลระบบขอสงวนสิทธิ์ในการลบโพสต์ของผู้ที่ไม่ปฏิบัติตาม{" "}
-        <span className="text-content underline cursor-pointer">
-          กฎ กติกา และมารยาท
-        </span>{" "}
-        ของเว็บไซต์ MyAnimeCommunity
-        <p>เพื่อรักษาบรรยากาศการพูดคุยของชุมชนคนรักอนิเมะ</p>
-      </span>
-    </div>
   );
 }

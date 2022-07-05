@@ -39,13 +39,12 @@ export default function PostImage(props) {
           <Grid.Col sm={2}>
             <Button
               fullWidth
+              className="bg-background hover:bg-background hover:opacity-75 "
               onClick={() => {
                 setOpenedImage((e) => !e);
-                setToggle(!toggle);
               }}
-              className="bg-black/50 hover:bg-black/50 hover:opacity-50"
             >
-              แสดง
+              {openedImage === false ? "แสดง" : "ซ่อน"}
             </Button>
           </Grid.Col>
         </Grid>
@@ -64,8 +63,6 @@ export default function PostImage(props) {
             เกิดข้อผิดพลาด ในการโหลดรูปภาพกรุณาลองใหม่อีกครั้ง
           </Text>
         )}
-
-        <Divider />
       </Collapse>
     </>
   );

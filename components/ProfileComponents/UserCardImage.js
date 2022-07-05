@@ -156,7 +156,7 @@ function ReportUser({ opened, setOpened }) {
           title: "text-title",
         }}
       >
-        <Stack>
+        <Stack spacing="sm">
           <Checkbox
             label="ชื่อผู้ใช้ไม่เหมาะสม"
             classNames={{
@@ -202,6 +202,7 @@ function ReportUser({ opened, setOpened }) {
           <Button
             className="bg-content text-[#fff] hover:bg-content hover:opacity-75"
             variant="default"
+            size="xs"
             onClick={() => setOpened(false)}
           >
             ยกเลิก
@@ -209,6 +210,7 @@ function ReportUser({ opened, setOpened }) {
           <Button
             className="bg-background text-title hover:bg-background hover:opacity-75"
             variant="default"
+            size="xs"
             onClick={() => setOpened(false)}
           >
             ส่งเรื่อง

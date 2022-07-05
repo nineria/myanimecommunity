@@ -26,6 +26,7 @@ import { deleteDoc } from "firebase/firestore";
 import { useModals } from "@mantine/modals";
 import { useRouter } from "next/router";
 import { UserContext } from "@lib/context";
+import WebsiteRule from "@components/WebsiteRule";
 
 const handleImageUpload = (image) =>
   new Promise((resolve, reject) => {
@@ -193,6 +194,9 @@ function CommentForm({ comment, commentRef, setOpened }) {
           </Tabs.Tab>
         </Tabs>
       </InputWrapper>
+
+      <WebsiteRule />
+
       <Group mt="sm" position="apart">
         <Button
           size="xs"

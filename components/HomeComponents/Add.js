@@ -14,6 +14,7 @@ import { Check } from "tabler-icons-react";
 import { auth, firestore, serverTimestamp } from "@lib/firebase";
 import { UserContext } from "@lib/context";
 import { useRouter } from "next/router";
+import WebsiteRule from "@components/WebsiteRule";
 
 export default function Add({ setOpened }) {
   const { username } = useContext(UserContext);
@@ -69,24 +70,17 @@ export default function Add({ setOpened }) {
 
   return (
     <form onSubmit={form.onSubmit((values) => HandleChange(values))}>
-      <Stack>
-        {/* Main post title */}
+      <Stack spacing="sm">
         <Title
           titleLink={form.getInputProps("titleLink")}
           title={form.getInputProps("title")}
         />
-        <Divider />
-        {/* Main post header */}
         <Header
           headerLink={form.getInputProps("headerLink")}
           header={form.getInputProps("header")}
         />
-        <Divider />
-        {/* Main post content */}
         <Content body={form.getInputProps("body")} />
-
-        <TermAndService />
-        {/* Button form Control */}
+        <WebsiteRule />
         <ButtonControl setOpened={setOpened} />
       </Stack>
     </form>

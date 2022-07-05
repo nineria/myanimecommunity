@@ -13,6 +13,7 @@ import Title from "./PostComponents/Title";
 import { Check } from "tabler-icons-react";
 import { firestore, getUserWithUsername, serverTimestamp } from "@lib/firebase";
 import { useRouter } from "next/router";
+import WebsiteRule from "@components/WebsiteRule";
 
 export default function Edit(props) {
   const router = useRouter();
@@ -74,24 +75,17 @@ export default function Edit(props) {
 
   return (
     <form onSubmit={form.onSubmit((values) => HandleChange(values))}>
-      <Stack>
-        {/* Main post title */}
+      <Stack spacing="sm">
         <Title
           titleLink={form.getInputProps("titleLink")}
           title={form.getInputProps("title")}
         />
-        <Divider />
-        {/* Main post header */}
         <Header
           headerLink={form.getInputProps("headerLink")}
           header={form.getInputProps("header")}
         />
-        <Divider />
-        {/* Main post content */}
         <Content body={form.getInputProps("body")} />
-
-        <TermAndService />
-        {/* Button form Control */}
+        <WebsiteRule />
         <ButtonControl setOpened={props.setOpened} postRef={postRef} />
       </Stack>
     </form>

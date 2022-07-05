@@ -208,28 +208,10 @@ function UsernameForm() {
             <Card>
               <Stack spacing="sm">
                 <Logo />
-                <Title order={3}>สร้างบัญชี</Title>
-                <Group position="center">
-                  <Button
-                    size="sm"
-                    radius="lg"
-                    className="bg-white w-[200px] text-black border-[1px] border-gray-300 hover:bg-white hover:opacity-75"
-                    onClick={signInWithGoogle}
-                  >
-                    <Image
-                      src="/google-logo.png"
-                      alt="google"
-                      width="15px"
-                      className="mr-2"
-                    />
-                    Google
-                  </Button>
-                </Group>
+                <Title order={2} align="center">
+                  สร้างบัญชี
+                </Title>
 
-                <Divider
-                  label="หรือดำเนินการต่อด้วยอีเมล"
-                  labelPosition="center"
-                />
                 <Group grow>
                   <InputWrapper id="input-demo" required label="ชื่อจริง">
                     <Input

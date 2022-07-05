@@ -5,7 +5,7 @@ import { useForm } from "@mantine/hooks";
 import { Divider, Stack } from "@mantine/core";
 import TagHeader from "./FormComponents/TagHeader";
 import TagGenre from "./FormComponents/TagGenre";
-import { PostHeader, RefCredit, TermAndService } from "./FormComponents";
+import { PostHeader, RefCredit } from "./FormComponents";
 import PostImage from "./FormComponents/PostImage";
 import PostContent from "./FormComponents/PostContent";
 import { ButtonControl } from "./FormComponents/ButtonControl";
@@ -13,6 +13,7 @@ import { UserContext } from "@lib/context";
 import kebabCase from "lodash.kebabcase";
 import { auth, firestore, serverTimestamp } from "@lib/firebase";
 import { useRouter } from "next/router";
+import WebsiteRule from "@components/WebsiteRule";
 
 export default function Add({ setOpened }) {
   const router = useRouter();
@@ -73,17 +74,14 @@ export default function Add({ setOpened }) {
 
   return (
     <form onSubmit={form.onSubmit((values) => HandleChange(values))}>
-      <Stack>
+      <Stack spacing="sm">
         <TagHeader data={tags} setData={setTags} />
         <TagGenre data={genres} setData={setGenres} />
         <PostHeader {...form.getInputProps("title")} />
-        <Divider />
         <PostImage {...form.getInputProps("image")} />
         <PostContent content={content} setContent={setContent} />
-        <Divider />
         <RefCredit {...form.getInputProps("credit")} />
-        <Divider />
-        <TermAndService />
+        <WebsiteRule />
         <ButtonControl setOpened={setOpened} />
       </Stack>
     </form>

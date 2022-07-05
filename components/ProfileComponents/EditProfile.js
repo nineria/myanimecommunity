@@ -104,7 +104,7 @@ function ProfileForm({ user, userRef, setOpened }) {
 
   return (
     <form onSubmit={form.onSubmit((values) => HandleChange(values))}>
-      <Stack>
+      <Stack spacing="sm">
         <Group grow>
           <InputWrapper id="input-demo" label="ชื่อจริง">
             <Input

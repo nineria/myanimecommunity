@@ -10,6 +10,7 @@ import kebabCase from "lodash.kebabcase";
 import { showNotification } from "@mantine/notifications";
 import { Check } from "tabler-icons-react";
 import Logo from "@components/Logo";
+import WebsiteRule from "@components/WebsiteRule";
 
 const handleImageUpload = (image) =>
   new Promise((resolve, reject) => {
@@ -127,24 +128,14 @@ export default function CreateComment({ post }) {
               >
                 {openedWebsiteRule && <WebsiteRulePage />}
               </Modal>
-              <div className="flex flex-row gap-1 items-center mt-2 text-title text-xs">
-                <div>
-                  ยอมรับ{" "}
-                  <span
-                    onClick={() => setOpenedWebsiteRule(true)}
-                    className="text-content cursor-pointer hover:underline"
-                  >
-                    กฎ กติกา และมารยาท
-                  </span>{" "}
-                  ของ MyAnimeCommunity
-                </div>
-              </div>
+              <WebsiteRule />
               <Button
+                size="xs"
                 className="bg-content text-[#fff] hover:bg-content hover:opacity-75"
                 variant="default"
                 onClick={() => HandleSubmit()}
               >
-                คอมเมนต์
+                ตอบกลับ
               </Button>
             </div>
           </div>
