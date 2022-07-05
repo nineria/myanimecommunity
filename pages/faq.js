@@ -309,7 +309,7 @@ export default function FaqPage({ data }) {
       <Title order={4} mt="lg" mb="xs">
         {data.title}
       </Title>
-      <Accordion iconPosition="left" initialItem={0} classNames={classes}>
+      <Accordion iconPosition="left" classNames={classes}>
         {data.description.map((item, index) => (
           <Accordion.Item key={index} label={item.label}>
             {item.content}
@@ -324,7 +324,7 @@ export default function FaqPage({ data }) {
       <Title order={4} mt="lg" mb="xs">
         {data.title}
       </Title>
-      <Accordion iconPosition="left" initialItem={0} classNames={classes}>
+      <Accordion iconPosition="left" classNames={classes}>
         {data.description.map((item, index) => (
           <Accordion.Item key={index} label={item.label}>
             {item.content}
