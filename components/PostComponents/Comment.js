@@ -18,7 +18,6 @@ import { UserContext } from "@lib/context";
 
 export default function Comment({ post, comment, setComments }) {
   const [commentRef, setCommentRef] = useState();
-  const [username] = useContext(UserContext);
 
   useEffect(() => {
     const getComments = async () => {
@@ -82,6 +81,7 @@ function LeftMenu({ comment }) {
 }
 
 function MainPost({ comment, commentRef }) {
+  const { username } = useContext(UserContext);
   const [opened, setOpened] = useState(false);
 
   const timestamp = new Date(comment.updatedAt.seconds * 1000);
