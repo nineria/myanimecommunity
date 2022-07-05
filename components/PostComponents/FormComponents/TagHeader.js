@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 // Components
-import { ActionIcon, Badge, Group, Input, InputWrapper } from "@mantine/core";
+import {
+  ActionIcon,
+  Badge,
+  Group,
+  Input,
+  InputWrapper,
+  Select,
+} from "@mantine/core";
 // Icons
 import { Tag, X } from "tabler-icons-react";
 
@@ -64,6 +71,7 @@ export default function TagHeader({ data, setData }) {
         className="bg-accent bg-opacity-50 border-title border-opacity-20 border-[1px] rounded-md p-1"
       >
         {tags}
+
         <Input
           icon={<Tag size={14} />}
           placeholder="เพิ่ม"

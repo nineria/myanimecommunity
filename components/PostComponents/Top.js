@@ -14,7 +14,7 @@ export default function Top({ data }) {
           ? { from: "indigo", to: "cyan" }
           : item === "รีวิว"
           ? { from: "teal", to: "lime" }
-          : item === "สปอย"
+          : item === "ข่าวสาร"
           ? { from: "orange", to: "red" }
           : { from: "gray", to: "gray" }
       }

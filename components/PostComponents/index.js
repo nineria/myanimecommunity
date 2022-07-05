@@ -170,6 +170,8 @@ function MainPost({ post, postRef }) {
           ? "REVIEW"
           : post.tag[0] === "สปอย"
           ? "SPOILER"
+          : post.tag[0] === "ข่าวสาร"
+          ? "NEWS"
           : "OTHER"}
       </p>
       <p className="text-xs mt-20">

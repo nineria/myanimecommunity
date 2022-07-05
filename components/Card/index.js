@@ -32,8 +32,10 @@ export default function Card({ posts, layout }) {
           ? { from: "indigo", to: "cyan" }
           : badge === "รีวิว"
           ? { from: "teal", to: "lime" }
-          : badge === "สปอย"
+          : badge === "ข่าวสาร"
           ? { from: "orange", to: "red" }
+          : badge === "สปอย"
+          ? { from: "red", to: "red" }
           : { from: "gray", to: "gray" }
       }
       radius="sm"
