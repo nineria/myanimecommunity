@@ -41,7 +41,7 @@ export default function CreateComment({ post }) {
       .collection("users")
       .doc(post.uid)
       .collection("posts")
-      .doc(kebabCase(post.title))
+      .doc(kebabCase(post.slug))
       .collection("comments")
       .doc();
 
