@@ -1,31 +1,14 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 // Hooks
 import { useForm } from "@mantine/hooks";
 // Components
-import {
-  Button,
-  Divider,
-  Group,
-  InputWrapper,
-  Stack,
-  Tabs,
-  Text,
-} from "@mantine/core";
-import TagHeader from "./FormComponents/TagHeader";
-import TagGenre from "./FormComponents/TagGenre";
-import { PostHeader, RefCredit, TermAndService } from "./FormComponents";
-import PostImage from "./FormComponents/PostImage";
-import PostContent from "./FormComponents/PostContent";
-import { ButtonControl } from "./FormComponents/ButtonControl";
+import { Button, Group, InputWrapper, Stack, Tabs, Text } from "@mantine/core";
 import AuthCheck from "@components/AuthCheck";
 import { serverTimestamp } from "@lib/firebase";
 import RichTextEditor from "@components/RichText";
 import { showNotification } from "@mantine/notifications";
 import { Check, X } from "tabler-icons-react";
-import { deleteDoc } from "firebase/firestore";
 import { useModals } from "@mantine/modals";
-import { useRouter } from "next/router";
-import { UserContext } from "@lib/context";
 import WebsiteRule from "@components/WebsiteRule";
 
 const handleImageUpload = (image) =>

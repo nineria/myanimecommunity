@@ -1,22 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 // Components
-import {
-  Avatar,
-  Button,
-  Group,
-  Modal,
-  Stack,
-  Text,
-  ThemeIcon,
-} from "@mantine/core";
+import { Avatar, Button, Group, Modal, Text } from "@mantine/core";
 // Icons
 import { CalendarMinus, Edit, ThumbUp } from "tabler-icons-react";
 import RichTextEditor from "@components/RichText";
 import { getUserWithUsername } from "@lib/firebase";
 import EditComment from "./EditComment";
 import { UserContext } from "@lib/context";
+import AuthorCheck from "@components/AuthorCheck";
 
-export default function Comment({ post, comment, setComments }) {
+export default function Comment({ post, comment }) {
   const [commentRef, setCommentRef] = useState();
 
   useEffect(() => {
@@ -41,7 +34,6 @@ export default function Comment({ post, comment, setComments }) {
         <div className="px-[0.5px] bg-white opacity-50"></div>
         <MainPost comment={comment} commentRef={commentRef} />
       </div>
-      {/* <BottomComponent /> */}
     </div>
   );
 }
@@ -112,12 +104,12 @@ function MainPost({ comment, commentRef }) {
         />
       </Modal>
       <Group position="apart">
-        {comment.createdAt.seconds === comment.updatedAt.seconds ? (
-          <p></p>
-        ) : (
+        {comment.createdAt.seconds !== comment.updatedAt.seconds ? (
           <p className="text-xs opacity-80 mb-2">แกไขล่าสุด : {date}</p>
+        ) : (
+          <div />
         )}
-        {username === comment.username ? (
+        <AuthorCheck username={comment.username}>
           <Button
             onClick={() => setOpened(true)}
             compact
@@ -128,7 +120,7 @@ function MainPost({ comment, commentRef }) {
           >
             แก้ไข
           </Button>
-        ) : null}
+        </AuthorCheck>
       </Group>
       <RichTextEditor
         readOnly

@@ -10,14 +10,17 @@ import {
   Anchor,
   Breadcrumbs,
   Container,
+  Group,
   Pagination,
   Paper,
   Skeleton,
   Stack,
+  Text,
 } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import CreateComment from "@components/PostComponents/CreateComment";
 import Comment from "@components/PostComponents/Comment";
+import { Star } from "tabler-icons-react";
 
 export async function getStaticProps({ params }) {
   const { username, slug } = params;
@@ -124,25 +127,38 @@ export default function PostPage(props) {
           <Breadcrumbs separator="→">{items}</Breadcrumbs>
           <Top data={post} />
           <Paper p="xs" className="shadow-md bg-foreground">
-            <Pagination
-              total={10}
-              size="sm"
-              page={activePage}
-              onChange={setPage}
-              withEdges
-              classNames={{
-                item: "text-title",
-                dots: "text-content",
-                active: "bg-content text-[#fff]",
-              }}
-            />
+            <Group position="apart">
+              <Pagination
+                total={10}
+                size="sm"
+                page={activePage}
+                onChange={setPage}
+                classNames={{
+                  item: "text-title",
+                  dots: "text-content",
+                  active: "bg-content text-[#fff]",
+                }}
+              />
+              <Group position="right" spacing="4px" className="text-content">
+                <Star size={14} />
+                <Star size={14} />
+                <Star size={14} />
+                <Star size={14} />
+                <Star size={14} />
+                <Text size="xs" weight={600} mx="xs">
+                  0 ดาว
+                </Text>
+              </Group>
+            </Group>
           </Paper>
           {activePage === 1 ? (
             <Stack spacing="xs">
+              {/* Post */}
               <Skeleton visible={loading}>
                 <PostComponents post={post} postRef={postRef} />
               </Skeleton>
               <Stack spacing="xs">
+                {/* Comment */}
                 {comments &&
                   comments.map((item, index) => (
                     <Skeleton key={index} visible={loading}>
@@ -160,7 +176,6 @@ export default function PostPage(props) {
               size="sm"
               page={activePage}
               onChange={setPage}
-              withEdges
               classNames={{
                 item: "text-title",
                 dots: "text-content",
@@ -168,6 +183,7 @@ export default function PostPage(props) {
               }}
             />
           </Paper>
+          {/* Create comment */}
           <AuthCheck>
             <CreateComment post={post} />
           </AuthCheck>

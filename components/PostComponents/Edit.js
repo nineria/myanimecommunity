@@ -2,7 +2,7 @@ import React, { useState } from "react";
 // Hooks
 import { useForm } from "@mantine/hooks";
 // Components
-import { Divider, Stack } from "@mantine/core";
+import { Stack } from "@mantine/core";
 import TagHeader from "./FormComponents/TagHeader";
 import TagGenre from "./FormComponents/TagGenre";
 import { PostHeader, RefCredit } from "./FormComponents";

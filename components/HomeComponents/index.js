@@ -7,6 +7,10 @@ import Add from "@components/HomeComponents/Add";
 import { Button, Container, Modal, Skeleton } from "@mantine/core";
 // Icons
 import { Animate } from "react-simple-animate";
+import { auth } from "@lib/firebase";
+import AdminCheck from "@components/AdminCheck";
+
+export const admin = "ผู้ดูแลระบบ";
 
 export default function HomeComponents({ homePosts }) {
   const { user, userData } = useContext(UserContext);
@@ -14,14 +18,6 @@ export default function HomeComponents({ homePosts }) {
   const [opened, setOpened] = useState(false);
 
   const [loading, setLoading] = useState(true);
-
-  // const HandleOpenMenu = () => {
-  //   return setOpenMenu(!openMenu);
-  // };
-
-  const HandlePostDataChange = (data) => {
-    setPostData(data);
-  };
 
   setTimeout(function () {
     setLoading(false);
@@ -51,7 +47,7 @@ export default function HomeComponents({ homePosts }) {
           >
             <div className="flex flex-col gap-2">
               {/* Add home post */}
-              {userData?.rule === "ผู้ดูแลระบบ" ? (
+              <AdminCheck>
                 <div className="flex flex-row justify-between w-full bg-foreground rounded-sm p-1 shadow-md">
                   <Modal
                     size="lg"
@@ -67,7 +63,6 @@ export default function HomeComponents({ homePosts }) {
                   >
                     <Add setOpened={setOpened} />
                   </Modal>
-
                   <Button
                     onClick={() => setOpened(true)}
                     className="bg-content text-[#fff] hover:bg-content hover:opacity-75"
@@ -77,7 +72,8 @@ export default function HomeComponents({ homePosts }) {
                     สร้างโพสต์ +
                   </Button>
                 </div>
-              ) : null}
+              </AdminCheck>
+
               {/* Display home post */}
               <div className="flex flex-col gap-2">
                 {homePosts &&

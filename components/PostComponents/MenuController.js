@@ -11,6 +11,7 @@ import {
 } from "@mantine/core";
 // Icons
 import { LayoutGrid, ListDetails } from "tabler-icons-react";
+import AuthCheck from "@components/AuthCheck";
 
 export default function PostsMenuController({ layout, setLayout }) {
   const [opened, setOpened] = useState(false);
@@ -29,15 +30,16 @@ export default function PostsMenuController({ layout, setLayout }) {
       >
         <Add setOpened={setOpened} />
       </Modal>
-      <Button
-        onClick={() => setOpened(true)}
-        className="bg-content text-[#fff] hover:bg-content hover:opacity-75"
-        variant="default"
-        size="xs"
-      >
-        สร้างโพสต์ +
-      </Button>
-
+      <AuthCheck>
+        <Button
+          onClick={() => setOpened(true)}
+          className="bg-content text-[#fff] hover:bg-content hover:opacity-75"
+          variant="default"
+          size="xs"
+        >
+          สร้างโพสต์ +
+        </Button>
+      </AuthCheck>
       <Group position="center">
         <SegmentedControl
           size="xs"

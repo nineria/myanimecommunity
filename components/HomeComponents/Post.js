@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import Link from "next/link";
 // Context
 import { UserContext } from "@lib/context";
@@ -8,7 +8,7 @@ import Status from "./PostComponents/Status";
 import { Modal } from "@mantine/core";
 // Icons
 import { ChevronUp, Edit as EditIcon } from "tabler-icons-react";
-import { getUserWithUsername } from "@lib/firebase";
+import AdminCheck from "@components/AdminCheck";
 
 export default function Post({ dummyData, disabled = false }) {
   const { user } = useContext(UserContext);
@@ -59,13 +59,14 @@ export default function Post({ dummyData, disabled = false }) {
               >
                 <Edit setOpened={setOpened} postData={dummyData} />
               </Modal>
-
-              <EditIcon
-                onClick={() => {
-                  disabled ? null : setOpened(true);
-                }}
-                className="hover:translate-y-[1px] hover:opacity-75 cursor-pointer"
-              />
+              <AdminCheck>
+                <EditIcon
+                  onClick={() => {
+                    disabled ? null : setOpened(true);
+                  }}
+                  className="hover:translate-y-[1px] hover:opacity-75 cursor-pointer"
+                />
+              </AdminCheck>
             </div>
           )}
           {/* Show-hide content */}

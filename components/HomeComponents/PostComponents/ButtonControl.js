@@ -3,7 +3,7 @@ import React from "react";
 import { Button, Group, Stack, Text } from "@mantine/core";
 import { useModals } from "@mantine/modals";
 import { showNotification } from "@mantine/notifications";
-import { Check, X } from "tabler-icons-react";
+import { X } from "tabler-icons-react";
 import { useRouter } from "next/router";
 
 export default function ButtonControl({ setOpened, postRef }) {

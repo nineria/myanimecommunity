@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 // Components
 import {
   Avatar,
@@ -7,20 +7,25 @@ import {
   Group,
   Image,
   Modal,
+  Space,
   Text,
 } from "@mantine/core";
 import Edit from "./Edit";
 // Icons
 import {
+  AlertTriangle,
+  ArrowBackUp,
   CalendarMinus,
   Edit as EditIcon,
   Star,
   ThumbUp,
+  X,
 } from "tabler-icons-react";
 import { getUserWithUsername } from "@lib/firebase";
 import AuthCheck from "@components/AuthCheck";
-import { UserContext } from "@lib/context";
 import RichTextEditor from "@components/RichText";
+import AuthorCheck from "@components/AuthorCheck";
+import AdminCheck from "@components/AdminCheck";
 
 export default function PostComponents({ post, postRef }) {
   return (
@@ -82,7 +87,6 @@ function LeftMenu({ post }) {
               radius="sm"
               variant="filled"
               color={item.color}
-              // rightSection={item}
               key={index}
               className="shadow-md"
             >
@@ -112,8 +116,6 @@ function LeftMenu({ post }) {
 function MainPost({ post, postRef }) {
   const [opened, setOpened] = useState(false);
 
-  const { username } = useContext(UserContext);
-
   const updatedAt =
     typeof post?.updatedAt === "number"
       ? new Date(post.updatedAt)
@@ -128,7 +130,11 @@ function MainPost({ post, postRef }) {
   return (
     <div className="relative px-4 py-2 text-title text-opacity-90 w-full">
       <Group position="apart" pb="xs">
-        <p className="text-xs opacity-80 mb-2">แก้ไขล่าสุด : {date}</p>
+        {post.createdAt.seconds !== post.updatedAt.seconds ? (
+          <p className="text-xs opacity-80 mb-2">แก้ไขล่าสุด : {date}</p>
+        ) : (
+          <div />
+        )}
         <Modal
           size="xl"
           classNames={{
@@ -142,7 +148,7 @@ function MainPost({ post, postRef }) {
         >
           <Edit post={post} postRef={postRef} setOpened={setOpened} />
         </Modal>
-        {username === post.username ? (
+        <AuthorCheck username={post.username}>
           <Button
             onClick={() => setOpened(true)}
             leftIcon={<EditIcon size={14} />}
@@ -153,7 +159,7 @@ function MainPost({ post, postRef }) {
           >
             แก้ไข
           </Button>
-        ) : null}
+        </AuthorCheck>
       </Group>
       <Image src={post.image} alt={post.image} my="xs"></Image>
       <RichTextEditor
@@ -161,9 +167,8 @@ function MainPost({ post, postRef }) {
         value={post.content}
         classNames={{ root: "bg-foreground border-none text-title" }}
       />
-      {/* <RichTextEditor className="!p-0 !m-none" readOnly value={data.content} /> */}
-
-      <p className="absolute bottom-2 select-none right-4 font-bold uppercase opacity-[0.03] text-[8vw] text-right tracking-tighter">
+      <Space h="50px" />
+      <p className="absolute bottom-20 right-4 font-bold leading-none uppercase opacity-[0.03] text-[8vw] text-right tracking-tighter">
         {post.tag[0] === "คำถาม"
           ? "QUESTION"
           : post.tag[0] === "รีวิว"
@@ -178,6 +183,22 @@ function MainPost({ post, postRef }) {
         อ้างอิง / แหล่งที่มา :{" "}
         <a className="text-content hover:underline">{post.credit}</a>
       </p>
+      <Group position="apart" className="text-xs" my="xs">
+        <div className="flex flex-row gap-1 items-end hover:underline cursor-pointer ">
+          <AlertTriangle size={14} />
+          รายงานโพสต์
+        </div>
+        <Group position="right">
+          <div className="flex flex-row gap-1 items-end hover:underline cursor-pointer ">
+            <ThumbUp size={14} />
+            ถูกใจ
+          </div>
+          <div className="flex flex-row gap-1 items-end hover:underline cursor-pointer ">
+            <ArrowBackUp size={14} />
+            ตอบกลับ
+          </div>
+        </Group>
+      </Group>
     </div>
   );
 }
