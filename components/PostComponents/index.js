@@ -130,7 +130,7 @@ function MainPost({ post, postRef }) {
   return (
     <div className="relative px-4 py-2 text-title text-opacity-90 w-full">
       <Group position="apart" pb="xs">
-        {post.createdAt.seconds !== post.updatedAt.seconds ? (
+        {post.createdAt?.seconds !== post.updatedAt?.seconds ? (
           <p className="text-xs opacity-80 mb-2">แก้ไขล่าสุด : {date}</p>
         ) : (
           <div />
