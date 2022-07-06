@@ -16,6 +16,8 @@ import { StatsGridIcons } from "@components/ProfileComponents/StatsGridIcons";
 import StatsSegments from "@components/ProfileComponents/StatsSegments";
 import { TableSort } from "@components/ProfileComponents/TableSort";
 import { getUserWithUsername, postToJSON } from "@lib/firebase";
+import AdminCheck from "@components/AdminCheck";
+import AnnouncementControl from "@components/ProfileComponents/AnnouncementControl";
 
 export async function getServerSideProps({ query }) {
   const { username } = query;
@@ -129,12 +131,13 @@ export default function UserProfilePage({ user, posts }) {
             end={{ transform: "translateY(0%)", opacity: "1" }}
           >
             <Stack spacing="xs">
-              {/* <Skeleton visible={loading}> */}
               <UserCardImage user={user} posts={posts} />
-              {/* </Skeleton> */}
               <StatsGridIcons user={user} posts={posts} />
               <StatsSegments user={user} />
-              {/* <TableSort data={userData} /> */}
+              <TableSort posts={posts} />
+              {/* <AdminCheck>
+                <AnnouncementControl />
+              </AdminCheck> */}
             </Stack>
           </Animate>
         </Container>

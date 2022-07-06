@@ -14,7 +14,15 @@ import {
   Progress,
 } from "@mantine/core";
 // Icons
-import { Selector, ChevronDown, ChevronUp, Search } from "tabler-icons-react";
+import {
+  Selector,
+  ChevronDown,
+  ChevronUp,
+  Search,
+  Underline,
+} from "tabler-icons-react";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
 const useStyles = createStyles(() => ({
   th: {
@@ -67,28 +75,29 @@ function sortData(data, payload) {
   );
 }
 
-export function TableSort({ data }) {
+export function TableSort({ posts }) {
+  const router = useRouter();
   const [search, setSearch] = useState("");
-  const [sortedData, setSortedData] = useState(data.posts);
+  const [sortedData, setSortedData] = useState(posts);
   const [sortBy, setSortBy] = useState(null);
   const [reverseSortDirection, setReverseSortDirection] = useState(false);
 
   const { classes, theme } = useStyles();
 
-  console.log(data.posts.length);
+  console.log(posts.length);
 
   const setSorting = (field) => {
     const reversed = field === sortBy ? !reverseSortDirection : false;
     setReverseSortDirection(reversed);
     setSortBy(field);
-    setSortedData(sortData(data.posts, { sortBy: field, reversed, search }));
+    setSortedData(sortData(posts, { sortBy: field, reversed, search }));
   };
 
   const handleSearchChange = (event) => {
     const { value } = event.currentTarget;
     setSearch(value);
     setSortedData(
-      sortData(data.posts, {
+      sortData(posts, {
         sortBy,
         reversed: reverseSortDirection,
         search: value,
@@ -97,24 +106,54 @@ export function TableSort({ data }) {
   };
 
   const rows = sortedData.map((row) => {
-    const totalReviews = row.reviews.negative + row.reviews.positive;
-    const positiveReviews = (row.reviews.positive / totalReviews) * 100;
-    const negativeReviews = (row.reviews.negative / totalReviews) * 100;
+    const totalReviews = row.likes + row.stars;
+    const positiveReviews = (row.likes / totalReviews) * 100;
+    const negativeReviews = (row.stars / totalReviews) * 100;
+
+    const createdAtTimestamp =
+      typeof row?.createdAt === "number"
+        ? new Date(row.createdAt)
+        : row.createdAt?.toDate();
+
+    const updatedAtTimestamp =
+      typeof row?.createdAt === "number"
+        ? new Date(row.createdAt)
+        : row.createdAt?.toDate();
+
+    const createdAt = createdAtTimestamp?.toLocaleDateString("th-th", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+    const updatedAt = updatedAtTimestamp?.toLocaleDateString("th-th", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
 
     return (
       <tr key={row.title}>
         <td>
-          <Anchor size="sm" onClick={(event) => event.preventDefault()}>
-            {row.title}
+          <Anchor size="sm">
+            <Link href={`/posts/${row.username}/${row.slug}`}>
+              <a target="_blank" rel="noreferrer">
+                {row.title}
+              </a>
+            </Link>
           </Anchor>
         </td>
-        <td>{row.date}</td>
+        <td>{createdAt}</td>
+        <td>{updatedAt}</td>
         <td>
-          <Anchor size="sm" onClick={(event) => event.preventDefault()}>
-            {row.author}
+          <Anchor size="sm">
+            <Link href={`/${row.username}`}>
+              <a target="_blank" rel="noreferrer">
+                {row.username}
+              </a>
+            </Link>
           </Anchor>
         </td>
-        <td>{Intl.NumberFormat().format(row.view)}</td>
+        {/* <td>{Intl.NumberFormat().format(row.view)}</td> */}
         <td>
           <Group position="apart">
             <Text size="xs" color="teal" weight={700}>
@@ -177,29 +216,36 @@ export function TableSort({ data }) {
                 reversed={reverseSortDirection}
                 onSort={() => setSorting("title")}
               >
-                ชื่อ
+                หัวข้อ
               </Th>
               <Th
-                sorted={sortBy === "date"}
+                sorted={sortBy === "createdAt"}
                 reversed={reverseSortDirection}
-                onSort={() => setSorting("date")}
+                onSort={() => setSorting("createdAt")}
               >
-                วันที่
+                สร้าง
               </Th>
               <Th
-                sorted={sortBy === "author"}
+                sorted={sortBy === "updatedAt"}
                 reversed={reverseSortDirection}
-                onSort={() => setSorting("author")}
+                onSort={() => setSorting("updatedAt")}
+              >
+                แก้ไขล่าสุด
+              </Th>
+              <Th
+                sorted={sortBy === "username"}
+                reversed={reverseSortDirection}
+                onSort={() => setSorting("username")}
               >
                 ผู้เขียน
               </Th>
-              <Th
+              {/* <Th
                 sorted={sortBy === "view"}
                 reversed={reverseSortDirection}
                 onSort={() => setSorting("view")}
               >
                 เข้าชม
-              </Th>
+              </Th> */}
               <th>
                 <Text weight={500} size="sm" className="text-title">
                   ความนิยม
@@ -212,9 +258,9 @@ export function TableSort({ data }) {
               rows
             ) : (
               <tr>
-                <td colSpan={Object.keys(data.posts[0]).length}>
+                <td colSpan={Object.keys(posts[0]).length}>
                   <Text weight={500} align="center">
-                    Nothing found
+                    ไม่พบรายการที่ค้นหา
                   </Text>
                 </td>
               </tr>
