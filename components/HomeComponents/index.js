@@ -1,13 +1,12 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 // Context
 import { UserContext } from "@lib/context";
 // Components
 import Post from "./Post";
 import Add from "@components/HomeComponents/Add";
-import { Button, Container, Modal, Skeleton } from "@mantine/core";
+import { Button, Container, Modal } from "@mantine/core";
 // Icons
 import { Animate } from "react-simple-animate";
-import { auth } from "@lib/firebase";
 import AdminCheck from "@components/AdminCheck";
 
 export const admin = "ผู้ดูแลระบบ";
@@ -84,9 +83,7 @@ export default function HomeComponents({ homePosts }) {
             </div>
           </Animate>
         ) : (
-          <Skeleton visible={loading}>
-            <Post dummyData={postDummy[0]} />
-          </Skeleton>
+          <Post dummyData={postDummy[0]} />
         )}
       </div>
     </Container>

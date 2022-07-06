@@ -26,6 +26,7 @@ import AuthCheck from "@components/AuthCheck";
 import RichTextEditor from "@components/RichText";
 import AuthorCheck from "@components/AuthorCheck";
 import AdminCheck from "@components/AdminCheck";
+import Like from "./LikeButton";
 
 export default function PostComponents({ post, postRef }) {
   return (
@@ -183,22 +184,25 @@ function MainPost({ post, postRef }) {
         อ้างอิง / แหล่งที่มา :{" "}
         <a className="text-content hover:underline">{post.credit}</a>
       </p>
-      <Group position="apart" className="text-xs" my="xs">
-        <div className="flex flex-row gap-1 items-end hover:underline cursor-pointer ">
-          <AlertTriangle size={14} />
-          รายงานโพสต์
-        </div>
-        <Group position="right">
+      <AuthCheck>
+        <Group position="apart" className="text-xs" my="xs">
           <div className="flex flex-row gap-1 items-end hover:underline cursor-pointer ">
-            <ThumbUp size={14} />
-            ถูกใจ
+            <AlertTriangle size={14} />
+            รายงานโพสต์
           </div>
-          <div className="flex flex-row gap-1 items-end hover:underline cursor-pointer ">
-            <ArrowBackUp size={14} />
-            ตอบกลับ
-          </div>
+          <Group position="right">
+            {/* <Like postRef={postRef} /> */}
+            <div className="flex flex-row gap-1 items-end hover:underline cursor-pointer ">
+              <ThumbUp size={14} />
+              ถูกใจ
+            </div>
+            <div className="flex flex-row gap-1 items-end hover:underline cursor-pointer ">
+              <ArrowBackUp size={14} />
+              ตอบกลับ
+            </div>
+          </Group>
         </Group>
-      </Group>
+      </AuthCheck>
     </div>
   );
 }
