@@ -49,9 +49,8 @@ export function ButtonControl({ setOpened, postRef, disabled }) {
         },
       });
       modals.closeModal(id);
-      setOpened(false);
 
-      router.push("/posts");
+      setOpened(false);
     };
     const id = modals.openModal({
       title: (

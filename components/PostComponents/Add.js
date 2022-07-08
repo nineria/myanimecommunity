@@ -14,6 +14,8 @@ import kebabCase from "lodash.kebabcase";
 import { auth, firestore, serverTimestamp } from "@lib/firebase";
 import { useRouter } from "next/router";
 import WebsiteRule from "@components/WebsiteRule";
+import { showNotification } from "@mantine/notifications";
+import { Check } from "tabler-icons-react";
 
 export default function Add({ setOpened }) {
   const router = useRouter();

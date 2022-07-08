@@ -12,6 +12,7 @@ import { ButtonControl } from "./FormComponents/ButtonControl";
 import { serverTimestamp } from "@lib/firebase";
 import AuthCheck from "@components/AuthCheck";
 import WebsiteRule from "@components/WebsiteRule";
+import { useRouter } from "next/router";
 
 export default function Edit({ post, postRef, setOpened }) {
   return (
@@ -26,6 +27,8 @@ function PostForm({ post, postRef, setOpened }) {
   const [genres, setGenres] = useState([...post.genre]);
   const [content, setContent] = useState(post.content);
 
+  const router = useRouter();
+
   const HandleChange = async (values) => {
     await postRef.update({
       tag: tags,
@@ -36,6 +39,8 @@ function PostForm({ post, postRef, setOpened }) {
       credit: values.credit,
       updatedAt: serverTimestamp(),
     });
+
+    router.reload();
   };
 
   const form = useForm({

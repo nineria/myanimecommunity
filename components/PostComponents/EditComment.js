@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 // Hooks
 import { useForm } from "@mantine/hooks";
 // Components
@@ -10,6 +10,8 @@ import { showNotification } from "@mantine/notifications";
 import { Check, X } from "tabler-icons-react";
 import { useModals } from "@mantine/modals";
 import WebsiteRule from "@components/WebsiteRule";
+import { UserContext } from "@lib/context";
+import { useRouter } from "next/router";
 
 const handleImageUpload = (image) =>
   new Promise((resolve, reject) => {
@@ -28,7 +30,7 @@ const handleImageUpload = (image) =>
       .catch(() => reject(new Error("Upload failed")));
   });
 
-export default function EditComment({ comment, commentRef, setOpened }) {
+export default function EditComment({ comment, commentRef, setOpened, post }) {
   return (
     <AuthCheck>
       {comment && (
@@ -36,14 +38,19 @@ export default function EditComment({ comment, commentRef, setOpened }) {
           comment={comment}
           commentRef={commentRef}
           setOpened={setOpened}
+          post={post}
         />
       )}
     </AuthCheck>
   );
 }
 
-function CommentForm({ comment, commentRef, setOpened }) {
+function CommentForm({ comment, commentRef, setOpened, post }) {
   const [content, setContent] = useState(comment.content);
+
+  const router = useRouter();
+
+  const { userData } = useContext(UserContext);
 
   const modals = useModals();
 
@@ -56,8 +63,8 @@ function CommentForm({ comment, commentRef, setOpened }) {
   const HandleChange = async () => {
     await commentRef.update({
       content: content,
-      username: comment.username,
-      avatar: comment.avatar,
+      username: userData.username,
+      avatar: userData.avatar,
       updateAt: serverTimestamp(),
     });
 
@@ -69,6 +76,9 @@ function CommentForm({ comment, commentRef, setOpened }) {
         root: "bg-foreground border-teal-400",
       },
     });
+
+    router.reload();
+
     setOpened(false);
   };
 
@@ -97,6 +107,9 @@ function CommentForm({ comment, commentRef, setOpened }) {
         },
       });
       modals.closeModal(id);
+
+      router.reload();
+
       setOpened(false);
     };
     const id = modals.openModal({

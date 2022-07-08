@@ -32,7 +32,7 @@ export default function Comment({ post, comment }) {
       <div className="flex flex-row ">
         <LeftMenu comment={comment} />
         <div className="px-[0.5px] bg-white opacity-50"></div>
-        <MainPost comment={comment} commentRef={commentRef} />
+        <MainPost comment={comment} commentRef={commentRef} post={post} />
       </div>
     </div>
   );
@@ -72,8 +72,7 @@ function LeftMenu({ comment }) {
   );
 }
 
-function MainPost({ comment, commentRef }) {
-  const { username } = useContext(UserContext);
+function MainPost({ comment, commentRef, post }) {
   const [opened, setOpened] = useState(false);
 
   const timestamp = new Date(comment.updatedAt.seconds * 1000);
@@ -101,6 +100,7 @@ function MainPost({ comment, commentRef }) {
           comment={comment}
           commentRef={commentRef}
           setOpened={setOpened}
+          post={post}
         />
       </Modal>
       <Group position="apart">

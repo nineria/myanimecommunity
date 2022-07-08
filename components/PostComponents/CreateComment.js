@@ -11,6 +11,7 @@ import { showNotification } from "@mantine/notifications";
 import { Check } from "tabler-icons-react";
 import Logo from "@components/Logo";
 import WebsiteRule from "@components/WebsiteRule";
+import { useRouter } from "next/router";
 
 const handleImageUpload = (image) =>
   new Promise((resolve, reject) => {
@@ -32,6 +33,8 @@ const handleImageUpload = (image) =>
 export default function CreateComment({ post }) {
   const { userData } = useContext(UserContext);
   const [value, onChange] = useState("");
+
+  const router = useRouter();
 
   const [openedWebsiteRule, setOpenedWebsiteRule] = useState(false);
 
@@ -66,6 +69,7 @@ export default function CreateComment({ post }) {
         root: "bg-foreground border-teal-400",
       },
     });
+    router.reload();
   };
 
   return (
