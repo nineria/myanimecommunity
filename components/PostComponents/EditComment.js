@@ -56,6 +56,8 @@ function CommentForm({ comment, commentRef, setOpened }) {
   const HandleChange = async () => {
     await commentRef.update({
       content: content,
+      username: comment.username,
+      avatar: comment.avatar,
       updateAt: serverTimestamp(),
     });
 
