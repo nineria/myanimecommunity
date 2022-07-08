@@ -6,73 +6,73 @@ import { Text, Container, ActionIcon, Group, Divider } from "@mantine/core";
 import { BrandTwitter, BrandYoutube, BrandInstagram } from "tabler-icons-react";
 import MyAniLogo from "@components/Navbar/MyAniLogo";
 
-export function Footer() {
-  const [data, setData] = useState([
-    {
-      title: "ชุมชนคนรักอนิเมะ",
-      links: [
-        {
-          label: "โพสต์ใหม่",
-          link: "/posts",
-        },
-        {
-          label: "ข่าวสาร",
-          link: "/news",
-        },
-        {
-          label: "รีวิว",
-          link: "/review",
-        },
-        {
-          label: "Q&A ถามตอบ",
-          link: "/qanda",
-        },
-      ],
-    },
-    {
-      title: "จัดการข้อมูล",
-      links: [
-        {
-          label: "โปรไฟล์",
-          link: "/profile",
-        },
-        {
-          label: "ตั้งค่า",
-          link: "/setting",
-        },
-        {
-          label: "คำถามที่พบบ่อย",
-          link: "/faq",
-        },
-        {
-          label: "ออกจากระบบ",
-          link: "#",
-        },
-      ],
-    },
-    {
-      title: "ข้อมูลเว็บไซต์",
-      links: [
-        {
-          label: "จำนวนโพสต์ : " + "145K",
-          link: "/posts",
-        },
-        {
-          label: "จำนวนสมาชิก : " + "1M",
-          link: "/news",
-        },
-        {
-          label: "-",
-          link: "#",
-        },
-        {
-          label: "-",
-          link: "#",
-        },
-      ],
-    },
-  ]);
+const data = [
+  {
+    title: "ชุมชนคนรักอนิเมะ",
+    links: [
+      {
+        label: "โพสต์ใหม่",
+        link: "/posts",
+      },
+      {
+        label: "ข่าวสาร",
+        link: "/news",
+      },
+      {
+        label: "รีวิว",
+        link: "/review",
+      },
+      {
+        label: "Q&A ถามตอบ",
+        link: "/qanda",
+      },
+    ],
+  },
+  {
+    title: "จัดการข้อมูล",
+    links: [
+      {
+        label: "โปรไฟล์",
+        link: "/profile",
+      },
+      {
+        label: "ตั้งค่า",
+        link: "/setting",
+      },
+      {
+        label: "คำถามที่พบบ่อย",
+        link: "/faq",
+      },
+      {
+        label: "ออกจากระบบ",
+        link: "#",
+      },
+    ],
+  },
+  {
+    title: "ข้อมูลเว็บไซต์",
+    links: [
+      {
+        label: "จำนวนโพสต์ : " + "145K",
+        link: "/posts",
+      },
+      {
+        label: "จำนวนสมาชิก : " + "1M",
+        link: "/news",
+      },
+      {
+        label: "-",
+        link: "#",
+      },
+      {
+        label: "-",
+        link: "#",
+      },
+    ],
+  },
+];
 
+export function Footer() {
   const groups = data.map((group) => {
     const links = group.links.map((link, index) => (
       <Text
