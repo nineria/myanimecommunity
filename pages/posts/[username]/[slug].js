@@ -157,7 +157,7 @@ export default function PostPage(props) {
                 {/* Comment */}
                 {comments &&
                   comments.map((item, index) => (
-                    <Comment post={post} comment={item} />
+                    <Comment key={index} post={post} comment={item} />
                   ))}
               </Stack>
             </Stack>
