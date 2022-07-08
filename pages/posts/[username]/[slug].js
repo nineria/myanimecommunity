@@ -9,8 +9,10 @@ import { useDocumentData } from "react-firebase-hooks/firestore";
 import {
   Anchor,
   Breadcrumbs,
+  Center,
   Container,
   Group,
+  Loader,
   Pagination,
   Paper,
   Skeleton,
@@ -21,6 +23,7 @@ import React, { useEffect, useState } from "react";
 import CreateComment from "@components/PostComponents/CreateComment";
 import Comment from "@components/PostComponents/Comment";
 import { Star } from "tabler-icons-react";
+import Loading from "@components/Loading";
 
 export async function getStaticProps({ params }) {
   const { username, slug } = params;
@@ -82,7 +85,6 @@ export default function PostPage(props) {
   const post = realtimePost || props.post;
 
   const [activePage, setPage] = useState(1);
-  const [loading, setLoading] = useState(true);
 
   const [comments, setComments] = useState();
 
@@ -114,10 +116,6 @@ export default function PostPage(props) {
       {item.title}
     </Anchor>
   ));
-
-  setTimeout(function () {
-    setLoading(false);
-  }, 500);
 
   return (
     <div className="bg-background min-h-[1024px] mb-[235px] pb-10">
@@ -154,16 +152,12 @@ export default function PostPage(props) {
           {activePage === 1 ? (
             <Stack spacing="xs">
               {/* Post */}
-              <Skeleton visible={loading}>
-                <PostComponents post={post} postRef={postRef} />
-              </Skeleton>
+              <PostComponents post={post} postRef={postRef} />
               <Stack spacing="xs">
                 {/* Comment */}
                 {comments &&
                   comments.map((item, index) => (
-                    <Skeleton key={index} visible={loading}>
-                      <Comment post={post} comment={item} />
-                    </Skeleton>
+                    <Comment post={post} comment={item} />
                   ))}
               </Stack>
             </Stack>
@@ -184,7 +178,7 @@ export default function PostPage(props) {
             />
           </Paper>
           {/* Create comment */}
-          <AuthCheck>
+          <AuthCheck fallback={<Loading />}>
             <CreateComment post={post} />
           </AuthCheck>
         </Stack>

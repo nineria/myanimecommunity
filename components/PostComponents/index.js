@@ -25,12 +25,11 @@ import { getUserWithUsername } from "@lib/firebase";
 import AuthCheck from "@components/AuthCheck";
 import RichTextEditor from "@components/RichText";
 import AuthorCheck from "@components/AuthorCheck";
-import AdminCheck from "@components/AdminCheck";
-import Like from "./LikeButton";
+import Loading from "@components/Loading";
 
 export default function PostComponents({ post, postRef }) {
   return (
-    <AuthCheck>
+    <AuthCheck fallback={<Loading />}>
       <div className="bg-foreground rounded-sm">
         {/* Left menu */}
         <div className="flex flex-row">

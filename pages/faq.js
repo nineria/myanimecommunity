@@ -6,13 +6,13 @@ import {
   createStyles,
   Card,
   Stack,
-  Breadcrumbs,
-  Anchor,
   Skeleton,
 } from "@mantine/core";
 import Navbar from "@components/Navbar";
 import { useThemeContext } from "@lib/useTheme";
 import { Footer } from "@components/Footer";
+import AuthCheck from "@components/AuthCheck";
+import Loading from "@components/Loading";
 
 const useStyles = createStyles((theme, _params, getRef) => ({
   icon: { ref: getRef("icon") },
@@ -320,7 +320,7 @@ export default function FaqPage({ data }) {
   ));
 
   const FaqLists = FaqListData.map((data, index) => (
-    <Card key={index} className="bg-foreground">
+    <div key={index}>
       <Title order={4} mt="lg" mb="xs">
         {data.title}
       </Title>
@@ -331,24 +331,24 @@ export default function FaqPage({ data }) {
           </Accordion.Item>
         ))}
       </Accordion>
-    </Card>
+    </div>
   ));
 
   return (
     <div className="bg-background text-accent min-h-[1024px] mb-[235px] pb-10">
       <Navbar isBusy />
       <Container size="lg">
-        <Stack spacing="xs">
-          <Skeleton visible={loading}>
+        <AuthCheck fallback={<Loading />}>
+          <Stack spacing="xs">
             <Card className="bg-foreground">
               <Title order={2} align="center">
                 คำถามที่พบบ่อย
               </Title>
               {FirstFaqLists}
             </Card>
-          </Skeleton>
-          <Skeleton visible={loading}>{FaqLists}</Skeleton>
-        </Stack>
+            <Card className="bg-foreground">{FaqLists}</Card>
+          </Stack>
+        </AuthCheck>
       </Container>
       <Footer />
     </div>

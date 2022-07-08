@@ -14,9 +14,7 @@ export default function PostLayout({ posts, layout }) {
 
   const postGrids = posts.map((data, index) => (
     <Grid.Col key={index} sm={6} md={6} lg={4}>
-      <Skeleton visible={loading}>
-        <Card layout={layout} posts={data} />
-      </Skeleton>
+      <Card layout={layout} posts={data} />
     </Grid.Col>
   ));
 

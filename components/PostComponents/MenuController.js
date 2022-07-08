@@ -12,6 +12,7 @@ import {
 // Icons
 import { LayoutGrid, ListDetails } from "tabler-icons-react";
 import AuthCheck from "@components/AuthCheck";
+import Loading from "@components/Loading";
 
 export default function PostsMenuController({ layout, setLayout }) {
   const [opened, setOpened] = useState(false);
@@ -30,7 +31,7 @@ export default function PostsMenuController({ layout, setLayout }) {
       >
         <Add setOpened={setOpened} />
       </Modal>
-      <AuthCheck>
+      <AuthCheck fallback={<div />}>
         <Button
           onClick={() => setOpened(true)}
           className="bg-content text-[#fff] hover:bg-content hover:opacity-75"

@@ -7,6 +7,8 @@ import { Animate } from "react-simple-animate";
 import { UserContext } from "@lib/context";
 import Navbar from "@components/Navbar";
 import PageNotFound from "./404.js";
+import AuthCheck from "@components/AuthCheck.js";
+import Loading from "@components/Loading.js";
 
 // This gets called on every request
 export async function getServerSideProps() {
@@ -80,8 +82,6 @@ export async function getServerSideProps() {
 export default function SettingPage({ samplePost, localTheme }) {
   const { user } = useContext(UserContext);
 
-  const [loading, setLoading] = useState(true);
-
   const { setTheme } = useThemeContext();
 
   const { toggleColorScheme } = useMantineColorScheme();
@@ -97,34 +97,26 @@ export default function SettingPage({ samplePost, localTheme }) {
     setTheme(localData);
   }, [setTheme, toggleColorScheme]);
 
-  setTimeout(function () {
-    setLoading(false);
-  }, 500);
-
   return (
     <>
       <div className="bg-background text-accent min-h-[1024px] mb-[235px] pb-10">
         {/* Navar */}
         <Navbar page="/setting" isBusy />
         {/* Check user and Setting*/}
-        {user && user ? (
-          <Container size="lg">
+        <Container size="lg">
+          <AuthCheck fallback={<Loading />}>
             <Animate
               play
               start={{ transform: "translateY(1%)", opacity: "0" }}
               end={{ transform: "translateY(0%)", opacity: "1" }}
             >
-              <Skeleton visible={loading}>
-                <SettingComponents
-                  samplePost={samplePost}
-                  localTheme={localTheme}
-                />
-              </Skeleton>
+              <SettingComponents
+                samplePost={samplePost}
+                localTheme={localTheme}
+              />
             </Animate>
-          </Container>
-        ) : (
-          <PageNotFound />
-        )}
+          </AuthCheck>
+        </Container>
       </div>
       {/* Footer */}
       <Footer />

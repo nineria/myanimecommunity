@@ -18,6 +18,7 @@ import { TableSort } from "@components/ProfileComponents/TableSort";
 import { getUserWithUsername, postToJSON } from "@lib/firebase";
 import AdminCheck from "@components/AdminCheck";
 import AnnouncementControl from "@components/ProfileComponents/AnnouncementControl";
+import Loading from "@components/Loading";
 
 export async function getServerSideProps({ query }) {
   const { username } = query;
@@ -119,9 +120,9 @@ export default function UserProfilePage({ user, posts }) {
 
   return (
     <div className="bg-background text-accent min-h-[1024px] mb-[235px] pb-10">
-      <AuthCheck>
-        <Navbar page="/profile" isBusy />
-        <Container size="lg">
+      <Navbar page="/profile" isBusy />
+      <Container size="lg">
+        <AuthCheck fallback={<Loading />}>
           <Animate
             play
             start={{
@@ -140,8 +141,8 @@ export default function UserProfilePage({ user, posts }) {
               </AdminCheck> */}
             </Stack>
           </Animate>
-        </Container>
-      </AuthCheck>
+        </AuthCheck>
+      </Container>
       <Footer />
     </div>
   );

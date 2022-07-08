@@ -6,6 +6,8 @@ import PostLayout from "@components/PostComponents/PostLayout";
 import { Anchor, Breadcrumbs, Container, Stack } from "@mantine/core";
 import { Footer } from "@components/Footer";
 import { firestore, postToJSON } from "@lib/firebase";
+import Loading from "@components/Loading";
+import AuthCheck from "@components/AuthCheck";
 
 // Max post to query per page
 const LIMIT = 10;
