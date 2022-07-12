@@ -6,7 +6,7 @@ import { showNotification } from "@mantine/notifications";
 import { X } from "tabler-icons-react";
 import { useRouter } from "next/router";
 
-export default function ButtonControl({ setOpened, postRef }) {
+export default function ButtonControl({ setOpened, postRef, type }) {
   const modals = useModals();
 
   const router = useRouter();
@@ -58,6 +58,7 @@ export default function ButtonControl({ setOpened, postRef }) {
         <Stack size="xs">
           <Group position="right">
             <Button
+              size="xs"
               className="bg-background text-title hover:bg-background hover:opacity-75"
               onClick={() => modals.closeModal(id)}
             >
@@ -65,6 +66,7 @@ export default function ButtonControl({ setOpened, postRef }) {
             </Button>
             <Button
               type="submit"
+              size="xs"
               className="bg-red-500 hover:bg-red-500 hover:opacity-75"
               onClick={() => handleOnClick()}
             >
@@ -78,18 +80,23 @@ export default function ButtonControl({ setOpened, postRef }) {
 
   return (
     <Group mt="md" position="apart">
-      <Button
-        size="xs"
-        className="bg-red-500 hover:bg-red-500 hover:opacity-75"
-        onClick={() => handleDelete()}
-      >
-        ลบ
-      </Button>
+      {type === "add" ? (
+        <div />
+      ) : (
+        <Button
+          size="xs"
+          className="bg-red-500 hover:bg-red-500 hover:opacity-75"
+          onClick={() => handleDelete()}
+        >
+          ลบ
+        </Button>
+      )}
+
       <Group spacing="xs" position="right">
         <Button
           size="xs"
           onClick={() => handleCancel()}
-          className="bg-gray-500 hover:bg-gray-500 hover:opacity-75"
+          className="bg-background text-title hover:bg-background hover:opacity-75"
         >
           ยกเลิก
         </Button>

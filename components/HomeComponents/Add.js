@@ -81,7 +81,7 @@ export default function Add({ setOpened }) {
         />
         <Content body={form.getInputProps("body")} />
         <WebsiteRule />
-        <ButtonControl setOpened={setOpened} />
+        <ButtonControl setOpened={setOpened} type="add" />
       </Stack>
     </form>
   );
