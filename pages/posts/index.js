@@ -1,6 +1,6 @@
 import Announcement from "@components/Announcement";
 import Navbar from "@components/Navbar";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import PostsMenuController from "@components/PostComponents/MenuController";
 import PostLayout from "@components/PostComponents/PostLayout";
 import {
@@ -17,6 +17,7 @@ import Loading from "@components/Loading";
 import AuthCheck from "@components/AuthCheck";
 import AdminCheck from "@components/AdminCheck";
 import { Edit } from "tabler-icons-react";
+import { UserContext } from "@lib/context";
 
 // Max post to query per page
 const LIMIT = 10;
@@ -33,6 +34,8 @@ export async function getServerSideProps(context) {
 
 export default function PostsPage(props) {
   const [layout, setLayout] = useState("grid");
+
+  const { user } = useContext(UserContext);
 
   const items = [
     { title: "หน้าหลัก", href: "/" },
@@ -62,23 +65,25 @@ export default function PostsPage(props) {
               position="apart"
               className="bg-foreground rounded-sm p-1 shadow-md"
             >
-              <AdminCheck>
-                <Button
-                  className="z-10 bg-content text-[#fff] hover:bg-content hover:opacity-75"
-                  variant="default"
-                  size="xs"
-                >
-                  สร้างประกาศ +
-                </Button>
-                <Button
-                  leftIcon={<Edit size={14} />}
-                  className="z-10 bg-background text-title hover:bg-background hover:opacity-75"
-                  variant="default"
-                  size="xs"
-                >
-                  จัดการประกาศ
-                </Button>
-              </AdminCheck>
+              {user && (
+                <AdminCheck>
+                  <Button
+                    className="z-10 bg-content text-[#fff] hover:bg-content hover:opacity-75"
+                    variant="default"
+                    size="xs"
+                  >
+                    สร้างประกาศ +
+                  </Button>
+                  <Button
+                    leftIcon={<Edit size={14} />}
+                    className="z-10 bg-background text-title hover:bg-background hover:opacity-75"
+                    variant="default"
+                    size="xs"
+                  >
+                    จัดการประกาศ
+                  </Button>
+                </AdminCheck>
+              )}
             </Group>
             {/* Announcement */}
             <Announcement

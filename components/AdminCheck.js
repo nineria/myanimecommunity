@@ -1,5 +1,3 @@
-import Link from "next/link";
-import PageNotFound from "pages/404";
 import { useContext } from "react";
 import { UserContext } from "../lib/context";
 
