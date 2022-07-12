@@ -15,15 +15,19 @@ import {
   PasswordInput,
   Stack,
   Text,
+  TextInput,
 } from "@mantine/core";
 import WebsiteRulePage from "@components/WebsiteRule";
-import PrivacyPolicyPage from "@components/PrivacyPolicy";
+import PrivacyPolicyPage from "@components/PrivacyPolicy/tmp";
 // Icons
 import { Mail } from "tabler-icons-react";
+import { useRouter } from "next/router";
 
 export default function LoginRegister() {
   const [openedLogin, setOpenedLogin] = useState(false);
   const [openedRegister, setOpenedRegister] = useState(false);
+
+  const router = useRouter();
 
   return (
     <div className="flex flex-row justify-end w-full gap-2">
@@ -77,7 +81,7 @@ export default function LoginRegister() {
       <Button
         className="bg-background text-title hover:bg-background hover:opacity-75"
         variant="default"
-        onClick={() => setOpenedRegister(true)}
+        onClick={() => router.push("/enter")}
       >
         ลงทะเบียน
       </Button>
@@ -135,25 +139,23 @@ export function LoginPopUp() {
         </Button>
       </Group>
       <Divider label="หรือดำเนินการต่อด้วยอีเมล" labelPosition="center" />
-      <InputWrapper id="input-demo" required label="อีเมล (Email)">
-        <Input
-          icon={<Mail size={20} />}
-          id="input-demo"
-          placeholder="อีเมลของคุณ"
-          classNames={{
-            input: "bg-accent bg-opacity-50",
-          }}
-        />
-      </InputWrapper>
-      <InputWrapper id="input-demo" required label="รหัสผ่าน">
-        <PasswordInput
-          placeholder="รหัสผ่านของคุณ"
-          id="your-password"
-          classNames={{
-            input: "bg-accent bg-opacity-50",
-          }}
-        />
-      </InputWrapper>
+      <TextInput
+        required
+        label="อีเมล (Email)"
+        icon={<Mail size={20} />}
+        placeholder="อีเมลของคุณ"
+        classNames={{
+          input: "bg-accent bg-opacity-50",
+        }}
+      />
+      <PasswordInput
+        required
+        label="รหัสผ่าน"
+        placeholder="รหัสผ่านของคุณ"
+        classNames={{
+          input: "bg-accent bg-opacity-50",
+        }}
+      />
       <Checkbox label="จดจำฉันไว้ในครั้งถัดไป" className="content-checkbox" />
       <Link href="/">
         <Button

@@ -1,42 +1,70 @@
-import { auth, firestore, googleAuthProvider } from "@lib/firebase";
+import { firestore } from "@lib/firebase";
 import { UserContext } from "@lib/context";
 import Navbar from "@components/Navbar";
 
-import { useEffect, useState, useCallback, useContext, useRef } from "react";
+import { useEffect, useState, useCallback, useContext } from "react";
 import debounce from "lodash.debounce";
 import { useThemeContext } from "@lib/useTheme";
-import PrivacyPolicyPage from "@components/PrivacyPolicy";
-import WebsiteRulePage from "@components/WebsiteRule";
 import HomeComponents from "@components/HomeComponents";
 import {
-  Avatar,
+  Box,
   Button,
   Card,
-  Center,
   Checkbox,
-  Collapse,
-  Container,
-  Grid,
   Group,
-  Image,
-  Input,
-  InputWrapper,
-  Modal,
   PasswordInput,
   Stack,
-  Text,
+  TextInput,
   Title,
 } from "@mantine/core";
-import { useForm } from "@mantine/hooks";
+import { useForm, zodResolver } from "@mantine/form";
 import { Mail } from "tabler-icons-react";
-import Link from "next/link";
 import { Footer } from "@components/Footer";
 import Logo from "@components/Logo";
+import { z } from "zod";
+import AgreeWebsiteRule from "@components/WebsiteRule/AgreeWebsiteRule";
+import PrivacyPolicy from "@components/PrivacyPolicy";
 
-export default function Enter(props) {
+const REGEX = {
+  length: /.{8,}/,
+  uppercase: /[A-Z]/,
+  lowercase: /[a-z]/,
+  numeric: /.*\d/,
+  special: /.*[!@#$%^&*]+/,
+};
+
+const schema = z
+  .object({
+    firstName: z.string().min(1, { message: "กรุณากรอกชื่อจริง" }),
+    lastName: z.string().min(1, { message: "กรุณากรอกนามสกุล" }),
+    username: z.string().min(1, { message: "กรุณากรอกชื่อผู้ใช้" }),
+    email: z.string().email({ message: "อีเมลไม่ถูกต้อง" }),
+    password: z
+      .string()
+      .regex(REGEX.length, {
+        message: "ความยาวของรหัสผ่านต้องมากกว่าหรือเท่ากับ 8 ตัวอักษร",
+      })
+      .regex(REGEX.uppercase, {
+        message: "รหัสผ่านต้องมีตัวพิมพ์ใหญ่อย่างน้อยหนึ่งตัว",
+      })
+      .regex(REGEX.lowercase, {
+        message: "รหัสผ่านต้องมีตัวพิมพ์เล็กอย่างน้อยหนึ่งตัว",
+      })
+      .regex(REGEX.numeric, {
+        message: "รหัสผ่านต้องมีตัวเลขอย่างน้อยหนึ่งตัว",
+      })
+      .regex(REGEX.special, {
+        message: "รหัสผ่านต้องมีอักขระพิเศษอย่างน้อยหนึ่งตัว",
+      }),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "รหัสผ่านไม่ตรงกัน",
+    path: ["confirmPassword"],
+  });
+
+export default function Enter() {
   const { user, username } = useContext(UserContext);
-
-  const [layout, setLayout] = useState("grid");
 
   const { setTheme } = useThemeContext();
 
@@ -49,12 +77,8 @@ export default function Enter(props) {
     setTheme(localData);
   }, [setTheme]);
 
-  // 1. user signed out <SignInButton />
-  // 2. user signed in, but missing username <UsernameForm />
-  // 3. user signed in, has username <SignOutButton />
-
   return (
-    <main className="bg-background min-h-[1024px] mb-[235px] pb-10">
+    <main>
       {/* <Metatags title="Enter" description="Sign up for this amazing app!" /> */}
       {user ? (
         !username ? (
@@ -62,18 +86,21 @@ export default function Enter(props) {
             <UsernameForm />
           </div>
         ) : (
-          <div>
+          <div className="bg-background min-h-[1024px] mb-[235px] pb-10">
             <Navbar />
             <HomeComponents />
             <Footer />
           </div>
         )
       ) : (
-        <div>
-          <Navbar />
-          <HomeComponents />
-          <Footer />
-        </div>
+        <Box>
+          <div className="absolute z-10 left-2 top-2">
+            <Logo />
+          </div>
+          <div className="bg-background fixed top-0 right-0 bottom-0 left-0">
+            <UsernameForm />
+          </div>
+        </Box>
       )}
     </main>
   );
@@ -81,19 +108,7 @@ export default function Enter(props) {
 
 // Username form
 function UsernameForm() {
-  const signInWithGoogle = async () => {
-    await auth.signInWithPopup(googleAuthProvider);
-  };
-
   const [formUsername, setFormUsername] = useState("");
-  const [isValid, setIsValid] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  const [openedImage, setOpenImage] = useState(false);
-  const [openedAvatar, setOpenAvatar] = useState(false);
-
-  const avatarRef = useRef();
-  const imageRef = useRef();
 
   const { user, username } = useContext(UserContext);
 
@@ -129,11 +144,9 @@ function UsernameForm() {
     }
   };
 
-  //
-
-  useEffect(() => {
-    checkUsername(formUsername);
-  }, [formUsername, checkUsername]);
+  // useEffect(() => {
+  //   checkUsername(formUsername);
+  // }, [formUsername, checkUsername]);
 
   // Hit the database for username match after each debounced change
   // useCallback is required for debounce to work
@@ -153,14 +166,16 @@ function UsernameForm() {
   const displayName = user?.displayName.split(" ") || "";
 
   const form = useForm({
+    schema: zodResolver(schema),
     initialValues: {
-      firstName: displayName[0],
-      lastName: displayName[1],
+      firstName: displayName[0] || "",
+      lastName: displayName[1] || "",
       username: "",
       avatar: user?.photoURL || "",
       image: "",
       email: user?.email || "",
       password: "",
+      confirmPassword: "",
       websiteRule: false,
       privacyPolicy: false,
       ranks: [
@@ -194,242 +209,108 @@ function UsernameForm() {
       ],
       rule: "สมาชิก",
     },
+    validate: {
+      confirmPassword: (value, values) =>
+        value !== values.password ? "Passwords did not match" : null,
+    },
   });
-
-  const [openedWebsiteRule, setOpenedWebsiteRule] = useState(false);
-  const [openedPrivacyPolicy, setOpenedPrivacyPolicy] = useState(false);
 
   return (
     !username && (
-      <section>
-        <Container size="sm">
-          <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
-            <Card>
-              <Stack spacing="sm">
-                <Logo />
-                <Title order={2} align="center">
-                  สร้างบัญชี
-                </Title>
+      <section className="flex h-full justify-center items-center">
+        <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
+          {/* <form onSubmit={form.onSubmit((values) => console.log(values))}> */}
+          <Card className="min-w-[600px]">
+            <Stack spacing="sm">
+              <Title order={2} align="center" mb="xl">
+                สร้างบัญชี
+              </Title>
 
-                <Group grow>
-                  <InputWrapper id="input-demo" required label="ชื่อจริง">
-                    <Input
-                      {...form.getInputProps("firstName")}
-                      placeholder="ชื่อจริงของคุณ"
-                      classNames={{
-                        input: "bg-accent bg-opacity-50",
-                      }}
-                    />
-                  </InputWrapper>
-                  <InputWrapper id="input-demo" required label="นามสกุล">
-                    <Input
-                      {...form.getInputProps("lastName")}
-                      placeholder="นามสกุลของคุณ"
-                      classNames={{
-                        input: "bg-accent bg-opacity-50",
-                      }}
-                    />
-                  </InputWrapper>
-                </Group>
-                <InputWrapper id="input-demo" required label="ชื่อผู้ใช้">
-                  <Input
-                    {...form.getInputProps("username")}
-                    placeholder="ชื่อผู้ใช้ของคุณ"
-                    classNames={{
-                      input: "bg-accent bg-opacity-50",
-                    }}
-                    // value={formUsername}
-                    // onChange={onChange}
-                  />
-                  {/* 
+              <Group grow>
+                <TextInput
+                  label="ชื่อจริง"
+                  {...form.getInputProps("firstName")}
+                  placeholder="ชื่อจริงของคุณ"
+                  classNames={{
+                    input: "bg-accent bg-opacity-50",
+                  }}
+                />
+                <TextInput
+                  label="นามสกุล"
+                  {...form.getInputProps("lastName")}
+                  placeholder="นามสกุลของคุณ"
+                  classNames={{
+                    input: "bg-accent bg-opacity-50",
+                  }}
+                />
+              </Group>
+              <TextInput
+                label="ชื่อผู้ใช้"
+                {...form.getInputProps("username")}
+                placeholder="ชื่อผู้ใช้ของคุณ"
+                classNames={{
+                  input: "bg-accent bg-opacity-50",
+                }}
+                // value={formUsername}
+                // onChange={onChange}
+              />
+              {/* 
                   <UsernameMessage
                     username={formUsername}
                     isValid={isValid}
                     loading={loading}
                   /> */}
-                </InputWrapper>
-                <InputWrapper id="input-demo" label="รูปภาพประจำตัว">
-                  <Grid>
-                    <Grid.Col sm={10}>
-                      <Input
-                        {...form.getInputProps("avatar")}
-                        ref={avatarRef}
-                        placeholder="รูปภาพประจำตัวของคุณ"
-                        classNames={{
-                          input: "bg-accent bg-opacity-50",
-                        }}
-                      />
-                    </Grid.Col>
-                    <Grid.Col sm={2}>
-                      <Button
-                        fullWidth
-                        className="bg-background hover:bg-background hover:opacity-75 "
-                        onClick={() => {
-                          setOpenAvatar((e) => !e);
-                        }}
-                      >
-                        {openedAvatar === false ? "แสดง" : "ซ่อน"}
-                      </Button>
-                    </Grid.Col>
-                  </Grid>
-                  <Collapse in={openedAvatar} mt="xs">
-                    {avatarRef.current?.value ? (
-                      <Stack spacing="xs">
-                        <Center m="sm">
-                          <Avatar size="xl" src={avatarRef.current?.value} />
-                        </Center>
-                        <InputWrapper description="หากรูปภาพไม่แสดงให้ลองเปลี่ยน Link" />
-                      </Stack>
-                    ) : (
-                      <Text color="red" size="xs">
-                        เกิดข้อผิดพลาด ในการโหลดรูปภาพกรุณาลองใหม่อีกครั้ง
-                      </Text>
-                    )}
-                  </Collapse>
-                </InputWrapper>
-                <InputWrapper id="input-demo" label="รูปภาพพื้นหลัง">
-                  <Grid>
-                    <Grid.Col sm={10}>
-                      <Input
-                        {...form.getInputProps("image")}
-                        placeholder="รูปภาพพื้นหลังของคุณ"
-                        ref={imageRef}
-                        classNames={{
-                          input: "bg-accent bg-opacity-50",
-                        }}
-                      />
-                    </Grid.Col>
-                    <Grid.Col sm={2}>
-                      <Button
-                        fullWidth
-                        className="bg-background hover:bg-background hover:opacity-75 "
-                        onClick={() => {
-                          setOpenImage((e) => !e);
-                        }}
-                      >
-                        {openedImage === false ? "แสดง" : "ซ่อน"}
-                      </Button>
-                    </Grid.Col>
-                  </Grid>
-                  <Collapse in={openedImage} mt="xs">
-                    {imageRef.current?.value ? (
-                      <Stack spacing="xs">
-                        <Image
-                          src={imageRef.current?.value}
-                          alt={imageRef.current?.value}
-                        />
-                        <InputWrapper description="หากรูปภาพไม่แสดงให้ลองเปลี่ยน Link" />
-                      </Stack>
-                    ) : (
-                      <Text color="red" size="xs">
-                        เกิดข้อผิดพลาด ในการโหลดรูปภาพกรุณาลองใหม่อีกครั้ง
-                      </Text>
-                    )}
-                  </Collapse>
-                </InputWrapper>
-                <InputWrapper id="input-demo" required label="อีเมล (Email)">
-                  <Input
-                    icon={<Mail size={20} />}
-                    {...form.getInputProps("email")}
-                    placeholder="อีเมลของคุณ"
-                    classNames={{
-                      input: "bg-accent bg-opacity-50",
-                    }}
-                  />
-                </InputWrapper>
-                <InputWrapper id="input-demo" required label="รหัสผ่าน">
-                  <PasswordInput
-                    placeholder="รหัสผ่านของคุณ"
-                    {...form.getInputProps("password")}
-                    classNames={{
-                      input: "bg-accent bg-opacity-50",
-                    }}
-                  />
-                </InputWrapper>
-                <InputWrapper id="input-demo" required label="ยืนยันรหัสผ่าน">
-                  <PasswordInput
-                    placeholder="ยืนยันรหัสผ่านของคุณ"
-                    {...form.getInputProps("password")}
-                    classNames={{
-                      input: "bg-accent bg-opacity-50",
-                    }}
-                  />
-                </InputWrapper>
-                <Stack>
-                  <Modal
-                    size="xl"
-                    overlayColor="#333"
-                    opened={openedWebsiteRule}
-                    onClose={() => setOpenedWebsiteRule(false)}
-                    title={<Logo />}
-                    classNames={{
-                      modal: "bg-foreground",
-                      overlay: "bg-background",
-                      title: "text-title",
-                    }}
-                  >
-                    {openedWebsiteRule && <WebsiteRulePage />}
-                  </Modal>
 
-                  <Checkbox
-                    size="xs"
-                    {...form.getInputProps("websiteRule")}
-                    label={
-                      <div>
-                        ยอมรับ{" "}
-                        <span
-                          onClick={() => setOpenedWebsiteRule(true)}
-                          className="text-content cursor-pointer hover:underline"
-                        >
-                          กฎ กติกา และมารยาท
-                        </span>{" "}
-                        ของ MyAnimeCommunity
-                      </div>
-                    }
-                  />
-
-                  <Modal
-                    size="xl"
-                    opened={openedPrivacyPolicy}
-                    onClose={() => setOpenedPrivacyPolicy(false)}
-                    title={<Logo />}
-                    classNames={{
-                      modal: "bg-foreground",
-                      overlay: "bg-background",
-                      title: "text-title",
-                    }}
-                  >
-                    {openedPrivacyPolicy && <PrivacyPolicyPage />}
-                  </Modal>
-                  <Checkbox
-                    size="xs"
-                    {...form.getInputProps("privacyPolicy")}
-                    label={
-                      <div>
-                        ยอมรับ{" "}
-                        <span
-                          onClick={() => setOpenedPrivacyPolicy(true)}
-                          className="text-content cursor-pointer hover:underline"
-                        >
-                          นโยบายเกี่ยวกับข้อมูลส่วนบุคคล
-                        </span>{" "}
-                        ของ MyAnimeCommunity
-                      </div>
-                    }
-                  />
-                </Stack>
-                <Button
-                  size="sm"
-                  type="submit"
-                  fullWidth
-                  // disabled={!isValid}
-                  className="bg-content hover:bg-content hover:opacity-75"
-                >
-                  ลงทะเบียน
-                </Button>
+              <TextInput
+                label="อีเมล (Email)"
+                icon={<Mail size={20} />}
+                {...form.getInputProps("email")}
+                placeholder="อีเมลของคุณ"
+                classNames={{
+                  input: "bg-accent bg-opacity-50",
+                }}
+              />
+              <PasswordInput
+                label="รหัสผ่าน"
+                placeholder="รหัสผ่านของคุณ"
+                {...form.getInputProps("password")}
+                classNames={{
+                  input: "bg-accent bg-opacity-50",
+                }}
+              />
+              <PasswordInput
+                label="ยืนยันรหัสผ่าน"
+                placeholder="ยืนยันรหัสผ่านของคุณ"
+                {...form.getInputProps("confirmPassword")}
+                classNames={{
+                  input: "bg-accent bg-opacity-50",
+                }}
+              />
+              <Stack>
+                <Checkbox
+                  required
+                  size="xs"
+                  {...form.getInputProps("websiteRule")}
+                  label={<AgreeWebsiteRule />}
+                />
+                <Checkbox
+                  required
+                  size="xs"
+                  {...form.getInputProps("privacyPolicy")}
+                  label={<PrivacyPolicy />}
+                />
               </Stack>
-            </Card>
-            {/* <h3>Debug State</h3>
+              <Button
+                size="sm"
+                type="submit"
+                fullWidth
+                className="bg-content hover:bg-content hover:opacity-75"
+              >
+                ลงทะเบียน
+              </Button>
+            </Stack>
+          </Card>
+          {/* <h3>Debug State</h3>
             <div>
               Username: {formUsername}
               <br />
@@ -437,8 +318,7 @@ function UsernameForm() {
               <br />
               Username Valid: {isValid.toString()}
             </div> */}
-          </form>
-        </Container>
+        </form>
       </section>
     )
   );
