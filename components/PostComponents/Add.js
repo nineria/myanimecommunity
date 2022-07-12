@@ -1,8 +1,15 @@
 import React, { useContext, useState } from "react";
 // Hooks
-import { useForm } from "@mantine/hooks";
+import { useForm, zodResolver } from "@mantine/form";
 // Components
-import { Divider, Stack } from "@mantine/core";
+import {
+  Button,
+  Group,
+  Input,
+  InputWrapper,
+  Stack,
+  TextInput,
+} from "@mantine/core";
 import TagHeader from "./FormComponents/TagHeader";
 import TagGenre from "./FormComponents/TagGenre";
 import { PostHeader, RefCredit } from "./FormComponents";
@@ -14,8 +21,21 @@ import kebabCase from "lodash.kebabcase";
 import { auth, firestore, serverTimestamp } from "@lib/firebase";
 import { useRouter } from "next/router";
 import WebsiteRule from "@components/WebsiteRule";
+import { z } from "zod";
 import { showNotification } from "@mantine/notifications";
 import { Check } from "tabler-icons-react";
+
+const schema = z.object({
+  title: z
+    .string()
+    .min(10, { message: "หัวข้อโพสต์ต้องมีอย่างน้อย 10 ตัวอักษร" })
+    .max(120, { message: "หัวข้อโพสต์ต้องไม่เกิน 120 ตัวอักษร" }),
+  image: z.string().min(1, { message: "กรุณาใส่รูปภาพประจำโพสต์" }),
+  credit: z.string().min(1, {
+    message:
+      "กรุณาใส่แหล่งที่มาหรืออ้างอิง กรณีข้อมูลในโพสต์เป็นของท่านเองให้เขียนว่า Original",
+  }),
+});
 
 export default function Add({ setOpened }) {
   const router = useRouter();
@@ -24,19 +44,15 @@ export default function Add({ setOpened }) {
   const [content, setContent] = useState("");
 
   const { username } = useContext(UserContext);
-  // Validate length
-  // const isValid = title.length > 3 && title.length < 100;
-
   const HandleChange = async (values) => {
     const uid = auth.currentUser.uid;
     const ref = firestore
       .collection("users")
       .doc(uid)
       .collection("posts")
-      .doc(kebabCase(values.title));
-
+      .doc();
     const data = {
-      slug: kebabCase(values.title),
+      slug: ref.id,
       tag: tags,
       genre: genres,
       title: values.title,
@@ -50,13 +66,24 @@ export default function Add({ setOpened }) {
       likes: values.likes,
       uid: uid,
     };
-
     await ref.set(data);
+
+    showNotification({
+      color: "teal",
+      title: "บันทึกการเปลี่ยนแปลงเรียบร้อย",
+      icon: <Check size={18} />,
+      classNames: {
+        root: "bg-foreground border-teal-400",
+      },
+    });
+
+    setOpened(false);
 
     router.reload();
   };
 
   const form = useForm({
+    schema: zodResolver(schema),
     initialValues: {
       slug: "",
       tag: [],
@@ -84,7 +111,7 @@ export default function Add({ setOpened }) {
         <PostContent content={content} setContent={setContent} />
         <RefCredit {...form.getInputProps("credit")} />
         <WebsiteRule />
-        <ButtonControl setOpened={setOpened} />
+        <ButtonControl setOpened={setOpened} type="add" />
       </Stack>
     </form>
   );

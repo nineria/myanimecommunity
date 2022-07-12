@@ -13,6 +13,7 @@
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@mantine/core": "^4.2.11",
+    "@mantine/form": "^4.2.12",
     "@mantine/hooks": "^4.2.11",
     "@mantine/modals": "^4.2.11",
     "@mantine/next": "^4.2.10",
@@ -34,7 +35,8 @@
     "rehype-raw": "^6.1.1",
     "remark-gfm": "^3.0.1",
     "showdown": "^2.1.0",
-    "tabler-icons-react": "^1.48.0"
+    "tabler-icons-react": "^1.48.0",
+    "zod": "^3.17.3"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.7",

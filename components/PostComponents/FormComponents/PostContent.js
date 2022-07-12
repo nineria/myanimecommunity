@@ -23,6 +23,7 @@ const handleImageUpload = (image) =>
 export default function PostContent({ content, setContent }) {
   return (
     <InputWrapper
+      required
       label="เนื้อหา"
       description="รายระเอียดเนื้อหาของโพตส์ เช่น รูปภาพ หรือ วิดีโอ รวมไปถึง Link ต่างๆ"
     >

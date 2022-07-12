@@ -131,6 +131,7 @@ function CommentForm({ comment, commentRef, setOpened, post }) {
           <Group position="right">
             <Button
               className="bg-background text-title hover:bg-background hover:opacity-75"
+              size="xs"
               onClick={() => modals.closeModal(id)}
             >
               ยกเลิก
@@ -138,6 +139,7 @@ function CommentForm({ comment, commentRef, setOpened, post }) {
             <Button
               type="submit"
               className="bg-red-500 hover:bg-red-500 hover:opacity-75"
+              size="xs"
               onClick={() => handleOnClick()}
             >
               ยืนยัน
@@ -207,7 +209,7 @@ function CommentForm({ comment, commentRef, setOpened, post }) {
           <Button
             size="xs"
             onClick={() => handleCancel()}
-            className="bg-gray-500 hover:bg-gray-500 hover:opacity-75"
+            className="bg-background text-title hover:bg-background hover:opacity-75"
           >
             ยกเลิก
           </Button>

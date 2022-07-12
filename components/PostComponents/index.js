@@ -19,6 +19,7 @@ import {
   Edit as EditIcon,
   Star,
   ThumbUp,
+  Trash,
   X,
 } from "tabler-icons-react";
 import { getUserWithUsername } from "@lib/firebase";
@@ -26,6 +27,7 @@ import AuthCheck from "@components/AuthCheck";
 import RichTextEditor from "@components/RichText";
 import AuthorCheck from "@components/AuthorCheck";
 import Loading from "@components/Loading";
+import AdminCheck from "@components/AdminCheck";
 
 export default function PostComponents({ post, postRef }) {
   return (
@@ -148,18 +150,31 @@ function MainPost({ post, postRef }) {
         >
           <Edit post={post} postRef={postRef} setOpened={setOpened} />
         </Modal>
-        <AuthorCheck username={post.username}>
-          <Button
-            onClick={() => setOpened(true)}
-            leftIcon={<EditIcon size={14} />}
-            compact
-            className="bg-foreground text-title hover:bg-content hover:text-[#fff]"
-            variant="default"
-            size="xs"
-          >
-            แก้ไข
-          </Button>
-        </AuthorCheck>
+        <Group spacing="xs">
+          <AuthorCheck username={post.username}>
+            <Button
+              onClick={() => setOpened(true)}
+              leftIcon={<EditIcon size={14} />}
+              compact
+              className="bg-foreground text-title hover:bg-content hover:text-[#fff]"
+              variant="default"
+              size="xs"
+            >
+              แก้ไข
+            </Button>
+          </AuthorCheck>
+          <AdminCheck>
+            <Button
+              leftIcon={<Trash size={14} />}
+              compact
+              className="bg-red-500 text-[#fff] hover:bg-red-500 hover:opacity-75"
+              variant="default"
+              size="xs"
+            >
+              ลบเนื้อหา
+            </Button>
+          </AdminCheck>
+        </Group>
       </Group>
       <Image src={post.image} alt={post.image} my="xs"></Image>
       <RichTextEditor

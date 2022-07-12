@@ -2,12 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 // Components
 import { Avatar, Button, Group, Modal, Text } from "@mantine/core";
 // Icons
-import { CalendarMinus, Edit, ThumbUp } from "tabler-icons-react";
+import { CalendarMinus, Edit, ThumbUp, Trash } from "tabler-icons-react";
 import RichTextEditor from "@components/RichText";
 import { getUserWithUsername } from "@lib/firebase";
 import EditComment from "./EditComment";
 import { UserContext } from "@lib/context";
 import AuthorCheck from "@components/AuthorCheck";
+import AdminCheck from "@components/AdminCheck";
 
 export default function Comment({ post, comment }) {
   const [commentRef, setCommentRef] = useState();
@@ -109,18 +110,31 @@ function MainPost({ comment, commentRef, post }) {
         ) : (
           <div />
         )}
-        <AuthorCheck username={comment.username}>
-          <Button
-            onClick={() => setOpened(true)}
-            compact
-            leftIcon={<Edit size={14} />}
-            className="bg-foreground z-10 text-title hover:bg-content hover:text-[#fff]"
-            variant="default"
-            size="xs"
-          >
-            แก้ไข
-          </Button>
-        </AuthorCheck>
+        <Group spacing="xs">
+          <AuthorCheck username={comment.username}>
+            <Button
+              onClick={() => setOpened(true)}
+              compact
+              leftIcon={<Edit size={14} />}
+              className="bg-foreground z-10 text-title hover:bg-content hover:text-[#fff]"
+              variant="default"
+              size="xs"
+            >
+              แก้ไข
+            </Button>
+          </AuthorCheck>
+          <AdminCheck>
+            <Button
+              leftIcon={<Trash size={14} />}
+              compact
+              className="z-10 bg-red-500 text-[#fff] hover:bg-red-500 hover:opacity-75"
+              variant="default"
+              size="xs"
+            >
+              ลบเนื้อหา
+            </Button>
+          </AdminCheck>
+        </Group>
       </Group>
       <RichTextEditor
         readOnly

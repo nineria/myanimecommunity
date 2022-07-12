@@ -1,17 +1,17 @@
 // import MarkdownPreview from "@components/MarkdownPreview";
 import React, { useContext, useState } from "react";
 // Components
-import { Avatar, Button, Modal, Tabs, Text } from "@mantine/core";
+import { Avatar, Button, Modal, Stack, Tabs, Text } from "@mantine/core";
 import WebsiteRulePage from "@components/WebsiteRule";
 import RichTextEditor from "@components/RichText";
 import { UserContext } from "@lib/context";
 import { auth, firestore, serverTimestamp } from "@lib/firebase";
-import kebabCase from "lodash.kebabcase";
 import { showNotification } from "@mantine/notifications";
 import { Check } from "tabler-icons-react";
 import Logo from "@components/Logo";
 import WebsiteRule from "@components/WebsiteRule";
 import { useRouter } from "next/router";
+import { useModals } from "@mantine/modals";
 
 const handleImageUpload = (image) =>
   new Promise((resolve, reject) => {
@@ -31,6 +31,7 @@ const handleImageUpload = (image) =>
   });
 
 export default function CreateComment({ post }) {
+  const modals = useModals();
   const { userData } = useContext(UserContext);
   const [value, onChange] = useState("");
 
@@ -39,12 +40,43 @@ export default function CreateComment({ post }) {
   const [openedWebsiteRule, setOpenedWebsiteRule] = useState(false);
 
   const HandleSubmit = async () => {
+    if (value === "<p><br></p>") {
+      const id = modals.openModal({
+        title: (
+          <Stack>
+            <Text size="sm">ข้อความของคุณว่างเปล่า?</Text>
+            <Text size="xs">กรุณาใส่ข้อความที่ต้องการตอบกลับ</Text>
+          </Stack>
+        ),
+        zIndex: "999",
+        centered: true,
+        classNames: {
+          modal: "bg-foreground",
+          overlay: "bg-background",
+        },
+        withCloseButton: false,
+        size: "sm",
+        children: (
+          <Button
+            fullWidth
+            size="xs"
+            type="submit"
+            className="bg-green-500 hover:bg-green-500 hover:opacity-75"
+            onClick={() => modals.closeModal(id)}
+          >
+            เข้าใจแล้ว
+          </Button>
+        ),
+      });
+      return;
+    }
+
     const uid = auth.currentUser.uid;
     const ref = firestore
       .collection("users")
       .doc(post.uid)
       .collection("posts")
-      .doc(kebabCase(post.slug))
+      .doc(post.slug)
       .collection("comments")
       .doc();
 

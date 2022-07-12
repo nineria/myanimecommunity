@@ -1,20 +1,11 @@
 import React from "react";
 // Components
-import {
-  Button,
-  Group,
-  Input,
-  InputWrapper,
-  Stack,
-  Textarea,
-} from "@mantine/core";
-import { useModals } from "@mantine/modals";
-import WebsiteRule from "@components/WebsiteRule";
+import { InputWrapper, Textarea, TextInput } from "@mantine/core";
 
 export function PostHeader(props) {
   return (
-    <InputWrapper label="หัวข้อ" description="หัวข้อของโพสต์">
-      <Input
+    <InputWrapper required label="หัวข้อ" description="หัวข้อของโพสต์">
+      <TextInput
         placeholder="หัวข้อโพสต์"
         classNames={{
           input: "bg-accent bg-opacity-50",
@@ -28,6 +19,7 @@ export function PostHeader(props) {
 export function RefCredit(props) {
   return (
     <InputWrapper
+      required
       label="อ้างอิง"
       description="โปรดระบุแหล่งที่มาของเนื้อหา เช่น รูปภาพ, ข้อความ ก่อนโพสต์ลงบนเว็บไซต์ MyAnimeCommunity"
     >

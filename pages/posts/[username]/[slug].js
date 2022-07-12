@@ -110,7 +110,7 @@ export default function PostPage(props) {
   const items = [
     { title: "หน้าหลัก", href: "/" },
     { title: "โพสต์ทั้งหมด", href: "/posts" },
-    { title: decodeURI(post.slug), href: "#" },
+    { title: post.slug, href: "#" },
   ].map((item, index) => (
     <Anchor size="sm" color="dimmed" href={item.href} key={index}>
       {item.title}

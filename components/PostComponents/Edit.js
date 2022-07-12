@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-// Hooks
-import { useForm } from "@mantine/hooks";
 // Components
 import { Stack } from "@mantine/core";
 import TagHeader from "./FormComponents/TagHeader";
@@ -13,6 +11,22 @@ import { serverTimestamp } from "@lib/firebase";
 import AuthCheck from "@components/AuthCheck";
 import WebsiteRule from "@components/WebsiteRule";
 import { useRouter } from "next/router";
+import { useForm, zodResolver } from "@mantine/form";
+import { z } from "zod";
+import { showNotification } from "@mantine/notifications";
+import { Check } from "tabler-icons-react";
+
+const schema = z.object({
+  title: z
+    .string()
+    .min(10, { message: "หัวข้อโพสต์ต้องมีอย่างน้อย 10 ตัวอักษร" })
+    .max(120, { message: "หัวข้อโพสต์ต้องไม่เกิน 120 ตัวอักษร" }),
+  image: z.string().min(1, { message: "กรุณาใส่รูปภาพประจำโพสต์" }),
+  credit: z.string().min(1, {
+    message:
+      "กรุณาใส่แหล่งที่มาหรืออ้างอิง กรณีข้อมูลในโพสต์เป็นของท่านเองให้เขียนว่า Original",
+  }),
+});
 
 export default function Edit({ post, postRef, setOpened }) {
   return (
@@ -40,10 +54,22 @@ function PostForm({ post, postRef, setOpened }) {
       updatedAt: serverTimestamp(),
     });
 
+    showNotification({
+      color: "teal",
+      title: "บันทึกการเปลี่ยนแปลงเรียบร้อย",
+      icon: <Check size={18} />,
+      classNames: {
+        root: "bg-foreground border-teal-400",
+      },
+    });
+
+    setOpened(false);
+
     router.reload();
   };
 
   const form = useForm({
+    schema: zodResolver(schema),
     initialValues: {
       tag: post.tag,
       genre: post.genre,

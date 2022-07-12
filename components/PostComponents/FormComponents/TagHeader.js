@@ -76,7 +76,6 @@ export default function TagHeader({ data, setData }) {
           icon={<Tag size={14} />}
           placeholder="เพิ่ม"
           onKeyDown={handleKeyDown}
-          className=""
           classNames={{
             input: "bg-transparent bg-opacity-50 max-w-[100px]  border-none",
           }}

@@ -3,11 +3,20 @@ import Navbar from "@components/Navbar";
 import React, { useState } from "react";
 import PostsMenuController from "@components/PostComponents/MenuController";
 import PostLayout from "@components/PostComponents/PostLayout";
-import { Anchor, Breadcrumbs, Container, Stack } from "@mantine/core";
+import {
+  Anchor,
+  Breadcrumbs,
+  Button,
+  Container,
+  Group,
+  Stack,
+} from "@mantine/core";
 import { Footer } from "@components/Footer";
 import { firestore, postToJSON } from "@lib/firebase";
 import Loading from "@components/Loading";
 import AuthCheck from "@components/AuthCheck";
+import AdminCheck from "@components/AdminCheck";
+import { Edit } from "tabler-icons-react";
 
 // Max post to query per page
 const LIMIT = 10;
@@ -44,16 +53,40 @@ export default function PostsPage(props) {
     <>
       <div className="bg-background text-white min-h-[1024px] mb-[235px] pb-10">
         <Navbar page="/posts" />
-
         <Container size="lg">
           <Stack spacing="xs">
             <Breadcrumbs separator="→">{items}</Breadcrumbs>
+            {/* Create New Announcement */}
+            <Group
+              grow
+              position="apart"
+              className="bg-foreground rounded-sm p-1 shadow-md"
+            >
+              <AdminCheck>
+                <Button
+                  className="z-10 bg-content text-[#fff] hover:bg-content hover:opacity-75"
+                  variant="default"
+                  size="xs"
+                >
+                  สร้างประกาศ +
+                </Button>
+                <Button
+                  leftIcon={<Edit size={14} />}
+                  className="z-10 bg-background text-title hover:bg-background hover:opacity-75"
+                  variant="default"
+                  size="xs"
+                >
+                  จัดการประกาศ
+                </Button>
+              </AdminCheck>
+            </Group>
             {/* Announcement */}
             <Announcement
               type={AnnouncementProperty.type}
               title={AnnouncementProperty.title}
               content={AnnouncementProperty.content}
             />
+
             {/* Menu Controller */}
             <PostsMenuController layout={layout} setLayout={setLayout} />
             {/* Posts */}

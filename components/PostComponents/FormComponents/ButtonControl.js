@@ -8,21 +8,8 @@ import { Check, X } from "tabler-icons-react";
 import { useModals } from "@mantine/modals";
 import { useRouter } from "next/router";
 
-export function ButtonControl({ setOpened, postRef, disabled }) {
+export function ButtonControl({ setOpened, postRef, disabled, type }) {
   const modals = useModals();
-  const router = useRouter();
-
-  const handleOnClick = () => {
-    showNotification({
-      color: "teal",
-      title: "บันทึกการเปลี่ยนแปลงเรียบร้อย",
-      icon: <Check size={18} />,
-      classNames: {
-        root: "bg-foreground border-teal-400",
-      },
-    });
-    setOpened(false);
-  };
 
   const handleCancel = () => {
     showNotification({
@@ -71,6 +58,7 @@ export function ButtonControl({ setOpened, postRef, disabled }) {
           <Group position="right">
             <Button
               className="bg-background text-title hover:bg-background hover:opacity-75"
+              size="xs"
               onClick={() => modals.closeModal(id)}
             >
               ยกเลิก
@@ -78,6 +66,7 @@ export function ButtonControl({ setOpened, postRef, disabled }) {
             <Button
               type="submit"
               className="bg-red-500 hover:bg-red-500 hover:opacity-75"
+              size="xs"
               onClick={() => handleOnClick()}
             >
               ยืนยัน
@@ -90,18 +79,23 @@ export function ButtonControl({ setOpened, postRef, disabled }) {
 
   return (
     <Group mt="md" position="apart">
-      <Button
-        size="xs"
-        className="bg-red-500 hover:bg-red-500 hover:opacity-75"
-        onClick={() => handleDelete()}
-      >
-        ลบ
-      </Button>
+      {type === "add" ? (
+        <div />
+      ) : (
+        <Button
+          size="xs"
+          className="bg-red-500 hover:bg-red-500 hover:opacity-75"
+          onClick={() => handleDelete()}
+        >
+          ลบ
+        </Button>
+      )}
+
       <Group spacing="xs" position="right">
         <Button
           size="xs"
           onClick={() => handleCancel()}
-          className="bg-gray-500 hover:bg-gray-500 hover:opacity-75"
+          className="bg-background text-title hover:bg-background hover:opacity-75"
         >
           ยกเลิก
         </Button>
@@ -110,7 +104,6 @@ export function ButtonControl({ setOpened, postRef, disabled }) {
           size="xs"
           disabled={disabled}
           className="bg-green-500 hover:bg-green-500 hover:opacity-75"
-          onClick={() => handleOnClick()}
         >
           ยืนยัน
         </Button>

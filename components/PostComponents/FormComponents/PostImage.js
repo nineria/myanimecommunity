@@ -10,6 +10,7 @@ import {
   InputWrapper,
   Stack,
   Text,
+  TextInput,
 } from "@mantine/core";
 
 export default function PostImage(props) {
@@ -22,12 +23,13 @@ export default function PostImage(props) {
   return (
     <>
       <InputWrapper
+        required
         label="รูปภาพ"
         description="รูปภาพจะแสดงอยู่ด้านบนสุดของโพสต์ สามารถเพิ่มได้แค่ภาพเดียวเท่านั้น (Link URL)"
       >
         <Grid gutter="xs">
           <Grid.Col sm={10}>
-            <Input
+            <TextInput
               ref={inputImageRef}
               classNames={{
                 input: "bg-accent bg-opacity-50",
