@@ -14,7 +14,7 @@ export default function ButtonControl({ setOpened, postRef, type }) {
   const handleCancel = () => {
     showNotification({
       color: "yellow",
-      title: "ยกเลิกการแก้ไขแล้ว",
+      title: "ยกเลิกแล้ว",
       icon: <X size={18} />,
       classNames: {
         root: "bg-foreground border-yellow-400",
