@@ -183,7 +183,7 @@ function MainPost({ post, postRef }) {
         classNames={{ root: "bg-foreground border-none text-title" }}
       />
       <Space h="50px" />
-      <p className="absolute bottom-20 right-4 font-bold leading-none uppercase opacity-[0.03] text-[8vw] text-right tracking-tighter">
+      <p className="absolute bottom-20 right-4 font-bold leading-none uppercase opacity-[0.03] text-[7vw] text-right tracking-tighter">
         {post.tag[0] === "คำถาม"
           ? "QUESTION"
           : post.tag[0] === "รีวิว"
@@ -194,7 +194,7 @@ function MainPost({ post, postRef }) {
           ? "NEWS"
           : "OTHER"}
       </p>
-      <p className="text-xs mt-20">
+      <p className="text-xs ">
         อ้างอิง / แหล่งที่มา :{" "}
         <a className="text-content hover:underline">{post.credit}</a>
       </p>

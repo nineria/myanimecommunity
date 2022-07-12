@@ -141,7 +141,7 @@ function MainPost({ comment, commentRef, post }) {
         value={comment?.content}
         classNames={{ root: "bg-foreground border-none text-title" }}
       />
-      <p className="absolute select-none bottom-2 right-4 leading-none font-bold uppercase opacity-[0.03] text-[8vw] text-right tracking-tighter">
+      <p className="absolute bottom-2 right-4 leading-none font-bold uppercase opacity-[0.03] text-[7vw] text-right tracking-tighter">
         Answer
       </p>
 
