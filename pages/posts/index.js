@@ -60,12 +60,12 @@ export default function PostsPage(props) {
           <Stack spacing="xs">
             <Breadcrumbs separator="→">{items}</Breadcrumbs>
             {/* Create New Announcement */}
-            <Group
-              grow
-              position="apart"
-              className="bg-foreground rounded-sm p-1 shadow-md"
-            >
-              {user && (
+            {user && (
+              <Group
+                grow
+                position="apart"
+                className="bg-foreground rounded-sm p-1 shadow-md"
+              >
                 <AdminCheck>
                   <Button
                     className="z-10 bg-content text-[#fff] hover:bg-content hover:opacity-75"
@@ -83,8 +83,8 @@ export default function PostsPage(props) {
                     จัดการประกาศ
                   </Button>
                 </AdminCheck>
-              )}
-            </Group>
+              </Group>
+            )}
             {/* Announcement */}
             <Announcement
               type={AnnouncementProperty.type}
