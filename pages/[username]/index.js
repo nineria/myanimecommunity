@@ -19,6 +19,7 @@ import { getUserWithUsername, postToJSON } from "@lib/firebase";
 import AdminCheck from "@components/AdminCheck";
 import AnnouncementControl from "@components/ProfileComponents/AnnouncementControl";
 import Loading from "@components/Loading";
+import { useThemeContext } from "@lib/useTheme";
 
 export async function getServerSideProps({ query }) {
   const { username } = query;
@@ -40,6 +41,17 @@ export async function getServerSideProps({ query }) {
 }
 
 export default function UserProfilePage({ user, posts }) {
+  const { setTheme } = useThemeContext();
+
+  useEffect(() => {
+    const localData = localStorage.getItem("themes");
+    if (localData == null) {
+      localStorage.setItem("themes", "red");
+      setTheme("red");
+    }
+    setTheme(localData);
+  }, [setTheme]);
+
   // const { userData } = useContext(UserContext);
 
   // const [totalLikes, setTotalLike] = useState(0);
