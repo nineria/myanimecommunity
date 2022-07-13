@@ -157,10 +157,16 @@ export function TableSort({ posts }) {
         <td>
           <Group position="apart">
             <Text size="xs" color="teal" weight={700}>
-              {positiveReviews.toFixed(0)}%
+              {row.likes === 0 || row.stars === 0
+                ? 0
+                : positiveReviews.toFixed(0)}
+              %
             </Text>
             <Text size="xs" color="red" weight={700}>
-              {negativeReviews.toFixed(0)}%
+              {row.likes === 0 || row.stars === 0
+                ? 0
+                : negativeReviews.toFixed(0)}
+              %
             </Text>
           </Group>
           <Progress

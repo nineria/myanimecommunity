@@ -185,7 +185,7 @@ function MainPost({ post, postRef }) {
         classNames={{ root: "bg-foreground border-none text-title" }}
       />
       <Space h="50px" />
-      <p className="absolute bottom-20 right-4 font-bold leading-none uppercase opacity-[0.03] text-[7vw] text-right tracking-tighter">
+      <p className="absolute bottom-20 right-4 font-bold leading-none uppercase opacity-[0.03] text-[13vw] text-right tracking-tighter">
         {post.tag[0] === "คำถาม"
           ? "QUESTION"
           : post.tag[0] === "รีวิว"

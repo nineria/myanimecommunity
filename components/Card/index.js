@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 // Components
-import { AspectRatio, Badge, Image } from "@mantine/core";
+import { AspectRatio, Badge, Image, Tooltip } from "@mantine/core";
 // Icons
 import { Clock, Star, ThumbUp } from "tabler-icons-react";
 import { kFormatter } from "@components/Calculator";
@@ -59,10 +59,11 @@ export default function Card({ posts, layout }) {
             <div className="absolute bottom-14 left-2 flex flex-row gap-1 z-10 text-sm">
               {badges}
             </div>
-            <div className="absolute bottom-0 left-0 right-0 bg-foreground px-2 py-2 text-title h-[65px]">
-              <h1 className="truncate font-bold text-base opacity-80">
+            <div className="absolute bottom-0 left-0 right-0 bg-foreground px-2 py-3 text-title h-[65px]">
+              <h1 className="truncate font-bold text-base opacity-80 z-20">
                 {data.title}
               </h1>
+
               <div className="flex flex-row justify-start gap-4 text-sm">
                 <div className="flex flex-row gap-1 items-center">
                   <Clock size={14} className="text-content" />
@@ -160,18 +161,18 @@ function ScreenLarge({ data, badges, date }) {
         <h1 className="truncate font-bold opacity-80 text-base md:max-w-[500px] lg:max-w-[700px]">
           {data.title}
         </h1>
-        <div className="flex flex-row justify-start gap-4 text-title text-sm">
+        <div className="flex flex-row justify-start gap-4 text-sm">
           <div className="flex flex-row gap-1 items-center">
-            <Clock size={20} className="text-content" />
+            <Clock size={14} className="text-content" />
             <p className="opacity-80">{date}</p>
           </div>
           <div className="flex flex-row gap-1 items-center">
-            <ThumbUp size={20} className="text-content" />
-            <p className="opacity-80">{data.like}</p>
+            <ThumbUp size={14} className="text-content" />
+            <p className="opacity-80">{kFormatter(data.likes)}</p>
           </div>
           <div className="flex flex-row gap-1 items-center">
-            <Star size={20} className="text-content" />
-            <p className="opacity-80">{data.star}</p>
+            <Star size={14} className="text-content" />
+            <p className="opacity-80">{kFormatter(data.stars)}</p>
           </div>
         </div>
         <div className="absolute right-2 bottom-2">
