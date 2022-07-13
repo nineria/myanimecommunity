@@ -24,7 +24,7 @@ import CreateComment from "@components/PostComponents/CreateComment";
 import Comment from "@components/PostComponents/Comment";
 import { Star } from "tabler-icons-react";
 import Loading from "@components/Loading";
-import Metatags from "pages/Metatags";
+import Metatags from "@components/Metatags";
 import LoginRegister from "@components/LoginRegister";
 
 export async function getStaticProps({ params }) {
