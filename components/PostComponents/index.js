@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 // Components
 import {
   Avatar,
@@ -26,21 +26,19 @@ import { getUserWithUsername } from "@lib/firebase";
 import AuthCheck from "@components/AuthCheck";
 import RichTextEditor from "@components/RichText";
 import AuthorCheck from "@components/AuthorCheck";
-import Loading from "@components/Loading";
 import AdminCheck from "@components/AdminCheck";
+import { UserContext } from "@lib/context";
 
 export default function PostComponents({ post, postRef }) {
   return (
-    <AuthCheck fallback={<Loading />}>
-      <div className="bg-foreground rounded-sm">
-        {/* Left menu */}
-        <div className="flex flex-row">
-          {post && <LeftMenu post={post} />}
-          <div className="px-[0.5px] bg-white opacity-50" />
-          {post && <MainPost post={post} postRef={postRef} />}
-        </div>
+    <div className="bg-foreground rounded-sm">
+      {/* Left menu */}
+      <div className="flex flex-row">
+        {post && <LeftMenu post={post} />}
+        <div className="px-[0.5px] bg-white opacity-50" />
+        {post && <MainPost post={post} postRef={postRef} />}
       </div>
-    </AuthCheck>
+    </div>
   );
 }
 
@@ -118,6 +116,8 @@ function LeftMenu({ post }) {
 function MainPost({ post, postRef }) {
   const [opened, setOpened] = useState(false);
 
+  const { user } = useContext(UserContext);
+
   const updatedAt =
     typeof post?.updatedAt === "number"
       ? new Date(post.updatedAt)
@@ -163,17 +163,19 @@ function MainPost({ post, postRef }) {
               แก้ไข
             </Button>
           </AuthorCheck>
-          <AdminCheck>
-            <Button
-              leftIcon={<Trash size={14} />}
-              compact
-              className="bg-red-500 text-[#fff] hover:bg-red-500 hover:opacity-75"
-              variant="default"
-              size="xs"
-            >
-              ลบเนื้อหา
-            </Button>
-          </AdminCheck>
+          {user && (
+            <AdminCheck>
+              <Button
+                leftIcon={<Trash size={14} />}
+                compact
+                className="bg-red-500 text-[#fff] hover:bg-red-500 hover:opacity-75"
+                variant="default"
+                size="xs"
+              >
+                ลบเนื้อหา
+              </Button>
+            </AdminCheck>
+          )}
         </Group>
       </Group>
       <Image src={post.image} alt={post.image} my="xs"></Image>
@@ -198,7 +200,7 @@ function MainPost({ post, postRef }) {
         อ้างอิง / แหล่งที่มา :{" "}
         <a className="text-content hover:underline">{post.credit}</a>
       </p>
-      <AuthCheck>
+      <AuthCheck fallback={<div />}>
         <Group position="apart" className="text-xs" my="xs">
           <div className="flex flex-row gap-1 items-end hover:underline cursor-pointer ">
             <AlertTriangle size={14} />

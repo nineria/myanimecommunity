@@ -25,6 +25,7 @@ import Comment from "@components/PostComponents/Comment";
 import { Star } from "tabler-icons-react";
 import Loading from "@components/Loading";
 import Metatags from "pages/Metatags";
+import LoginRegister from "@components/LoginRegister";
 
 export async function getStaticProps({ params }) {
   const { username, slug } = params;
@@ -184,7 +185,7 @@ export default function PostPage(props) {
             />
           </Paper>
           {/* Create comment */}
-          <AuthCheck fallback={<Loading />}>
+          <AuthCheck fallback={<div />}>
             <CreateComment post={post} />
           </AuthCheck>
         </Stack>

@@ -76,6 +76,8 @@ function LeftMenu({ comment }) {
 function MainPost({ comment, commentRef, post }) {
   const [opened, setOpened] = useState(false);
 
+  const { user } = useContext(UserContext);
+
   const timestamp = new Date(comment.updatedAt.seconds * 1000);
 
   const date = timestamp?.toLocaleDateString("th-th", {
@@ -123,17 +125,19 @@ function MainPost({ comment, commentRef, post }) {
               แก้ไข
             </Button>
           </AuthorCheck>
-          <AdminCheck>
-            <Button
-              leftIcon={<Trash size={14} />}
-              compact
-              className="z-10 bg-red-500 text-[#fff] hover:bg-red-500 hover:opacity-75"
-              variant="default"
-              size="xs"
-            >
-              ลบเนื้อหา
-            </Button>
-          </AdminCheck>
+          {user && (
+            <AdminCheck>
+              <Button
+                leftIcon={<Trash size={14} />}
+                compact
+                className="z-10 bg-red-500 text-[#fff] hover:bg-red-500 hover:opacity-75"
+                variant="default"
+                size="xs"
+              >
+                ลบเนื้อหา
+              </Button>
+            </AdminCheck>
+          )}
         </Group>
       </Group>
       <RichTextEditor
