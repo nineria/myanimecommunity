@@ -61,29 +61,31 @@ export default function PostsPage(props) {
             <Breadcrumbs separator="→">{items}</Breadcrumbs>
             {/* Create New Announcement */}
             {user && (
-              <Group
-                grow
-                position="apart"
-                className="bg-foreground rounded-sm p-1 shadow-md"
-              >
-                <AdminCheck>
+              <AdminCheck>
+                <Group
+                  grow
+                  position="apart"
+                  className="bg-foreground rounded-sm p-1 shadow-md"
+                >
                   <Button
-                    className="z-10 bg-content text-[#fff] hover:bg-content hover:opacity-75"
+                    className="z-10 bg-content text-[#fff] hover:bg-content hover:opacity-75 max-w-fit"
                     variant="default"
                     size="xs"
                   >
                     สร้างประกาศ +
                   </Button>
-                  <Button
-                    leftIcon={<Edit size={14} />}
-                    className="z-10 bg-background text-title hover:bg-background hover:opacity-75"
-                    variant="default"
-                    size="xs"
-                  >
-                    จัดการประกาศ
-                  </Button>
-                </AdminCheck>
-              </Group>
+                  <div className="bg-background max-w-fit p-[1px] rounded-md">
+                    <Button
+                      leftIcon={<Edit size={14} />}
+                      className="z-10 bg-foreground text-title hover:bg-foreground hover:opacity-75 "
+                      variant="default"
+                      size="xs"
+                    >
+                      จัดการประกาศ
+                    </Button>
+                  </div>
+                </Group>
+              </AdminCheck>
             )}
             {/* Announcement */}
             <Announcement
