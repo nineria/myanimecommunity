@@ -24,6 +24,7 @@ import CreateComment from "@components/PostComponents/CreateComment";
 import Comment from "@components/PostComponents/Comment";
 import { Star } from "tabler-icons-react";
 import Loading from "@components/Loading";
+import Metatags from "pages/Metatags";
 
 export async function getStaticProps({ params }) {
   const { username, slug } = params;
@@ -119,6 +120,11 @@ export default function PostPage(props) {
 
   return (
     <div className="bg-background min-h-[1024px] mb-[235px] pb-10">
+      <Metatags
+        title={post.title}
+        description={post.content}
+        image={post.iamge}
+      />
       <Navbar />
       <Container size="lg" py="xs">
         <Stack spacing="xs">
