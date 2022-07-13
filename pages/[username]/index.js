@@ -147,7 +147,8 @@ export default function UserProfilePage({ user, posts }) {
               <UserCardImage user={user} posts={posts} />
               <StatsGridIcons user={user} posts={posts} />
               <StatsSegments user={user} />
-              <TableSort posts={posts} />
+              {posts[0] && <TableSort posts={posts} />}
+
               {/* <AdminCheck>
                 <AnnouncementControl />
               </AdminCheck> */}
