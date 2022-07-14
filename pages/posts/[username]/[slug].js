@@ -130,7 +130,9 @@ export default function PostPage(props) {
       <Navbar />
       <Container size="lg" py="xs">
         <Stack spacing="xs">
-          <Breadcrumbs separator="→">{items}</Breadcrumbs>
+          <Breadcrumbs separator="→" className="truncate">
+            {items}
+          </Breadcrumbs>
           {/* Top section */}
           <Top data={post} />
           <Paper p="xs" className="shadow-md bg-foreground">
