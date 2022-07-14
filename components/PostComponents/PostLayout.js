@@ -1,17 +1,9 @@
-import React, { useState } from "react";
 // Components
 import Card from "@components/Card";
-import { Grid, Skeleton, Stack } from "@mantine/core";
-// Icons
+import { Grid, Stack } from "@mantine/core";
 import { Animate } from "react-simple-animate";
 
 export default function PostLayout({ posts, layout }) {
-  const [loading, setLoading] = useState(true);
-
-  setTimeout(function () {
-    setLoading(false);
-  }, 500);
-
   const postGrids = posts.map((data, index) => (
     <Grid.Col key={index} sm={6} md={6} lg={4}>
       <Card layout={layout} posts={data} />

@@ -60,11 +60,15 @@ export default function Card({ posts, layout }) {
               {badges}
             </div>
             <div className="absolute bottom-0 left-0 right-0 bg-foreground px-2 py-3 text-title h-[65px]">
-              <h1 className="truncate font-bold text-base opacity-80 z-20">
-                {data.title}
-              </h1>
-
-              <div className="flex flex-row justify-start gap-4 text-sm">
+              <Tooltip
+                label={data.title}
+                position="top"
+                withArrow
+                className="absolute top-3 left-2 right-2  z-10"
+              >
+                <h1 className="truncate font-bold text-base">{data.title}</h1>
+              </Tooltip>
+              <div className="absolute top-10 left-2 flex flex-row justify-start gap-4 text-sm">
                 <div className="flex flex-row gap-1 items-center">
                   <Clock size={14} className="text-content" />
                   <p className="opacity-80">{date}</p>

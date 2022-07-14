@@ -26,6 +26,7 @@ import { Star } from "tabler-icons-react";
 import Loading from "@components/Loading";
 import Metatags from "@components/Metatags";
 import LoginRegister, { LoginPopUp } from "@components/LoginRegister";
+import { Animate } from "react-simple-animate";
 
 export async function getStaticProps({ params }) {
   const { username, slug } = params;
@@ -163,8 +164,8 @@ export default function PostPage(props) {
             <Stack spacing="xs">
               {/* Post */}
               <PostComponents post={post} postRef={postRef} />
+              {/* Comment */}
               <Stack spacing="xs">
-                {/* Comment */}
                 {comments &&
                   comments.map((item, index) => (
                     <Comment key={index} post={post} comment={item} />

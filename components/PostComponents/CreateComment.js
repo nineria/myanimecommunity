@@ -106,9 +106,9 @@ export default function CreateComment({ post }) {
 
   return (
     <div className="bg-foreground">
-      <div className="flex flex-row">
+      <div className="flex md:flex-row flex-col">
         <LeftMenu data={userData} />
-        <div className="px-[0.5px] bg-white opacity-50"></div>
+        <div className="md:block hidden px-[0.5px] bg-white opacity-50"></div>
         <div className="p-2 text-title w-full">
           <div className="border-[1px] border-white border-opacity-10 rounded-sm p-2">
             <Tabs
@@ -183,11 +183,18 @@ export default function CreateComment({ post }) {
 
 function LeftMenu({ data }) {
   return (
-    <div className="px-2 py-4 mt-2">
-      <div className="flex flex-col gap-2 items-center w-[100px]">
-        <Avatar radius="xl" size="lg" src={data.avatar} alt={data.username} />
-        <div className="block text-center">
-          <Text color="red">{data.username}</Text>
+    <div className="px-2 md:py-4 pb-2 mt-2">
+      <div className="flex md:flex-col flex-row gap-2 items-center md:w-[100px]">
+        <div className="md:block hidden">
+          <Avatar radius="xl" size="lg" src={data.avatar} alt={data.username} />
+        </div>
+        <div className="md:hidden visible">
+          <Avatar radius="xl" size="md" src={data.avatar} alt={data.username} />
+        </div>
+        <div className="block  md:text-center text-left">
+          <Text color="red" className="md:text-base text-sm">
+            {data.username}
+          </Text>
           <p className="text-title text-xs">{data.rule}</p>
         </div>
       </div>

@@ -2,13 +2,20 @@ import React, { useContext, useEffect, useState } from "react";
 // Components
 import { Avatar, Button, Group, Modal, Text } from "@mantine/core";
 // Icons
-import { CalendarMinus, Edit, ThumbUp, Trash } from "tabler-icons-react";
+import {
+  AlertTriangle,
+  CalendarMinus,
+  Edit,
+  ThumbUp,
+  Trash,
+} from "tabler-icons-react";
 import RichTextEditor from "@components/RichText";
 import { getUserWithUsername } from "@lib/firebase";
 import EditComment from "./EditComment";
 import { UserContext } from "@lib/context";
 import AuthorCheck from "@components/AuthorCheck";
 import AdminCheck from "@components/AdminCheck";
+import AuthCheck from "@components/AuthCheck";
 
 export default function Comment({ post, comment }) {
   const [commentRef, setCommentRef] = useState();
@@ -30,10 +37,29 @@ export default function Comment({ post, comment }) {
 
   return (
     <div className="bg-foreground rounded-sm">
-      <div className="flex flex-row ">
-        <LeftMenu comment={comment} />
-        <div className="px-[0.5px] bg-white opacity-50"></div>
-        <MainPost comment={comment} commentRef={commentRef} post={post} />
+      <PostLayout>
+        {post && <LeftMenu comment={comment} />}
+        {post && <TopMenu comment={comment} />}
+        {post && (
+          <MainPost comment={comment} commentRef={commentRef} post={post} />
+        )}
+      </PostLayout>
+    </div>
+  );
+}
+
+function PostLayout(props) {
+  return (
+    <div>
+      <div className="md:flex flex-row hidden">
+        {props.children[0]}
+        <div className="px-[0.5px] bg-white opacity-50" />
+        {props.children[2]}
+      </div>
+
+      <div className="flex md:hidden flex-col">
+        {props.children[1]}
+        {props.children[2]}
       </div>
     </div>
   );
@@ -73,6 +99,37 @@ function LeftMenu({ comment }) {
   );
 }
 
+function TopMenu({ comment }) {
+  const timestamp = new Date(comment.createdAt.seconds * 1000);
+
+  const date = timestamp?.toLocaleDateString("th-th", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+
+  console.log(comment);
+
+  return (
+    <div className="absolute p-2">
+      <div className="flex flex-row items-center gap-2">
+        <Avatar
+          radius="xl"
+          size="md"
+          src={comment?.avatar}
+          alt={comment?.username}
+        />
+        <div className="flex flex-col">
+          <Text color="red" size="sm">
+            {comment?.username}
+          </Text>
+          <div className="flex flex-row items-center text-xs gap-2">{date}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function MainPost({ comment, commentRef, post }) {
   const [opened, setOpened] = useState(false);
 
@@ -87,7 +144,7 @@ function MainPost({ comment, commentRef, post }) {
   });
 
   return (
-    <div className="relative px-4 py-2 text-title text-opacity-90 w-full">
+    <div className="relative mt-11 md:mt-0 text-title text-opacity-90 w-full min-h-[100px]">
       <Modal
         size="xl"
         classNames={{
@@ -112,7 +169,7 @@ function MainPost({ comment, commentRef, post }) {
         ) : (
           <div />
         )}
-        <Group spacing="xs">
+        <Group spacing="xs" className="absolute md:top-2 -top-9 right-2 z-20">
           <AuthorCheck username={comment.username}>
             <Button
               onClick={() => setOpened(true)}
@@ -143,12 +200,37 @@ function MainPost({ comment, commentRef, post }) {
       <RichTextEditor
         readOnly
         value={comment?.content}
-        classNames={{ root: "bg-transparent border-none text-title z-10" }}
+        classNames={{
+          root: "bg-transparent border-none text-title z-10 mb-2 md:mt-6",
+        }}
       />
-      <p className="absolute bottom-2 select-none right-6 leading-none font-bold uppercase opacity-[0.03] text-[8vw] text-right tracking-tighter">
+      <AuthCheck fallback={<div />}>
+        <Group
+          position="apart"
+          className="absolute bottom-0 right-0 left-0 text-xs z-10 "
+          my="xs"
+          mx="md"
+        >
+          <div className="flex flex-row gap-1 items-end hover:underline cursor-pointer ">
+            <AlertTriangle size={14} />
+            รายงานโพสต์
+          </div>
+          <Group position="right">
+            {/* <Like postRef={postRef} /> */}
+            <div className="flex flex-row gap-1 items-end hover:underline cursor-pointer ">
+              <ThumbUp size={14} />
+              {comment.likes} ถูกใจ
+            </div>
+            {/* <div className="flex flex-row gap-1 items-end hover:underline cursor-pointer ">
+              <ArrowBackUp size={14} />
+              ตอบกลับ
+            </div> */}
+          </Group>
+        </Group>
+      </AuthCheck>
+      <p className="absolute bottom-4 select-none right-6 leading-none font-bold uppercase opacity-[0.03] text-[120px] md:text-[150px] text-right tracking-tighter">
         REPLY
       </p>
-
       {/* <p className="absolute bottom-4 text-xs">
         <div className="flex items-center text-content gap-1 mb-2 border-[1px] border-title border-opacity-10 p-1 rounded-sm">
           <ThemeIcon radius="md" size="xs" color="gray">
