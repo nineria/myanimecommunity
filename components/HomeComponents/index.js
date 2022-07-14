@@ -16,12 +16,6 @@ export default function HomeComponents({ homePosts }) {
 
   const [opened, setOpened] = useState(false);
 
-  const [loading, setLoading] = useState(true);
-
-  setTimeout(function () {
-    setLoading(false);
-  }, 500);
-
   const postDummy = [
     {
       title: "Q&A ถาม-ตอบ ข้อสงสัยต่างๆ",
@@ -35,17 +29,17 @@ export default function HomeComponents({ homePosts }) {
   return (
     <Container size="lg">
       <div className={` mt-2 text-white w-full`}>
-        {user ? (
-          <Animate
-            play
-            start={{
-              transform: "translateY(1%)",
-              opacity: "0",
-            }}
-            end={{ transform: "translateY(0%)", opacity: "1" }}
-          >
-            <div className="flex flex-col gap-2">
-              {/* Add home post */}
+        <Animate
+          play
+          start={{
+            transform: "translateY(1%)",
+            opacity: "0",
+          }}
+          end={{ transform: "translateY(0%)", opacity: "1" }}
+        >
+          <div className="flex flex-col gap-2">
+            {/* Add home post */}
+            {user && (
               <AdminCheck>
                 <div className="flex flex-row justify-between w-full bg-foreground rounded-sm p-1 shadow-md">
                   <Modal
@@ -72,19 +66,17 @@ export default function HomeComponents({ homePosts }) {
                   </Button>
                 </div>
               </AdminCheck>
+            )}
 
-              {/* Display home post */}
-              <div className="flex flex-col gap-2">
-                {homePosts &&
-                  homePosts.map((item, index) => (
-                    <Post key={index} dummyData={item} />
-                  ))}
-              </div>
+            {/* Display home post */}
+            <div className="flex flex-col gap-2">
+              {homePosts &&
+                homePosts.map((post, index) => (
+                  <Post key={index} homePosts={post} />
+                ))}
             </div>
-          </Animate>
-        ) : (
-          <Post dummyData={postDummy[0]} />
-        )}
+          </div>
+        </Animate>
       </div>
     </Container>
   );

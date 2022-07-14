@@ -16,7 +16,7 @@ export default function PageNotFound() {
   }, [setTheme]);
 
   return (
-    <div className="min-h-[1024px] bg-background">
+    <div className="fixed top-0 right-0 bottom-0 left-0 bg-background">
       <Stack align="center">
         <h1 className="clip-image-text md:text-[20vw] text-[43vw]">404</h1>
         <div className="bg-foreground lg:p-8 p-4 rounded-sm ">
@@ -26,7 +26,7 @@ export default function PageNotFound() {
             </p>
           </Blockquote>
           <Center>
-            <Link href="/enter">
+            <Link href="/">
               <Button
                 className="bg-content  text-[#fff] hover:bg-content hover:opacity-75"
                 variant="default"

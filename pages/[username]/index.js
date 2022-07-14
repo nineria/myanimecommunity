@@ -48,6 +48,7 @@ export default function UserProfilePage({ user, posts }) {
   const { username } = useContext(UserContext);
 
   useEffect(() => {
+    if (!user || !posts) router.push("/404");
     const localData = localStorage.getItem("themes");
     if (localData == null) {
       localStorage.setItem("themes", "red");
@@ -136,8 +137,8 @@ export default function UserProfilePage({ user, posts }) {
     <div className="bg-background text-accent min-h-[1024px] mb-[235px] pb-10">
       <Navbar page="/profile" isBusy />
       <Container size="lg">
-        <AuthCheck fallback={username ? <Loading /> : <PageNotFound />}>
-          {username && (
+        <AuthCheck fallback={<Loading />}>
+          {username && user && posts && (
             <Animate
               play
               start={{

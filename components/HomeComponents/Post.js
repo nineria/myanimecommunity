@@ -10,7 +10,7 @@ import { Modal } from "@mantine/core";
 import { ChevronUp, Edit as EditIcon } from "tabler-icons-react";
 import AdminCheck from "@components/AdminCheck";
 
-export default function Post({ dummyData, disabled = false }) {
+export default function Post({ homePosts, disabled = false }) {
   const { user } = useContext(UserContext);
 
   const [toggle, setTogle] = useState(true);
@@ -18,9 +18,9 @@ export default function Post({ dummyData, disabled = false }) {
   const [opened, setOpened] = useState(false);
 
   const updatedAt =
-    typeof dummyData?.updatedAt === "number"
-      ? new Date(dummyData.updatedAt)
-      : dummyData.updatedAt?.toDate();
+    typeof homePosts?.updatedAt === "number"
+      ? new Date(homePosts.updatedAt)
+      : homePosts.updatedAt?.toDate();
 
   const date = updatedAt?.toLocaleDateString("th-th", {
     year: "numeric",
@@ -36,9 +36,9 @@ export default function Post({ dummyData, disabled = false }) {
         }`}
       >
         {/* Title */}
-        <Link href={dummyData?.titleLink || "/"}>
+        <Link href={homePosts?.titleLink || "/"}>
           <a className="truncate text-[#fff] max-w-[600px] cursor-pointer hover:underline">
-            {dummyData?.title || "หัวข้อหลัก"}
+            {homePosts?.title || "หัวข้อหลัก"}
           </a>
         </Link>
         {/* Edit button */}
@@ -57,7 +57,7 @@ export default function Post({ dummyData, disabled = false }) {
                   title: "text-title",
                 }}
               >
-                <Edit setOpened={setOpened} postData={dummyData} />
+                <Edit setOpened={setOpened} postData={homePosts} />
               </Modal>
               <AdminCheck>
                 <EditIcon
@@ -83,9 +83,9 @@ export default function Post({ dummyData, disabled = false }) {
       <div className="flex flex-col bg-[#aaa] gap-[1px]">
         {toggle ? (
           <Status
-            header={dummyData?.header || "หัวข้อย่อย"}
-            headerLink={dummyData?.headerLink || "/"}
-            body={dummyData?.body || "เนื้อหา"}
+            header={homePosts?.header || "หัวข้อย่อย"}
+            headerLink={homePosts?.headerLink || "/"}
+            body={homePosts?.body || "เนื้อหา"}
             date={date}
           />
         ) : null}

@@ -1,3 +1,4 @@
+import AuthCheck from "@components/AuthCheck";
 import { Footer } from "@components/Footer";
 
 import HomeComponents from "@components/HomeComponents";
