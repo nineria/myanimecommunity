@@ -84,7 +84,7 @@ export default function Enter() {
     }
 
     setTheme(localData);
-  }, [setTheme, username]);
+  }, [setTheme, router, username]);
 
   return (
     <main>
