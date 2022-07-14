@@ -24,6 +24,7 @@ import Logo from "@components/Logo";
 import { z } from "zod";
 import AgreeWebsiteRule from "@components/WebsiteRule/AgreeWebsiteRule";
 import PrivacyPolicy from "@components/PrivacyPolicy";
+import { useRouter } from "next/router";
 
 const REGEX = {
   length: /.{8,}/,
@@ -66,16 +67,24 @@ const schema = z
 export default function Enter() {
   const { user, username } = useContext(UserContext);
 
+  const router = useRouter();
+
   const { setTheme } = useThemeContext();
 
   useEffect(() => {
     const localData = localStorage.getItem("themes");
+
     if (localData == null) {
       localStorage.setItem("themes", "red");
       setTheme("red");
     }
+
+    if (username) {
+      router.push("/");
+    }
+
     setTheme(localData);
-  }, [setTheme]);
+  }, [setTheme, username]);
 
   return (
     <main>
@@ -110,6 +119,8 @@ export default function Enter() {
 function UsernameForm() {
   const [formUsername, setFormUsername] = useState("");
 
+  const router = useRouter();
+
   const { user, username } = useContext(UserContext);
 
   const onSubmit = async (values) => {
@@ -123,6 +134,8 @@ function UsernameForm() {
     batch.set(usernameDoc, { uid: user.uid });
 
     await batch.commit();
+
+    router.push("/");
   };
 
   const onChange = (e) => {
@@ -221,7 +234,7 @@ function UsernameForm() {
         <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
           {/* <form onSubmit={form.onSubmit((values) => console.log(values))}> */}
           <Card className="min-w-[600px]">
-            <Stack spacing="sm">
+            <Stack spacing="md">
               <Title order={2} align="center" mb="xl">
                 สร้างบัญชี
               </Title>
@@ -286,7 +299,7 @@ function UsernameForm() {
                   input: "bg-accent bg-opacity-50",
                 }}
               />
-              <Stack>
+              <Stack my="md">
                 <Checkbox
                   required
                   size="xs"

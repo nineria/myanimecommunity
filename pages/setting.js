@@ -80,7 +80,7 @@ export async function getServerSideProps() {
 }
 
 export default function SettingPage({ samplePost, localTheme }) {
-  const { user } = useContext(UserContext);
+  const { username } = useContext(UserContext);
 
   const { setTheme } = useThemeContext();
 
@@ -104,7 +104,7 @@ export default function SettingPage({ samplePost, localTheme }) {
         <Navbar page="/setting" isBusy />
         {/* Check user and Setting*/}
         <Container size="lg">
-          <AuthCheck fallback={<Loading />}>
+          <AuthCheck fallback={username ? <Loading /> : <PageNotFound />}>
             <Animate
               play
               start={{ transform: "translateY(1%)", opacity: "0" }}

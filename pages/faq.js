@@ -6,13 +6,10 @@ import {
   createStyles,
   Card,
   Stack,
-  Skeleton,
 } from "@mantine/core";
 import Navbar from "@components/Navbar";
 import { useThemeContext } from "@lib/useTheme";
 import { Footer } from "@components/Footer";
-import AuthCheck from "@components/AuthCheck";
-import Loading from "@components/Loading";
 
 const useStyles = createStyles((theme, _params, getRef) => ({
   icon: { ref: getRef("icon") },
@@ -338,17 +335,15 @@ export default function FaqPage({ data }) {
     <div className="bg-background text-accent min-h-[1024px] mb-[235px] pb-10">
       <Navbar isBusy />
       <Container size="lg">
-        <AuthCheck fallback={<Loading />}>
-          <Stack spacing="xs">
-            <Card className="bg-foreground">
-              <Title order={2} align="center">
-                คำถามที่พบบ่อย
-              </Title>
-              {FirstFaqLists}
-            </Card>
-            <Card className="bg-foreground">{FaqLists}</Card>
-          </Stack>
-        </AuthCheck>
+        <Stack spacing="xs">
+          <Card className="bg-foreground">
+            <Title order={2} align="center">
+              คำถามที่พบบ่อย
+            </Title>
+            {FirstFaqLists}
+          </Card>
+          <Card className="bg-foreground">{FaqLists}</Card>
+        </Stack>
       </Container>
       <Footer />
     </div>

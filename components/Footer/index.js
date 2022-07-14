@@ -5,74 +5,77 @@ import { Text, Container, ActionIcon, Group, Divider } from "@mantine/core";
 // Icons, Logo
 import { BrandTwitter, BrandYoutube, BrandInstagram } from "tabler-icons-react";
 import MyAniLogo from "@components/Navbar/MyAniLogo";
-
-const data = [
-  {
-    title: "ชุมชนคนรักอนิเมะ",
-    links: [
-      {
-        label: "โพสต์ใหม่",
-        link: "/posts",
-      },
-      {
-        label: "ข่าวสาร",
-        link: "/news",
-      },
-      {
-        label: "รีวิว",
-        link: "/review",
-      },
-      {
-        label: "Q&A ถามตอบ",
-        link: "/qanda",
-      },
-    ],
-  },
-  {
-    title: "จัดการข้อมูล",
-    links: [
-      {
-        label: "โปรไฟล์",
-        link: "/profile",
-      },
-      {
-        label: "ตั้งค่า",
-        link: "/setting",
-      },
-      {
-        label: "คำถามที่พบบ่อย",
-        link: "/faq",
-      },
-      {
-        label: "ออกจากระบบ",
-        link: "#",
-      },
-    ],
-  },
-  {
-    title: "ข้อมูลเว็บไซต์",
-    links: [
-      {
-        label: "จำนวนโพสต์ : " + "145K",
-        link: "/posts",
-      },
-      {
-        label: "จำนวนสมาชิก : " + "1M",
-        link: "/news",
-      },
-      {
-        label: "-",
-        link: "#",
-      },
-      {
-        label: "-",
-        link: "#",
-      },
-    ],
-  },
-];
+import { useContext } from "react";
+import { UserContext } from "@lib/context";
 
 export function Footer() {
+  const { username } = useContext(UserContext);
+  const data = [
+    {
+      title: "ชุมชนคนรักอนิเมะ",
+      links: [
+        {
+          label: "โพสต์ใหม่",
+          link: "/posts",
+        },
+        {
+          label: "ข่าวสาร",
+          link: "/news",
+        },
+        {
+          label: "รีวิว",
+          link: "/review",
+        },
+        {
+          label: "Q&A ถามตอบ",
+          link: "/qanda",
+        },
+      ],
+    },
+    {
+      title: "จัดการข้อมูล",
+      links: [
+        {
+          label: "โปรไฟล์",
+          link: `/${username}`,
+        },
+        {
+          label: "ตั้งค่า",
+          link: "/setting",
+        },
+        {
+          label: "คำถามที่พบบ่อย",
+          link: "/faq",
+        },
+        {
+          label: "ออกจากระบบ",
+          link: "#",
+        },
+      ],
+    },
+    {
+      title: "ข้อมูลเว็บไซต์",
+      links: [
+        {
+          label: "จำนวนโพสต์ : " + "145K",
+          link: "#",
+        },
+        {
+          label: "จำนวนสมาชิก : " + "1M",
+          link: "#",
+        },
+        {
+          label: "-",
+          link: "#",
+        },
+        {
+          label: "-",
+          link: "#",
+        },
+      ],
+    },
+  ];
+
   const groups = data.map((group) => {
     const links = group.links.map((link, index) => (
       <Text
@@ -100,7 +103,7 @@ export function Footer() {
   });
 
   return (
-    <footer className="fixed bottom-0 pt-8 bg-foreground mt-10 h-[235px] -z-10 w-full border-t-2 border-content">
+    <footer className="fixed bottom-0 pt-4 md:pt-8 bg-foreground mt-10 h-[235px] -z-10 w-full border-t-2 border-content">
       <Container size="lg" className="flex md:justify-between justify-center">
         <div className="w-[250px] md:text-left text-center">
           <div className="text-3xl font-bold">
@@ -122,7 +125,7 @@ export function Footer() {
       </Container>
       <Container
         size="lg"
-        className="flex flex-col md:flex-row md:justify-between items-center "
+        className="flex flex-col md:flex-row md:justify-between items-center"
       >
         <Text className="text-title opacity-80" size="sm">
           © 2022 MyAnimeCommunity. All rights reserved.

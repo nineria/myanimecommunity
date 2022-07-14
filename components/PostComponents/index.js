@@ -14,13 +14,11 @@ import Edit from "./Edit";
 // Icons
 import {
   AlertTriangle,
-  ArrowBackUp,
   CalendarMinus,
   Edit as EditIcon,
   Star,
   ThumbUp,
   Trash,
-  X,
 } from "tabler-icons-react";
 import { getUserWithUsername } from "@lib/firebase";
 import AuthCheck from "@components/AuthCheck";
@@ -130,7 +128,7 @@ function MainPost({ post, postRef }) {
   });
 
   return (
-    <div className="relative px-4 py-2 text-title text-opacity-90 w-full">
+    <div className="relative px-4 py-2 text-title text-opacity-90 w-full ">
       <Group position="apart" pb="xs">
         {post.createdAt?.seconds !== post.updatedAt?.seconds ? (
           <p className="text-xs opacity-80 mb-2">แก้ไขล่าสุด : {date}</p>
@@ -178,14 +176,16 @@ function MainPost({ post, postRef }) {
           )}
         </Group>
       </Group>
-      <Image src={post.image} alt={post.image} my="xs"></Image>
+      <Image src={post.image} alt={post.image} my="xs" radius="sm" />
       <RichTextEditor
         readOnly
         value={post.content}
-        classNames={{ root: "bg-foreground border-none text-title" }}
+        classNames={{
+          root: "bg-transparent border-none text-title z-10",
+        }}
       />
       <Space h="50px" />
-      <p className="absolute bottom-20 right-4 font-bold leading-none uppercase opacity-[0.03] text-[13vw] text-right tracking-tighter">
+      <p className="absolute select-none bottom-20 right-6 font-bold leading-none uppercase opacity-[0.03] text-[10vw] text-right tracking-tighter">
         {post.tag[0] === "คำถาม"
           ? "QUESTION"
           : post.tag[0] === "รีวิว"
@@ -212,10 +212,10 @@ function MainPost({ post, postRef }) {
               <ThumbUp size={14} />
               ถูกใจ
             </div>
-            <div className="flex flex-row gap-1 items-end hover:underline cursor-pointer ">
+            {/* <div className="flex flex-row gap-1 items-end hover:underline cursor-pointer ">
               <ArrowBackUp size={14} />
               ตอบกลับ
-            </div>
+            </div> */}
           </Group>
         </Group>
       </AuthCheck>

@@ -143,11 +143,11 @@ function MainPost({ comment, commentRef, post }) {
       <RichTextEditor
         readOnly
         value={comment?.content}
-        classNames={{ root: "bg-foreground border-none text-title" }}
+        classNames={{ root: "bg-transparent border-none text-title z-10" }}
       />
-      {/* <p className="absolute bottom-2 right-4 leading-none font-bold uppercase opacity-[0.03] text-[7vw] text-right tracking-tighter">
-        Answer
-      </p> */}
+      <p className="absolute bottom-2 select-none right-6 leading-none font-bold uppercase opacity-[0.03] text-[8vw] text-right tracking-tighter">
+        REPLY
+      </p>
 
       {/* <p className="absolute bottom-4 text-xs">
         <div className="flex items-center text-content gap-1 mb-2 border-[1px] border-title border-opacity-10 p-1 rounded-sm">

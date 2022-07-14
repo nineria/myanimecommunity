@@ -16,10 +16,10 @@ import { StatsGridIcons } from "@components/ProfileComponents/StatsGridIcons";
 import StatsSegments from "@components/ProfileComponents/StatsSegments";
 import { TableSort } from "@components/ProfileComponents/TableSort";
 import { getUserWithUsername, postToJSON } from "@lib/firebase";
-import AdminCheck from "@components/AdminCheck";
-import AnnouncementControl from "@components/ProfileComponents/AnnouncementControl";
 import Loading from "@components/Loading";
 import { useThemeContext } from "@lib/useTheme";
+import { useRouter } from "next/router";
+import PageNotFound from "pages/404";
 
 export async function getServerSideProps({ query }) {
   const { username } = query;
@@ -43,6 +43,10 @@ export async function getServerSideProps({ query }) {
 export default function UserProfilePage({ user, posts }) {
   const { setTheme } = useThemeContext();
 
+  const router = useRouter();
+
+  const { username } = useContext(UserContext);
+
   useEffect(() => {
     const localData = localStorage.getItem("themes");
     if (localData == null) {
@@ -51,8 +55,6 @@ export default function UserProfilePage({ user, posts }) {
     }
     setTheme(localData);
   }, [setTheme]);
-
-  // const { userData } = useContext(UserContext);
 
   // const [totalLikes, setTotalLike] = useState(0);
 
@@ -73,87 +75,89 @@ export default function UserProfilePage({ user, posts }) {
   //   setLoading(false);
   // }, 500);
 
-  const typeProps = [
-    {
-      name: "Action",
-      color: {
-        from: "indigo",
-        to: "cyan",
-      },
-    },
-    {
-      name: "Drama",
-      color: {
-        from: "teal",
-        to: "lime",
-      },
-    },
-    {
-      name: "School",
-      color: {
-        from: "teal",
-        to: "blue",
-      },
-    },
-    {
-      name: "Love",
-      color: {
-        from: "orange",
-        to: "red",
-      },
-    },
-    {
-      name: "Comedy",
-      color: {
-        from: "#ed6ea0",
-        to: "#ec8c69",
-      },
-    },
-  ];
+  // const typeProps = [
+  //   {
+  //     name: "Action",
+  //     color: {
+  //       from: "indigo",
+  //       to: "cyan",
+  //     },
+  //   },
+  //   {
+  //     name: "Drama",
+  //     color: {
+  //       from: "teal",
+  //       to: "lime",
+  //     },
+  //   },
+  //   {
+  //     name: "School",
+  //     color: {
+  //       from: "teal",
+  //       to: "blue",
+  //     },
+  //   },
+  //   {
+  //     name: "Love",
+  //     color: {
+  //       from: "orange",
+  //       to: "red",
+  //     },
+  //   },
+  //   {
+  //     name: "Comedy",
+  //     color: {
+  //       from: "#ed6ea0",
+  //       to: "#ec8c69",
+  //     },
+  //   },
+  // ];
 
-  const socialProps = [
-    {
-      name: user?.email,
-      icon: <Mail />,
-    },
-    {
-      name: "Instagram",
-      icon: <BrandInstagram />,
-    },
-    {
-      name: "Github",
-      icon: <BrandGithub />,
-    },
-    {
-      name: "Linkedin",
-      icon: <BrandLinkedin />,
-    },
-  ];
+  // const socialProps = [
+  //   {
+  //     name: user?.email,
+  //     icon: <Mail />,
+  //   },
+  //   {
+  //     name: "Instagram",
+  //     icon: <BrandInstagram />,
+  //   },
+  //   {
+  //     name: "Github",
+  //     icon: <BrandGithub />,
+  //   },
+  //   {
+  //     name: "Linkedin",
+  //     icon: <BrandLinkedin />,
+  //   },
+  // ];
 
   return (
     <div className="bg-background text-accent min-h-[1024px] mb-[235px] pb-10">
       <Navbar page="/profile" isBusy />
       <Container size="lg">
-        <AuthCheck fallback={<Loading />}>
-          <Animate
-            play
-            start={{
-              transform: "translateY(1%)",
-              opacity: "0",
-            }}
-            end={{ transform: "translateY(0%)", opacity: "1" }}
-          >
-            <Stack spacing="xs">
-              <UserCardImage user={user} posts={posts} />
-              <StatsGridIcons user={user} posts={posts} />
-              <StatsSegments user={user} />
-              {posts[0] && <TableSort posts={posts} />}
+        <AuthCheck fallback={username ? <Loading /> : <PageNotFound />}>
+          {username && (
+            <Animate
+              play
+              start={{
+                transform: "translateY(1%)",
+                opacity: "0",
+              }}
+              end={{ transform: "translateY(0%)", opacity: "1" }}
+            >
+              <Stack spacing="xs">
+                <UserCardImage user={user} posts={posts} />
+                <StatsGridIcons user={user} posts={posts} />
+                <StatsSegments user={user} />
+                {posts[0] && <TableSort posts={posts} />}
 
-              {/* <AdminCheck>
+                {/* <AdminCheck>
                 <AnnouncementControl />
               </AdminCheck> */}
-            </Stack>
-          </Animate>
+              </Stack>
+            </Animate>
+          )}
         </AuthCheck>
       </Container>
       <Footer />

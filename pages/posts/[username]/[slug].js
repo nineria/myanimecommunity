@@ -25,7 +25,7 @@ import Comment from "@components/PostComponents/Comment";
 import { Star } from "tabler-icons-react";
 import Loading from "@components/Loading";
 import Metatags from "@components/Metatags";
-import LoginRegister from "@components/LoginRegister";
+import LoginRegister, { LoginPopUp } from "@components/LoginRegister";
 
 export async function getStaticProps({ params }) {
   const { username, slug } = params;
@@ -130,6 +130,7 @@ export default function PostPage(props) {
       <Container size="lg" py="xs">
         <Stack spacing="xs">
           <Breadcrumbs separator="→">{items}</Breadcrumbs>
+          {/* Top section */}
           <Top data={post} />
           <Paper p="xs" className="shadow-md bg-foreground">
             <Group position="apart">
@@ -144,16 +145,18 @@ export default function PostPage(props) {
                   active: "bg-content text-[#fff]",
                 }}
               />
-              <Group position="right" spacing="4px" className="text-content">
-                <Star size={14} />
-                <Star size={14} />
-                <Star size={14} />
-                <Star size={14} />
-                <Star size={14} />
-                <Text size="xs" weight={600} mx="xs">
-                  0 ดาว
-                </Text>
-              </Group>
+              <AuthCheck fallback={<></>}>
+                <Group position="right" spacing="4px" className="text-content">
+                  <Star size={14} />
+                  <Star size={14} />
+                  <Star size={14} />
+                  <Star size={14} />
+                  <Star size={14} />
+                  <Text size="xs" weight={600} mx="xs">
+                    0 ดาว
+                  </Text>
+                </Group>
+              </AuthCheck>
             </Group>
           </Paper>
           {activePage === 1 ? (
@@ -185,7 +188,7 @@ export default function PostPage(props) {
             />
           </Paper>
           {/* Create comment */}
-          <AuthCheck fallback={<div />}>
+          <AuthCheck fallback={<></>}>
             <CreateComment post={post} />
           </AuthCheck>
         </Stack>

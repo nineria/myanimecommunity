@@ -102,8 +102,12 @@ function Logo() {
 }
 
 export function LoginPopUp() {
+  const router = useRouter();
+
   const signInWithGoogle = async () => {
     await auth.signInWithPopup(googleAuthProvider);
+
+    router.push("/enter");
   };
 
   return (

@@ -16,6 +16,7 @@ import {
   Image,
   PasswordInput,
   Group,
+  Card,
 } from "@mantine/core";
 
 import {
@@ -191,10 +192,21 @@ function ProfileForm({ user, userRef, setOpened }) {
           <Collapse in={openedImage} mt="xs">
             {imageRef.current?.value ? (
               <Stack spacing="xs">
-                <Image
+                {/* <Image
                   src={imageRef.current?.value}
                   alt={imageRef.current?.value}
-                />
+                /> */}
+
+                <Card radius="sm">
+                  <Card.Section
+                    sx={{
+                      backgroundImage: `url(${imageRef.current?.value})`,
+                      height: 260,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                    }}
+                  />
+                </Card>
                 <InputWrapper description="หากรูปภาพไม่แสดงให้ลองเปลี่ยน Link" />
               </Stack>
             ) : (
