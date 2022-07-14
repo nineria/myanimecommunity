@@ -244,7 +244,7 @@ function MainPost({ post, postRef }) {
         >
           <Edit post={post} postRef={postRef} setOpened={setOpened} />
         </Modal>
-        <Group spacing="xs">
+        <Group spacing="xs" className="z-20">
           <AuthorCheck username={post.username}>
             <Button
               onClick={() => setOpened(true)}
@@ -308,10 +308,6 @@ function MainPost({ post, postRef }) {
               <ThumbUp size={14} />
               {post.likes} ถูกใจ
             </div>
-            {/* <div className="flex flex-row gap-1 items-end hover:underline cursor-pointer ">
-              <ArrowBackUp size={14} />
-              ตอบกลับ
-            </div> */}
           </Group>
         </Group>
       </AuthCheck>

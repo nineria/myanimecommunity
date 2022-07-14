@@ -46,8 +46,6 @@ export default function EditComment({ comment, commentRef, setOpened, post }) {
 }
 
 function CommentForm({ comment, commentRef, setOpened, post }) {
-  const [content, setContent] = useState(comment.content);
-
   const router = useRouter();
 
   const { userData } = useContext(UserContext);
@@ -56,13 +54,13 @@ function CommentForm({ comment, commentRef, setOpened, post }) {
 
   const form = useForm({
     initialValues: {
-      content: content,
+      content: comment.content,
     },
   });
 
-  const HandleChange = async () => {
+  const HandleChange = async (values) => {
     await commentRef.update({
-      content: content,
+      content: values.content,
       username: userData.username,
       avatar: userData.avatar,
       updateAt: serverTimestamp(),
@@ -151,7 +149,7 @@ function CommentForm({ comment, commentRef, setOpened, post }) {
   };
 
   return (
-    <form onSubmit={form.onSubmit(() => HandleChange())}>
+    <form onSubmit={form.onSubmit((values) => HandleChange(values))}>
       <InputWrapper
         label="คอมเมนต์"
         description="แก้ไขรายระเอียดคอมเมนต์ เช่น ข้อความ รูปภาพ วิดีโอ รวมไปถึง Link ต่างๆ"
@@ -172,7 +170,6 @@ function CommentForm({ comment, commentRef, setOpened, post }) {
               sticky={true}
               stickyOffset={-55}
               {...form.getInputProps("content")}
-              onChange={setContent}
               placeholder="รายระเอียดเนื้อหาของโพตส์ เช่น รูปภาพ หรือ วิดีโอ รวมไปถึง Link ต่างๆ"
               onImageUpload={handleImageUpload}
               classNames={{
@@ -186,7 +183,7 @@ function CommentForm({ comment, commentRef, setOpened, post }) {
           <Tabs.Tab label="ตัวอย่าง">
             <RichTextEditor
               readOnly
-              value={content}
+              {...form.getInputProps("content")}
               classNames={{
                 root: "bg-black/10 text-title border-[#fff] border-opacity-20",
               }}

@@ -41,7 +41,6 @@ export default function Add({ setOpened }) {
   const router = useRouter();
   const [tags, setTags] = useState([]);
   const [genres, setGenres] = useState([]);
-  const [content, setContent] = useState("");
 
   const { username } = useContext(UserContext);
   const HandleChange = async (values) => {
@@ -57,7 +56,7 @@ export default function Add({ setOpened }) {
       genre: genres,
       title: values.title,
       image: values.image,
-      content: content,
+      content: values.content,
       credit: values.credit,
       username: username,
       updatedAt: serverTimestamp(),
@@ -108,7 +107,7 @@ export default function Add({ setOpened }) {
         <TagGenre data={genres} setData={setGenres} />
         <PostHeader {...form.getInputProps("title")} />
         <PostImage {...form.getInputProps("image")} />
-        <PostContent content={content} setContent={setContent} />
+        <PostContent {...form.getInputProps("content")} />
         <RefCredit {...form.getInputProps("credit")} />
         <WebsiteRule />
         <ButtonControl setOpened={setOpened} type="add" />

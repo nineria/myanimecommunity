@@ -39,7 +39,6 @@ export default function Edit({ post, postRef, setOpened }) {
 function PostForm({ post, postRef, setOpened }) {
   const [tags, setTags] = useState([...post.tag]);
   const [genres, setGenres] = useState([...post.genre]);
-  const [content, setContent] = useState(post.content);
 
   const router = useRouter();
 
@@ -49,7 +48,7 @@ function PostForm({ post, postRef, setOpened }) {
       genre: genres,
       title: values.title,
       image: values.image,
-      content: content,
+      content: values.content,
       credit: values.credit,
       updatedAt: serverTimestamp(),
     });
@@ -88,7 +87,7 @@ function PostForm({ post, postRef, setOpened }) {
           <TagGenre data={genres} setData={setGenres} />
           <PostHeader {...form.getInputProps("title")} />
           <PostImage {...form.getInputProps("image")} />
-          <PostContent content={content} setContent={setContent} />
+          <PostContent {...form.getInputProps("content")} />
           <RefCredit {...form.getInputProps("credit")} />
           <WebsiteRule />
           <ButtonControl setOpened={setOpened} postRef={postRef} />
