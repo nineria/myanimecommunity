@@ -95,8 +95,8 @@ function CommentForm({ comment, commentRef, setOpened, post }) {
   };
 
   const handleDelete = () => {
-    const handleOnClick = () => {
-      commentRef.delete();
+    const handleOnClick = async () => {
+      await commentRef.delete();
 
       showNotification({
         color: "red",

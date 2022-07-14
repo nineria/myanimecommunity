@@ -216,15 +216,10 @@ function MainPost({ comment, commentRef, post }) {
             รายงานโพสต์
           </div>
           <Group position="right">
-            {/* <Like postRef={postRef} /> */}
             <div className="flex flex-row gap-1 items-end hover:underline cursor-pointer ">
               <ThumbUp size={14} />
               {comment.likes} ถูกใจ
             </div>
-            {/* <div className="flex flex-row gap-1 items-end hover:underline cursor-pointer ">
-              <ArrowBackUp size={14} />
-              ตอบกลับ
-            </div> */}
           </Group>
         </Group>
       </AuthCheck>
