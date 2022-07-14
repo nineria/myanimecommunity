@@ -55,7 +55,7 @@ export default function UserProfilePage({ user, posts }) {
       setTheme("red");
     }
     setTheme(localData);
-  }, [setTheme]);
+  }, [setTheme, posts, router, user]);
 
   // const [totalLikes, setTotalLike] = useState(0);
 
