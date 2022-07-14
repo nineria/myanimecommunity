@@ -108,8 +108,6 @@ function TopMenu({ comment }) {
     day: "numeric",
   });
 
-  console.log(comment);
-
   return (
     <div className="absolute p-2">
       <div className="flex flex-row items-center gap-2">

@@ -108,7 +108,7 @@ export default function Themes(props) {
         </div>
       </div>
       {/* Option menu result changed example */}
-      <ResultSample samplePost={props.samplePost} />
+      <ResultSample posts={props.posts} />
     </div>
   );
 }

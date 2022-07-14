@@ -20,7 +20,7 @@ export default function Post({ homePosts, disabled = false }) {
   const updatedAt =
     typeof homePosts?.updatedAt === "number"
       ? new Date(homePosts.updatedAt)
-      : homePosts.updatedAt?.toDate();
+      : homePosts?.updatedAt?.toDate();
 
   const date = updatedAt?.toLocaleDateString("th-th", {
     year: "numeric",
@@ -87,6 +87,7 @@ export default function Post({ homePosts, disabled = false }) {
             headerLink={homePosts?.headerLink || "/"}
             body={homePosts?.body || "เนื้อหา"}
             date={date}
+            disabled={disabled}
           />
         ) : null}
       </div>

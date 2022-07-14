@@ -9,6 +9,7 @@ import {
   Button,
   Container,
   Group,
+  Pagination,
   Stack,
 } from "@mantine/core";
 import { Footer } from "@components/Footer";
@@ -36,6 +37,8 @@ export default function PostsPage(props) {
   const [layout, setLayout] = useState("grid");
 
   const { user } = useContext(UserContext);
+
+  const [activePage, setPage] = useState(1);
 
   const items = [
     { title: "หน้าหลัก", href: "/" },
@@ -97,7 +100,20 @@ export default function PostsPage(props) {
             {/* Menu Controller */}
             <PostsMenuController layout={layout} setLayout={setLayout} />
             {/* Posts */}
+
             <PostLayout posts={props.posts} layout={layout} />
+            <Pagination
+              total={1}
+              mt="lg"
+              size="sm"
+              page={activePage}
+              onChange={setPage}
+              classNames={{
+                item: "text-title",
+                dots: "text-content",
+                active: "bg-content text-[#fff]",
+              }}
+            />
           </Stack>
         </Container>
       </div>

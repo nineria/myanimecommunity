@@ -15,7 +15,7 @@ export default function SettingComponents(props) {
         </Text>
       </Group>
       <Divider className="opacity-50" />
-      <Themes samplePost={props.samplePost} localTheme={props.localTheme} />
+      <Themes posts={props.posts} localTheme={props.localTheme} />
     </div>
   );
 }

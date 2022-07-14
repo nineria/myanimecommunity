@@ -135,33 +135,31 @@ export default function PostPage(props) {
           </Breadcrumbs>
           {/* Top section */}
           <Top data={post} />
-          <Paper p="xs" className="shadow-md bg-foreground">
-            <Group position="apart">
-              <Pagination
-                total={10}
-                size="sm"
-                page={activePage}
-                onChange={setPage}
-                classNames={{
-                  item: "text-title",
-                  dots: "text-content",
-                  active: "bg-content text-[#fff]",
-                }}
-              />
-              <AuthCheck fallback={<></>}>
-                <Group position="right" spacing="4px" className="text-content">
-                  <Star size={14} />
-                  <Star size={14} />
-                  <Star size={14} />
-                  <Star size={14} />
-                  <Star size={14} />
-                  <Text size="xs" weight={600} mx="xs">
-                    0 ดาว
-                  </Text>
-                </Group>
-              </AuthCheck>
-            </Group>
-          </Paper>
+          <Group position="apart">
+            <Pagination
+              total={1}
+              size="sm"
+              page={activePage}
+              onChange={setPage}
+              classNames={{
+                item: "text-title",
+                dots: "text-content",
+                active: "bg-content text-[#fff]",
+              }}
+            />
+            <AuthCheck fallback={<></>}>
+              <Group position="right" spacing="4px" className="text-content">
+                <Star size={14} />
+                <Star size={14} />
+                <Star size={14} />
+                <Star size={14} />
+                <Star size={14} />
+                <Text size="xs" weight={600} mx="xs">
+                  0 ดาว
+                </Text>
+              </Group>
+            </AuthCheck>
+          </Group>
           {activePage === 1 ? (
             <Stack spacing="xs">
               {/* Post */}
@@ -179,7 +177,7 @@ export default function PostPage(props) {
           )}
           <Paper p="xs" className="shadow-md bg-foreground">
             <Pagination
-              total={10}
+              total={1}
               size="sm"
               page={activePage}
               onChange={setPage}

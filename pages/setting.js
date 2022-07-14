@@ -9,33 +9,15 @@ import Navbar from "@components/Navbar";
 import PageNotFound from "./404.js";
 import AuthCheck from "@components/AuthCheck.js";
 import Loading from "@components/Loading.js";
+import { firestore, postToJSON } from "@lib/firebase.js";
 
+const LIMIT = 10;
 // This gets called on every request
 export async function getServerSideProps() {
   // Fetch data from external API
-  const samplePost = await [
-    {
-      title: "อัพเดทข่าวสาร",
-      titleLink: "/news",
-      header: "ข่าวสารอนิเมะอนิเมะ & ประกาศจากเว็บไซต์",
-      headerLink: "/news",
-      body: "โพสต์รวบรวมอนิเมะเปิดตัวใหม่ และข่าวสารต่างๆ เกี่ยวกับอนิเมะ",
-    },
-    {
-      title: "รีวิว อนิเมะ มังงะ สปอย",
-      titleLink: "/review",
-      header: "รีวิวอนิเมะเปิดตัวใหม่ และข้อมูลที่เกี่ยวข้อง",
-      headerLink: "/news",
-      body: "โพสต์รวบรวมรีวิวอนิเมะก่อนไปรับชม และเรื่องย่อต่างๆ พร้อมข้อมูลจำเพราะของตัวละคร ฯลฯ",
-    },
-    {
-      title: "Q&A ถาม-ตอบ ข้อสงสัยต่างๆ",
-      titleLink: "/qAndA",
-      header: "โพสต์ ถาม-ตอบ ข้อสงสัยเกี่ยวกับ อนิเมะ มังงะ",
-      headerLink: "/news",
-      body: "โพสต์รวบรวมรีวิวอนิเมะก่อนไปรับชม และเรื่องย่อต่างๆ พร้อมข้อมูลจำเพราะของตัวละคร ฯลฯ",
-    },
-  ];
+  const postsQuery = firestore.collectionGroup("homePosts").limit(LIMIT);
+
+  const posts = (await postsQuery.get()).docs.map(postToJSON);
 
   const localTheme = await [
     {
@@ -76,10 +58,10 @@ export async function getServerSideProps() {
     },
   ];
   // Pass data to the page via props
-  return { props: { samplePost, localTheme } };
+  return { props: { posts, localTheme } };
 }
 
-export default function SettingPage({ samplePost, localTheme }) {
+export default function SettingPage({ posts, localTheme }) {
   const { username } = useContext(UserContext);
 
   const { setTheme } = useThemeContext();
@@ -110,10 +92,7 @@ export default function SettingPage({ samplePost, localTheme }) {
               start={{ transform: "translateY(1%)", opacity: "0" }}
               end={{ transform: "translateY(0%)", opacity: "1" }}
             >
-              <SettingComponents
-                samplePost={samplePost}
-                localTheme={localTheme}
-              />
+              <SettingComponents posts={posts} localTheme={localTheme} />
             </Animate>
           </AuthCheck>
         </Container>
