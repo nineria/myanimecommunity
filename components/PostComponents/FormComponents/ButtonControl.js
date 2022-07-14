@@ -24,8 +24,8 @@ export function ButtonControl({ setOpened, postRef, disabled, type }) {
   };
 
   const handleDelete = () => {
-    const handleOnClick = () => {
-      postRef.delete();
+    const handleOnClick = async () => {
+      await postRef.delete();
 
       showNotification({
         color: "red",
