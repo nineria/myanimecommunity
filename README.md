@@ -2,6 +2,8 @@
 
 [https://myanimecommunity.vercel.app](https://myanimecommunity.vercel.app)
 
+<img src="https://i.ibb.co/mhVXDPw/1.png">
+
 ## Description
 
 My Anime Community website purpose is to bring together people who like anime. They can come in and talk and exchange knowledge about anime, manga or light novels.
