@@ -16,6 +16,7 @@ import AuthCheck from "@components/AuthCheck";
 import Loading from "@components/Loading";
 import { UserContext } from "@lib/context";
 import AdminCheck from "@components/AdminCheck";
+import AddAnnouncement from "@components/Announcement/Add";
 
 export default function PostsMenuController({ layout, setLayout }) {
   const { user } = useContext(UserContext);
@@ -51,13 +52,7 @@ export default function PostsMenuController({ layout, setLayout }) {
             <AdminCheck>
               <Divider orientation="vertical" mx="xs" />
               <Group grow spacing="xs">
-                <Button
-                  className="z-10 bg-content text-[#fff] hover:bg-content hover:opacity-75 max-w-fit"
-                  variant="default"
-                  size="xs"
-                >
-                  สร้างประกาศ +
-                </Button>
+                <AddAnnouncement />
                 <div className="bg-background max-w-fit p-[1px] rounded-md">
                   <Button
                     leftIcon={<Edit size={14} />}

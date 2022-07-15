@@ -3,7 +3,12 @@ import Link from "next/link";
 // Components
 import { Text, Container, ActionIcon, Group, Divider } from "@mantine/core";
 // Icons, Logo
-import { BrandTwitter, BrandYoutube, BrandInstagram } from "tabler-icons-react";
+import {
+  BrandTwitter,
+  BrandYoutube,
+  BrandInstagram,
+  BrandFacebook,
+} from "tabler-icons-react";
 import MyAniLogo from "@components/Navbar/MyAniLogo";
 import { useContext } from "react";
 import { UserContext } from "@lib/context";
@@ -132,15 +137,33 @@ export function Footer() {
         </Text>
 
         <Group spacing={0} className="" position="right" noWrap>
-          <ActionIcon size="lg">
-            <BrandTwitter size={18} className="text-title" />
-          </ActionIcon>
-          <ActionIcon size="lg">
-            <BrandYoutube size={18} className="text-title" />
-          </ActionIcon>
-          <ActionIcon size="lg">
-            <BrandInstagram size={18} className="text-title" />
-          </ActionIcon>
+          <a
+            href="https://twitter.com/nineria_nananai"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <ActionIcon size="lg">
+              <BrandTwitter size={18} className="text-title" />
+            </ActionIcon>
+          </a>
+          <a
+            href="https://www.facebook.com/NineriaNananai"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <ActionIcon size="lg">
+              <BrandFacebook size={18} className="text-title" />
+            </ActionIcon>
+          </a>
+          <a
+            href="https://www.instagram.com/ninerianananai/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <ActionIcon size="lg">
+              <BrandInstagram size={18} className="text-title" />
+            </ActionIcon>
+          </a>
         </Group>
       </Container>
     </footer>

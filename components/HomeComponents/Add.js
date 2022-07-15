@@ -2,12 +2,11 @@ import React, { useContext } from "react";
 // Hooks
 import { useForm } from "@mantine/hooks";
 // Components
-import { Divider, Stack } from "@mantine/core";
+import { Stack } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import ButtonControl from "./PostComponents/ButtonControl";
 import Content from "./PostComponents/Content";
 import Header from "./PostComponents/Header";
-import TermAndService from "./PostComponents/TermAndService";
 import Title from "./PostComponents/Title";
 // Icons
 import { Check } from "tabler-icons-react";

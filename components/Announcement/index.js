@@ -4,18 +4,28 @@ import { useThemeContext } from "@lib/useTheme";
 // Icons
 import { Animate } from "react-simple-animate";
 import { AlertCircle, X } from "tabler-icons-react";
+import { Group } from "@mantine/core";
+import EditAnnouncement from "./Edit";
+import { getUserWithUsername } from "@lib/firebase";
+import { useContext } from "react";
+import { UserContext } from "@lib/context";
+import AdminCheck from "@components/AdminCheck";
 
-export default function Announcement({ type, title, content }) {
+export default function Announcement(props, { disabled = false }) {
   const [onClose, setOnClose] = useState(true);
+
+  const { user } = useContext(UserContext);
 
   const { setTheme } = useThemeContext();
 
   useEffect(() => {
     const localData = localStorage.getItem("themes");
+
     if (localData == null) {
       localStorage.setItem("themes", "red");
       setTheme("red");
     }
+
     setTheme(localData);
   }, [setTheme]);
 
@@ -29,9 +39,9 @@ export default function Announcement({ type, title, content }) {
         >
           <div
             className={`${
-              type === "danger"
+              props.type === "danger"
                 ? "border-red-500 bg-red-500"
-                : type === "warning"
+                : props.type === "warning"
                 ? "border-orange-500 bg-orange-500"
                 : "border-green-500 bg-green-500"
             } border-2 rounded-sm flex flex-row items-center`}
@@ -41,15 +51,26 @@ export default function Announcement({ type, title, content }) {
             </div>
             <div className="flex flex-row px-2 text-title  w-full py-2 bg-foreground rounded-r-sm">
               <div className="w-full">
-                <h1 className="font-bold md:text-base text-sm ">{title}</h1>
-                <p className="text-xs md:text-sm ">{content}</p>
+                <h1 className="font-bold md:text-base text-sm ">
+                  {props.title}
+                </h1>
+                <p className="text-xs md:text-sm ">{props.content}</p>
               </div>
-              <div
-                className="cursor-pointer bg-foreground"
-                onClick={() => setOnClose(!onClose)}
-              >
-                <X size={18} color="#aaa" />
-              </div>
+              <Group grow spacing="xs" className="absolute top-2 right-2">
+                {user && (
+                  <AdminCheck>
+                    <div className="cursor-pointer bg-foreground">
+                      <EditAnnouncement {...props} />
+                    </div>
+                  </AdminCheck>
+                )}
+                <div
+                  className="cursor-pointer bg-foreground"
+                  onClick={() => !disabled && setOnClose(!onClose)}
+                >
+                  <X size={18} color="#aaa" />
+                </div>
+              </Group>
             </div>
           </div>
         </Animate>

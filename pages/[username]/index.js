@@ -15,12 +15,14 @@ import AuthCheck from "@components/AuthCheck";
 import { StatsGridIcons } from "@components/ProfileComponents/StatsGridIcons";
 import StatsSegments from "@components/ProfileComponents/StatsSegments";
 import { TableSort } from "@components/ProfileComponents/TableSort";
-import { getUserWithUsername, postToJSON } from "@lib/firebase";
+import { firestore, getUserWithUsername, postToJSON } from "@lib/firebase";
 import Loading from "@components/Loading";
 import { useThemeContext } from "@lib/useTheme";
 import { useRouter } from "next/router";
 import PageNotFound from "pages/404";
 import Metatags from "@components/Metatags";
+import AdminCheck from "@components/AdminCheck";
+import AnnouncementControl from "@components/ProfileComponents/AnnouncementControl";
 
 export async function getServerSideProps({ query }) {
   const { username } = query;
@@ -155,9 +157,9 @@ export default function UserProfilePage({ user, posts }) {
                 <StatsSegments user={user} />
                 {posts[0] && <TableSort posts={posts} />}
 
-                {/* <AdminCheck>
-                <AnnouncementControl />
-              </AdminCheck> */}
+                <AdminCheck>
+                  <AnnouncementControl />
+                </AdminCheck>
               </Stack>
             </Animate>
           )}
