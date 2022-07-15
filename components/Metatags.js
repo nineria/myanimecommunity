@@ -1,9 +1,9 @@
 import Head from "next/head";
 
 export default function Metatags({
-  title = "My Anime Community",
-  description = "Bring together people who like anime, They can come in and talk and exchange knowledge about anime, manga or light novels.",
-  image = "https://github.com/nineria/myanimecommunity/blob/main/public/image/website-1.png?raw=true",
+  title = "ยินดีต้อนรับสู่ MyAnimeCommunity!",
+  description = "รวมพลคนรักอนิเมะ เข้ามาพูดคุยแลกเปลี่ยนความรู้เกี่ยวกับอนิเมะ มังงะ หรือไลท์โนเวล!",
+  image = "https://i.ibb.co/WHQKjc4/image.png",
 }) {
   return (
     <Head>

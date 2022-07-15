@@ -19,6 +19,7 @@ import AuthCheck from "@components/AuthCheck";
 import AdminCheck from "@components/AdminCheck";
 import { Edit } from "tabler-icons-react";
 import { UserContext } from "@lib/context";
+import Metatags from "@components/Metatags";
 
 // Max post to query per page
 const LIMIT = 10;
@@ -58,6 +59,7 @@ export default function PostsPage(props) {
   return (
     <>
       <div className="bg-background text-white min-h-[1024px] mb-[235px] pb-10">
+        <Metatags />
         <Navbar page="/posts" />
         <Container size="lg">
           <Stack spacing="xs">

@@ -2,6 +2,7 @@ import AuthCheck from "@components/AuthCheck";
 import { Footer } from "@components/Footer";
 
 import HomeComponents from "@components/HomeComponents";
+import Metatags from "@components/Metatags";
 import Navbar from "@components/Navbar";
 import { firestore, fromMillis, postToJSON } from "@lib/firebase";
 import { useThemeContext } from "@lib/useTheme";
@@ -69,6 +70,7 @@ export default function HomePage(props) {
     <>
       <div className="bg-background min-h-[1024px] mb-[235px] pb-10">
         <Navbar />
+        <Metatags />
         <HomeComponents homePosts={posts} />
       </div>
       <Footer />

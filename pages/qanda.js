@@ -11,6 +11,7 @@ import {
   useMantineColorScheme,
 } from "@mantine/core";
 import { Footer } from "@components/Footer";
+import Metatags from "@components/Metatags";
 
 // Max post to query per page
 const LIMIT = 10;
@@ -56,6 +57,7 @@ export default function QAndAPage({ data }) {
     <>
       <div className="bg-background text-white min-h-[1024px] mb-[235px] pb-10">
         <Navbar page="/qanda" />
+        <Metatags />
         <Container size="lg">
           <Stack spacing="xs">
             <Breadcrumbs separator="→">{items}</Breadcrumbs>

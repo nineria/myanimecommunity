@@ -5,6 +5,7 @@ import PostsMenuController from "@components/PostComponents/MenuController";
 import React, { useState } from "react";
 import { Anchor, Breadcrumbs, Container, Stack } from "@mantine/core";
 import { Footer } from "@components/Footer";
+import Metatags from "@components/Metatags";
 
 // This gets called on every request
 export async function getServerSideProps() {
@@ -63,6 +64,8 @@ export default function NewsPage({ data }) {
     <>
       <div className="bg-background text-white min-h-[1024px] mb-[235px] pb-10">
         <Navbar page="/news" />
+        <Metatags />
+
         <Container size="lg">
           <Stack spacing="xs">
             <Breadcrumbs separator="→">{items}</Breadcrumbs>

@@ -20,6 +20,7 @@ import Loading from "@components/Loading";
 import { useThemeContext } from "@lib/useTheme";
 import { useRouter } from "next/router";
 import PageNotFound from "pages/404";
+import Metatags from "@components/Metatags";
 
 export async function getServerSideProps({ query }) {
   const { username } = query;
@@ -136,6 +137,7 @@ export default function UserProfilePage({ user, posts }) {
   return (
     <div className="bg-background text-accent min-h-[1024px] mb-[235px] pb-10">
       <Navbar page="/profile" isBusy />
+      <Metatags />
       <Container size="lg">
         <AuthCheck fallback={<Loading />}>
           {username && user && posts && (

@@ -13,6 +13,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { useThemeContext } from "@lib/useTheme";
 import { Footer } from "@components/Footer";
+import Metatags from "@components/Metatags";
 
 // This gets called on every request
 export async function getServerSideProps() {
@@ -110,6 +111,7 @@ export default function ReviewPage({ data }) {
     <>
       <div className="bg-background text-white min-h-[1024px] mb-[235px] pb-10">
         <Navbar page="/review" />
+        <Metatags />
         <Container size="lg">
           <Stack spacing="xs">
             <Breadcrumbs separator="→">{items}</Breadcrumbs>

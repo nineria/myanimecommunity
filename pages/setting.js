@@ -10,6 +10,7 @@ import PageNotFound from "./404.js";
 import AuthCheck from "@components/AuthCheck.js";
 import Loading from "@components/Loading.js";
 import { firestore, postToJSON } from "@lib/firebase.js";
+import Metatags from "@components/Metatags.js";
 
 const LIMIT = 10;
 // This gets called on every request
@@ -84,6 +85,7 @@ export default function SettingPage({ posts, localTheme }) {
       <div className="bg-background text-accent min-h-[1024px] mb-[235px] pb-10">
         {/* Navar */}
         <Navbar page="/setting" isBusy />
+        <Metatags />
         {/* Check user and Setting*/}
         <Container size="lg">
           <AuthCheck fallback={username ? <Loading /> : <PageNotFound />}>

@@ -10,6 +10,7 @@ import {
 import Navbar from "@components/Navbar";
 import { useThemeContext } from "@lib/useTheme";
 import { Footer } from "@components/Footer";
+import Metatags from "@components/Metatags";
 
 const useStyles = createStyles((theme, _params, getRef) => ({
   icon: { ref: getRef("icon") },
@@ -334,6 +335,8 @@ export default function FaqPage({ data }) {
   return (
     <div className="bg-background text-accent min-h-[1024px] mb-[235px] pb-10">
       <Navbar isBusy />
+      <Metatags />
+
       <Container size="lg">
         <Stack spacing="xs">
           <Card className="bg-foreground">
