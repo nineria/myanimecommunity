@@ -65,34 +65,7 @@ export default function PostsPage(props) {
         <Container size="lg">
           <Stack spacing="xs">
             <Breadcrumbs separator="→">{items}</Breadcrumbs>
-            {/* Create New Announcement */}
-            {user && (
-              <AdminCheck>
-                <Group
-                  grow
-                  position="apart"
-                  className="bg-foreground rounded-sm p-1 shadow-md"
-                >
-                  <Button
-                    className="z-10 bg-content text-[#fff] hover:bg-content hover:opacity-75 max-w-fit"
-                    variant="default"
-                    size="xs"
-                  >
-                    สร้างประกาศ +
-                  </Button>
-                  <div className="bg-background max-w-fit p-[1px] rounded-md">
-                    <Button
-                      leftIcon={<Edit size={14} />}
-                      className="z-10 bg-foreground text-title hover:bg-foreground hover:opacity-75 "
-                      variant="default"
-                      size="xs"
-                    >
-                      จัดการประกาศ
-                    </Button>
-                  </div>
-                </Group>
-              </AdminCheck>
-            )}
+
             {/* Announcement */}
             <Announcement
               type={AnnouncementProperty.type}
@@ -105,19 +78,18 @@ export default function PostsPage(props) {
             {/* Posts */}
 
             <PostLayout posts={props.posts} layout={layout} />
-            <Paper className="shadow-md bg-foreground p-1.5">
-              <Pagination
-                total={1}
-                size="sm"
-                page={activePage}
-                onChange={setPage}
-                classNames={{
-                  item: "text-title",
-                  dots: "text-content",
-                  active: "bg-content text-[#fff]",
-                }}
-              />
-            </Paper>
+            <Pagination
+              total={2}
+              size="sm"
+              mt="sm"
+              page={activePage}
+              onChange={setPage}
+              classNames={{
+                item: "text-title bg-foreground",
+                dots: "text-content bg-content",
+                active: "bg-content text-[#fff]",
+              }}
+            />
           </Stack>
         </Container>
       </div>

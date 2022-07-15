@@ -105,7 +105,7 @@ export default function CreateComment({ post }) {
   };
 
   return (
-    <div className="bg-foreground">
+    <div className="bg-foreground rounded-sm">
       <div className="flex md:flex-row flex-col">
         <LeftMenu data={userData} />
         <div className="md:block hidden px-[0.5px] bg-white opacity-50"></div>

@@ -41,7 +41,7 @@ export default function HomeComponents({ homePosts }) {
             {/* Add home post */}
             {user && (
               <AdminCheck>
-                <div className="flex flex-row justify-between w-full bg-foreground rounded-sm p-1 shadow-md">
+                <div className="flex flex-row justify-between w-full ">
                   <Modal
                     size="lg"
                     opened={opened}
@@ -58,7 +58,7 @@ export default function HomeComponents({ homePosts }) {
                   </Modal>
                   <Button
                     onClick={() => setOpened(true)}
-                    className="bg-content text-[#fff] hover:bg-content hover:opacity-75"
+                    className="bg-content text-[#fff] hover:bg-content hover:opacity-75 "
                     variant="default"
                     size="xs"
                   >

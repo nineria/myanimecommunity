@@ -133,13 +133,13 @@ export default function PostPage(props) {
           <Top data={post} />
           <Group position="apart">
             <Pagination
-              total={1}
+              total={2}
               size="sm"
               page={activePage}
               onChange={setPage}
               classNames={{
-                item: "text-title",
-                dots: "text-content",
+                item: "text-title bg-foreground",
+                dots: "text-content bg-content",
                 active: "bg-content text-[#fff]",
               }}
             />
@@ -171,19 +171,17 @@ export default function PostPage(props) {
           ) : (
             <Stack spacing="xs"></Stack>
           )}
-          <Paper p="xs" className="shadow-md bg-foreground">
-            <Pagination
-              total={1}
-              size="sm"
-              page={activePage}
-              onChange={setPage}
-              classNames={{
-                item: "text-title",
-                dots: "text-content",
-                active: "bg-content text-[#fff]",
-              }}
-            />
-          </Paper>
+          <Pagination
+            total={2}
+            size="sm"
+            page={activePage}
+            onChange={setPage}
+            classNames={{
+              item: "text-title bg-foreground",
+              dots: "text-content bg-content",
+              active: "bg-content text-[#fff]",
+            }}
+          />
           {/* Create comment */}
           <AuthCheck fallback={<></>}>
             <CreateComment post={post} />

@@ -1,20 +1,25 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 // Components
 import Add from "@components/PostComponents/Add";
 import {
   Box,
   Button,
   Center,
+  Divider,
   Group,
   Modal,
   SegmentedControl,
 } from "@mantine/core";
 // Icons
-import { LayoutGrid, ListDetails } from "tabler-icons-react";
+import { Edit, LayoutGrid, ListDetails } from "tabler-icons-react";
 import AuthCheck from "@components/AuthCheck";
 import Loading from "@components/Loading";
+import { UserContext } from "@lib/context";
+import AdminCheck from "@components/AdminCheck";
 
 export default function PostsMenuController({ layout, setLayout }) {
+  const { user } = useContext(UserContext);
+
   const [opened, setOpened] = useState(false);
   return (
     <div className="flex flex-row justify-between w-full bg-foreground rounded-sm p-1 shadow-md">
@@ -31,16 +36,43 @@ export default function PostsMenuController({ layout, setLayout }) {
       >
         <Add setOpened={setOpened} />
       </Modal>
-      <AuthCheck fallback={<div />}>
-        <Button
-          onClick={() => setOpened(true)}
-          className="bg-content text-[#fff] hover:bg-content hover:opacity-75"
-          variant="default"
-          size="xs"
-        >
-          สร้างโพสต์ +
-        </Button>
-      </AuthCheck>
+      <Group spacing="xs">
+        <AuthCheck fallback={<div />}>
+          <Button
+            onClick={() => setOpened(true)}
+            className="bg-content text-[#fff] hover:bg-content hover:opacity-75"
+            variant="default"
+            size="xs"
+          >
+            สร้างโพสต์ +
+          </Button>
+          {/* Create New Announcement */}
+          {user && (
+            <AdminCheck>
+              <Divider orientation="vertical" mx="xs" />
+              <Group grow spacing="xs">
+                <Button
+                  className="z-10 bg-content text-[#fff] hover:bg-content hover:opacity-75 max-w-fit"
+                  variant="default"
+                  size="xs"
+                >
+                  สร้างประกาศ +
+                </Button>
+                <div className="bg-background max-w-fit p-[1px] rounded-md">
+                  <Button
+                    leftIcon={<Edit size={14} />}
+                    className="z-10 bg-foreground text-title hover:bg-foreground hover:opacity-75 "
+                    variant="default"
+                    size="xs"
+                  >
+                    จัดการประกาศ
+                  </Button>
+                </div>
+              </Group>
+            </AdminCheck>
+          )}
+        </AuthCheck>
+      </Group>
       <Group position="center">
         <SegmentedControl
           size="xs"
