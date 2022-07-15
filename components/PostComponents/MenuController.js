@@ -54,18 +54,16 @@ export default function PostsMenuController({ layout, setLayout }) {
               <Divider orientation="vertical" mx="xs" />
               <Group grow spacing="xs">
                 <AddAnnouncement />
-                <div className="bg-background max-w-fit p-[1px] rounded-md">
-                  <Link href={`/${username}#announcementControl`}>
-                    <Button
-                      leftIcon={<Edit size={14} />}
-                      className="z-10 bg-foreground text-title hover:bg-foreground hover:opacity-75 "
-                      variant="default"
-                      size="xs"
-                    >
-                      จัดการประกาศ
-                    </Button>
-                  </Link>
-                </div>
+                <Link href={`/${username}#announcementControl`}>
+                  <Button
+                    leftIcon={<Edit size={14} />}
+                    className="z-10 bg-foreground text-title hover:bg-foreground hover:opacity-75 "
+                    variant="default"
+                    size="xs"
+                  >
+                    จัดการประกาศ
+                  </Button>
+                </Link>
               </Group>
             </AdminCheck>
           )}

@@ -11,7 +11,7 @@ import { useContext } from "react";
 import { UserContext } from "@lib/context";
 import AdminCheck from "@components/AdminCheck";
 
-export default function Announcement(props, { disabled = false }) {
+export default function Announcement(props) {
   const [onClose, setOnClose] = useState(true);
 
   const { user } = useContext(UserContext);
@@ -60,16 +60,20 @@ export default function Announcement(props, { disabled = false }) {
                 {user && (
                   <AdminCheck>
                     <div className="cursor-pointer bg-foreground">
-                      <EditAnnouncement {...props} />
+                      {props.disabled === false && (
+                        <EditAnnouncement {...props} />
+                      )}
                     </div>
                   </AdminCheck>
                 )}
-                <div
-                  className="cursor-pointer bg-foreground"
-                  onClick={() => !disabled && setOnClose(!onClose)}
-                >
-                  <X size={18} color="#aaa" />
-                </div>
+                {props.disabled === false && (
+                  <div
+                    className="cursor-pointer bg-foreground"
+                    onClick={() => setOnClose(!onClose)}
+                  >
+                    <X size={18} color="#aaa" />
+                  </div>
+                )}
               </Group>
             </div>
           </div>
