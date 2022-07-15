@@ -10,7 +10,7 @@ import { Modal } from "@mantine/core";
 import { ChevronUp, Edit as EditIcon } from "tabler-icons-react";
 import AdminCheck from "@components/AdminCheck";
 
-export default function Post({ homePosts, disabled = false }) {
+export default function Post({ homePosts, disabled }) {
   const { user } = useContext(UserContext);
 
   const [toggle, setTogle] = useState(true);
@@ -59,14 +59,14 @@ export default function Post({ homePosts, disabled = false }) {
               >
                 <Edit setOpened={setOpened} postData={homePosts} />
               </Modal>
-              <AdminCheck>
-                <EditIcon
-                  onClick={() => {
-                    disabled ? null : setOpened(true);
-                  }}
-                  className="hover:translate-y-[1px] hover:opacity-75 cursor-pointer"
-                />
-              </AdminCheck>
+              {!disabled && (
+                <AdminCheck>
+                  <EditIcon
+                    onClick={() => setOpened(true)}
+                    className="hover:translate-y-[1px] hover:opacity-75 cursor-pointer"
+                  />
+                </AdminCheck>
+              )}
             </div>
           )}
           {/* Show-hide content */}

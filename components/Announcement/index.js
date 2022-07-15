@@ -3,10 +3,9 @@ import React, { useEffect, useState } from "react";
 import { useThemeContext } from "@lib/useTheme";
 // Icons
 import { Animate } from "react-simple-animate";
-import { AlertCircle, X } from "tabler-icons-react";
+import { AlertCircle, Disabled, X } from "tabler-icons-react";
 import { Group } from "@mantine/core";
 import EditAnnouncement from "./Edit";
-import { getUserWithUsername } from "@lib/firebase";
 import { useContext } from "react";
 import { UserContext } from "@lib/context";
 import AdminCheck from "@components/AdminCheck";
@@ -57,23 +56,19 @@ export default function Announcement(props) {
                 <p className="text-xs md:text-sm ">{props.content}</p>
               </div>
               <Group grow spacing="xs" className="absolute top-2 right-2">
-                {user && (
+                {user && !props.disabled && (
                   <AdminCheck>
                     <div className="cursor-pointer bg-foreground">
-                      {props.disabled === false && (
-                        <EditAnnouncement {...props} />
-                      )}
+                      <EditAnnouncement {...props} />
                     </div>
                   </AdminCheck>
                 )}
-                {props.disabled === false && (
-                  <div
-                    className="cursor-pointer bg-foreground"
-                    onClick={() => setOnClose(!onClose)}
-                  >
-                    <X size={18} color="#aaa" />
-                  </div>
-                )}
+                <div
+                  className="cursor-pointer bg-foreground"
+                  onClick={() => setOnClose(!onClose)}
+                >
+                  {!props.disabled && <X size={18} color="#aaa" />}
+                </div>
               </Group>
             </div>
           </div>
