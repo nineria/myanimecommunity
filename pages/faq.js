@@ -318,7 +318,7 @@ export default function FaqPage({ data }) {
   ));
 
   const FaqLists = FaqListData.map((data, index) => (
-    <div key={index}>
+    <Card key={index} className="bg-foreground">
       <Title order={4} mt="lg" mb="xs">
         {data.title}
       </Title>
@@ -329,7 +329,7 @@ export default function FaqPage({ data }) {
           </Accordion.Item>
         ))}
       </Accordion>
-    </div>
+    </Card>
   ));
 
   return (
@@ -345,7 +345,7 @@ export default function FaqPage({ data }) {
             </Title>
             {FirstFaqLists}
           </Card>
-          <Card className="bg-foreground">{FaqLists}</Card>
+          {FaqLists}
         </Stack>
       </Container>
       <Footer />
