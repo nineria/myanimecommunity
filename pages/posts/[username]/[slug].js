@@ -122,11 +122,7 @@ export default function PostPage(props) {
 
   return (
     <div className="bg-background min-h-[1024px] mb-[235px] pb-10">
-      <Metatags
-        title={post.title}
-        description={post.credit}
-        image={post.image}
-      />
+      <Metatags title={post.title} image={post.image} />
       <Navbar />
       <Container size="lg" py="xs">
         <Stack spacing="xs">
