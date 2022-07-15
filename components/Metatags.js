@@ -3,7 +3,7 @@ import Head from "next/head";
 export default function Metatags({
   title = "ยินดีต้อนรับสู่ MyAnimeCommunity!",
   description = "รวมพลคนรักอนิเมะ เข้ามาพูดคุยแลกเปลี่ยนความรู้เกี่ยวกับอนิเมะ มังงะ หรือไลท์โนเวล!",
-  image = "https://i.ibb.co/WHQKjc4/image.png",
+  image = "https://i.ibb.co/mhVXDPw/1.png",
 }) {
   return (
     <Head>
