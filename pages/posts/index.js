@@ -10,6 +10,7 @@ import {
   Container,
   Group,
   Pagination,
+  Paper,
   Stack,
 } from "@mantine/core";
 import { Footer } from "@components/Footer";
@@ -104,18 +105,19 @@ export default function PostsPage(props) {
             {/* Posts */}
 
             <PostLayout posts={props.posts} layout={layout} />
-            <Pagination
-              total={1}
-              mt="lg"
-              size="sm"
-              page={activePage}
-              onChange={setPage}
-              classNames={{
-                item: "text-title",
-                dots: "text-content",
-                active: "bg-content text-[#fff]",
-              }}
-            />
+            <Paper className="shadow-md bg-foreground p-1.5">
+              <Pagination
+                total={1}
+                size="sm"
+                page={activePage}
+                onChange={setPage}
+                classNames={{
+                  item: "text-title",
+                  dots: "text-content",
+                  active: "bg-content text-[#fff]",
+                }}
+              />
+            </Paper>
           </Stack>
         </Container>
       </div>
