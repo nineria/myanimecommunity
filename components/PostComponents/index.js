@@ -275,7 +275,7 @@ function MainPost({ post, postRef }) {
       <Image src={post.image} alt={post.image} my="xs" radius="sm" />
       <RichTextEditor
         readOnly
-        value={post.content}
+        value={post?.content}
         classNames={{
           root: "bg-transparent border-none text-title z-10",
         }}
