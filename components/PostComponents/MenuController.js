@@ -17,9 +17,10 @@ import Loading from "@components/Loading";
 import { UserContext } from "@lib/context";
 import AdminCheck from "@components/AdminCheck";
 import AddAnnouncement from "@components/Announcement/Add";
+import Link from "next/link";
 
 export default function PostsMenuController({ layout, setLayout }) {
-  const { user } = useContext(UserContext);
+  const { user, username } = useContext(UserContext);
 
   const [opened, setOpened] = useState(false);
   return (
@@ -54,14 +55,16 @@ export default function PostsMenuController({ layout, setLayout }) {
               <Group grow spacing="xs">
                 <AddAnnouncement />
                 <div className="bg-background max-w-fit p-[1px] rounded-md">
-                  <Button
-                    leftIcon={<Edit size={14} />}
-                    className="z-10 bg-foreground text-title hover:bg-foreground hover:opacity-75 "
-                    variant="default"
-                    size="xs"
-                  >
-                    จัดการประกาศ
-                  </Button>
+                  <Link href={`/${username}#announcementControl`}>
+                    <Button
+                      leftIcon={<Edit size={14} />}
+                      className="z-10 bg-foreground text-title hover:bg-foreground hover:opacity-75 "
+                      variant="default"
+                      size="xs"
+                    >
+                      จัดการประกาศ
+                    </Button>
+                  </Link>
                 </div>
               </Group>
             </AdminCheck>

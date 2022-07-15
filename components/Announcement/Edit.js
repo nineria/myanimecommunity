@@ -5,6 +5,7 @@ import {
   Modal,
   Select,
   Stack,
+  Textarea,
   TextInput,
 } from "@mantine/core";
 import React, { useContext, useEffect, useState } from "react";
@@ -15,12 +16,7 @@ import { showNotification } from "@mantine/notifications";
 import { Check, Edit as EditIcon } from "tabler-icons-react";
 import { UserContext } from "@lib/context";
 import { useRouter } from "next/router";
-import {
-  auth,
-  firestore,
-  getUserWithUsername,
-  serverTimestamp,
-} from "@lib/firebase";
+import { firestore, serverTimestamp } from "@lib/firebase";
 
 const schema = z.object({
   title: z
@@ -62,6 +58,7 @@ export default function EditAnnouncement(props) {
       updatedAt: serverTimestamp(),
       published: values.published,
     };
+
     await ref.update(data);
 
     showNotification({
@@ -122,9 +119,11 @@ export default function EditAnnouncement(props) {
               }}
               {...form.getInputProps("title")}
             />
-            <TextInput
+            <Textarea
               label="เนื้อหา"
               placeholder="เนื้อหาของประกาศ"
+              autosize
+              minRows={2}
               classNames={{
                 input: "bg-accent bg-opacity-50",
               }}

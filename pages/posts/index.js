@@ -12,7 +12,6 @@ import {
 } from "@mantine/core";
 import { Footer } from "@components/Footer";
 import { firestore, postToJSON } from "@lib/firebase";
-
 import Metatags from "@components/Metatags";
 
 // Max post to query per page

@@ -1,10 +1,12 @@
 import AnnouncementControl from "../Announcement/";
 import {
   Button,
+  Checkbox,
   InputWrapper,
   Modal,
   Select,
   Stack,
+  Textarea,
   TextInput,
 } from "@mantine/core";
 import React, { useContext, useState } from "react";
@@ -48,7 +50,7 @@ export default function AddAnnouncement() {
       updatedAt: serverTimestamp(),
       createdAt: serverTimestamp(),
       uid: uid,
-      published: true,
+      published: values.published,
     };
     await ref.set(data);
 
@@ -72,6 +74,7 @@ export default function AddAnnouncement() {
       type: "success",
       title: "",
       content: "",
+      published: false,
     },
   });
 
@@ -109,9 +112,11 @@ export default function AddAnnouncement() {
               }}
               {...form.getInputProps("title")}
             />
-            <TextInput
+            <Textarea
               label="เนื้อหา"
               placeholder="เนื้อหาของประกาศ"
+              autosize
+              minRows={2}
               classNames={{
                 input: "bg-accent bg-opacity-50",
               }}
@@ -128,6 +133,10 @@ export default function AddAnnouncement() {
                 disabled
               />
             </InputWrapper>
+            <Checkbox
+              {...form.getInputProps("published")}
+              label="เริ่มประกาศ"
+            />
           </Stack>
           <ButtonControl setOpened={setOpened} type="add" />
         </form>

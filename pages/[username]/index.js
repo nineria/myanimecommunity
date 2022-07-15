@@ -1,28 +1,23 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { Animate } from "react-simple-animate";
-import {
-  BrandGithub,
-  BrandInstagram,
-  BrandLinkedin,
-  Mail,
-} from "tabler-icons-react";
 import { UserContext } from "@lib/context";
 import Navbar from "@components/Navbar";
-import { Container, Skeleton, Stack } from "@mantine/core";
+import { Container, Stack, Title } from "@mantine/core";
 import { Footer } from "@components/Footer";
 import UserCardImage from "@components/ProfileComponents/UserCardImage";
 import AuthCheck from "@components/AuthCheck";
 import { StatsGridIcons } from "@components/ProfileComponents/StatsGridIcons";
 import StatsSegments from "@components/ProfileComponents/StatsSegments";
 import { TableSort } from "@components/ProfileComponents/TableSort";
-import { firestore, getUserWithUsername, postToJSON } from "@lib/firebase";
+import { getUserWithUsername, postToJSON } from "@lib/firebase";
 import Loading from "@components/Loading";
 import { useThemeContext } from "@lib/useTheme";
 import { useRouter } from "next/router";
-import PageNotFound from "pages/404";
 import Metatags from "@components/Metatags";
 import AdminCheck from "@components/AdminCheck";
 import AnnouncementControl from "@components/ProfileComponents/AnnouncementControl";
+import GiveUserRank from "@components/ProfileComponents/GiveUserRank";
+import ReportFormUser from "@components/ProfileComponents/ReportFormUser";
 
 export async function getServerSideProps({ query }) {
   const { username } = query;
@@ -158,7 +153,14 @@ export default function UserProfilePage({ user, posts }) {
                 {posts[0] && <TableSort posts={posts} />}
 
                 <AdminCheck>
-                  <AnnouncementControl />
+                  <Title order={2} align="center" className="text-title mt-4">
+                    ส่วนของผู้ดูแลระบบ
+                  </Title>
+                  <div id="announcementControl">
+                    <AnnouncementControl />
+                  </div>
+                  <GiveUserRank />
+                  <ReportFormUser />
                 </AdminCheck>
               </Stack>
             </Animate>

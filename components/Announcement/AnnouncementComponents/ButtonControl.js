@@ -29,7 +29,7 @@ export default function ButtonControl({ setOpened, postRef, type }) {
 
       showNotification({
         color: "red",
-        title: "ลบโพสต์แล้ว",
+        title: "ลบประกาศแล้ว",
         icon: <X size={18} />,
         classNames: {
           root: "bg-foreground border-red-400",
