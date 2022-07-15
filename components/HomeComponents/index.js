@@ -12,19 +12,9 @@ import AdminCheck from "@components/AdminCheck";
 export const admin = "ผู้ดูแลระบบ";
 
 export default function HomeComponents({ homePosts }) {
-  const { user, userData } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   const [opened, setOpened] = useState(false);
-
-  const postDummy = [
-    {
-      title: "Q&A ถาม-ตอบ ข้อสงสัยต่างๆ",
-      titleLink: "/qAndA",
-      header: "โพสต์ ถาม-ตอบ ข้อสงสัยเกี่ยวกับ อนิเมะ มังงะ",
-      headerLink: "/news",
-      body: "โพสต์รวบรวมรีวิวอนิเมะก่อนไปรับชม และเรื่องย่อต่างๆ พร้อมข้อมูลจำเพราะของตัวละคร ฯลฯ",
-    },
-  ];
 
   return (
     <Container size="lg">
