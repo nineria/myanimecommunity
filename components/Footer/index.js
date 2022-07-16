@@ -8,6 +8,7 @@ import {
   BrandYoutube,
   BrandInstagram,
   BrandFacebook,
+  BrandGithub,
 } from "tabler-icons-react";
 import MyAniLogo from "@components/Navbar/MyAniLogo";
 import { useContext } from "react";
@@ -156,12 +157,17 @@ export function Footer() {
             </ActionIcon>
           </a>
           <a
-            href="https://www.instagram.com/ninerianananai/"
+            href="https://www.instagram.com/ninerianananai"
             target="_blank"
             rel="noreferrer"
           >
             <ActionIcon size="lg">
               <BrandInstagram size={18} className="text-title" />
+            </ActionIcon>
+          </a>
+          <a href="https://github.com/nineria" target="_blank" rel="noreferrer">
+            <ActionIcon size="lg">
+              <BrandGithub size={18} className="text-title" />
             </ActionIcon>
           </a>
         </Group>
