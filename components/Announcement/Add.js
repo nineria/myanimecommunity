@@ -8,6 +8,7 @@ import {
   Stack,
   Textarea,
   TextInput,
+  Tooltip,
 } from "@mantine/core";
 import React, { useContext, useState } from "react";
 import ButtonControl from "./AnnouncementComponents/ButtonControl";
@@ -143,12 +144,22 @@ export default function AddAnnouncement() {
       </Modal>
       <Button
         onClick={() => setOpened(true)}
-        className="z-10 bg-content text-[#fff] hover:bg-content hover:opacity-75 max-w-fit"
+        className="md:block hidden z-10 bg-content text-[#fff] hover:bg-content hover:opacity-75 max-w-fit"
         variant="default"
         size="xs"
       >
         สร้างประกาศ +
       </Button>
+      <Tooltip label="สร้างประกาศใหม่" placement="start" withArrow>
+        <Button
+          onClick={() => setOpened(true)}
+          className="md:hidden block z-10 bg-content text-[#fff] hover:bg-content hover:opacity-75 max-w-fit"
+          variant="default"
+          size="xs"
+        >
+          +
+        </Button>
+      </Tooltip>
     </>
   );
 }

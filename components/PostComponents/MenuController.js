@@ -9,6 +9,7 @@ import {
   Group,
   Modal,
   SegmentedControl,
+  Tooltip,
 } from "@mantine/core";
 // Icons
 import { Edit, LayoutGrid, ListDetails } from "tabler-icons-react";
@@ -42,27 +43,48 @@ export default function PostsMenuController({ layout, setLayout }) {
         <AuthCheck fallback={<div />}>
           <Button
             onClick={() => setOpened(true)}
-            className="bg-content text-[#fff] hover:bg-content hover:opacity-75"
+            className="md:block hidden bg-content text-[#fff] hover:bg-content hover:opacity-75"
             variant="default"
             size="xs"
           >
             สร้างโพสต์ +
           </Button>
+          <Tooltip label="สร้างโพสต์ใหม่" placement="start" withArrow>
+            <Button
+              onClick={() => setOpened(true)}
+              className="md:hidden block bg-content text-[#fff] hover:bg-content hover:opacity-75"
+              variant="default"
+              size="xs"
+            >
+              +
+            </Button>
+          </Tooltip>
           {/* Create New Announcement */}
           {user && (
             <AdminCheck>
-              <Divider orientation="vertical" mx="xs" />
+              <Divider orientation="vertical" mx="none" />
               <Group grow spacing="xs">
                 <AddAnnouncement />
                 <Link href={`/${username}#announcementControl`}>
-                  <Button
-                    leftIcon={<Edit size={14} />}
-                    className="z-10 bg-foreground text-title hover:bg-foreground hover:opacity-75 "
-                    variant="default"
-                    size="xs"
-                  >
-                    จัดการประกาศ
-                  </Button>
+                  <>
+                    <Button
+                      leftIcon={<Edit size={14} />}
+                      className="md:block hidden z-10 bg-foreground text-title hover:bg-foreground hover:opacity-75"
+                      variant="default"
+                      size="xs"
+                    >
+                      จัดการประกาศ
+                    </Button>
+                    <Tooltip label="จัดการประกาศ" placement="start" withArrow>
+                      <Button
+                        className="md:hidden block z-10 bg-foreground text-title hover:bg-foreground hover:opacity-75"
+                        variant="default"
+                        size="xs"
+                      >
+                        <Edit size={14} />
+                      </Button>
+                    </Tooltip>
+                  </>
                 </Link>
               </Group>
             </AdminCheck>
@@ -85,7 +107,9 @@ export default function PostsMenuController({ layout, setLayout }) {
               label: (
                 <Center>
                   <LayoutGrid size={16} />
-                  <Box ml={5}>GRID</Box>
+                  <Box ml={5} className="md:block hidden">
+                    GRID
+                  </Box>
                 </Center>
               ),
             },
@@ -94,7 +118,9 @@ export default function PostsMenuController({ layout, setLayout }) {
               label: (
                 <Center>
                   <ListDetails size={16} />
-                  <Box ml={5}>LIST</Box>
+                  <Box ml={5} className="md:block hidden">
+                    LIST
+                  </Box>
                 </Center>
               ),
             },
