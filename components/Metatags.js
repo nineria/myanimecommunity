@@ -8,6 +8,18 @@ export default function Metatags({
   return (
     <Head>
       <title>{title}</title>
+      <link
+        rel="icon"
+        type="image/png"
+        sizes="32x32"
+        href="/my-anime-community-logo-32x32.png"
+      />
+      <link
+        rel="icon"
+        type="image/png"
+        sizes="16x16"
+        href="/my-anime-community-logo-16x16.png"
+      />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:site" content="@nineria_nananai" />
       <meta name="twitter:title" content={title} />
