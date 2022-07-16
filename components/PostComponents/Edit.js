@@ -62,7 +62,7 @@ function PostForm({ post, postRef, setOpened }) {
       },
     });
 
-    router.replace(router.asPath);
+    router.reload();
 
     setOpened(false);
   };
