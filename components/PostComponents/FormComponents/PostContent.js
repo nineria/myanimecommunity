@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 // Components
 import { InputWrapper, Tabs } from "@mantine/core";
 import RichTextEditor from "@components/RichText";

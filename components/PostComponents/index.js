@@ -273,13 +273,16 @@ function MainPost({ post, postRef }) {
         </Group>
       </Group>
       <Image src={post.image} alt={post.image} my="xs" radius="sm" />
-      <RichTextEditor
-        readOnly
-        value={post?.content}
-        classNames={{
-          root: "bg-transparent border-none text-title z-10",
-        }}
-      />
+      {post.content && (
+        <RichTextEditor
+          readOnly
+          value={post.content}
+          classNames={{
+            root: "bg-transparent border-none text-title z-10",
+          }}
+        />
+      )}
+
       <Space h="50px" />
       <p className="absolute select-none bottom-20 right-6 font-bold leading-none uppercase opacity-[0.03] text-[120px] md:text-[150px] text-right tracking-tighter">
         {post.tag[0] === "คำถาม"

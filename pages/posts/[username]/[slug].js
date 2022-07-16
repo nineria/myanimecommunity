@@ -28,56 +28,84 @@ import Metatags from "@components/Metatags";
 import LoginRegister, { LoginPopUp } from "@components/LoginRegister";
 import { Animate } from "react-simple-animate";
 
-export async function getStaticProps({ params }) {
-  const { username, slug } = params;
+// export async function getStaticProps({ params }) {
+//   try {
+//     const { username, slug } = params;
 
-  const userDoc = await getUserWithUsername(username);
+//     const userDoc = await getUserWithUsername(username);
 
-  let post;
-  let path;
+//     let post;
+//     let path;
 
-  if (userDoc) {
-    const postRef = userDoc.ref.collection("posts").doc(slug);
+//     if (userDoc) {
+//       const postRef = userDoc.ref.collection("posts").doc(slug);
 
-    post = postToJSON(await postRef.get());
+//       post = postToJSON(await postRef.get());
 
-    // try {
-    //   comments = postToJSON(await commentsRef.get());
-    // } catch (error) {
-    //   comments = null;
-    // }
+//       path = postRef.path;
+//     }
 
-    path = postRef.path;
-  }
+//     return {
+//       props: { post, path },
+//       revalidate: 5000,
+//     };
+//   } catch (error) {
+//     return {
+//       props: null,
+//     };
+//   }
+// }
 
-  return {
-    props: { post, path },
-    revalidate: 5000,
-  };
-}
+// export async function getStaticPaths() {
+//   // Improve my using Admin SDK to select empty docs
+//   const snapshot = await firestore.collectionGroup("posts").get();
 
-export async function getStaticPaths() {
-  // Improve my using Admin SDK to select empty docs
-  const snapshot = await firestore.collectionGroup("posts").get();
+//   const paths = snapshot.docs.map((doc) => {
+//     const { slug, username } = doc.data();
+//     return {
+//       params: {
+//         username,
+//         slug,
+//       },
+//     };
+//   });
 
-  const paths = snapshot.docs.map((doc) => {
-    const { slug, username } = doc.data();
+//   return {
+//     // must be in this format:
+//     // paths: [
+//     //   { params: { username, slug }}
+//     // ],
+//     paths,
+//     fallback: false,
+//     // fallback can be  true if you want to show a fallback version of page
+//   };
+// }
+
+export async function getServerSideProps({ query }) {
+  try {
+    const { username, slug } = query;
+
+    const userDoc = await getUserWithUsername(username);
+
+    let post;
+    let path;
+
+    if (userDoc) {
+      const postRef = userDoc.ref.collection("posts").doc(slug);
+
+      post = postToJSON(await postRef.get());
+
+      path = postRef.path;
+    }
+
     return {
-      params: {
-        username,
-        slug,
-      },
+      props: { post, path },
     };
-  });
-
-  return {
-    // must be in this format:
-    // paths: [
-    //   { params: { username, slug }}
-    // ],
-    paths,
-    fallback: "blocking",
-  };
+  } catch (error) {
+    return {
+      props: null,
+    };
+  }
 }
 
 export default function PostPage(props) {

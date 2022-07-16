@@ -10,11 +10,11 @@ import { ButtonControl } from "./FormComponents/ButtonControl";
 import { serverTimestamp } from "@lib/firebase";
 import AuthCheck from "@components/AuthCheck";
 import WebsiteRule from "@components/WebsiteRule";
-import { useRouter } from "next/router";
 import { useForm, zodResolver } from "@mantine/form";
 import { z } from "zod";
 import { showNotification } from "@mantine/notifications";
 import { Check } from "tabler-icons-react";
+import { useRouter } from "next/router";
 
 const schema = z.object({
   title: z
@@ -62,9 +62,9 @@ function PostForm({ post, postRef, setOpened }) {
       },
     });
 
-    setOpened(false);
+    router.replace(router.asPath);
 
-    router.reload();
+    setOpened(false);
   };
 
   const form = useForm({
@@ -87,7 +87,10 @@ function PostForm({ post, postRef, setOpened }) {
           <TagGenre data={genres} setData={setGenres} />
           <PostHeader {...form.getInputProps("title")} />
           <PostImage {...form.getInputProps("image")} />
-          <PostContent {...form.getInputProps("content")} />
+          <PostContent
+            {...form.getInputProps("content")}
+            value={form.getInputProps("content").value}
+          />
           <RefCredit {...form.getInputProps("credit")} />
           <WebsiteRule />
           <ButtonControl setOpened={setOpened} postRef={postRef} />
