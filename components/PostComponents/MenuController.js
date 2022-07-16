@@ -49,10 +49,15 @@ export default function PostsMenuController({ layout, setLayout }) {
           >
             สร้างโพสต์ +
           </Button>
-          <Tooltip label="สร้างโพสต์ใหม่" placement="start" withArrow>
+          <Tooltip
+            className="md:hidden block"
+            label="สร้างโพสต์ใหม่"
+            placement="start"
+            withArrow
+          >
             <Button
               onClick={() => setOpened(true)}
-              className="md:hidden block bg-content text-[#fff] hover:bg-content hover:opacity-75"
+              className="bg-content text-[#fff] hover:bg-content hover:opacity-75"
               variant="default"
               size="xs"
             >
@@ -63,30 +68,33 @@ export default function PostsMenuController({ layout, setLayout }) {
           {user && (
             <AdminCheck>
               <Divider orientation="vertical" mx="none" />
-              <Group grow spacing="xs">
-                <AddAnnouncement />
+              <AddAnnouncement />
+              <Link href={`/${username}#announcementControl`}>
+                <Button
+                  leftIcon={<Edit size={14} />}
+                  className="md:block hidden z-10 bg-foreground text-title hover:bg-foreground hover:opacity-75"
+                  variant="default"
+                  size="xs"
+                >
+                  จัดการประกาศ
+                </Button>
+              </Link>
+              <Tooltip
+                className="md:hidden block "
+                label="จัดการประกาศ"
+                placement="start"
+                withArrow
+              >
                 <Link href={`/${username}#announcementControl`}>
-                  <>
-                    <Button
-                      leftIcon={<Edit size={14} />}
-                      className="md:block hidden z-10 bg-foreground text-title hover:bg-foreground hover:opacity-75"
-                      variant="default"
-                      size="xs"
-                    >
-                      จัดการประกาศ
-                    </Button>
-                    <Tooltip label="จัดการประกาศ" placement="start" withArrow>
-                      <Button
-                        className="md:hidden block z-10 bg-foreground text-title hover:bg-foreground hover:opacity-75"
-                        variant="default"
-                        size="xs"
-                      >
-                        <Edit size={14} />
-                      </Button>
-                    </Tooltip>
-                  </>
+                  <Button
+                    className="z-10 bg-foreground text-title hover:bg-foreground hover:opacity-75"
+                    variant="default"
+                    size="xs"
+                  >
+                    <Edit size={14} />
+                  </Button>
                 </Link>
-              </Group>
+              </Tooltip>
             </AdminCheck>
           )}
         </AuthCheck>
