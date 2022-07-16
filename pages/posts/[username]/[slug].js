@@ -148,9 +148,16 @@ export default function PostPage(props) {
     </Anchor>
   ));
 
+  const regex = /(<([^>]+)>)/gi;
+  const description = post.content.replace(regex, "");
+
   return (
     <div className="bg-background min-h-[1024px] mb-[235px] pb-10">
-      <Metatags title={post.title} image={post.image} />
+      <Metatags
+        title={post.title}
+        image={post.image}
+        description={description}
+      />
       <Navbar />
       <Container size="lg" py="xs">
         <Stack spacing="xs">
