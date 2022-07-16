@@ -1,6 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 // Components
-import { Avatar, Button, Group, Modal, Text } from "@mantine/core";
+import {
+  Avatar,
+  Button,
+  Group,
+  Modal,
+  Text,
+  TypographyStylesProvider,
+} from "@mantine/core";
 // Icons
 import {
   AlertTriangle,
@@ -195,6 +202,7 @@ function MainPost({ comment, commentRef, post }) {
           )}
         </Group>
       </Group>
+
       <RichTextEditor
         readOnly
         value={comment?.content}
