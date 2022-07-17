@@ -153,14 +153,19 @@ function Logo() {
 }
 
 export function LoginPopUp({ setOpenedRegister }) {
-  // const router = useRouter();
+  const router = useRouter();
 
   const { username } = useContext(UserContext);
 
   const signInWithGoogle = async () => {
-    await auth.signInWithPopup(googleAuthProvider);
+    try {
+      await auth.signInWithPopup(googleAuthProvider);
 
-    if (!username) setOpenedRegister(true);
+      if (!username) setOpenedRegister(true);
+    } catch (error) {
+      console.log(error);
+      router.push("/");
+    }
   };
 
   const signInWithFacebook = async () => {
@@ -169,7 +174,8 @@ export function LoginPopUp({ setOpenedRegister }) {
 
       if (!username) setOpenedRegister(true);
     } catch (error) {
-      console.log(error, ": Email นี้ถูกใช้ไปแล้ว");
+      console.log(error);
+      router.push("/");
     }
   };
 
@@ -257,23 +263,28 @@ export function LoginPopUp({ setOpenedRegister }) {
 export function RegisterPopUp() {
   const [formUsername, setFormUsername] = useState("");
 
+  const router = useRouter();
+
   const { user, username } = useContext(UserContext);
 
   const signInWithGoogle = async () => {
-    await auth.signInWithPopup(googleAuthProvider);
+    try {
+      await auth.signInWithPopup(googleAuthProvider);
+    } catch (error) {
+      console.log(error);
+      router.push("/");
+    }
   };
 
   const signInWithFacebook = async () => {
     try {
       await auth.signInWithPopup(facebookAuthProvider);
-
-      if (!username) setOpenedRegister(true);
+      console.log("in");
     } catch (error) {
       console.log(error);
+      router.push("/");
     }
   };
-
-  console.log(user);
 
   return (
     !username && (
@@ -298,13 +309,13 @@ export function RegisterPopUp() {
               size="sm"
               radius="lg"
               className="bg-white w-[200px] text-black border-[1px] border-gray-300 hover:bg-white hover:opacity-75"
+              onClick={signInWithFacebook}
             >
               <Image
                 src="/facebook-logo.png"
                 alt="facebook"
                 width="15px"
                 className="mr-2"
-                onClick={signInWithFacebook}
               />
               Facebook
             </Button>
