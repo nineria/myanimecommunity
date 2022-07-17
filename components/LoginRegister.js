@@ -537,3 +537,14 @@ function Register() {
     </form>
   );
 }
+
+// function UsernameMessage({ username, isValid, loading }) {
+//   if (loading) return <p>กำลังตรวจสอบชื่อผู้ใช้...</p>;
+//   else if (isValid)
+//     return (
+//       <p className="text-success">ชื่อผู้ใช้ {username} สามารถใช้งานได้!</p>
+//     );
+//   else if (username && !isValid)
+//     return <p className="text-danger">ชื่อผู้ใช้นั้นถูกใช้แล้ว!</p>;
+//   else return <p></p>;
+// }
