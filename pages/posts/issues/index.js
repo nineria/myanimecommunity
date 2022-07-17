@@ -21,6 +21,7 @@ export async function getServerSideProps() {
   const postsQuery = firestore
     .collectionGroup("posts")
     .orderBy("createdAt", "desc")
+    .where("tag", "array-contains", "ปัญหา")
     .limit(LIMIT);
 
   const posts = (await postsQuery.get()).docs.map(postToJSON);
@@ -37,7 +38,7 @@ export async function getServerSideProps() {
   };
 }
 
-export default function PostsPage(props) {
+export default function IssuesPage(props) {
   const [layout, setLayout] = useState("grid");
 
   const [activePage, setPage] = useState(1);
@@ -59,7 +60,7 @@ export default function PostsPage(props) {
     <>
       <div className="bg-background text-white min-h-[1024px] mb-[235px] pb-10">
         <Metatags />
-        <Navbar page="/posts" />
+        <Navbar page="/posts/news" />
         <Container size="lg">
           <Stack spacing="xs">
             <Breadcrumbs separator="→">{items}</Breadcrumbs>

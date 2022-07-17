@@ -18,17 +18,17 @@ export const accessMenuProperty = [
   },
   {
     name: "ข่าวสาร",
-    link: "/news",
+    link: "/posts/news",
     icon: <MoodHappy size={14} />,
   },
   {
     name: "รีวิว",
-    link: "/review",
+    link: "/posts/reviews",
     icon: <MoodSuprised size={14} />,
   },
   {
     name: "Q&A ถามตอบ",
-    link: "/qanda",
+    link: "/posts/qandas",
     icon: <MoodConfuzed size={14} />,
   },
 ];
@@ -41,14 +41,14 @@ export const navbarProperty = [
   },
   {
     name: "ข่าวสาร",
-    path: "/news",
+    path: "/posts/news",
   },
   {
     name: "รีวิวอนิเมะ",
-    path: "/review",
+    path: "/posts/reviews",
   },
   {
     name: "Q&A ถามตอบ",
-    path: "/qanda",
+    path: "/posts/qandas",
   },
 ];
