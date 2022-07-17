@@ -126,16 +126,25 @@ function TopMenu({ comment }) {
   return (
     <div className="absolute p-2">
       <div className="flex flex-row items-center gap-2">
-        <Avatar
-          radius="xl"
-          size="md"
-          src={comment?.avatar}
-          alt={comment?.username}
-        />
+        <Link href={`/${comment.username}`}>
+          <Avatar
+            radius="xl"
+            size="md"
+            src={comment?.avatar}
+            alt={comment?.username}
+            className="cursor-pointer"
+          />
+        </Link>
         <div className="flex flex-col">
-          <Text color="red" size="sm">
-            {comment?.username}
-          </Text>
+          <Link href={`/${comment.username}`}>
+            <Text
+              color="red"
+              size="sm"
+              className="cursor-pointer hover:underline"
+            >
+              {comment?.username}
+            </Text>
+          </Link>
           <div className="flex flex-row items-center text-xs gap-2">{date}</div>
         </div>
       </div>

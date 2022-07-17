@@ -12,6 +12,7 @@ import Logo from "@components/Logo";
 import WebsiteRule from "@components/WebsiteRule";
 import { useRouter } from "next/router";
 import { useModals } from "@mantine/modals";
+import Link from "next/link";
 
 const handleImageUpload = (image) =>
   new Promise((resolve, reject) => {
@@ -186,16 +187,43 @@ function LeftMenu({ data }) {
     <div className="px-2 md:py-4 pb-2 mt-2">
       <div className="flex md:flex-col flex-row gap-2 items-center md:w-[100px]">
         <div className="md:block hidden">
-          <Avatar radius="xl" size="lg" src={data.avatar} alt={data.username} />
+          <Link href={`/${data.username}`}>
+            <Avatar
+              radius="xl"
+              size="lg"
+              src={data.avatar}
+              alt={data.username}
+              className="cursor-pointer"
+            />
+          </Link>
         </div>
         <div className="md:hidden visible">
-          <Avatar radius="xl" size="md" src={data.avatar} alt={data.username} />
+          <Link href={`/${data.username}`}>
+            <Avatar
+              radius="xl"
+              size="md"
+              src={data.avatar}
+              alt={data.username}
+              className="cursor-pointer"
+            />
+          </Link>
         </div>
         <div className="block  md:text-center text-left">
-          <Text color="red" className="md:text-base text-sm">
-            {data.username}
-          </Text>
-          <p className="text-title text-xs">{data.rule}</p>
+          <Link href={`/${data.username}`}>
+            <Text
+              color="red"
+              className="md:text-base text-sm cursor-pointer hover:underline"
+            >
+              {data.username}
+            </Text>
+          </Link>
+          <p
+            className={`${
+              data.rule === "ผู้ดูแลระบบ" ? "text-yellow-400" : "text-title"
+            } text-xs`}
+          >
+            {data.rule}
+          </p>
         </div>
       </div>
     </div>
