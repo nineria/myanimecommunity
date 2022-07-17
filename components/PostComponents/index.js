@@ -16,6 +16,7 @@ import {
   AlertTriangle,
   CalendarMinus,
   Edit as EditIcon,
+  MilitaryRank,
   Star,
   ThumbUp,
   Trash,
@@ -85,7 +86,7 @@ function TopMenu({ post }) {
   return (
     <div className="px-2 py-4">
       {user && (
-        <div className="flex flex-row justify-center items-center w-full">
+        <div className="flex flex-row flex-wrap justify-around items-center w-full">
           <Link href={`/${user.username}`}>
             <Avatar
               radius="xl"
@@ -109,22 +110,24 @@ function TopMenu({ post }) {
               {user.rule}
             </p>
           </div>
+          {user && (
+            <div className="flex flex-col gap-1 mt-4 ml-4">
+              {user.ranks.map((item, index) => (
+                <Badge
+                  radius="none"
+                  variant="gradient"
+                  gradient={{ from: item.color.from, to: item.color.to }}
+                  key={index}
+                  className="shadow-md w-full"
+                >
+                  {item.label}
+                </Badge>
+              ))}
+            </div>
+          )}
         </div>
       )}
-      {user && (
-        <div className="flex flex-col gap-1 mt-4">
-          {user.ranks.map((item, index) => (
-            <Badge
-              variant="filled"
-              color={item.color}
-              key={index}
-              className="shadow-md"
-            >
-              {item.label}
-            </Badge>
-          ))}
-        </div>
-      )}
+
       <div className="flex flex-row justify-around mt-4 text-title text-opacity-80">
         <div className="flex flex-row items-center text-xs gap-2">
           <CalendarMinus size={14} /> สร้าง: {date}
@@ -194,13 +197,15 @@ function LeftMenu({ post }) {
       {user && (
         <div className="flex flex-col gap-1 mt-4">
           {user.ranks.map((item, index) => (
+            // console.log(item.color)
             <Badge
-              variant="filled"
-              color={item.color}
+              radius="none"
+              variant="gradient"
+              gradient={{ from: item.color.from, to: item.color.to }}
               key={index}
               className="shadow-md"
             >
-              {item.label}
+              <p className="drop-shadow-md">{item.label}</p>
             </Badge>
           ))}
         </div>

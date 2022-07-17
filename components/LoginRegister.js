@@ -400,7 +400,10 @@ function Register() {
       privacyPolicy: false,
       ranks: [
         {
-          color: "blue",
+          color: {
+            form: "#36D1DC",
+            to: "#5B86E5",
+          },
           label: "สมาชิกใหม่",
         },
       ],

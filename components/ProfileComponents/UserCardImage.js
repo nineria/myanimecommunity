@@ -83,8 +83,9 @@ export default function UserCardImage({ user, posts }) {
             user.ranks.map((rank) => (
               <Badge
                 key={rank.label}
-                variant="outline"
-                color={rank.color}
+                variant="gradient"
+                gradient={{ from: rank.color.from, to: rank.color.to }}
+                className="shadow-md"
                 size="lg"
               >
                 {rank.label}
