@@ -150,18 +150,20 @@ export default function UserProfilePage({ user, posts }) {
                 <UserCardImage user={user} posts={posts} />
                 <StatsGridIcons user={user} posts={posts} />
                 <StatsSegments user={user} />
-                {posts[0] && <TableSort posts={posts} />}
+                {posts[0] && <TableSort user={user} posts={posts} />}
 
-                <AdminCheck>
-                  <Title order={2} align="center" className="text-title mt-4">
-                    ส่วนของผู้ดูแลระบบ
-                  </Title>
-                  <div id="announcementControl">
-                    <AnnouncementControl />
-                  </div>
-                  <GiveUserRank />
-                  <ReportFormUser />
-                </AdminCheck>
+                {username === user.username && (
+                  <AdminCheck>
+                    <Title order={2} align="center" className="text-title mt-4">
+                      ส่วนของผู้ดูแลระบบ
+                    </Title>
+                    <div id="announcementControl">
+                      <AnnouncementControl />
+                    </div>
+                    <GiveUserRank />
+                    <ReportFormUser />
+                  </AdminCheck>
+                )}
               </Stack>
             </Animate>
           )}

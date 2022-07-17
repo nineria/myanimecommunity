@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 // Components
 import {
   createStyles,
@@ -14,15 +14,9 @@ import {
   Progress,
 } from "@mantine/core";
 // Icons
-import {
-  Selector,
-  ChevronDown,
-  ChevronUp,
-  Search,
-  Underline,
-} from "tabler-icons-react";
-import { useRouter } from "next/router";
+import { Selector, ChevronDown, ChevronUp, Search } from "tabler-icons-react";
 import Link from "next/link";
+import { UserContext } from "@lib/context";
 
 const useStyles = createStyles(() => ({
   th: {
@@ -75,16 +69,15 @@ function sortData(data, payload) {
   );
 }
 
-export function TableSort({ posts }) {
-  const router = useRouter();
+export function TableSort({ user, posts }) {
+  const { username } = useContext(UserContext);
+
   const [search, setSearch] = useState("");
   const [sortedData, setSortedData] = useState(posts);
   const [sortBy, setSortBy] = useState(null);
   const [reverseSortDirection, setReverseSortDirection] = useState(false);
 
   const { classes, theme } = useStyles();
-
-  console.log(posts.length);
 
   const setSorting = (field) => {
     const reversed = field === sortBy ? !reverseSortDirection : false;
@@ -196,9 +189,16 @@ export function TableSort({ posts }) {
   return (
     <Card p="md" radius="sm" className="bg-foreground">
       <ScrollArea>
-        <Text size="xl" weight={700} mb="sm">
-          การจัดการโพสต์
-        </Text>
+        {username === user.username ? (
+          <Text size="xl" weight={700} mb="sm">
+            การจัดการโพสต์
+          </Text>
+        ) : (
+          <Text size="xl" weight={700} mb="sm">
+            โพสต์ทั้งหมดของ {user.username}
+          </Text>
+        )}
+
         <TextInput
           placeholder="ค้นหา"
           mb="md"

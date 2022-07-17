@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 // Components
 import {
   Avatar,
@@ -18,8 +18,11 @@ import { AlertTriangle, Edit } from "tabler-icons-react";
 // Tools
 import { kFormatter } from "@components/Calculator";
 import EditProfile from "./EditProfile";
+import { UserContext } from "@lib/context";
 
 export default function UserCardImage({ user, posts }) {
+  const { username } = useContext(UserContext);
+
   const [opened, setOpened] = useState(false);
   const [editOpened, setEditOpened] = useState(false);
 
@@ -44,17 +47,20 @@ export default function UserCardImage({ user, posts }) {
           backgroundPosition: "center",
         }}
       />
-      <div className="fixed top-2 right-0 p-[2px] bg-foreground rounded-l-md">
-        <Button
-          className="border-none mr-2 text-title hover:bg-content hover:text-[#fff]"
-          compact
-          variant="default"
-          rightIcon={<AlertTriangle size={20} />}
-          onClick={() => setOpened(true)}
-        >
-          แจ้งรายงาน
-        </Button>
-      </div>
+      {username !== user.username && (
+        <div className="fixed top-2 right-0 p-[2px] bg-foreground rounded-l-md">
+          <Button
+            className="border-none mr-2 text-title hover:bg-content hover:text-[#fff]"
+            compact
+            variant="default"
+            rightIcon={<AlertTriangle size={20} />}
+            onClick={() => setOpened(true)}
+          >
+            แจ้งรายงาน
+          </Button>
+        </div>
+      )}
+
       <Avatar
         src={user.avatar}
         size={120}
@@ -127,15 +133,17 @@ export default function UserCardImage({ user, posts }) {
         >
           {editOpened && <EditProfile user={user} setOpened={setEditOpened} />}
         </Modal>
-        <Button
-          fullWidth
-          className="bg-black/30 text-[#fff] hover:bg-black/30 hover:opacity-75"
-          variant="default"
-          rightIcon={<Edit size={20} />}
-          onClick={() => setEditOpened(true)}
-        >
-          แก้ไขรายละเอียด
-        </Button>
+        {username === user.username && (
+          <Button
+            fullWidth
+            className="bg-black/30 text-[#fff] hover:bg-black/30 hover:opacity-75"
+            variant="default"
+            rightIcon={<Edit size={20} />}
+            onClick={() => setEditOpened(true)}
+          >
+            แก้ไขรายละเอียด
+          </Button>
+        )}
       </Stack>
     </Card>
   );

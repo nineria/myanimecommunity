@@ -23,6 +23,7 @@ import { UserContext } from "@lib/context";
 import AuthorCheck from "@components/AuthorCheck";
 import AdminCheck from "@components/AdminCheck";
 import AuthCheck from "@components/AuthCheck";
+import Link from "next/link";
 
 export default function Comment({ post, comment }) {
   const [commentRef, setCommentRef] = useState();
@@ -84,13 +85,20 @@ function LeftMenu({ comment }) {
   return (
     <div className="px-2 py-4 mt-2">
       <div className="flex flex-col items-center w-[100px] ">
-        <Avatar
-          radius="xl"
-          size="lg"
-          src={comment?.avatar}
-          alt={comment?.username}
-        />
-        <Text color="red">{comment?.username}</Text>
+        <Link href={`/${comment.username}`}>
+          <Avatar
+            radius="xl"
+            size="lg"
+            src={comment?.avatar}
+            alt={comment?.username}
+            className="cursor-pointer"
+          />
+        </Link>
+        <Link href={`/${comment.username}`}>
+          <Text color="red" className="cursor-pointer hover:underline">
+            {comment?.username}
+          </Text>
+        </Link>
       </div>
       <div className="flex flex-col mt-4 text-title text-opacity-80">
         <div className="flex flex-row items-center text-xs gap-2">

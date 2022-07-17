@@ -26,6 +26,7 @@ import RichTextEditor from "@components/RichText";
 import AuthorCheck from "@components/AuthorCheck";
 import AdminCheck from "@components/AdminCheck";
 import { UserContext } from "@lib/context";
+import Link from "next/link";
 
 export default function PostComponents({ post, postRef }) {
   return (
@@ -85,15 +86,21 @@ function TopMenu({ post }) {
     <div className="px-2 py-4">
       {user && (
         <div className="flex flex-row justify-center items-center w-full">
-          <Avatar
-            radius="xl"
-            size="lg"
-            src={user.avatar}
-            alt={user.username}
-            className="border-2 border-title"
-          />
+          <Link href={`/${user.username}`}>
+            <Avatar
+              radius="xl"
+              size="lg"
+              src={user.avatar}
+              alt={user.username}
+              className="border-2 border-title cursor-pointer"
+            />
+          </Link>
           <div className="flex flex-col ml-4 ">
-            <Text color="red">{user.username}</Text>
+            <Link href={`/${user.username}`}>
+              <Text color="red" className="cursor-pointer hover:underline">
+                {user.username}
+              </Text>
+            </Link>
             <p
               className={`${
                 user.rule === "ผู้ดูแลระบบ" ? "text-yellow-400" : "text-title"
@@ -162,8 +169,20 @@ function LeftMenu({ post }) {
     <div className="px-2 py-4">
       {user && (
         <div className="flex flex-col items-center w-[100px] ">
-          <Avatar radius="xl" size="lg" src={user.avatar} alt={user.username} />
-          <Text color="red">{user.username}</Text>
+          <Link href={`/${user.username}`}>
+            <Avatar
+              radius="xl"
+              size="lg"
+              src={user.avatar}
+              alt={user.username}
+              className="cursor-pointer"
+            />
+          </Link>
+          <Link href={`/${user.username}`}>
+            <Text color="red" className="cursor-pointer hover:underline">
+              {user.username}
+            </Text>
+          </Link>
           <p
             className={`${
               user.rule === "ผู้ดูแลระบบ" ? "text-yellow-400" : "text-title"
