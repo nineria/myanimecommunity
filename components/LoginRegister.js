@@ -1,7 +1,12 @@
 import React, { useCallback, useContext, useState } from "react";
 import Link from "next/link";
 // Context
-import { auth, firestore, googleAuthProvider } from "@lib/firebase";
+import {
+  auth,
+  facebookAuthProvider,
+  firestore,
+  googleAuthProvider,
+} from "@lib/firebase";
 // Components
 import {
   Button,
@@ -29,6 +34,7 @@ import { useForm, zodResolver } from "@mantine/form";
 import { z } from "zod";
 import AgreeWebsiteRule from "./WebsiteRule/AgreeWebsiteRule";
 import PrivacyPolicy from "./PrivacyPolicy";
+import { FacebookAuthProvider } from "firebase/auth";
 
 const REGEX = {
   length: /.{8,}/,
@@ -94,7 +100,7 @@ export default function LoginRegister() {
       >
         {/* Modal content */}
 
-        {openedLogin && <LoginPopUp />}
+        {openedLogin && <LoginPopUp setOpenedRegister={setOpenedRegister} />}
       </Modal>
       <Button
         className="bg-content text-[#fff] hover:bg-content hover:opacity-75"
@@ -146,11 +152,21 @@ function Logo() {
   );
 }
 
-export function LoginPopUp() {
-  const router = useRouter();
+export function LoginPopUp({ setOpenedRegister }) {
+  // const router = useRouter();
+
+  const { username } = useContext(UserContext);
 
   const signInWithGoogle = async () => {
     await auth.signInWithPopup(googleAuthProvider);
+
+    if (!username) setOpenedRegister(true);
+  };
+
+  const signInWithFacebook = async () => {
+    await auth.signInWithPopup(facebookAuthProvider);
+
+    if (!username) setOpenedRegister(true);
   };
 
   return (
@@ -171,10 +187,10 @@ export function LoginPopUp() {
           Google
         </Button>
         <Button
-          disabled
           size="sm"
           radius="lg"
           className="bg-white w-[200px] text-black border-[1px] border-gray-300 hover:bg-white hover:opacity-75"
+          onClick={signInWithFacebook}
         >
           <Image
             src="/facebook-logo.png"
@@ -242,6 +258,9 @@ export function RegisterPopUp() {
   const signInWithGoogle = async () => {
     await auth.signInWithPopup(googleAuthProvider);
   };
+  const signInWithFacebook = async () => {
+    await auth.signInWithPopup(googleAuthProvider);
+  };
 
   return (
     !username && (
@@ -273,6 +292,7 @@ export function RegisterPopUp() {
                 alt="facebook"
                 width="15px"
                 className="mr-2"
+                onClick={signInWithFacebook}
               />
               Facebook
             </Button>
