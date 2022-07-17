@@ -262,8 +262,15 @@ export function RegisterPopUp() {
   const signInWithGoogle = async () => {
     await auth.signInWithPopup(googleAuthProvider);
   };
+
   const signInWithFacebook = async () => {
-    await auth.signInWithPopup(googleAuthProvider);
+    try {
+      await auth.signInWithPopup(facebookAuthProvider);
+
+      if (!username) setOpenedRegister(true);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   console.log(user);
