@@ -84,7 +84,7 @@ export default function UserCardImage({ user, posts }) {
               <Badge
                 key={rank.label}
                 variant="gradient"
-                gradient={{ from: rank.color.from, to: rank.color.to }}
+                gradient={{ from: rank.color.from, to: rank.color.to, deg: 35 }}
                 className="shadow-md"
                 size="lg"
               >

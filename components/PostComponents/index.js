@@ -116,7 +116,11 @@ function TopMenu({ post }) {
                 <Badge
                   radius="none"
                   variant="gradient"
-                  gradient={{ from: item.color.from, to: item.color.to }}
+                  gradient={{
+                    from: item.color.from,
+                    to: item.color.to,
+                    deg: 35,
+                  }}
                   key={index}
                   className="shadow-md w-full"
                 >
@@ -201,7 +205,7 @@ function LeftMenu({ post }) {
             <Badge
               radius="none"
               variant="gradient"
-              gradient={{ from: item.color.from, to: item.color.to }}
+              gradient={{ from: item.color.from, to: item.color.to, deg: 35 }}
               key={index}
               className="shadow-md"
             >
