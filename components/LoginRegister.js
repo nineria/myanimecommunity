@@ -164,9 +164,13 @@ export function LoginPopUp({ setOpenedRegister }) {
   };
 
   const signInWithFacebook = async () => {
-    await auth.signInWithPopup(facebookAuthProvider);
+    try {
+      await auth.signInWithPopup(facebookAuthProvider);
 
-    if (!username) setOpenedRegister(true);
+      if (!username) setOpenedRegister(true);
+    } catch (error) {
+      console.log(error, ": Email นี้ถูกใช้ไปแล้ว");
+    }
   };
 
   return (
@@ -261,6 +265,8 @@ export function RegisterPopUp() {
   const signInWithFacebook = async () => {
     await auth.signInWithPopup(googleAuthProvider);
   };
+
+  console.log(user);
 
   return (
     !username && (
@@ -370,7 +376,7 @@ function Register() {
       username: "",
       avatar: user?.photoURL || "",
       image: "",
-      email: user?.email || "",
+      email: user?.email || user?.providerData[0].email || "",
       password: "",
       confirmPassword: "",
       websiteRule: false,
