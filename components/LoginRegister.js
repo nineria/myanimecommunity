@@ -295,7 +295,6 @@ export function RegisterPopUp() {
               Google
             </Button>
             <Button
-              disabled
               size="sm"
               radius="lg"
               className="bg-white w-[200px] text-black border-[1px] border-gray-300 hover:bg-white hover:opacity-75"
