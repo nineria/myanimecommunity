@@ -115,7 +115,6 @@ function TopMenu({ post }) {
         <div className="flex flex-col gap-1 mt-4">
           {user.ranks.map((item, index) => (
             <Badge
-              radius="sm"
               variant="filled"
               color={item.color}
               key={index}
@@ -196,7 +195,6 @@ function LeftMenu({ post }) {
         <div className="flex flex-col gap-1 mt-4">
           {user.ranks.map((item, index) => (
             <Badge
-              radius="sm"
               variant="filled"
               color={item.color}
               key={index}
