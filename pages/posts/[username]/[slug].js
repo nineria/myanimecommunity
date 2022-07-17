@@ -159,7 +159,7 @@ export default function PostPage(props) {
         description={description}
       />
       <Navbar />
-      <Container size="lg" py="xs">
+      <Container size="lg">
         <Stack spacing="xs">
           <Breadcrumbs separator="→" className="truncate">
             {items}

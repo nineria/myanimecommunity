@@ -21,7 +21,7 @@ export async function getServerSideProps() {
   const postsQuery = firestore
     .collectionGroup("posts")
     .orderBy("createdAt", "desc")
-    .where("tag", "array-contains", "คำถาม")
+    .where("tag", "array-contains", "ข่าวสาร")
     .limit(LIMIT);
 
   const posts = (await postsQuery.get()).docs.map(postToJSON);
@@ -38,7 +38,7 @@ export async function getServerSideProps() {
   };
 }
 
-export default function QAndAsPage(props) {
+export default function NewsPage(props) {
   const [layout, setLayout] = useState("grid");
 
   const [activePage, setPage] = useState(1);
@@ -46,6 +46,7 @@ export default function QAndAsPage(props) {
   const items = [
     { title: "หน้าหลัก", href: "/" },
     { title: "โพสต์ทั้งหมด", href: "/posts" },
+    { title: "ข่าวสาร", href: "#" },
   ].map((item, index) => (
     <Anchor size="sm" color="dimmed" href={item.href} key={index}>
       {item.title}
@@ -60,7 +61,7 @@ export default function QAndAsPage(props) {
     <>
       <div className="bg-background text-white min-h-[1024px] mb-[235px] pb-10">
         <Metatags />
-        <Navbar page="/posts/qandas" />
+        <Navbar page="/posts/news" />
         <Container size="lg">
           <Stack spacing="xs">
             <Breadcrumbs separator="→">{items}</Breadcrumbs>

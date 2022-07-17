@@ -30,11 +30,11 @@ export function Footer() {
         },
         {
           label: "รีวิว",
-          link: "/review",
+          link: "/reviews",
         },
         {
           label: "Q&A ถามตอบ",
-          link: "/qanda",
+          link: "/qandas",
         },
       ],
     },
