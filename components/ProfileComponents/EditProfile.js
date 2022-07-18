@@ -28,6 +28,13 @@ import {
 import AuthCheck from "@components/AuthCheck";
 import { showNotification } from "@mantine/notifications";
 import { Check, X } from "tabler-icons-react";
+import { useContext } from "react";
+import { UserContext } from "@lib/context";
+import {
+  DropzoneAvatar,
+  DropzoneImage,
+} from "@components/ProfileComponents/Dropzone";
+import { useRouter } from "next/router";
 
 export default function EditProfile({ user, setOpened }) {
   const [userRef, setUserRef] = useState();
@@ -53,8 +60,10 @@ export default function EditProfile({ user, setOpened }) {
 }
 
 function ProfileForm({ user, userRef, setOpened }) {
-  const avatarRef = useRef();
-  const imageRef = useRef();
+  const router = useRouter();
+
+  const [image, setImage] = useState();
+  const [avatar, setAvatar] = useState();
 
   const [openedImage, setOpenImage] = useState(false);
   const [openedAvatar, setOpenAvatar] = useState(false);
@@ -63,8 +72,8 @@ function ProfileForm({ user, userRef, setOpened }) {
     await userRef.update({
       firstName: values.firstName,
       lastName: values.lastName,
-      avatar: values.avatar,
-      image: values.image,
+      avatar: avatar || user.avatar,
+      image: image || user.image,
       email: values.email,
       password: values.password,
     });
@@ -77,7 +86,10 @@ function ProfileForm({ user, userRef, setOpened }) {
         root: "bg-foreground border-teal-400",
       },
     });
+
     setOpened(false);
+
+    router.reload();
   };
 
   const handleCancel = () => {
@@ -97,7 +109,6 @@ function ProfileForm({ user, userRef, setOpened }) {
       firstName: user.firstName,
       lastName: user.lastName,
       avatar: user.avatar,
-      image: user.image,
       email: user.email,
       password: user.password,
     },
@@ -106,6 +117,29 @@ function ProfileForm({ user, userRef, setOpened }) {
   return (
     <form onSubmit={form.onSubmit((values) => HandleChange(values))}>
       <Stack spacing="sm">
+        <Card p="md" radius="sm" className="bg-foreground">
+          <Card.Section
+            sx={{
+              backgroundImage: `url(${image || user.image})`,
+              height: 260,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          >
+            <DropzoneImage setImage={setImage} />
+          </Card.Section>
+          <div className="relative w-fit">
+            <Avatar
+              src={avatar || user.avatar}
+              size={120}
+              radius={120}
+              mx="auto"
+              mt={-60}
+              className="border-2 border-foreground"
+            />
+            <DropzoneAvatar setImage={setAvatar} />
+          </div>
+        </Card>
         <Group grow>
           <InputWrapper id="input-demo" label="ชื่อจริง">
             <Input
@@ -126,96 +160,6 @@ function ProfileForm({ user, userRef, setOpened }) {
             />
           </InputWrapper>
         </Group>
-        <InputWrapper id="input-demo" label="รูปภาพประจำตัว">
-          <Grid>
-            <Grid.Col sm={10}>
-              <Input
-                {...form.getInputProps("avatar")}
-                ref={avatarRef}
-                placeholder="รูปภาพประจำตัวของคุณ"
-                classNames={{
-                  input: "bg-accent bg-opacity-50",
-                }}
-              />
-            </Grid.Col>
-            <Grid.Col sm={2}>
-              <Button
-                fullWidth
-                className="bg-background hover:bg-background hover:opacity-75 "
-                onClick={() => {
-                  setOpenAvatar((e) => !e);
-                }}
-              >
-                {openedAvatar === false ? "แสดง" : "ซ่อน"}
-              </Button>
-            </Grid.Col>
-          </Grid>
-          <Collapse in={openedAvatar} mt="xs">
-            {avatarRef.current?.value ? (
-              <Stack spacing="xs">
-                <Center m="sm">
-                  <Avatar size="xl" src={avatarRef.current?.value} />
-                </Center>
-                <InputWrapper description="หากรูปภาพไม่แสดงให้ลองเปลี่ยน Link" />
-              </Stack>
-            ) : (
-              <Text color="red" size="xs">
-                เกิดข้อผิดพลาด ในการโหลดรูปภาพกรุณาลองใหม่อีกครั้ง
-              </Text>
-            )}
-          </Collapse>
-        </InputWrapper>
-        <InputWrapper id="input-demo" label="รูปภาพพื้นหลัง">
-          <Grid>
-            <Grid.Col sm={10}>
-              <Input
-                {...form.getInputProps("image")}
-                ref={imageRef}
-                placeholder="รูปภาพพื้นหลังของคุณ"
-                classNames={{
-                  input: "bg-accent bg-opacity-50",
-                }}
-              />
-            </Grid.Col>
-            <Grid.Col sm={2}>
-              <Button
-                fullWidth
-                className="bg-background hover:bg-background hover:opacity-75 "
-                onClick={() => {
-                  setOpenImage((e) => !e);
-                }}
-              >
-                {openedImage === false ? "แสดง" : "ซ่อน"}
-              </Button>
-            </Grid.Col>
-          </Grid>
-          <Collapse in={openedImage} mt="xs">
-            {imageRef.current?.value ? (
-              <Stack spacing="xs">
-                {/* <Image
-                  src={imageRef.current?.value}
-                  alt={imageRef.current?.value}
-                /> */}
-
-                <Card radius="sm">
-                  <Card.Section
-                    sx={{
-                      backgroundImage: `url(${imageRef.current?.value})`,
-                      height: 260,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                    }}
-                  />
-                </Card>
-                <InputWrapper description="หากรูปภาพไม่แสดงให้ลองเปลี่ยน Link" />
-              </Stack>
-            ) : (
-              <Text color="red" size="xs">
-                เกิดข้อผิดพลาด ในการโหลดรูปภาพกรุณาลองใหม่อีกครั้ง
-              </Text>
-            )}
-          </Collapse>
-        </InputWrapper>
         <InputWrapper id="input-demo" label="อีเมล (email)">
           <Input
             {...form.getInputProps("email")}

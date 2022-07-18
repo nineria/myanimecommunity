@@ -42,7 +42,7 @@ export default function UserCardImage({ user, posts }) {
       <Card.Section
         sx={{
           backgroundImage: `url(${user.image})`,
-          height: 260,
+          height: 360,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -61,23 +61,41 @@ export default function UserCardImage({ user, posts }) {
         </div>
       )}
 
-      <Avatar
-        src={user.avatar}
-        size={120}
-        radius={120}
-        mx="auto"
-        mt={-90}
-        className="border-2 border-foreground"
-      />
-      <Stack spacing="sm">
-        <div className="block">
-          <Text align="center" size="lg" mt="sm" weight={500}>
-            {user.firstName} {user.lastName}
-          </Text>
-          <Text align="center" weight={500}>
-            ({user.username})
-          </Text>
+      <div className="relative mx-5">
+        <div className="relative w-fit">
+          <Group>
+            <Avatar
+              src={user.avatar}
+              size={140}
+              radius={140}
+              mx="auto"
+              mt={-70}
+              className="border-2 border-title"
+            />
+            <div className="block">
+              <Text align="left" size="xl" weight={500}>
+                {user.username}
+              </Text>
+              <Text align="left" size="md" className="opacity-50">
+                {user.firstName} {user.lastName}
+              </Text>
+            </div>
+          </Group>
         </div>
+        {username === user.username && (
+          <Button
+            className="absolute top-2 right-0 border-title text-title hover:opacity-75"
+            variant="outline"
+            radius="xl"
+            rightIcon={<Edit size={20} />}
+            onClick={() => setEditOpened(true)}
+          >
+            แก้ไขรายละเอียด
+          </Button>
+        )}
+      </div>
+
+      <Stack spacing="sm">
         <Group position="center">
           {user &&
             user.ranks.map((rank) => (
@@ -134,17 +152,6 @@ export default function UserCardImage({ user, posts }) {
         >
           {editOpened && <EditProfile user={user} setOpened={setEditOpened} />}
         </Modal>
-        {username === user.username && (
-          <Button
-            fullWidth
-            className="bg-black/30 text-[#fff] hover:bg-black/30 hover:opacity-75"
-            variant="default"
-            rightIcon={<Edit size={20} />}
-            onClick={() => setEditOpened(true)}
-          >
-            แก้ไขรายละเอียด
-          </Button>
-        )}
       </Stack>
     </Card>
   );
