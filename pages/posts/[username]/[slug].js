@@ -27,6 +27,7 @@ import Loading from "@components/Loading";
 import Metatags from "@components/Metatags";
 import LoginRegister, { LoginPopUp } from "@components/LoginRegister";
 import { Animate } from "react-simple-animate";
+import Logo from "@components/Logo";
 
 // export async function getStaticProps({ params }) {
 //   try {
@@ -218,7 +219,20 @@ export default function PostPage(props) {
             }}
           />
           {/* Create comment */}
-          <AuthCheck fallback={<></>}>
+          <AuthCheck
+            fallback={
+              <div className="flex flex-col justify-center bg-foreground rounded-sm py-10">
+                <Text className="text-title text-center">
+                  เข้าสู่ระบบ หรือลงทะเบียน เพื่อเป็นส่วนหนึ่งของ
+                </Text>
+                <Text className="text-title text-center mb-5">
+                  <Logo />
+                  และอื่น ๆ อีกมากมาย!
+                </Text>
+                <LoginRegister center />
+              </div>
+            }
+          >
             <CreateComment post={post} />
           </AuthCheck>
         </Stack>

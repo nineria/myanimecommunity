@@ -74,14 +74,16 @@ const schema = z
     path: ["confirmPassword"],
   });
 
-export default function LoginRegister() {
+export default function LoginRegister({ center = false }) {
   const [openedLogin, setOpenedLogin] = useState(false);
   const [openedRegister, setOpenedRegister] = useState(false);
 
-  const router = useRouter();
-
   return (
-    <div className="flex flex-row justify-end w-full gap-2">
+    <div
+      className={`flex flex-row ${
+        center ? "justify-center" : "justify-end"
+      } w-full gap-2`}
+    >
       <Modal
         centered
         size="md"
