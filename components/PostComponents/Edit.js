@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 // Components
-import { Stack } from "@mantine/core";
+import { LoadingOverlay, Stack } from "@mantine/core";
 import TagHeader from "./FormComponents/TagHeader";
 import TagGenre from "./FormComponents/TagGenre";
 import { PostHeader, RefCredit } from "./FormComponents";
@@ -21,7 +21,6 @@ const schema = z.object({
     .string()
     .min(10, { message: "หัวข้อโพสต์ต้องมีอย่างน้อย 10 ตัวอักษร" })
     .max(120, { message: "หัวข้อโพสต์ต้องไม่เกิน 120 ตัวอักษร" }),
-  image: z.string().min(1, { message: "กรุณาใส่รูปภาพประจำโพสต์" }),
   credit: z.string().min(1, {
     message:
       "กรุณาใส่แหล่งที่มาหรืออ้างอิง กรณีข้อมูลในโพสต์เป็นของท่านเองให้เขียนว่า Original",
@@ -39,15 +38,19 @@ export default function Edit({ post, postRef, setOpened }) {
 function PostForm({ post, postRef, setOpened }) {
   const [tags, setTags] = useState([...post.tag]);
   const [genres, setGenres] = useState([...post.genre]);
+  const [image, setImage] = useState(post.image);
+
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
   const HandleChange = async (values) => {
+    setLoading(true);
     await postRef.update({
       tag: tags,
       genre: genres,
       title: values.title,
-      image: values.image,
+      image: image,
       content: values.content,
       credit: values.credit,
       updatedAt: serverTimestamp(),
@@ -62,9 +65,9 @@ function PostForm({ post, postRef, setOpened }) {
       },
     });
 
-    router.reload();
+    setLoading(false);
 
-    setOpened(false);
+    router.reload();
   };
 
   const form = useForm({
@@ -73,7 +76,6 @@ function PostForm({ post, postRef, setOpened }) {
       tag: post.tag,
       genre: post.genre,
       title: post.title,
-      image: post.image,
       content: post.content,
       credit: post.credit,
     },
@@ -82,11 +84,12 @@ function PostForm({ post, postRef, setOpened }) {
   return (
     <AuthCheck>
       <form onSubmit={form.onSubmit((values) => HandleChange(values))}>
+        <LoadingOverlay visible={loading} />
         <Stack spacing="sm">
           <TagHeader data={tags} setData={setTags} />
           <TagGenre data={genres} setData={setGenres} />
           <PostHeader {...form.getInputProps("title")} />
-          <PostImage {...form.getInputProps("image")} />
+          <PostImage image={image} setImage={setImage} />
           <PostContent
             {...form.getInputProps("content")}
             value={form.getInputProps("content").value}

@@ -7,6 +7,7 @@ import {
   Group,
   Input,
   InputWrapper,
+  LoadingOverlay,
   Stack,
   TextInput,
 } from "@mantine/core";
@@ -30,7 +31,6 @@ const schema = z.object({
     .string()
     .min(10, { message: "หัวข้อโพสต์ต้องมีอย่างน้อย 10 ตัวอักษร" })
     .max(120, { message: "หัวข้อโพสต์ต้องไม่เกิน 120 ตัวอักษร" }),
-  image: z.string().min(1, { message: "กรุณาใส่รูปภาพประจำโพสต์" }),
   credit: z.string().min(1, {
     message:
       "กรุณาใส่แหล่งที่มาหรืออ้างอิง กรณีข้อมูลในโพสต์เป็นของท่านเองให้เขียนว่า Original",
@@ -38,12 +38,18 @@ const schema = z.object({
 });
 
 export default function Add({ setOpened }) {
+  const { username } = useContext(UserContext);
+
   const router = useRouter();
+
+  const [loading, setLoading] = useState();
+
   const [tags, setTags] = useState([]);
   const [genres, setGenres] = useState([]);
+  const [image, setImage] = useState();
 
-  const { username } = useContext(UserContext);
   const HandleChange = async (values) => {
+    setLoading(true);
     const uid = auth.currentUser.uid;
     const ref = firestore
       .collection("users")
@@ -55,7 +61,7 @@ export default function Add({ setOpened }) {
       tag: tags,
       genre: genres,
       title: values.title,
-      image: values.image,
+      image: image,
       content: values.content,
       credit: values.credit,
       username: username,
@@ -76,9 +82,9 @@ export default function Add({ setOpened }) {
       },
     });
 
-    setOpened(false);
+    setLoading(false);
 
-    router.reload();
+    router.replace(`posts/${username}/${ref.id}`);
   };
 
   const form = useForm({
@@ -88,7 +94,6 @@ export default function Add({ setOpened }) {
       tag: [],
       genre: [],
       title: "",
-      image: "",
       content: "",
       credit: "",
       username: "",
@@ -102,11 +107,12 @@ export default function Add({ setOpened }) {
 
   return (
     <form onSubmit={form.onSubmit((values) => HandleChange(values))}>
+      <LoadingOverlay visible={loading} />
       <Stack spacing="sm">
         <TagHeader data={tags} setData={setTags} />
         <TagGenre data={genres} setData={setGenres} />
         <PostHeader {...form.getInputProps("title")} />
-        <PostImage {...form.getInputProps("image")} />
+        <PostImage image={image} setImage={setImage} />
         <PostContent {...form.getInputProps("content")} />
         <RefCredit {...form.getInputProps("credit")} />
         <WebsiteRule />

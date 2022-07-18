@@ -11,17 +11,7 @@ import { useRouter } from "next/router";
 export function ButtonControl({ setOpened, postRef, disabled, type }) {
   const modals = useModals();
 
-  const handleCancel = () => {
-    showNotification({
-      color: "yellow",
-      title: "ยกเลิกการแก้ไขแล้ว",
-      icon: <X size={18} />,
-      classNames: {
-        root: "bg-foreground border-yellow-400",
-      },
-    });
-    setOpened(false);
-  };
+  const router = useRouter();
 
   const handleDelete = () => {
     const handleOnClick = async () => {
@@ -38,6 +28,8 @@ export function ButtonControl({ setOpened, postRef, disabled, type }) {
       modals.closeModal(id);
 
       setOpened(false);
+
+      router.replace("/posts");
     };
     const id = modals.openModal({
       title: (
@@ -94,7 +86,7 @@ export function ButtonControl({ setOpened, postRef, disabled, type }) {
       <Group spacing="xs" position="right">
         <Button
           size="xs"
-          onClick={() => handleCancel()}
+          onClick={() => setOpened(false)}
           className="bg-background text-title hover:bg-background hover:opacity-75"
         >
           ยกเลิก

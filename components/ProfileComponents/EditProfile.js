@@ -17,6 +17,7 @@ import {
   PasswordInput,
   Group,
   Card,
+  LoadingOverlay,
 } from "@mantine/core";
 
 import {
@@ -31,8 +32,8 @@ import { Check, X } from "tabler-icons-react";
 import { useContext } from "react";
 import { UserContext } from "@lib/context";
 import {
-  DropzoneAvatar,
-  DropzoneImage,
+  DropzoneProfileAvatar,
+  DropzoneProfileImage,
 } from "@components/ProfileComponents/Dropzone";
 import { useRouter } from "next/router";
 
@@ -65,10 +66,10 @@ function ProfileForm({ user, userRef, setOpened }) {
   const [image, setImage] = useState();
   const [avatar, setAvatar] = useState();
 
-  const [openedImage, setOpenImage] = useState(false);
-  const [openedAvatar, setOpenAvatar] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const HandleChange = async (values) => {
+    setLoading(true);
     await userRef.update({
       firstName: values.firstName,
       lastName: values.lastName,
@@ -87,21 +88,9 @@ function ProfileForm({ user, userRef, setOpened }) {
       },
     });
 
-    setOpened(false);
+    setLoading(false);
 
-    router.reload();
-  };
-
-  const handleCancel = () => {
-    showNotification({
-      color: "yellow",
-      title: "ยกเลิกการแก้ไขแล้ว",
-      icon: <X size={18} />,
-      classNames: {
-        root: "bg-foreground border-yellow-400",
-      },
-    });
-    setOpened(false);
+    router.replace(router.asPath);
   };
 
   const form = useForm({
@@ -116,6 +105,7 @@ function ProfileForm({ user, userRef, setOpened }) {
 
   return (
     <form onSubmit={form.onSubmit((values) => HandleChange(values))}>
+      <LoadingOverlay visible={loading} />
       <Stack spacing="sm">
         <Card p="md" radius="sm" className="bg-foreground">
           <Card.Section
@@ -126,7 +116,7 @@ function ProfileForm({ user, userRef, setOpened }) {
               backgroundPosition: "center",
             }}
           >
-            <DropzoneImage setImage={setImage} />
+            <DropzoneProfileImage setImage={setImage} />
           </Card.Section>
           <div className="relative w-fit">
             <Avatar
@@ -137,7 +127,7 @@ function ProfileForm({ user, userRef, setOpened }) {
               mt={-60}
               className="border-2 border-foreground"
             />
-            <DropzoneAvatar setImage={setAvatar} />
+            <DropzoneProfileAvatar setImage={setAvatar} />
           </div>
         </Card>
         <Group grow>
@@ -191,7 +181,7 @@ function ProfileForm({ user, userRef, setOpened }) {
         <Group spacing="xs" position="right">
           <Button
             size="xs"
-            onClick={() => handleCancel()}
+            onClick={() => setOpened(false)}
             className="bg-gray-500 hover:bg-gray-500 hover:opacity-75"
           >
             ยกเลิก
