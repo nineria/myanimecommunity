@@ -132,11 +132,11 @@ export default function UserProfilePage({ user, posts }) {
   // ];
 
   return (
-    <div className="bg-background text-accent min-h-[1024px] mb-[235px] pb-10">
-      <Navbar page="/profile" isBusy />
-      <Metatags />
-      <Container size="lg">
-        <AuthCheck fallback={<Loading />}>
+    <AuthCheck fallback={username ? <Loading /> : null}>
+      <div className="bg-background text-accent min-h-[1024px] mb-[235px] pb-10">
+        <Navbar page="/profile" isBusy />
+        <Metatags />
+        <Container size="lg">
           {username && user && posts && (
             <Animate
               play
@@ -167,9 +167,9 @@ export default function UserProfilePage({ user, posts }) {
               </Stack>
             </Animate>
           )}
-        </AuthCheck>
-      </Container>
-      <Footer />
-    </div>
+        </Container>
+        <Footer />
+      </div>
+    </AuthCheck>
   );
 }
