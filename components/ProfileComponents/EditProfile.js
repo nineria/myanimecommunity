@@ -90,6 +90,8 @@ function ProfileForm({ user, userRef, setOpened }) {
 
     setLoading(false);
 
+    setOpened(false);
+
     router.replace(router.asPath);
   };
 
