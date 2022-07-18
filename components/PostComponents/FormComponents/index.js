@@ -6,7 +6,7 @@ export function PostHeader(props) {
   return (
     <InputWrapper required label="หัวข้อ" description="หัวข้อของโพสต์">
       <TextInput
-        placeholder="หัวข้อโพสต์"
+        placeholder="หัวข้อที่น่าสนใจของคุณ!"
         classNames={{
           input: "bg-accent bg-opacity-50",
         }}

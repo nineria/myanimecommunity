@@ -34,7 +34,7 @@ import { UserContext } from "@lib/context";
 import {
   DropzoneProfileAvatar,
   DropzoneProfileImage,
-} from "@components/ProfileComponents/Dropzone";
+} from "@components/Dropzone";
 import { useRouter } from "next/router";
 
 export default function EditProfile({ user, setOpened }) {

@@ -44,10 +44,10 @@ const dropzoneChildren = (status) => (
 
     <div>
       <Text size="xl" inline>
-        ลากรูปภาพมาที่นี่ หรือ คลิกเพื่อเลือกไฟล์
+        ลากรูปภาพมาที่นี่ หรือคลิกเพื่อเลือกไฟล์
       </Text>
       <Text size="sm" inline mt={7}>
-        ประเภทไฟล์ที่รองรับ PNG, JPEG, SVG และ GIF ขนาดไม่เกิน 5MB
+        ประเภทไฟล์ที่รองรับ PNG, JPEG และ SVG ขนาดไฟล์ไม่ควรเกิน 5MB
       </Text>
     </div>
   </Group>

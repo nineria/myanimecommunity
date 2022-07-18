@@ -55,7 +55,7 @@ export default function TagGenre({ data, setData }) {
           <Tag size={14} /> ประเภทของเนื้อหา
         </Group>
       }
-      description="เช่น Action, Comedy, Romance, Drama"
+      description="เช่น Action, Comedy, Romance, Drama - กด Enter เพื่อเพิ่มประเภทของเนื้อหา"
     >
       <Group
         spacing="4px"

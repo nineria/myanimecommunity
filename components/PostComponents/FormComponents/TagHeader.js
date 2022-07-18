@@ -64,7 +64,7 @@ export default function TagHeader({ data, setData }) {
           <Tag size={14} /> ประเภทของโพสต์
         </Group>
       }
-      description="เช่น คำถาม, สปอย, รีวิว"
+      description="เช่น คำถาม, สปอย, รีวิว - กด Enter เพื่อเพิ่มประเภทของโพสต์"
     >
       <Group
         spacing="4px"

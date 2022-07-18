@@ -25,7 +25,7 @@ export default function PostContent(props) {
     <InputWrapper
       required
       label="เนื้อหา"
-      description="รายระเอียดเนื้อหาของโพตส์ เช่น รูปภาพ หรือ วิดีโอ รวมไปถึง Link ต่างๆ"
+      description="รายระเอียดเนื้อหาของโพสต์ เช่น รูปภาพ หรือ วิดีโอ รวมไปถึง Link ต่างๆ"
     >
       <Tabs
         variant="default"
@@ -38,7 +38,7 @@ export default function PostContent(props) {
             sticky={true}
             stickyOffset={-55}
             {...props}
-            placeholder="รายระเอียดเนื้อหาของโพตส์ เช่น รูปภาพ หรือ วิดีโอ รวมไปถึง Link ต่างๆ"
+            placeholder="คุณกำลังคิดอะไรอยู่"
             onImageUpload={handleImageUpload}
             classNames={{
               root: "bg-black/5 text-title border-[#fff] border-opacity-20",
