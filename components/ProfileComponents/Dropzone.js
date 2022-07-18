@@ -62,12 +62,15 @@ export function DropzoneProfileImage({ setImage }) {
 
   const openConfirmModal = () => {
     const id = modals.openModal({
-      title: "ไม่ลองรับไฟล์ประเภทนี้",
+      title: "เกิดข้อผิดพลาด!",
       zIndex: "999",
       centered: true,
       children: (
         <Stack>
-          <Text size="sm">ประเภทไฟล์ที่แนะนำคือ PNG, JPEG และ SVG</Text>
+          <Text size="sm">
+            ขนาดความกว้างของไฟล์จะต้องไม่เกิน 1024px
+            และประเภทของไฟล์จะต้องอยู่ในรูปแบบ PNG, JPEG หรือ SVG เท่านั้น
+          </Text>
           <Button
             type="submit"
             className="bg-red-500 hover:bg-red-500 hover:opacity-75"
@@ -113,7 +116,7 @@ export function DropzoneProfileImage({ setImage }) {
         MIME_TYPES.svg,
         MIME_TYPES.webp,
       ]}
-      className="absolute top-2 right-2 bottom-[85px] left-2 text-title hover:text-accent bg-transparent  bg-opacity-30 hover:bg-black/30"
+      className="absolute top-2 right-2 bottom-[85px] left-2 text-[#fff] bg-transparent hover:bg-black/30"
     >
       {(status) => dropzoneChildren(status, theme)}
     </Dropzone>
@@ -127,12 +130,15 @@ export function DropzoneProfileAvatar({ setImage }) {
 
   const openConfirmModal = () => {
     const id = modals.openModal({
-      title: "ไม่ลองรับไฟล์ประเภทนี้",
+      title: "เกิดข้อผิดพลาด!",
       zIndex: "999",
       centered: true,
       children: (
         <Stack>
-          <Text size="sm">ประเภทไฟล์ที่แนะนำคือ PNG, JPEG และ SVG</Text>
+          <Text size="sm">
+            ขนาดความกว้างของไฟล์จะต้องไม่เกิน 512px
+            และประเภทของไฟล์จะต้องอยู่ในรูปแบบ PNG, JPEG หรือ SVG เท่านั้น
+          </Text>
           <Button
             type="submit"
             className="bg-red-500 hover:bg-red-500 hover:opacity-75"
@@ -168,18 +174,19 @@ export function DropzoneProfileAvatar({ setImage }) {
   return (
     <Dropzone
       loading={loading}
+      radius="100px"
       multiple={false}
       onDrop={(file) => handleImageUpload(file)}
       //   onDrop={(files) => console.log("accepted files", files)}
       onReject={openConfirmModal}
-      maxSize={3 * 1024 ** 2}
+      maxSize={3 * 512 ** 2}
       accept={[
         MIME_TYPES.png,
         MIME_TYPES.jpeg,
         MIME_TYPES.svg,
         MIME_TYPES.webp,
       ]}
-      className="absolute rounded-full top-2 right-2 bottom-2 left-2 text-title hover:text-accent bg-transparent bg-opacity-30 hover:bg-black/30"
+      className="absolute  top-2 right-2 bottom-2 left-2 text-[#fff] bg-transparent hover:bg-black/40"
     >
       {(status) => (
         <div className="flex flex-col justify-center items-center h-full w-full">
@@ -202,12 +209,15 @@ export function DropzoneImage({ setImage }) {
 
   const openConfirmModal = () => {
     const id = modals.openModal({
-      title: "ไม่ลองรับไฟล์ประเภทนี้",
+      title: "เกิดข้อผิดพลาด!",
       zIndex: "999",
       centered: true,
       children: (
         <Stack>
-          <Text size="sm">ประเภทไฟล์ที่แนะนำคือ PNG, JPEG และ SVG</Text>
+          <Text size="sm">
+            ขนาดความกว้างของไฟล์จะต้องไม่เกิน 1024px
+            และประเภทของไฟล์จะต้องอยู่ในรูปแบบ PNG, JPEG หรือ SVG เท่านั้น
+          </Text>
           <Button
             type="submit"
             className="bg-red-500 hover:bg-red-500 hover:opacity-75"
@@ -254,7 +264,7 @@ export function DropzoneImage({ setImage }) {
         MIME_TYPES.svg,
         MIME_TYPES.webp,
       ]}
-      className="absolute top-2 right-2 bottom-2 left-2 text-[#fff] bg-transparent bg-opacity-30 hover:bg-black/30"
+      className="absolute top-2 right-2 bottom-2 left-2 text-[#fff] bg-transparent hover:bg-black/30"
     >
       {(status) => dropzoneChildren(status, theme)}
     </Dropzone>
