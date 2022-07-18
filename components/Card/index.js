@@ -91,6 +91,8 @@ export default function Card({ posts, layout }) {
                   ? "REVIEW"
                   : data.tag[0] === "สปอย"
                   ? "SPOILER"
+                  : data.tag[0] === "ข่าวสาร"
+                  ? "NEWS"
                   : "OTHER"}
               </h1>
             </div>
@@ -150,6 +152,8 @@ function ScreenSmall({ data, badges, date }) {
               ? "REVIEW"
               : data.tag[0] === "สปอย"
               ? "SPOILER"
+              : data.tag[0] === "ข่าวสาร"
+              ? "NEWS"
               : "OTHER"}
           </h1>
         </div>
@@ -200,6 +204,8 @@ function ScreenLarge({ data, badges, date }) {
               ? "REVIEW"
               : data.tag[0] === "สปอย"
               ? "SPOILER"
+              : data.tag[0] === "ข่าวสาร"
+              ? "NEWS"
               : "OTHER"}
           </h1>
         </div>

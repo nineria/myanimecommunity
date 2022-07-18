@@ -28,6 +28,7 @@ export async function getServerSideProps() {
 
   const announcementsQuery = firestore
     .collectionGroup("announcements")
+    .orderBy("createdAt", "desc")
     .where("published", "==", true)
     .limit(3);
 

@@ -28,6 +28,8 @@ import Metatags from "@components/Metatags";
 import LoginRegister, { LoginPopUp } from "@components/LoginRegister";
 import { Animate } from "react-simple-animate";
 import Logo from "@components/Logo";
+import { useContext } from "react";
+import { UserContext } from "@lib/context";
 
 // export async function getStaticProps({ params }) {
 //   try {
@@ -111,6 +113,8 @@ export async function getServerSideProps({ query }) {
 
 export default function PostPage(props) {
   const postRef = firestore.doc(props.path);
+
+  const { username } = useContext(UserContext);
 
   const [realtimePost] = useDocumentData(postRef);
 
@@ -221,16 +225,20 @@ export default function PostPage(props) {
           {/* Create comment */}
           <AuthCheck
             fallback={
-              <div className="flex flex-col justify-center bg-foreground rounded-sm py-10">
-                <Text className="text-title text-center">
-                  เข้าสู่ระบบ หรือลงทะเบียน เพื่อเป็นส่วนหนึ่งของ
-                </Text>
-                <Text className="text-title text-center mb-5">
-                  <Logo />
-                  และอื่น ๆ อีกมากมาย!
-                </Text>
-                <LoginRegister center />
-              </div>
+              username ? (
+                <Loading />
+              ) : (
+                <div className="flex flex-col justify-center bg-foreground rounded-sm py-10">
+                  <Text className="text-title text-center">
+                    เข้าสู่ระบบ หรือลงทะเบียน เพื่อเป็นส่วนหนึ่งของ
+                  </Text>
+                  <Text className="text-title text-center mb-5">
+                    <Logo />
+                    และอื่น ๆ อีกมากมาย!
+                  </Text>
+                  <LoginRegister center />
+                </div>
+              )
             }
           >
             <CreateComment post={post} />

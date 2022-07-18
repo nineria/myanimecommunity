@@ -15,7 +15,7 @@ import ButtonControl from "./AnnouncementComponents/ButtonControl";
 import { useForm, zodResolver } from "@mantine/form";
 import { z } from "zod";
 import { showNotification } from "@mantine/notifications";
-import { Check } from "tabler-icons-react";
+import { AlertCircle, Check } from "tabler-icons-react";
 import { UserContext } from "@lib/context";
 import { useRouter } from "next/router";
 import { auth, firestore, serverTimestamp } from "@lib/firebase";
@@ -105,35 +105,42 @@ export default function AddAnnouncement() {
               ]}
               {...form.getInputProps("type")}
             />
-            <TextInput
-              label="หัวข้อ"
-              placeholder="หัวข้อการประกาศ"
-              classNames={{
-                input: "bg-accent bg-opacity-50",
-              }}
-              {...form.getInputProps("title")}
-            />
-            <Textarea
-              label="เนื้อหา"
-              placeholder="เนื้อหาของประกาศ"
-              autosize
-              minRows={2}
-              classNames={{
-                input: "bg-accent bg-opacity-50",
-              }}
-              {...form.getInputProps("content")}
-            />
-            <InputWrapper
-              label="ตัวอย่างของประกาศ"
-              description="ตัวอย่างเมื่อนำไปแสดงบนเว็บไซต์"
+            <div
+              className={`${
+                form.getInputProps("type").value === "danger"
+                  ? "border-red-500 bg-red-500"
+                  : form.getInputProps("type").value === "warning"
+                  ? "border-orange-500 bg-orange-500"
+                  : "border-green-500 bg-green-500"
+              } border-2 rounded-sm flex flex-row items-center`}
             >
-              <AnnouncementControl
-                type={form.getInputProps("type").value}
-                title={form.getInputProps("title").value || "--ใส่หัวข้อ"}
-                content={form.getInputProps("content").value || "--ใส่เนื้อหา"}
-                disabled
-              />
-            </InputWrapper>
+              <div>
+                <AlertCircle size={25} className="text-white m-1" />
+              </div>
+              <div className="flex flex-row px-2 text-title  w-full py-2 bg-foreground rounded-r-sm">
+                <div className="w-full">
+                  <h1 className="font-bold md:text-base text-sm ">
+                    <TextInput
+                      placeholder="หัวข้อการประกาศ"
+                      classNames={{
+                        input: "bg-transparent bg-opacity-50  border-none",
+                      }}
+                      {...form.getInputProps("title")}
+                    />
+                  </h1>
+                  <p className="text-xs md:text-sm ">
+                    <Textarea
+                      placeholder="เนื้อหาของประกาศ"
+                      autosize
+                      classNames={{
+                        input: "bg-transparent bg-opacity-50  border-none",
+                      }}
+                      {...form.getInputProps("content")}
+                    />
+                  </p>
+                </div>
+              </div>
+            </div>
             <Checkbox
               {...form.getInputProps("published")}
               label="เริ่มประกาศ"

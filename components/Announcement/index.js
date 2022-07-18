@@ -4,18 +4,27 @@ import { useThemeContext } from "@lib/useTheme";
 // Icons
 import { Animate } from "react-simple-animate";
 import { AlertCircle, Disabled, X } from "tabler-icons-react";
-import { Group } from "@mantine/core";
+import { Button, Group, Stack, Text } from "@mantine/core";
 import EditAnnouncement from "./Edit";
 import { useContext } from "react";
 import { UserContext } from "@lib/context";
 import AdminCheck from "@components/AdminCheck";
+import { firestore } from "@lib/firebase";
+import { useModals } from "@mantine/modals";
+import { showNotification } from "@mantine/notifications";
+import { useRouter } from "next/router";
 
 export default function Announcement(props) {
-  const [onClose, setOnClose] = useState(true);
-
   const { user } = useContext(UserContext);
 
   const { setTheme } = useThemeContext();
+
+  const modals = useModals();
+
+  const router = useRouter();
+
+  const [onClose, setOnClose] = useState(true);
+  const [postRef, setPostRef] = useState();
 
   useEffect(() => {
     const localData = localStorage.getItem("themes");
@@ -26,7 +35,69 @@ export default function Announcement(props) {
     }
 
     setTheme(localData);
-  }, [setTheme]);
+
+    const uid = props.uid;
+    const ref = firestore
+      .collection("users")
+      .doc(uid)
+      .collection("announcements")
+      .doc(props.slug);
+    setPostRef(ref);
+  }, [setTheme, props.uid, props.slug]);
+
+  const handleDelete = () => {
+    const handleOnClick = async () => {
+      await postRef.delete();
+
+      showNotification({
+        color: "red",
+        title: "ลบประกาศแล้ว",
+        icon: <X size={18} />,
+        classNames: {
+          root: "bg-foreground border-red-400",
+        },
+      });
+      modals.closeModal(id);
+
+      router.reload();
+    };
+    const id = modals.openModal({
+      title: (
+        <Stack>
+          <Text size="sm">คุณต้องการลบประกาศนี้หรือไม่?</Text>
+          <Text size="xs">การดำเนินการต่อไปนี้จะไม่สามารถกลับมาแก้ไขได้</Text>
+        </Stack>
+      ),
+      zIndex: "999",
+      centered: true,
+      classNames: {
+        modal: "bg-foreground",
+        overlay: "bg-background",
+      },
+      size: "sm",
+      children: (
+        <Stack size="xs">
+          <Group position="right">
+            <Button
+              size="xs"
+              className="bg-background text-title hover:bg-background hover:opacity-75"
+              onClick={() => modals.closeModal(id)}
+            >
+              ยกเลิก
+            </Button>
+            <Button
+              type="submit"
+              size="xs"
+              className="bg-red-500 hover:bg-red-500 hover:opacity-75"
+              onClick={() => handleOnClick()}
+            >
+              ยืนยัน
+            </Button>
+          </Group>
+        </Stack>
+      ),
+    });
+  };
 
   return (
     <div className="shadow-md">
@@ -59,15 +130,24 @@ export default function Announcement(props) {
                 {user && !props.disabled && (
                   <AdminCheck>
                     <div className="cursor-pointer bg-foreground">
-                      <EditAnnouncement {...props} />
+                      <EditAnnouncement {...props} postRef={postRef} />
                     </div>
                   </AdminCheck>
                 )}
-                <div
-                  className="cursor-pointer bg-foreground"
-                  onClick={() => setOnClose(!onClose)}
-                >
-                  {!props.disabled && <X size={18} color="#aaa" />}
+                <div className="cursor-pointer bg-foreground">
+                  {!props.disabled && user && (
+                    <AdminCheck
+                      fallback={
+                        <X
+                          size={18}
+                          color="#aaa"
+                          onClick={() => setOnClose(!onClose)}
+                        />
+                      }
+                    >
+                      <X size={18} color="#aaa" onClick={handleDelete} />
+                    </AdminCheck>
+                  )}
                 </div>
               </Group>
             </div>
