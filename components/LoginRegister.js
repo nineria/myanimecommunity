@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import Link from "next/link";
 // Context
 import {
@@ -10,22 +10,16 @@ import {
 // Components
 import {
   Button,
-  Card,
   Checkbox,
   Divider,
   Group,
   Image,
-  Input,
-  InputWrapper,
   Modal,
   PasswordInput,
   Stack,
   Text,
   TextInput,
-  Title,
 } from "@mantine/core";
-import WebsiteRulePage from "@components/WebsiteRule";
-import PrivacyPolicyPage from "@components/PrivacyPolicy/tmp";
 // Icons
 import { AlertTriangle, Mail } from "tabler-icons-react";
 import { useRouter } from "next/router";
@@ -34,7 +28,7 @@ import { useForm, zodResolver } from "@mantine/form";
 import { z } from "zod";
 import AgreeWebsiteRule from "./WebsiteRule/AgreeWebsiteRule";
 import PrivacyPolicy from "./PrivacyPolicy";
-import { FacebookAuthProvider } from "firebase/auth";
+import debounce from "lodash.debounce";
 
 const REGEX = {
   length: /.{8,}/,
@@ -263,11 +257,9 @@ export function LoginPopUp({ setOpenedRegister }) {
 }
 
 export function RegisterPopUp() {
-  const [formUsername, setFormUsername] = useState("");
-
   const router = useRouter();
 
-  const { user, username } = useContext(UserContext);
+  const { username } = useContext(UserContext);
 
   const signInWithGoogle = async () => {
     try {
@@ -322,9 +314,9 @@ export function RegisterPopUp() {
               Facebook
             </Button>
           </Group>
-          <Divider label="ขั้นตอนการลงทะเบียน" labelPosition="center" />
 
-          {user && <Register />}
+          <Divider label="ขั้นตอนการลงทะเบียน" labelPosition="center" />
+          <Register />
         </Stack>
       </section>
     )
@@ -332,16 +324,27 @@ export function RegisterPopUp() {
 }
 
 function Register() {
-  const { user, username } = useContext(UserContext);
+  const { user } = useContext(UserContext);
+
+  const [formValue, setFormValue] = useState("");
+  const [isValid, setIsValid] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = async (values) => {
     // Create refs for both documents
     const userDoc = firestore.doc(`users/${user.uid}`);
-    const usernameDoc = firestore.doc(`usernames/${values.username}`);
+    const usernameDoc = firestore.doc(`usernames/${formValue}`);
 
     // Commit both docs together as a batch write.
     const batch = firestore.batch();
-    batch.set(userDoc, values);
+    batch.set(userDoc, {
+      ...values,
+      firstName: displayName[0],
+      lastName: displayName[1],
+      username: formValue,
+      email: values.email || "",
+      avatar: user?.photoURL,
+    });
     batch.set(usernameDoc, { uid: user.uid });
 
     await batch.commit();
@@ -349,51 +352,51 @@ function Register() {
 
   const onChange = (e) => {
     // Force form value typed in form to match correct format
-    const val = e.target.value.toLowerCase();
+    const val = e.target.value;
     const re = /^(?=[a-zA-Z0-9._]{3,15}$)(?!.*[_.]{2})[^_.].*[^_.]$/;
 
     // Only set form value if length is < 3 OR it passes regex
     if (val.length < 3) {
-      setFormUsername(val);
+      setFormValue(val);
       setLoading(false);
       setIsValid(false);
     }
 
     if (re.test(val)) {
-      setFormUsername(val);
+      setFormValue(val);
       setLoading(true);
       setIsValid(false);
     }
   };
 
-  // useEffect(() => {
-  //   checkUsername(formUsername);
-  // }, [formUsername, checkUsername]);
+  useEffect(() => {
+    checkUsername(formValue);
+  }, [formValue]);
 
   // Hit the database for username match after each debounced change
   // useCallback is required for debounce to work
   const checkUsername = useCallback(
-    () =>
-      debounce(async (username) => {
-        if (username.length >= 3) {
-          const ref = firestore.doc(`usernames/${username}`);
-          const { exists } = await ref.get();
-          setIsValid(!exists);
-          setLoading(false);
-        }
-      }, 500),
+    debounce(async (username) => {
+      if (username.length >= 3) {
+        const ref = firestore.doc(`usernames/${username}`);
+        const { exists } = await ref.get();
+        // console.log("Firestore read executed!");
+        setIsValid(!exists);
+        setLoading(false);
+      }
+    }, 500),
     []
   );
 
   const displayName = user?.displayName.split(" ") || "";
 
   const form = useForm({
-    schema: zodResolver(schema),
+    schema: !user && zodResolver(schema),
     initialValues: {
-      firstName: displayName[0] || "",
-      lastName: displayName[1] || "",
+      firstName: "",
+      lastName: "",
       username: "",
-      avatar: user?.photoURL || "",
+      avatar: "",
       image: "",
       email: user?.email || user?.providerData[0].email || "",
       password: "",
@@ -434,80 +437,79 @@ function Register() {
       ],
       rule: "สมาชิก",
     },
-    validate: {
-      confirmPassword: (value, values) =>
-        value !== values.password ? "Passwords did not match" : null,
-    },
   });
 
   return (
     <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
-      {/* <form onSubmit={form.onSubmit((values) => console.log(values))}> */}
       <Stack spacing="md">
-        {/* <Title order={2} align="center" mb="xl">
-              สร้างบัญชี
-            </Title> */}
+        {!user && (
+          <Group grow>
+            <TextInput
+              label="ชื่อจริง"
+              {...form.getInputProps("firstName")}
+              placeholder="ชื่อจริงของคุณ"
+              classNames={{
+                input: "bg-accent bg-opacity-50",
+              }}
+            />
+            <TextInput
+              label="นามสกุล"
+              {...form.getInputProps("lastName")}
+              placeholder="นามสกุลของคุณ"
+              classNames={{
+                input: "bg-accent bg-opacity-50",
+              }}
+            />
+          </Group>
+        )}
 
-        <Group grow>
-          <TextInput
-            label="ชื่อจริง"
-            {...form.getInputProps("firstName")}
-            placeholder="ชื่อจริงของคุณ"
-            classNames={{
-              input: "bg-accent bg-opacity-50",
-            }}
-          />
-          <TextInput
-            label="นามสกุล"
-            {...form.getInputProps("lastName")}
-            placeholder="นามสกุลของคุณ"
-            classNames={{
-              input: "bg-accent bg-opacity-50",
-            }}
-          />
-        </Group>
         <TextInput
+          required
           label="ชื่อผู้ใช้"
-          {...form.getInputProps("username")}
+          // {...form.getInputProps("username")}
           placeholder="ชื่อผู้ใช้ของคุณ"
           classNames={{
             input: "bg-accent bg-opacity-50",
           }}
-          // value={formUsername}
-          // onChange={onChange}
+          value={formValue}
+          onChange={onChange}
         />
-        {/* 
-          <UsernameMessage
-            username={formUsername}
-            isValid={isValid}
-            loading={loading}
-          /> */}
 
-        <TextInput
-          label="อีเมล (Email)"
-          icon={<Mail size={20} />}
-          {...form.getInputProps("email")}
-          placeholder="อีเมลของคุณ"
-          classNames={{
-            input: "bg-accent bg-opacity-50",
-          }}
+        <UsernameMessage
+          username={formValue}
+          isValid={isValid}
+          loading={loading}
         />
-        <PasswordInput
-          label="รหัสผ่าน"
-          placeholder="รหัสผ่านของคุณ"
-          {...form.getInputProps("password")}
-          classNames={{
-            input: "bg-accent bg-opacity-50",
-          }}
-        />
-        <PasswordInput
-          label="ยืนยันรหัสผ่าน"
-          placeholder="ยืนยันรหัสผ่านของคุณ"
-          {...form.getInputProps("confirmPassword")}
-          classNames={{
-            input: "bg-accent bg-opacity-50",
-          }}
-        />
+
+        {!user && (
+          <>
+            <TextInput
+              label="อีเมล (Email)"
+              icon={<Mail size={20} />}
+              {...form.getInputProps("email")}
+              placeholder="อีเมลของคุณ"
+              classNames={{
+                input: "bg-accent bg-opacity-50",
+              }}
+            />
+            <PasswordInput
+              label="รหัสผ่าน"
+              placeholder="รหัสผ่านของคุณ"
+              {...form.getInputProps("password")}
+              classNames={{
+                input: "bg-accent bg-opacity-50",
+              }}
+            />
+            <PasswordInput
+              label="ยืนยันรหัสผ่าน"
+              placeholder="ยืนยันรหัสผ่านของคุณ"
+              {...form.getInputProps("confirmPassword")}
+              classNames={{
+                input: "bg-accent bg-opacity-50",
+              }}
+            />
+          </>
+        )}
         <Stack my="md">
           <Checkbox
             required
@@ -543,13 +545,15 @@ function Register() {
   );
 }
 
-// function UsernameMessage({ username, isValid, loading }) {
-//   if (loading) return <p>กำลังตรวจสอบชื่อผู้ใช้...</p>;
-//   else if (isValid)
-//     return (
-//       <p className="text-success">ชื่อผู้ใช้ {username} สามารถใช้งานได้!</p>
-//     );
-//   else if (username && !isValid)
-//     return <p className="text-danger">ชื่อผู้ใช้นั้นถูกใช้แล้ว!</p>;
-//   else return <p></p>;
-// }
+function UsernameMessage({ username, isValid, loading }) {
+  if (loading) return <p className="text-xs">กำลังตรวจสอบชื่อผู้ใช้...</p>;
+  else if (isValid)
+    return (
+      <p className="text-green-400 text-xs">
+        ชื่อผู้ใช้ {username} สามารถใช้งานได้!
+      </p>
+    );
+  else if (username && !isValid)
+    return <p className="text-red-400 text-xs">มีชื่อผู้ใช้แล้ว!</p>;
+  else return <p></p>;
+}
