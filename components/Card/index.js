@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 // Components
-import { AspectRatio, Badge, Image, Tooltip } from "@mantine/core";
+import {
+  AspectRatio,
+  Badge,
+  Image,
+  Tooltip,
+  Card as CardSection,
+} from "@mantine/core";
 // Icons
 import { Clock, Star, ThumbUp } from "tabler-icons-react";
 import { kFormatter } from "@components/Calculator";
@@ -52,7 +58,7 @@ export default function Card({ posts, layout }) {
         <AspectRatio ratio={16 / 9}>
           <div className="relative flex flex-col rounded-sm shadow-md cursor-pointer hover:brightness-90">
             <Image
-              className="w-full h-full"
+              className="h-full w-full mb-16"
               src={data.image}
               alt={data.title}
             />
@@ -116,7 +122,11 @@ function ScreenSmall({ data, badges, date }) {
   return (
     <AspectRatio ratio={16 / 9}>
       <div className="relative flex flex-col rounded-sm shadow-md cursor-pointer hover:brightness-90">
-        <Image className="w-full h-full" src={data.image} alt={data.title} />
+        <Image
+          className="h-full w-full mb-16"
+          src={data.image}
+          alt={data.title}
+        />
         <div className="absolute bottom-14 left-2 flex flex-row gap-1 z-10 text-sm">
           {badges}
         </div>
@@ -165,8 +175,22 @@ function ScreenSmall({ data, badges, date }) {
 function ScreenLarge({ data, badges, date }) {
   return (
     <div className="flex flex-row rounded-sm shadow-md w-full cursor-pointer hover:brightness-90">
-      <div className="w-[300px] h-[100px] overflow-hidden ">
-        <Image className="rounded-sm" src={data.image} alt={data.title} />
+      <div className="relative w-[300px] h-[100px] overflow-hidden">
+        {/* <Image
+          className="absolute bottom-0"
+          src={data.image}
+          alt={data.title}
+        /> */}
+        <CardSection radius="none" className="bg-foreground rounded-l-sm">
+          <CardSection.Section
+            sx={{
+              backgroundImage: `url(${data.image})`,
+              height: 100,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          />
+        </CardSection>
       </div>
 
       <div className="relative flex flex-col gap-2 justify-center bg-foreground px-2 py-2 text-title w-full">
