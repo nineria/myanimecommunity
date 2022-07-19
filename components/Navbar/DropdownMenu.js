@@ -52,8 +52,8 @@ export default function UserMenu({ user, isBusy, signOut }) {
                 {user?.username || "ไม่พบข้อมูล"}
               </div>
 
-              <Text color="dimmed" size="xs">
-                {user?.email || "ไม่พบข้อมูล"}
+              <Text color="dimmed" size="xs" className="truncate">
+                {user?.email || "ยังไม่ได้ยืนยัน Email"}
               </Text>
             </div>
           </a>

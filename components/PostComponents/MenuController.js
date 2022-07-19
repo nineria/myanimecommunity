@@ -14,16 +14,17 @@ import {
 // Icons
 import { Edit, LayoutGrid, ListDetails } from "tabler-icons-react";
 import AuthCheck from "@components/AuthCheck";
-import Loading from "@components/Loading";
 import { UserContext } from "@lib/context";
 import AdminCheck from "@components/AdminCheck";
 import AddAnnouncement from "@components/Announcement/Add";
 import Link from "next/link";
+import Verify from "@components/Verify";
 
 export default function PostsMenuController({ layout, setLayout }) {
-  const { user, username } = useContext(UserContext);
+  const { user, userData, username } = useContext(UserContext);
 
   const [opened, setOpened] = useState(false);
+
   return (
     <div className="flex flex-row justify-between w-full bg-foreground rounded-sm p-1 shadow-md">
       <Modal
@@ -40,15 +41,20 @@ export default function PostsMenuController({ layout, setLayout }) {
         <Add setOpened={setOpened} />
       </Modal>
       <Group spacing="xs">
-        <AuthCheck fallback={<div />}>
-          <Button
-            onClick={() => setOpened(true)}
-            className="md:block hidden bg-content text-[#fff] hover:bg-content hover:opacity-75"
-            variant="default"
-            size="xs"
-          >
-            สร้างโพสต์ +
-          </Button>
+        <AuthCheck fallback={<></>}>
+          {userData && userData.email === "" ? (
+            <Verify />
+          ) : (
+            <Button
+              onClick={() => setOpened(true)}
+              className="md:block hidden bg-content text-[#fff] hover:bg-content hover:opacity-75"
+              variant="default"
+              size="xs"
+            >
+              สร้างโพสต์ +
+            </Button>
+          )}
+
           <Tooltip
             className="md:hidden block"
             label="สร้างโพสต์ใหม่"
