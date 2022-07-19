@@ -55,10 +55,10 @@ export default function Add({ setOpened }) {
       .collection("users")
       .doc(uid)
       .collection("posts")
-      .doc(kebabCase(values.title));
+      .doc();
     try {
       const data = {
-        slug: kebabCase(values.title),
+        slug: ref.id,
         tag: tags,
         genre: genres,
         title: values.title,
