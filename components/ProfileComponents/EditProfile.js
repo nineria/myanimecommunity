@@ -1,36 +1,25 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 // Hooks
 import { useForm } from "@mantine/hooks";
 // Components
 import {
   Avatar,
   Button,
-  Center,
-  Collapse,
   Divider,
-  Grid,
-  Input,
   InputWrapper,
   Stack,
   Text,
-  Image,
   PasswordInput,
   Group,
   Card,
   LoadingOverlay,
+  TextInput,
 } from "@mantine/core";
 
-import {
-  auth,
-  firestore,
-  getUserWithUsername,
-  serverTimestamp,
-} from "@lib/firebase";
+import { getUserWithUsername } from "@lib/firebase";
 import AuthCheck from "@components/AuthCheck";
 import { showNotification } from "@mantine/notifications";
-import { Check, X } from "tabler-icons-react";
-import { useContext } from "react";
-import { UserContext } from "@lib/context";
+import { Check } from "tabler-icons-react";
 import {
   DropzoneProfileAvatar,
   DropzoneProfileImage,
@@ -100,7 +89,8 @@ function ProfileForm({ user, userRef, setOpened }) {
       firstName: user.firstName,
       lastName: user.lastName,
       avatar: user.avatar,
-      email: user.email,
+      email: "",
+      phoneNumber: "",
       password: user.password,
     },
   });
@@ -132,38 +122,51 @@ function ProfileForm({ user, userRef, setOpened }) {
             <DropzoneProfileAvatar setImage={setAvatar} />
           </div>
         </Card>
+        <Divider label="ยืนยันตัวตน" labelPosition="center" />
         <Group grow>
-          <InputWrapper id="input-demo" label="ชื่อจริง">
-            <Input
-              {...form.getInputProps("firstName")}
-              placeholder="ชื่อจริงของคุณ"
-              classNames={{
-                input: "bg-accent bg-opacity-50",
-              }}
-            />
-          </InputWrapper>
-          <InputWrapper id="input-demo" label="นามสกุล">
-            <Input
-              {...form.getInputProps("lastName")}
-              placeholder="นามสกุลของคุณ"
-              classNames={{
-                input: "bg-accent bg-opacity-50",
-              }}
-            />
-          </InputWrapper>
-        </Group>
-        <InputWrapper id="input-demo" label="อีเมล (email)">
-          <Input
-            {...form.getInputProps("email")}
-            placeholder="อีเมลของคุณ"
+          <TextInput
+            label="ชื่อจริง"
+            required
+            {...form.getInputProps("firstName")}
+            placeholder="ชื่อจริงของคุณ"
             classNames={{
               input: "bg-accent bg-opacity-50",
             }}
           />
-        </InputWrapper>
-        <Text mt="sm">เปลี่ยนรหัสผ่าน</Text>
-        <InputWrapper id="input-demo" label="รหัสผ่านเดิม">
+          <TextInput
+            label="นามสกุล"
+            required
+            {...form.getInputProps("lastName")}
+            placeholder="นามสกุลของคุณ"
+            classNames={{
+              input: "bg-accent bg-opacity-50",
+            }}
+          />
+        </Group>
+        <TextInput
+          required
+          label="ยืนยันอีเมล (Email)"
+          {...form.getInputProps("email")}
+          placeholder="อีเมลของคุณ"
+          classNames={{
+            input: "bg-accent bg-opacity-50",
+          }}
+        />
+
+        <TextInput
+          label="เบอร์โทรศัพท์"
+          required
+          {...form.getInputProps("phoneNumber")}
+          placeholder="เบอร์โทรศัพท์ของคุณ"
+          classNames={{
+            input: "bg-accent bg-opacity-50",
+          }}
+        />
+        <Divider label="เปลี่ยนรหัสผ่าน" labelPosition="center" />
+
+        <InputWrapper label="รหัสผ่านเดิม">
           <PasswordInput
+            disabled
             {...form.getInputProps("password")}
             placeholder="รหัสผ่านเดิมของคุณ"
             classNames={{
@@ -171,8 +174,9 @@ function ProfileForm({ user, userRef, setOpened }) {
             }}
           />
         </InputWrapper>
-        <InputWrapper id="input-demo" label="รหัสผ่านใหม่">
+        <InputWrapper label="รหัสผ่านใหม่">
           <PasswordInput
+            disabled
             {...form.getInputProps("password")}
             placeholder="รหัสผ่านใหม่เดิมของคุณ"
             classNames={{
@@ -180,6 +184,10 @@ function ProfileForm({ user, userRef, setOpened }) {
             }}
           />
         </InputWrapper>
+        <Text size="xs" color="red">
+          ทางเว็บไซต์ MyAnimeCommunity
+          ปิดปรับปรุงระบบการเปลี่ยนแปลงรหัสผ่านใหม่ชั่วคราว
+        </Text>
         <Group spacing="xs" position="right">
           <Button
             size="xs"
