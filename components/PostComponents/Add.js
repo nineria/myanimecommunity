@@ -24,7 +24,7 @@ import { useRouter } from "next/router";
 import WebsiteRule from "@components/WebsiteRule";
 import { z } from "zod";
 import { showNotification } from "@mantine/notifications";
-import { Check } from "tabler-icons-react";
+import { Check, X } from "tabler-icons-react";
 
 const schema = z.object({
   title: z
@@ -55,36 +55,59 @@ export default function Add({ setOpened }) {
       .collection("users")
       .doc(uid)
       .collection("posts")
-      .doc();
-    const data = {
-      slug: kebabCase(values.title),
-      tag: tags,
-      genre: genres,
-      title: values.title,
-      image: image,
-      content: values.content,
-      credit: values.credit,
-      username: username,
-      updatedAt: serverTimestamp(),
-      createdAt: serverTimestamp(),
-      stars: values.stars,
-      likes: values.likes,
-      uid: uid,
-    };
-    await ref.set(data);
+      .doc(kebabCase(values.title));
+    try {
+      const data = {
+        slug: kebabCase(values.title),
+        tag: tags,
+        genre: genres,
+        title: values.title,
+        image: image,
+        content: values.content,
+        credit: values.credit,
+        username: username,
+        updatedAt: serverTimestamp(),
+        createdAt: serverTimestamp(),
+        stars: values.stars,
+        likes: values.likes,
+        uid: uid,
+      };
 
-    showNotification({
-      color: "teal",
-      title: "บันทึกการเปลี่ยนแปลงเรียบร้อย",
-      icon: <Check size={18} />,
-      classNames: {
-        root: "bg-foreground border-teal-400",
-      },
-    });
+      await ref.set(data);
+
+      showNotification({
+        color: "teal",
+        title: "บันทึกการเปลี่ยนแปลงเรียบร้อย",
+        icon: <Check size={18} />,
+        classNames: {
+          root: "bg-foreground border-teal-400",
+        },
+      });
+
+      router.replace(`posts/${username}/${ref.id}`);
+    } catch (error) {
+      if (image === undefined || image === null) {
+        showNotification({
+          color: "red",
+          title: "กรุณาใส่รูปภาพประจำโพสต์!",
+          icon: <X size={18} />,
+          classNames: {
+            root: "bg-foreground border-teal-400",
+          },
+        });
+      } else {
+        showNotification({
+          color: "red",
+          title: "มีข้อผิดพลาดเกิดขึ้น! โปรดลองอีกครั้ง",
+          icon: <X size={18} />,
+          classNames: {
+            root: "bg-foreground border-teal-400",
+          },
+        });
+      }
+    }
 
     setLoading(false);
-
-    router.replace(`posts/${username}/${ref.id}`);
   };
 
   const form = useForm({
