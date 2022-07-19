@@ -89,8 +89,8 @@ function ProfileForm({ user, userRef, setOpened }) {
       firstName: user.firstName,
       lastName: user.lastName,
       avatar: user.avatar,
-      email: "",
-      phoneNumber: "",
+      email: user.email,
+      phoneNumber: user?.phoneNumber || "",
       password: user.password,
     },
   });
@@ -155,7 +155,6 @@ function ProfileForm({ user, userRef, setOpened }) {
 
         <TextInput
           label="เบอร์โทรศัพท์"
-          required
           {...form.getInputProps("phoneNumber")}
           placeholder="เบอร์โทรศัพท์ของคุณ"
           classNames={{
