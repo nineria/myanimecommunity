@@ -96,7 +96,11 @@ function PostForm({ post, postRef, setOpened }) {
           />
           <RefCredit {...form.getInputProps("credit")} />
           <WebsiteRule />
-          <ButtonControl setOpened={setOpened} postRef={postRef} />
+          <ButtonControl
+            setOpened={setOpened}
+            postRef={postRef}
+            disabled={loading}
+          />
         </Stack>
       </form>
     </AuthCheck>

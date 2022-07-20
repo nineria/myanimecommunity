@@ -94,7 +94,7 @@ export function ButtonControl({ setOpened, postRef, disabled, type }) {
         <Button
           type="submit"
           size="xs"
-          disabled={disabled}
+          disabled={!disabled}
           className="bg-green-500 hover:bg-green-500 hover:opacity-75"
         >
           ยืนยัน
