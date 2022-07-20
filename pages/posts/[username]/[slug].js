@@ -30,6 +30,7 @@ import { Animate } from "react-simple-animate";
 import Logo from "@components/Logo";
 import { useContext } from "react";
 import { UserContext } from "@lib/context";
+import Verify from "@components/Verify";
 
 // export async function getStaticProps({ params }) {
 //   try {
@@ -114,7 +115,7 @@ export async function getServerSideProps({ query }) {
 export default function PostPage(props) {
   const postRef = firestore.doc(props.path);
 
-  const { username } = useContext(UserContext);
+  const { userData, username } = useContext(UserContext);
 
   const [realtimePost] = useDocumentData(postRef);
 

@@ -6,56 +6,79 @@ import {
   Group,
   Input,
   InputWrapper,
+  MultiSelect,
   Select,
+  Stack,
 } from "@mantine/core";
 // Icons
 import { Tag, X } from "tabler-icons-react";
 
+const tagsData = [
+  {
+    label: "คำถาม",
+    value: {
+      label: "คำถาม",
+      color: {
+        from: "indigo",
+        to: "cyan",
+      },
+    },
+  },
+  {
+    label: "สปอย",
+    value: {
+      label: "สปอย",
+      color: {
+        from: "red",
+        to: "red",
+      },
+    },
+  },
+  {
+    label: "รีวิว",
+    value: {
+      label: "รีวิว",
+      color: {
+        from: "teal",
+        to: "lime",
+      },
+    },
+  },
+  {
+    label: "ข่าวสาร",
+    value: {
+      label: "ข่าวสาร",
+      color: {
+        from: "orange",
+        to: "red",
+      },
+    },
+  },
+];
+
 export default function TagHeader({ data, setData }) {
-  const [tmpTags, setTmpTags] = useState([]);
-
-  const handleRemoveTag = (item, index) => {
-    data.splice(index, 1);
+  const handleDeleteTag = (label) => {
+    data.pop(label);
     setData(data);
-    setTmpTags([...tmpTags, item]);
   };
 
-  const removeButton = (item, index) => {
-    return (
-      <ActionIcon size="xs" color="blue" radius="xl" variant="transparent">
-        <X size={10} onClick={() => handleRemoveTag(item, index)} />
-      </ActionIcon>
-    );
-  };
-
-  const tags = data.map((item, index) => {
-    return (
-      <Badge
-        key={index}
-        variant="outline"
-        sx={{ paddingRight: 3 }}
-        rightSection={removeButton(item, index)}
-      >
-        {item}
-      </Badge>
-    );
-  });
-
-  const handleKeyDown = (e) => {
-    if (e.key !== "Enter") return;
-
-    const value = e.target.value;
-
-    if (!value.trim()) return;
-
-    data.push(value);
-
-    setData(data);
-    setTmpTags([...tmpTags, value]);
-
-    e.target.value = "";
-    e.preventDefault();
-  };
+  const tag =
+    data &&
+    data.map((item, index) => {
+      return (
+        <Badge
+          key={index}
+          variant="gradient"
+          gradient={{ from: item.color?.from, to: item.color?.to, deg: 30 }}
+          className="text-[#fff]"
+          rightSection={
+            <X size={10} onClick={() => handleDeleteTag(item.label)} />
+          }
+        >
+          {item.label}
+        </Badge>
+      );
+    });
 
   return (
     <InputWrapper
@@ -64,9 +87,19 @@ export default function TagHeader({ data, setData }) {
           <Tag size={14} /> ประเภทของโพสต์
         </Group>
       }
-      description="เช่น คำถาม, สปอย, รีวิว - กด Enter เพื่อเพิ่มประเภทของโพสต์"
+      description="เลือกประเภทของโพสต์ มากกว่า หรืออย่างใดอย่างหนึ่ง"
     >
-      <Group
+      <Group spacing="xs" mb="xs">
+        {tag}
+      </Group>
+      <MultiSelect
+        required
+        data={tagsData}
+        onChange={(value) => setData(value)}
+        placeholder="เลือกประเภทของโพสต์"
+      />
+
+      {/* <Group
         spacing="4px"
         className="bg-accent bg-opacity-50 border-title border-opacity-20 border-[1px] rounded-md p-1"
       >
@@ -81,7 +114,7 @@ export default function TagHeader({ data, setData }) {
           }}
           size="xs"
         />
-      </Group>
+      </Group> */}
     </InputWrapper>
   );
 }

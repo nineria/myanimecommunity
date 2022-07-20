@@ -333,6 +333,15 @@ function Register() {
   const onSubmit = async (values) => {
     // Create refs for both documents
     const userDoc = firestore.doc(`users/${user.uid}`);
+    const ranksDoc = firestore.doc(
+      `users/${user.uid}/ranks/${{
+        color: {
+          form: "#36D1DC",
+          to: "#5B86E5",
+        },
+        label: "สมาชิกใหม่",
+      }}`
+    );
     const usernameDoc = firestore.doc(`usernames/${formValue}`);
 
     // Commit both docs together as a batch write.
@@ -346,6 +355,7 @@ function Register() {
       avatar: user?.photoURL,
     });
     batch.set(usernameDoc, { uid: user.uid });
+    batch.set(ranksDoc);
 
     await batch.commit();
   };
@@ -403,15 +413,6 @@ function Register() {
       confirmPassword: "",
       websiteRule: false,
       privacyPolicy: false,
-      ranks: [
-        {
-          color: {
-            form: "#36D1DC",
-            to: "#5B86E5",
-          },
-          label: "สมาชิกใหม่",
-        },
-      ],
       stats: [
         {
           label: "ถูกใจ",

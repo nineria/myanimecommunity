@@ -4,7 +4,7 @@ import { useModals } from "@mantine/modals";
 import { useRouter } from "next/router";
 import React, { useContext } from "react";
 
-export default function Verify() {
+export default function Verify(props) {
   const { username } = useContext(UserContext);
 
   const modals = useModals();
@@ -66,7 +66,7 @@ export default function Verify() {
       size="xs"
       onClick={handleOpenModals}
     >
-      สร้างโพสต์ +
+      {props.children}
     </Button>
   );
 }

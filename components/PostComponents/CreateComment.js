@@ -15,6 +15,7 @@ import { useModals } from "@mantine/modals";
 import Link from "next/link";
 import AuthCheck from "@components/AuthCheck";
 import { LoginPopUp } from "@components/LoginRegister";
+import Verify from "@components/Verify";
 
 const handleImageUpload = (image) =>
   new Promise((resolve, reject) => {
@@ -168,14 +169,18 @@ export default function CreateComment({ post }) {
                 {openedWebsiteRule && <WebsiteRulePage />}
               </Modal>
               <WebsiteRule />
-              <Button
-                size="xs"
-                className="bg-content text-[#fff] hover:bg-content hover:opacity-75"
-                variant="default"
-                onClick={() => HandleSubmit()}
-              >
-                ตอบกลับ
-              </Button>
+              {userData && userData.email === "" ? (
+                <Verify>ตอบกลับ</Verify>
+              ) : (
+                <Button
+                  size="xs"
+                  className="bg-content text-[#fff] hover:bg-content hover:opacity-75"
+                  variant="default"
+                  onClick={() => HandleSubmit()}
+                >
+                  ตอบกลับ
+                </Button>
+              )}
             </div>
           </div>
         </div>

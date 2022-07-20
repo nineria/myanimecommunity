@@ -43,7 +43,7 @@ export default function PostsMenuController({ layout, setLayout }) {
       <Group spacing="xs">
         <AuthCheck fallback={<></>}>
           {userData && userData.email === "" ? (
-            <Verify />
+            <Verify>สร้างโพสต์ +</Verify>
           ) : (
             <Button
               onClick={() => setOpened(true)}

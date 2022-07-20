@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Animate } from "react-simple-animate";
 import { UserContext } from "@lib/context";
 import Navbar from "@components/Navbar";
@@ -45,6 +45,8 @@ export default function UserProfilePage({ user, posts }) {
 
   const { username } = useContext(UserContext);
 
+  const [userRef, setUserRef] = useState();
+
   useEffect(() => {
     if (!user || !posts) router.push("/404");
     const localData = localStorage.getItem("themes");
@@ -52,7 +54,14 @@ export default function UserProfilePage({ user, posts }) {
       localStorage.setItem("themes", "red");
       setTheme("red");
     }
+
+    const getUserRef = async () => {
+      const userDoc = await getUserWithUsername(username);
+
+      setUserRef(userDoc);
+    };
     setTheme(localData);
+    getUserRef();
   }, [setTheme, posts, router, user]);
 
   // const [totalLikes, setTotalLike] = useState(0);
@@ -147,7 +156,7 @@ export default function UserProfilePage({ user, posts }) {
               end={{ transform: "translateY(0%)", opacity: "1" }}
             >
               <Stack spacing="xs">
-                <UserCardImage user={user} posts={posts} />
+                <UserCardImage user={user} userRef={userRef} posts={posts} />
                 <StatsGridIcons user={user} posts={posts} />
                 <StatsSegments user={user} />
                 {posts[0] && <TableSort user={user} posts={posts} />}

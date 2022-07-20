@@ -14,13 +14,19 @@ import {
   Textarea,
 } from "@mantine/core";
 // Icons
-import { AlertTriangle, Edit } from "tabler-icons-react";
+import { AlertTriangle, Edit, X } from "tabler-icons-react";
 // Tools
 import { kFormatter } from "@components/Calculator";
 import EditProfile from "./EditProfile";
 import { UserContext } from "@lib/context";
+import { GiveAndRemoveRank } from "./GiveUserRank";
+import { getUserWithUsername } from "@lib/firebase";
+import { useRouter } from "next/router";
+import { useModals } from "@mantine/modals";
+import { showNotification } from "@mantine/notifications";
+import AdminCheck from "@components/AdminCheck";
 
-export default function UserCardImage({ user, posts }) {
+export default function UserCardImage({ user, userRef, posts }) {
   const { username } = useContext(UserContext);
 
   const [opened, setOpened] = useState(false);
@@ -28,14 +34,99 @@ export default function UserCardImage({ user, posts }) {
 
   const [totalLikes, setTotalLike] = useState(0);
 
+  const [userRanks, setUserRanks] = useState(user.ranks);
+
+  const router = useRouter();
+
+  const modals = useModals();
+
   useEffect(() => {
     let total = 0;
     const setTotal = () => {
       posts.map((item) => (total = total + item.likes));
     };
+
+    const getRanks = async () => {
+      const userDoc = await getUserWithUsername(user.username);
+
+      let ranks = null;
+
+      const ranksRef = await userDoc.ref.collection("ranks").get();
+      ranks = await JSON.stringify(ranksRef.docs.map((doc) => doc.data()));
+
+      ranks = JSON.parse(ranks);
+
+      setUserRanks(ranks);
+    };
+
+    getRanks();
+
     setTotal();
     setTotalLike(total);
   }, [posts]);
+
+  const removeUserRank = (slug, label) => {
+    const handleOnClick = async () => {
+      const userDoc = await getUserWithUsername(user.username);
+      const ranksRef = await userDoc.ref.collection("ranks").doc(slug);
+      await ranksRef.delete();
+
+      router.replace(`/${user.username}`);
+
+      showNotification({
+        color: "red",
+        title: `ถอดแรงค์ ${label} ของ ${user.username} ออกแล้ว`,
+        icon: <X size={18} />,
+        classNames: {
+          root: "bg-foreground border-red-400",
+        },
+      });
+      modals.closeModal(id);
+
+      setOpened(false);
+
+      router.replace(`/${user.username}`);
+    };
+    const id = modals.openModal({
+      title: (
+        <Stack>
+          <Text size="sm">
+            คุณต้องการถอดแรงค์ <span className="text-content">{label}</span> ของ{" "}
+            <span className="text-content">{user.username}</span> ออกหรือไม่?
+          </Text>
+        </Stack>
+      ),
+      withCloseButton: false,
+      zIndex: "999",
+      centered: true,
+      classNames: {
+        modal: "bg-foreground",
+        overlay: "bg-background",
+      },
+      size: "sm",
+      children: (
+        <Stack size="xs">
+          <Group position="right">
+            <Button
+              className="bg-background text-title hover:bg-background hover:opacity-75"
+              size="xs"
+              onClick={() => modals.closeModal(id)}
+            >
+              ยกเลิก
+            </Button>
+            <Button
+              type="submit"
+              className="bg-red-500 hover:bg-red-500 hover:opacity-75"
+              size="xs"
+              onClick={() => handleOnClick()}
+            >
+              ถอดแรงค์
+            </Button>
+          </Group>
+        </Stack>
+      ),
+    });
+  };
 
   return (
     <Card p="md" radius="sm" className="bg-foreground">
@@ -61,30 +152,27 @@ export default function UserCardImage({ user, posts }) {
         </div>
       )}
 
-      <div className="relative mx-5">
-        <div className="relative w-fit">
-          <Group>
-            <Avatar
-              src={user.avatar}
-              size={140}
-              radius={140}
-              mx="auto"
-              mt={-70}
-              className="border-2 border-title"
-            />
-            <div className="block">
-              <Text align="left" size="xl" weight={500}>
-                {user.username}
-              </Text>
-              <Text align="left" size="md" className="opacity-50">
-                {user.firstName} {user.lastName}
-              </Text>
-            </div>
-          </Group>
-        </div>
+      <div className="flex md:flex-row flex-col md:justify-between justify-center py-4">
+        <Group spacing="xl">
+          <Avatar
+            src={user.avatar}
+            size={130}
+            radius={130}
+            mt={-80}
+            className="border-2 border-[#fff]"
+          />
+          <div className="block">
+            <Text align="left" size="xl" weight={500}>
+              {user.username}
+            </Text>
+            <Text align="left" size="md" className="opacity-50">
+              {user.firstName} {user.lastName}
+            </Text>
+          </div>
+        </Group>
         {username === user.username && (
           <Button
-            className="absolute top-2 right-0 border-title text-title hover:opacity-75"
+            className="border-title md:my-0 my-10 text-title hover:opacity-75"
             variant="outline"
             radius="xl"
             rightIcon={<Edit size={20} />}
@@ -96,20 +184,54 @@ export default function UserCardImage({ user, posts }) {
       </div>
 
       <Stack spacing="sm">
-        <Group position="center">
-          {user &&
-            user.ranks.map((rank) => (
-              <Badge
-                key={rank.label}
-                variant="gradient"
-                gradient={{ from: rank.color.from, to: rank.color.to, deg: 35 }}
-                className="shadow-md"
-                size="lg"
+        <div className="flex flex-row flex-wrap justify-center items-center gap-2">
+          {userRanks &&
+            userRanks.map((rank, index) => (
+              <AdminCheck
+                fallback={
+                  <Badge
+                    key={index}
+                    variant="gradient"
+                    gradient={{
+                      from: rank.color.from,
+                      to: rank.color.to,
+                      deg: 35,
+                    }}
+                    className="shadow-md"
+                    size="lg"
+                  >
+                    {rank.label}
+                  </Badge>
+                }
               >
-                {rank.label}
-              </Badge>
+                <Badge
+                  key={index}
+                  rightSection={
+                    <X
+                      size={16}
+                      className="cursor-pointer"
+                      onClick={() => removeUserRank(rank.slug, rank.label)}
+                    />
+                  }
+                  variant="gradient"
+                  gradient={{
+                    from: rank.color.from,
+                    to: rank.color.to,
+                    deg: 35,
+                  }}
+                  className="shadow-md"
+                  size="lg"
+                >
+                  {rank.label}
+                </Badge>
+              </AdminCheck>
             ))}
-        </Group>
+
+          {/* Give User rank */}
+          <AdminCheck fallback={<></>}>
+            <GiveAndRemoveRank user={user} userRanks={userRanks} />
+          </AdminCheck>
+        </div>
         <Group mt="md" position="center" spacing={50}>
           <div>
             <Text align="center" size="lg" weight={500}>

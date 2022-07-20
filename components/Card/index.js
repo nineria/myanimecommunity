@@ -30,25 +30,15 @@ export default function Card({ posts, layout }) {
     day: "numeric",
   });
 
-  const badges = data.tag.map((badge) => (
+  const badges = data.tag.map((badge, index) => (
     <Badge
-      key={badge}
-      gradient={
-        badge === "คำถาม"
-          ? { from: "indigo", to: "cyan" }
-          : badge === "รีวิว"
-          ? { from: "teal", to: "lime" }
-          : badge === "ข่าวสาร"
-          ? { from: "orange", to: "red" }
-          : badge === "สปอย"
-          ? { from: "red", to: "red" }
-          : { from: "gray", to: "gray" }
-      }
+      key={index}
+      gradient={{ from: badge.color?.from, to: badge.color?.to, deg: 30 }}
       radius="sm"
       variant="gradient"
       className="shadow-md"
     >
-      {badge}
+      {badge.label}
     </Badge>
   ));
 
