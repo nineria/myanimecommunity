@@ -63,7 +63,7 @@ export default function UserCardImage({ user, userRef, posts }) {
 
     setTotal();
     setTotalLike(total);
-  }, [posts]);
+  }, [posts, user.username]);
 
   const removeUserRank = (slug, label) => {
     const handleOnClick = async () => {
@@ -188,9 +188,9 @@ export default function UserCardImage({ user, userRef, posts }) {
           {userRanks &&
             userRanks.map((rank, index) => (
               <AdminCheck
+                key={index}
                 fallback={
                   <Badge
-                    key={index}
                     variant="gradient"
                     gradient={{
                       from: rank.color.from,

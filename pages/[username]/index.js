@@ -62,7 +62,7 @@ export default function UserProfilePage({ user, posts }) {
     };
     setTheme(localData);
     getUserRef();
-  }, [setTheme, posts, router, user]);
+  }, [setTheme, posts, router, user, username]);
 
   // const [totalLikes, setTotalLike] = useState(0);
 
