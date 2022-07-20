@@ -21,10 +21,14 @@ export async function getServerSideProps() {
   const postsQuery = firestore
     .collectionGroup("posts")
     .orderBy("createdAt", "desc")
-    .where("tag", "array-contains", "ปัญหา")
     .limit(LIMIT);
 
-  const posts = (await postsQuery.get()).docs.map(postToJSON);
+  const rawPosts = (await postsQuery.get()).docs.map(postToJSON);
+
+  const posts = rawPosts.filter((post) => {
+    const tag = post.tag.some((item) => item.label === "ปัญหา");
+    if (tag) return post;
+  });
 
   const announcementsQuery = firestore
     .collectionGroup("announcements")
