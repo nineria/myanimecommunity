@@ -115,7 +115,7 @@ export async function getServerSideProps({ query }) {
 export default function PostPage(props) {
   const postRef = firestore.doc(props.path);
 
-  const { userData, username } = useContext(UserContext);
+  const { username } = useContext(UserContext);
 
   const [realtimePost] = useDocumentData(postRef);
 

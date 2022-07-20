@@ -167,8 +167,8 @@ export function GiveAndRemoveRank({ user, userRanks }) {
               required
               data={ranksData}
               onChange={(value) => setRank(value)}
-              label="Your favorite frameworks/libraries"
-              placeholder="Pick all that you like"
+              label="แรงค์ทั้งหมดที่สามารถเพิ่มได้"
+              placeholder="เลือกแรงค์ที่นี่"
             />
           </InputWrapper>
           <Group mt="md" position="right">

@@ -47,7 +47,7 @@ export default function PostsMenuController({ layout, setLayout }) {
           ) : (
             <Button
               onClick={() => setOpened(true)}
-              className="md:block hidden bg-content text-[#fff] hover:bg-content hover:opacity-75"
+              className="bg-content text-[#fff] hover:bg-content hover:opacity-75"
               variant="default"
               size="xs"
             >
@@ -55,21 +55,6 @@ export default function PostsMenuController({ layout, setLayout }) {
             </Button>
           )}
 
-          <Tooltip
-            className="md:hidden block"
-            label="สร้างโพสต์ใหม่"
-            placement="start"
-            withArrow
-          >
-            <Button
-              onClick={() => setOpened(true)}
-              className="bg-content text-[#fff] hover:bg-content hover:opacity-75"
-              variant="default"
-              size="xs"
-            >
-              +
-            </Button>
-          </Tooltip>
           {/* Create New Announcement */}
           {user && (
             <AdminCheck>

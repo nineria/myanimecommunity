@@ -1,15 +1,6 @@
 import React, { useState } from "react";
 // Components
-import {
-  ActionIcon,
-  Badge,
-  Group,
-  Input,
-  InputWrapper,
-  MultiSelect,
-  Select,
-  Stack,
-} from "@mantine/core";
+import { Badge, Group, InputWrapper, MultiSelect } from "@mantine/core";
 // Icons
 import { Tag, X } from "tabler-icons-react";
 
@@ -51,6 +42,16 @@ const tagsData = [
       color: {
         from: "orange",
         to: "red",
+      },
+    },
+  },
+  {
+    label: "ปัญหา",
+    value: {
+      label: "ปัญหา",
+      color: {
+        from: "#000000",
+        to: "#434343",
       },
     },
   },

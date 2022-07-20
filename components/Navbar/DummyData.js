@@ -44,7 +44,7 @@ export const navbarProperty = [
     path: "/news",
   },
   {
-    name: "รีวิวอนิเมะ",
+    name: "รีวิว",
     path: "/reviews",
   },
   {

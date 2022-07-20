@@ -30,12 +30,33 @@ import { UserContext } from "@lib/context";
 import Link from "next/link";
 
 export default function PostComponents({ post, postRef }) {
+  const [userRanks, setUserRanks] = useState(null);
+
+  console.log(userRanks);
+
+  useEffect(() => {
+    const getRanks = async () => {
+      const userDoc = await getUserWithUsername(post.username);
+
+      let ranks = null;
+
+      const ranksRef = await userDoc.ref.collection("ranks").get();
+      ranks = await JSON.stringify(ranksRef.docs.map((doc) => doc.data()));
+
+      ranks = JSON.parse(ranks);
+
+      setUserRanks(ranks);
+    };
+
+    getRanks();
+  }, [post.username]);
+
   return (
     <div className="bg-foreground rounded-sm">
       {/* Left menu */}
       <PostLayout>
-        {post && <LeftMenu post={post} />}
-        {post && <TopMenu post={post} />}
+        {post && <LeftMenu post={post} userRanks={userRanks} />}
+        {post && <TopMenu post={post} userRanks={userRanks} />}
         {post && <MainPost post={post} postRef={postRef} />}
       </PostLayout>
     </div>
@@ -148,7 +169,7 @@ function TopMenu({ post }) {
   );
 }
 
-function LeftMenu({ post }) {
+function LeftMenu({ post, userRanks }) {
   const [user, setUser] = useState();
 
   useEffect(() => {
@@ -189,31 +210,33 @@ function LeftMenu({ post }) {
               {user.username}
             </Text>
           </Link>
-          <p
+          {/* <p
             className={`${
               user.rule === "ผู้ดูแลระบบ" ? "text-yellow-400" : "text-title"
             } text-xs`}
           >
             {user.rule}
-          </p>
+          </p> */}
         </div>
       )}
-      {user && (
-        <div className="flex flex-col gap-1 mt-4">
-          {user.ranks.map((item, index) => (
-            // console.log(item.color)
+      <div className="flex flex-col gap-1 mt-4">
+        {userRanks &&
+          userRanks.map((rank, index) => (
             <Badge
-              radius="none"
-              variant="gradient"
-              gradient={{ from: item.color.from, to: item.color.to, deg: 35 }}
               key={index}
+              variant="gradient"
+              radius="none"
+              gradient={{
+                from: rank.color.from,
+                to: rank.color.to,
+                deg: 35,
+              }}
               className="shadow-md"
             >
-              <p className="drop-shadow-md">{item.label}</p>
+              <p className="drop-shadow-md">{rank.label}</p>
             </Badge>
           ))}
-        </div>
-      )}
+      </div>
       <div className="flex flex-col mt-4 text-title text-opacity-80">
         <div className="flex flex-row items-center text-xs gap-2">
           <CalendarMinus size={14} />

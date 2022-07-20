@@ -15,7 +15,7 @@ import ButtonControl from "./AnnouncementComponents/ButtonControl";
 import { useForm, zodResolver } from "@mantine/form";
 import { z } from "zod";
 import { showNotification } from "@mantine/notifications";
-import { AlertCircle, Check } from "tabler-icons-react";
+import { AlertCircle, Check, Speakerphone } from "tabler-icons-react";
 import { UserContext } from "@lib/context";
 import { useRouter } from "next/router";
 import { auth, firestore, serverTimestamp } from "@lib/firebase";
@@ -164,7 +164,7 @@ export default function AddAnnouncement() {
           variant="default"
           size="xs"
         >
-          +
+          <Speakerphone size={14} />
         </Button>
       </Tooltip>
     </>

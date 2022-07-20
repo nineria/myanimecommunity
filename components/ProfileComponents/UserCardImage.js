@@ -34,7 +34,7 @@ export default function UserCardImage({ user, userRef, posts }) {
 
   const [totalLikes, setTotalLike] = useState(0);
 
-  const [userRanks, setUserRanks] = useState(user.ranks);
+  const [userRanks, setUserRanks] = useState(null);
 
   const router = useRouter();
 
