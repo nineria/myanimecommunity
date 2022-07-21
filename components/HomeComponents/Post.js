@@ -34,6 +34,18 @@ export default function Post({ today, homePosts, description, disabled }) {
       const regex = /(<([^>]+)>)/gi;
       const description = item.content.replace(regex, "");
       const link = `posts/${item.username}/${item.slug}`;
+
+      const updatedAt =
+        typeof item?.updatedAt === "number"
+          ? new Date(item.updatedAt)
+          : item?.updatedAt?.toDate();
+
+      const date = updatedAt?.toLocaleDateString("th-th", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      });
+
       return (
         <Status
           key={index}
@@ -42,6 +54,14 @@ export default function Post({ today, homePosts, description, disabled }) {
           body={item?.body || description}
           date={date}
           disabled={disabled}
+          post={{
+            posts: {
+              length: 1,
+            },
+            comments: {
+              length: 1,
+            },
+          }}
         />
       );
     });
@@ -113,6 +133,14 @@ export default function Post({ today, homePosts, description, disabled }) {
               body={homePosts?.body || "เนื้อหา"}
               date={date}
               disabled={disabled}
+              post={{
+                posts: {
+                  length: 10,
+                },
+                comments: {
+                  length: 7,
+                },
+              }}
             />
           )}
         </div>

@@ -4,8 +4,9 @@ import Link from "next/link";
 import Stats from "./Stats";
 // Icons
 import { Messages } from "tabler-icons-react";
+import { comment } from "postcss";
 
-export default function Status({ header, headerLink, body, date }) {
+export default function Status({ header, headerLink, body, date, post }) {
   return (
     <div className="flex lg:flex-row flex-col gap-2 lg:justify-between lg:items-start px-3 py-2 text-content bg-foreground overflow-hidden">
       <div className="flex gap-2">
@@ -34,8 +35,8 @@ export default function Status({ header, headerLink, body, date }) {
       </div>
       {/* Stat */}
       <Stats>
-        <Stats.Posts>25</Stats.Posts>
-        <Stats.Comments>3.6K</Stats.Comments>
+        <Stats.Posts>{post?.posts.length || 1}</Stats.Posts>
+        <Stats.Comments>{post?.comments.length || 1}</Stats.Comments>
         <Stats.EditDate>{date}</Stats.EditDate>
       </Stats>
     </div>
