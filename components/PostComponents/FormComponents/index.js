@@ -1,6 +1,7 @@
 import React from "react";
 // Components
-import { InputWrapper, Textarea, TextInput } from "@mantine/core";
+import { InputWrapper, TextInput } from "@mantine/core";
+import RichTextEditor from "@components/RichText";
 
 export function PostHeader(props) {
   return (
@@ -23,14 +24,17 @@ export function RefCredit(props) {
       label="อ้างอิง"
       description="โปรดระบุแหล่งที่มาของเนื้อหา เช่น รูปภาพ, ข้อความ ก่อนโพสต์ลงบนเว็บไซต์ MyAnimeCommunity"
     >
-      <Textarea
+      <RichTextEditor
+        controls={[["bold", "italic", "underline"], ["link"]]}
+        stickyOffset={-50}
+        {...props}
         placeholder="ระบุแหล่งที่มาของเนื้อหา"
         classNames={{
-          input: "bg-accent bg-opacity-50",
+          root: "bg-black/5 text-title border-[#fff] border-opacity-20",
+          toolbar: "bg-foreground text-title",
+          toolbarControl:
+            "bg-foreground border-title border-opacity-20 hover:bg-background",
         }}
-        autosize
-        minRows={1}
-        {...props}
       />
     </InputWrapper>
   );

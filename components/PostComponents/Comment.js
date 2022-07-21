@@ -175,6 +175,7 @@ function MainPost({ comment, commentRef, post }) {
           title: "text-title",
         }}
         opened={opened}
+        closeOnClickOutside={false}
         onClose={() => setOpened(false)}
         title="แก้ไขคอมเมนต์"
       >

@@ -89,6 +89,7 @@ export default function AddAnnouncement() {
           title: "text-title",
         }}
         opened={opened}
+        closeOnClickOutside={false}
         onClose={() => setOpened(false)}
         title="สร้างประกาศ"
       >

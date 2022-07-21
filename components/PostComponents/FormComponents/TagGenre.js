@@ -40,7 +40,6 @@ export default function TagGenre({ data, setData }) {
     if (!value.trim()) return;
 
     data.push(value);
-
     setData(data);
     setTags([...tags, value]);
 
@@ -66,7 +65,6 @@ export default function TagGenre({ data, setData }) {
           icon={<Tag size={14} />}
           placeholder="เพิ่ม"
           onKeyDown={handleKeyDown}
-          className=""
           classNames={{
             input: "bg-transparent bg-opacity-50 max-w-[100px] border-none",
           }}

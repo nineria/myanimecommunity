@@ -83,6 +83,7 @@ export default function EditAnnouncement(props) {
           title: "text-title",
         }}
         opened={opened}
+        closeOnClickOutside={false}
         onClose={() => setOpened(false)}
         title="สร้างประกาศ"
       >

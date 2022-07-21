@@ -35,6 +35,7 @@ export default function PostsMenuController({ layout, setLayout }) {
           title: "text-title",
         }}
         opened={opened}
+        closeOnClickOutside={false}
         onClose={() => setOpened(false)}
         title="สร้างโพสต์"
       >

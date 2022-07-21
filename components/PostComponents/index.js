@@ -16,7 +16,6 @@ import {
   AlertTriangle,
   CalendarMinus,
   Edit as EditIcon,
-  MilitaryRank,
   Star,
   ThumbUp,
   Trash,
@@ -286,6 +285,7 @@ function MainPost({ post, postRef }) {
             overlay: "bg-background",
             title: "text-title",
           }}
+          closeOnClickOutside={false}
           opened={opened}
           onClose={() => setOpened(false)}
           title="แก้ไขโพสต์"
@@ -341,10 +341,13 @@ function MainPost({ post, postRef }) {
           ? "NEWS"
           : "OTHER"}
       </p>
-      <p className="text-xs px-2">
-        อ้างอิง / แหล่งที่มา :{" "}
-        <a className="text-content hover:underline">{post.credit}</a>
-      </p>
+      <RichTextEditor
+        readOnly
+        value={post.credit}
+        classNames={{
+          root: "bg-transparent border-none text-title z-10",
+        }}
+      />
       <AuthCheck fallback={<div />}>
         <Group position="apart" className="text-xs px-2" my="xs">
           <div className="flex flex-row gap-1 items-end hover:underline cursor-pointer ">

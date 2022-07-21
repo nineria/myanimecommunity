@@ -136,18 +136,6 @@ export default function LoginRegister({ center = false }) {
   );
 }
 
-function Logo() {
-  return (
-    <Link href="/">
-      <div className=" font-bold cursor-pointer text-xl">
-        <span className="text-[#4C6EF5]">My</span>
-        <span className="text-content">A</span>
-        <span className="text-title">nimeCommunity</span>
-      </div>
-    </Link>
-  );
-}
-
 export function LoginPopUp({ setOpenedRegister }) {
   const router = useRouter();
 

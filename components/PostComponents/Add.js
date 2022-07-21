@@ -2,15 +2,7 @@ import React, { useContext, useState } from "react";
 // Hooks
 import { useForm, zodResolver } from "@mantine/form";
 // Components
-import {
-  Button,
-  Group,
-  Input,
-  InputWrapper,
-  LoadingOverlay,
-  Stack,
-  TextInput,
-} from "@mantine/core";
+import { LoadingOverlay, Stack } from "@mantine/core";
 import TagHeader from "./FormComponents/TagHeader";
 import TagGenre from "./FormComponents/TagGenre";
 import { PostHeader, RefCredit } from "./FormComponents";
@@ -18,7 +10,6 @@ import PostImage from "./FormComponents/PostImage";
 import PostContent from "./FormComponents/PostContent";
 import { ButtonControl } from "./FormComponents/ButtonControl";
 import { UserContext } from "@lib/context";
-import kebabCase from "lodash.kebabcase";
 import { auth, firestore, serverTimestamp } from "@lib/firebase";
 import { useRouter } from "next/router";
 import WebsiteRule from "@components/WebsiteRule";

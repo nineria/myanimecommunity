@@ -151,8 +151,14 @@ export function GiveAndRemoveRank({ user, userRanks }) {
     <div>
       <Modal
         opened={opened}
+        closeOnClickOutside={false}
         onClose={() => setOpened(false)}
         title={`เพิ่มแรงค์ของ ${user.username}!`}
+        classNames={{
+          modal: "bg-foreground",
+          overlay: "bg-background",
+          title: "text-title",
+        }}
       >
         <Stack>
           <LoadingOverlay visible={loading} />

@@ -264,7 +264,8 @@ export default function UserCardImage({ user, userRef, posts }) {
           size="xl"
           opened={editOpened}
           onClose={() => setEditOpened(false)}
-          title="แก้ไขข้อมูลส่วนตัว!"
+          closeOnClickOutside={false}
+          title="แก้ไขข้อมูลส่วนตัว"
           centered
           classNames={{
             modal: "bg-foreground",
