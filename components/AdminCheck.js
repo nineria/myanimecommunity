@@ -7,5 +7,5 @@ export const ADMIN_UID = "ViTbVpVfXVQHcK9WmvzAUJggayk2";
 export default function AdminCheck(props) {
   const { user } = useContext(UserContext);
 
-  return user.uid === ADMIN_UID ? props.children : props.fallback || null;
+  return user?.uid === ADMIN_UID ? props.children : props.fallback || null;
 }

@@ -69,8 +69,6 @@ function ProfileForm({ user, userRef, setOpened }) {
 
   const [usernameValid, setUsernameValid] = useState(false);
   const [confirmValid, setConfirmValid] = useState(false);
-  const [deleteUsername, setDeleteUsername] = useState("");
-  const [deleteConfirm, setDeleteConfirm] = useState("");
   const [openedConfirm, setOpenedConfirm] = useState(false);
 
   const HandleChange = async (values) => {
@@ -114,12 +112,21 @@ function ProfileForm({ user, userRef, setOpened }) {
   });
 
   const loginAgain = () => {
+    const handleSignOut = async () => {
+      await auth.signOut();
+      modals.closeModal(id);
+      router.push("/");
+    };
+
     const id = modals.openModal({
       title: (
         <Stack>
           <Text size="sm">
             คุณจำเป็นต้อง <b>เข้าสู่ระบบ</b> ใหม่อีกครั้งเพื่อยืนยันตัวตน
             และดำเนินการต่อ
+          </Text>
+          <Text size="xs">
+            (กรณีเข้าสู่ระบบอีกครั้งไม่ได้แสดงว่าบัญชีถูกลบไปแล้ว)
           </Text>
         </Stack>
       ),
@@ -145,13 +152,9 @@ function ProfileForm({ user, userRef, setOpened }) {
               ยกเลิก
             </Button>
             <Button
-              type="submit"
               className="bg-red-500 hover:bg-red-500 hover:opacity-75"
               size="xs"
-              onClick={() => {
-                auth.signOut();
-                router.push("/");
-              }}
+              onClick={handleSignOut}
             >
               ออกจากระบบ
             </Button>
@@ -162,18 +165,24 @@ function ProfileForm({ user, userRef, setOpened }) {
   };
 
   const deleteAccount = async () => {
-    const uid = auth.currentUser.uid;
-
-    auth.currentUser
-      .delete()
-      .then(() => {
-        firestore.collection("usernames").doc(user.username).delete();
-        firestore.collection("users").docs(uid).delete();
-      })
-      .catch(() => {
-        loginAgain();
-        router.push("/");
-      });
+    try {
+      await firestore.collection("usernames").doc(user.username).delete();
+      await firestore
+        .collection("users")
+        .doc(auth.currentUser.uid)
+        .collection("ranks")
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            doc.ref.delete();
+          });
+        });
+      await firestore.collection("users").doc(auth.currentUser.uid).delete();
+      router.push("/");
+    } catch (error) {
+      console.log("ERROR => ", auth.currentUser.uid, error);
+      loginAgain();
+    }
   };
 
   const checkUsername = (e) => {
@@ -245,7 +254,6 @@ function ProfileForm({ user, userRef, setOpened }) {
                 </Button>
                 <Button
                   disabled={usernameValid && confirmValid ? false : true}
-                  type="submit"
                   className="bg-[#ff0000] hover:bg-[#ff0000] hover:opacity-75"
                   size="xs"
                   onClick={() => deleteAccount()}
@@ -357,7 +365,6 @@ function ProfileForm({ user, userRef, setOpened }) {
             </Text>
             <Group>
               <Button
-                type="submit"
                 className="bg-[#ff0000] hover:bg-[#ff0000] hover:opacity-75"
                 size="xs"
                 onClick={() => setOpenedConfirm(true)}

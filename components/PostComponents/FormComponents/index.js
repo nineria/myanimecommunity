@@ -25,7 +25,7 @@ export function RefCredit(props) {
       description="โปรดระบุแหล่งที่มาของเนื้อหา เช่น รูปภาพ, ข้อความ ก่อนโพสต์ลงบนเว็บไซต์ MyAnimeCommunity"
     >
       <RichTextEditor
-        controls={[["bold", "italic", "underline"], ["link"]]}
+        controls={[["bold", "italic", "underline", "orderedList"], ["link"]]}
         stickyOffset={-50}
         {...props}
         placeholder="ระบุแหล่งที่มาของเนื้อหา"

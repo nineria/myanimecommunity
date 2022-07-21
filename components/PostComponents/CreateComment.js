@@ -115,43 +115,26 @@ export default function CreateComment({ post }) {
         <div className="md:block hidden px-[0.5px] bg-white opacity-50"></div>
         <div className="p-2 text-title w-full">
           <div className="border-[1px] border-white border-opacity-10 rounded-sm p-2">
-            <Tabs
-              variant="default"
+            <RichTextEditor
+              controls={[
+                ["bold", "italic", "underline", "link"],
+                ["h3", "h4"],
+                ["image", "video"],
+              ]}
+              sticky={true}
+              stickyOffset={55}
+              value={value}
+              onChange={onChange}
+              placeholder="คุณกำลังคิดอะไรอยู่"
+              onImageUpload={handleImageUpload}
               classNames={{
-                tabLabel: "text-title",
+                root: "bg-black/10 text-title border-[#fff] border-opacity-20",
+                toolbar: "bg-foreground text-title",
+                toolbarControl:
+                  "bg-foreground border-title border-opacity-20 hover:bg-background",
               }}
-            >
-              <Tabs.Tab label="เขียน">
-                <RichTextEditor
-                  controls={[
-                    ["bold", "italic", "underline", "link"],
-                    ["h3", "h4"],
-                    ["image", "video"],
-                  ]}
-                  sticky={true}
-                  stickyOffset={55}
-                  value={value}
-                  onChange={onChange}
-                  placeholder="คุณกำลังคิดอะไรอยู่"
-                  onImageUpload={handleImageUpload}
-                  classNames={{
-                    root: "bg-black/10 text-title border-[#fff] border-opacity-20",
-                    toolbar: "bg-foreground text-title",
-                    toolbarControl:
-                      "bg-foreground border-title border-opacity-20 hover:bg-background",
-                  }}
-                />
-              </Tabs.Tab>
-              <Tabs.Tab label="ตัวอย่าง">
-                <RichTextEditor
-                  readOnly
-                  value={value}
-                  classNames={{
-                    root: "bg-black/10 text-title border-[#fff] border-opacity-20",
-                  }}
-                />
-              </Tabs.Tab>
-            </Tabs>
+            />
+
             <div className="flex flex-row justify-between mt-2">
               <Modal
                 size="1000px"

@@ -72,9 +72,6 @@ export default function TagHeader({ data, setData }) {
           variant="gradient"
           gradient={{ from: item.color?.from, to: item.color?.to, deg: 30 }}
           className="text-[#fff]"
-          rightSection={
-            <X size={10} onClick={() => handleDeleteTag(item.label)} />
-          }
         >
           {item.label}
         </Badge>

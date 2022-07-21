@@ -80,7 +80,7 @@ function PostLayout(props) {
   );
 }
 
-function TopMenu({ post }) {
+function TopMenu({ post, userRanks }) {
   const [user, setUser] = useState();
 
   useEffect(() => {
@@ -130,9 +130,9 @@ function TopMenu({ post }) {
               {user.rule}
             </p>
           </div>
-          {user && (
+          {userRanks && (
             <div className="flex flex-col gap-1 mt-4 ml-4">
-              {user.ranks.map((item, index) => (
+              {userRanks.map((item, index) => (
                 <Badge
                   radius="none"
                   variant="gradient"
