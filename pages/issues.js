@@ -1,18 +1,21 @@
 import Announcement from "@components/Announcement";
 import Navbar from "@components/Navbar";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PostsMenuController from "@components/PostComponents/MenuController";
 import PostLayout from "@components/PostComponents/PostLayout";
 import {
   Anchor,
   Breadcrumbs,
+  Button,
   Container,
+  Group,
   Pagination,
   Stack,
 } from "@mantine/core";
 import { Footer } from "@components/Footer";
 import { firestore, postToJSON } from "@lib/firebase";
 import Metatags from "@components/Metatags";
+import Loading from "@components/Loading";
 
 // Max post to query per page
 const LIMIT = 12;
