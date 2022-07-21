@@ -1,33 +1,28 @@
 import React from "react";
 // Components
-import { Grid, Input, InputWrapper } from "@mantine/core";
+import { Grid, Input, InputWrapper, Stack, TextInput } from "@mantine/core";
 
 export default function Header(props) {
   return (
-    <InputWrapper
-      label="หัวข้อย่อย"
-      description="เชื่อมโยงไปยังหน้าที่ต้องการ และใส่หัวข้อย่อย"
-    >
-      <Grid grow>
-        <Grid.Col sm={2}>
-          <Input
-            classNames={{
-              input: "bg-accent bg-opacity-50",
-            }}
-            placeholder="/post"
-            {...props.headerLink}
-          />
-        </Grid.Col>
-        <Grid.Col sm={10}>
-          <Input
-            classNames={{
-              input: "bg-accent bg-opacity-50",
-            }}
-            placeholder="หัวข้อโพสต์"
-            {...props.header}
-          />
-        </Grid.Col>
-      </Grid>
-    </InputWrapper>
+    <Stack>
+      <TextInput
+        label="เชื่อมโยง"
+        description="Link เชื่อมโยงไปยังหน้าที่ต้องการ"
+        classNames={{
+          input: "bg-accent bg-opacity-50",
+        }}
+        placeholder="/https"
+        {...props.headerLink}
+      />
+
+      <TextInput
+        label="หัวข้อย่อย"
+        classNames={{
+          input: "bg-accent bg-opacity-50",
+        }}
+        placeholder="หัวข้อย่อย"
+        {...props.header}
+      />
+    </Stack>
   );
 }

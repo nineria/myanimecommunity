@@ -10,7 +10,7 @@ import { Modal } from "@mantine/core";
 import { ChevronUp, Edit as EditIcon } from "tabler-icons-react";
 import AdminCheck from "@components/AdminCheck";
 
-export default function Post({ homePosts, disabled }) {
+export default function Post({ today, homePosts, description, disabled }) {
   const { user } = useContext(UserContext);
 
   const [toggle, setTogle] = useState(true);
@@ -28,6 +28,24 @@ export default function Post({ homePosts, disabled }) {
     day: "numeric",
   });
 
+  const todaysPosts =
+    today &&
+    homePosts.map((item, index) => {
+      const regex = /(<([^>]+)>)/gi;
+      const description = item.content.replace(regex, "");
+      const link = `posts/${item.username}/${item.slug}`;
+      return (
+        <Status
+          key={index}
+          header={item?.title || "หัวข้อย่อย"}
+          headerLink={item?.headerLink || link}
+          body={item?.body || description}
+          date={date}
+          disabled={disabled}
+        />
+      );
+    });
+
   return (
     <div className="rounded-sm shadow-md">
       <div
@@ -38,7 +56,7 @@ export default function Post({ homePosts, disabled }) {
         {/* Title */}
         <Link href={homePosts?.titleLink || "/"}>
           <a className="truncate text-[#fff] max-w-[600px] cursor-pointer hover:underline">
-            {homePosts?.title || "หัวข้อหลัก"}
+            {today ? "โพสต์ใหม่วันนี้" : homePosts?.title || "หัวข้อหลัก"}
           </a>
         </Link>
         {/* Edit button */}
@@ -49,6 +67,7 @@ export default function Post({ homePosts, disabled }) {
                 size="lg"
                 opened={opened}
                 onClose={() => setOpened(false)}
+                closeOnClickOutside={false}
                 title="แก้ไขโพสต์ - หน้าหลัก"
                 centered
                 classNames={{
@@ -59,7 +78,7 @@ export default function Post({ homePosts, disabled }) {
               >
                 <Edit setOpened={setOpened} postData={homePosts} />
               </Modal>
-              {!disabled && (
+              {!disabled && !today && (
                 <AdminCheck>
                   <EditIcon
                     onClick={() => setOpened(true)}
@@ -80,17 +99,24 @@ export default function Post({ homePosts, disabled }) {
         </div>
       </div>
       {/* Post */}
-      <div className="flex flex-col bg-[#aaa] gap-[1px]">
-        {toggle ? (
-          <Status
-            header={homePosts?.header || "หัวข้อย่อย"}
-            headerLink={homePosts?.headerLink || "/"}
-            body={homePosts?.body || "เนื้อหา"}
-            date={date}
-            disabled={disabled}
-          />
-        ) : null}
-      </div>
+
+      {today ? (
+        <div className="flex flex-col bg-[#aaa] gap-[1px]">
+          {toggle && todaysPosts}
+        </div>
+      ) : (
+        <div className="flex flex-col bg-[#aaa] gap-[1px]">
+          {toggle && (
+            <Status
+              header={homePosts?.title || "หัวข้อย่อย"}
+              headerLink={homePosts?.headerLink || "/"}
+              body={homePosts?.body || "เนื้อหา"}
+              date={date}
+              disabled={disabled}
+            />
+          )}
+        </div>
+      )}
     </div>
   );
 }

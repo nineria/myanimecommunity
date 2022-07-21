@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 // Hooks
 import { useForm } from "@mantine/hooks";
 // Components
-import { Stack } from "@mantine/core";
+import { Divider, Stack } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import ButtonControl from "./PostComponents/ButtonControl";
 import Content from "./PostComponents/Content";
@@ -74,6 +74,7 @@ export default function Add({ setOpened }) {
           titleLink={form.getInputProps("titleLink")}
           title={form.getInputProps("title")}
         />
+        <Divider label="หัวข้อย่อย และเนื้อหา" labelPosition="center" />
         <Header
           headerLink={form.getInputProps("headerLink")}
           header={form.getInputProps("header")}

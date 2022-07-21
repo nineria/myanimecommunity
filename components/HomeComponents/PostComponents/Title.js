@@ -1,33 +1,27 @@
 import React from "react";
 // Components
-import { Grid, Input, InputWrapper } from "@mantine/core";
+import { Stack, TextInput } from "@mantine/core";
 
 export default function Title(props) {
   return (
-    <InputWrapper
-      label="หัวข้อโพสต์"
-      description="เชื่อมโยงไปยังหน้าที่ต้องการ และใส่หัวข้อโพสต์หลัก"
-    >
-      <Grid grow>
-        <Grid.Col sm={2}>
-          <Input
-            classNames={{
-              input: "bg-accent bg-opacity-50",
-            }}
-            placeholder="/review"
-            {...props.titleLink}
-          />
-        </Grid.Col>
-        <Grid.Col sm={10}>
-          <Input
-            classNames={{
-              input: "bg-accent bg-opacity-50",
-            }}
-            placeholder="หัวข้อโพสต์"
-            {...props.title}
-          />
-        </Grid.Col>
-      </Grid>
-    </InputWrapper>
+    <Stack spacing="xs">
+      <TextInput
+        label="เชื่อมโยง"
+        description="Link เชื่อมโยงไปยังหน้าที่ต้องการ"
+        classNames={{
+          input: "bg-accent bg-opacity-50",
+        }}
+        placeholder="/https"
+        {...props.titleLink}
+      />
+      <TextInput
+        label="หัวข้อโพสต์"
+        classNames={{
+          input: "bg-accent bg-opacity-50",
+        }}
+        placeholder="โพสต์ใหม่ที่น่าสนใจ"
+        {...props.title}
+      />
+    </Stack>
   );
 }

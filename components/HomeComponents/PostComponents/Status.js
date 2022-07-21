@@ -9,7 +9,7 @@ export default function Status({ header, headerLink, body, date }) {
   return (
     <div className="flex lg:flex-row flex-col gap-2 lg:justify-between lg:items-start px-3 py-2 text-content bg-foreground overflow-hidden">
       <div className="flex gap-2">
-        <Messages size={40} className="min-w-fit" />
+        <Messages className="min-w-fit h-[40px]" />
         <div
           className={`${
             body ? "flex flex-col" : "flex items-center"
@@ -27,7 +27,7 @@ export default function Status({ header, headerLink, body, date }) {
             </a>
           </Link>
           {/* Body */}
-          <p className="text-title opacity-50 md:text-sm text-xs max-w-[800px]">
+          <p className="text-title truncate opacity-50 md:text-sm text-xs max-w-[700px]">
             {body}
           </p>
         </div>

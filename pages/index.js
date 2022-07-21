@@ -1,10 +1,9 @@
-import AuthCheck from "@components/AuthCheck";
 import { Footer } from "@components/Footer";
 
 import HomeComponents from "@components/HomeComponents";
 import Metatags from "@components/Metatags";
 import Navbar from "@components/Navbar";
-import { firestore, fromMillis, postToJSON } from "@lib/firebase";
+import { firestore, postToJSON } from "@lib/firebase";
 import { useThemeContext } from "@lib/useTheme";
 
 import { useState, useEffect } from "react";
@@ -27,9 +26,6 @@ export async function getServerSideProps() {
 
 export default function HomePage(props) {
   const [posts, setPosts] = useState(props.homePosts);
-  // const [loading, setLoading] = useState(false);
-
-  // const [postsEnd, setPostsEnd] = useState(false);
 
   const { setTheme } = useThemeContext();
 
@@ -41,30 +37,6 @@ export default function HomePage(props) {
     }
     setTheme(localData);
   }, [setTheme]);
-
-  // const getMorePosts = async () => {
-  //   setLoading(true);
-  //   const last = posts[posts.length - 1];
-
-  //   const cursor =
-  //     typeof last.createdAt === "number"
-  //       ? fromMillis(last.createdAt)
-  //       : last.createdAt;
-
-  //   const query = firestore
-  //     .collectionGroup("posts")
-  //     .where("published", "==", true)
-  //     .orderBy("createdAt", "desc")
-  //     .startAfter(cursor)
-  //     .limit(LIMIT);
-
-  //   const newPosts = (await query.get()).docs.map((doc) => doc.data());
-
-  //   setPosts(posts.concat(newPosts));
-  //   setLoading(false);
-
-  //   if (newPosts.length < LIMIT) setPostsEnd(true);
-  // };
 
   return (
     <>
