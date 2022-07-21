@@ -54,13 +54,10 @@ export default function NewsPage(props) {
 
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    posts.length <= LIMIT ? setPostsEnd(true) : setPostsEnd(false);
-  }, [posts.length]);
-
   const [page, setPage] = useState(1);
 
   const showNext = ({ item }) => {
+    if (posts.length <= LIMIT) return setPostsEnd(true);
     setLoading(true);
     setPostsEnd(false);
     const fetchNextData = async () => {
@@ -77,7 +74,7 @@ export default function NewsPage(props) {
 
       const newPosts = (await query.get()).docs.map((doc) => doc.data());
 
-      if (newPosts.length < LIMIT) setPostsEnd(true);
+      if (newPosts.length <= LIMIT) setPostsEnd(true);
 
       setPosts(newPosts);
       setPage(page + 1);
