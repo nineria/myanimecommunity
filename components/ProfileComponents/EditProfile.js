@@ -172,6 +172,7 @@ function ProfileForm({ user, userRef, setOpened }) {
       })
       .catch(() => {
         loginAgain();
+        router.push("/");
       });
   };
 
