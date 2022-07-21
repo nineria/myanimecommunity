@@ -8,17 +8,13 @@ import {
   Breadcrumbs,
   Button,
   Container,
-  Divider,
   Group,
-  Pagination,
   Stack,
 } from "@mantine/core";
 import { Footer } from "@components/Footer";
 import { firestore, fromMillis, postToJSON } from "@lib/firebase";
 import Metatags from "@components/Metatags";
-import InfiniteScroll from "react-infinite-scroll-component";
 import Loading from "@components/Loading";
-import { Checkbox } from "tabler-icons-react";
 
 // Max post to query per page
 const LIMIT = 12;
@@ -59,7 +55,7 @@ export default function NewsPage(props) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    posts.length >= LIMIT ? setPostsEnd(false) : setPostsEnd(true);
+    posts.length <= LIMIT ? setPostsEnd(true) : setPostsEnd(false);
   }, [posts.length]);
 
   const [page, setPage] = useState(1);

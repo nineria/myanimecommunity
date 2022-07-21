@@ -9,7 +9,6 @@ import {
   Button,
   Container,
   Group,
-  Pagination,
   Stack,
 } from "@mantine/core";
 import { Footer } from "@components/Footer";
@@ -55,7 +54,7 @@ export default function IssuesPage(props) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    posts.length >= LIMIT ? setPostsEnd(false) : setPostsEnd(true);
+    posts.length <= LIMIT ? setPostsEnd(true) : setPostsEnd(false);
   }, [posts.length]);
 
   const [page, setPage] = useState(1);
