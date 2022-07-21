@@ -39,9 +39,15 @@ export default function TagGenre({ data, setData }) {
 
     if (!value.trim()) return;
 
-    data.push(value);
-    setData(data);
-    setTags([...tags, value]);
+    const str = value.replace(/[, ]+/g, " ").trim();
+
+    const list = str.split(" ");
+
+    list.map((item) => {
+      data.push(item);
+      setData(data);
+      setTags([...tags, item]);
+    });
 
     e.target.value = "";
     e.preventDefault();
@@ -66,7 +72,7 @@ export default function TagGenre({ data, setData }) {
           placeholder="เพิ่ม"
           onKeyDown={handleKeyDown}
           classNames={{
-            input: "bg-transparent bg-opacity-50 max-w-[100px] border-none",
+            input: "bg-transparent bg-opacity-50 border-none",
           }}
           size="xs"
         />
