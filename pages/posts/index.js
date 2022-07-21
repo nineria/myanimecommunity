@@ -1,15 +1,20 @@
 import Announcement from "@components/Announcement";
 import Navbar from "@components/Navbar";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PostsMenuController from "@components/PostComponents/MenuController";
 import PostLayout from "@components/PostComponents/PostLayout";
-import { Anchor, Breadcrumbs, Container, Divider, Stack } from "@mantine/core";
+import {
+  Anchor,
+  Breadcrumbs,
+  Button,
+  Container,
+  Group,
+  Stack,
+} from "@mantine/core";
 import { Footer } from "@components/Footer";
 import { firestore, fromMillis, postToJSON } from "@lib/firebase";
 import Metatags from "@components/Metatags";
 import Loading from "@components/Loading";
-import InfiniteScroll from "react-infinite-scroll-component";
-import { Checkbox } from "tabler-icons-react";
 
 // Max post to query per page
 const LIMIT = 12;
@@ -21,11 +26,6 @@ export async function getServerSideProps() {
     .limit(LIMIT);
 
   const posts = (await postsQuery.get()).docs.map(postToJSON);
-
-  // const posts = rawPosts.filter((post) => {
-  //   const tag = post.tag.some((item) => item.label === "ปัญหา");
-  //   if (!tag) return post;
-  // });
 
   const announcementsQuery = firestore
     .collectionGroup("announcements")
@@ -47,29 +47,65 @@ export default function PostsPage(props) {
 
   const [postsEnd, setPostsEnd] = useState(false);
 
-  const nextPosts = async () => {
-    const last = posts[posts.length - 1];
+  const [loading, setLoading] = useState(false);
 
-    const cursor =
-      typeof last.createdAt === "number"
-        ? fromMillis(last.createdAt)
-        : last.createdAt;
+  useEffect(() => {
+    posts.length >= LIMIT ? setPostsEnd(false) : setPostsEnd(true);
+  }, [posts.length]);
 
-    const query = firestore
-      .collectionGroup("posts")
-      .orderBy("createdAt", "desc")
-      .startAfter(cursor)
-      .limit(LIMIT);
+  const [page, setPage] = useState(1);
 
-    const newPosts = (await query.get()).docs.map((doc) => doc.data());
-    // setPage(newPosts.length);
+  const showNext = ({ item }) => {
+    setLoading(true);
+    setPostsEnd(false);
+    const fetchNextData = async () => {
+      const cursor =
+        typeof item.createdAt === "number"
+          ? fromMillis(item.createdAt)
+          : item.createdAt;
 
-    setPosts(posts.concat(newPosts));
-    // setPosts(newPosts);
+      const query = firestore
+        .collectionGroup("posts")
+        .orderBy("createdAt", "desc")
+        .startAfter(cursor)
+        .limit(LIMIT);
 
-    if (newPosts.length < LIMIT) {
-      setPostsEnd(true);
-    }
+      const newPosts = (await query.get()).docs.map((doc) => doc.data());
+
+      if (newPosts.length < LIMIT) setPostsEnd(true);
+
+      setPosts(newPosts);
+      setPage(page + 1);
+    };
+    fetchNextData();
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  };
+
+  const showPrevious = ({ item }) => {
+    setLoading(true);
+    setPostsEnd(false);
+    const fetchNextData = async () => {
+      const cursor =
+        typeof item.createdAt === "number"
+          ? fromMillis(item.createdAt)
+          : item.createdAt;
+
+      const query = firestore
+        .collectionGroup("posts")
+        .orderBy("createdAt", "desc")
+        .endBefore(cursor)
+        .limitToLast(LIMIT);
+
+      const newPosts = (await query.get()).docs.map((doc) => doc.data());
+      setPosts(newPosts);
+      setPage(page - 1);
+    };
+    fetchNextData();
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
   };
 
   const items = [
@@ -95,38 +131,38 @@ export default function PostsPage(props) {
         <Container size="lg">
           <Stack spacing="xs">
             <Breadcrumbs separator="→">{items}</Breadcrumbs>
-
             {/* Announcement */}
             {announcements}
-
-            {/* Menu Controller */}
+            {/* Posts Controller */}
             <PostsMenuController layout={layout} setLayout={setLayout} />
             {/* Posts */}
-
-            <InfiniteScroll
-              dataLength={posts.length} //This is important field to render the next data
-              next={nextPosts}
-              hasMore={!postsEnd}
-              loader={<Loading />}
-              endMessage={
-                <Divider
-                  label={
-                    <div className="flex flex-row gap-1 text-xs text-title my-5">
-                      <Checkbox size={16} />
-                      <span>นั่นคือโพสต์ทั้งหมดของวันนี้!</span>
-                    </div>
-                  }
-                  labelPosition="center"
-                />
-              }
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                overflow: "hidden",
-              }}
-            >
-              <PostLayout posts={posts} layout={layout} />
-            </InfiniteScroll>
+            {loading ? (
+              <Loading />
+            ) : (
+              <>
+                <PostLayout posts={posts} layout={layout} />
+                <Group>
+                  <Button
+                    type="submit"
+                    className="bg-content hover:bg-content hover:opacity-75"
+                    size="xs"
+                    onClick={() => showPrevious({ item: posts[0] })}
+                    disabled={page === 1 ? true : false}
+                  >
+                    ก่อนหน้า
+                  </Button>
+                  <Button
+                    type="submit"
+                    className="bg-content hover:bg-content hover:opacity-75"
+                    size="xs"
+                    onClick={() => showNext({ item: posts[posts.length - 1] })}
+                    disabled={postsEnd}
+                  >
+                    ถัดไป
+                  </Button>
+                </Group>
+              </>
+            )}
           </Stack>
         </Container>
       </div>

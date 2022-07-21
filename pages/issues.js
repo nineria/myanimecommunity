@@ -15,7 +15,7 @@ import { firestore, postToJSON } from "@lib/firebase";
 import Metatags from "@components/Metatags";
 
 // Max post to query per page
-const LIMIT = 10;
+const LIMIT = 12;
 
 export async function getServerSideProps() {
   const postsQuery = firestore
@@ -45,11 +45,75 @@ export async function getServerSideProps() {
 export default function IssuesPage(props) {
   const [layout, setLayout] = useState("grid");
 
-  const [activePage, setPage] = useState(1);
+  const [posts, setPosts] = useState(props.posts);
+
+  const [postsEnd, setPostsEnd] = useState(false);
+
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    posts.length >= LIMIT ? setPostsEnd(false) : setPostsEnd(true);
+  }, [posts.length]);
+
+  const [page, setPage] = useState(1);
+
+  const showNext = ({ item }) => {
+    setLoading(true);
+    setPostsEnd(false);
+    const fetchNextData = async () => {
+      const cursor =
+        typeof item.createdAt === "number"
+          ? fromMillis(item.createdAt)
+          : item.createdAt;
+
+      const query = firestore
+        .collectionGroup("posts")
+        .orderBy("createdAt", "desc")
+        .startAfter(cursor)
+        .limit(LIMIT);
+
+      const newPosts = (await query.get()).docs.map((doc) => doc.data());
+
+      if (newPosts.length < LIMIT) setPostsEnd(true);
+
+      setPosts(newPosts);
+      setPage(page + 1);
+    };
+    fetchNextData();
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  };
+
+  const showPrevious = ({ item }) => {
+    setLoading(true);
+    setPostsEnd(false);
+    const fetchNextData = async () => {
+      const cursor =
+        typeof item.createdAt === "number"
+          ? fromMillis(item.createdAt)
+          : item.createdAt;
+
+      const query = firestore
+        .collectionGroup("posts")
+        .orderBy("createdAt", "desc")
+        .endBefore(cursor)
+        .limitToLast(LIMIT);
+
+      const newPosts = (await query.get()).docs.map((doc) => doc.data());
+      setPosts(newPosts);
+      setPage(page - 1);
+    };
+    fetchNextData();
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  };
 
   const items = [
     { title: "หน้าหลัก", href: "/" },
     { title: "โพสต์ทั้งหมด", href: "/posts" },
+    { title: "แจ้งปัญหา", href: "#" },
   ].map((item, index) => (
     <Anchor size="sm" color="dimmed" href={item.href} key={index}>
       {item.title}
@@ -68,26 +132,38 @@ export default function IssuesPage(props) {
         <Container size="lg">
           <Stack spacing="xs">
             <Breadcrumbs separator="→">{items}</Breadcrumbs>
-
             {/* Announcement */}
             {announcements}
-
-            {/* Menu Controller */}
+            {/* Posts Controller */}
             <PostsMenuController layout={layout} setLayout={setLayout} />
             {/* Posts */}
-            <PostLayout posts={props.posts} layout={layout} />
-            <Pagination
-              total={2}
-              size="sm"
-              mt="sm"
-              page={activePage}
-              onChange={setPage}
-              classNames={{
-                item: "text-title bg-foreground",
-                dots: "text-content bg-content",
-                active: "bg-content text-[#fff]",
-              }}
-            />
+            {loading ? (
+              <Loading />
+            ) : (
+              <>
+                <PostLayout posts={posts} layout={layout} />
+                <Group>
+                  <Button
+                    type="submit"
+                    className="bg-content hover:bg-content hover:opacity-75"
+                    size="xs"
+                    onClick={() => showPrevious({ item: posts[0] })}
+                    disabled={page === 1 ? true : false}
+                  >
+                    ก่อนหน้า
+                  </Button>
+                  <Button
+                    type="submit"
+                    className="bg-content hover:bg-content hover:opacity-75"
+                    size="xs"
+                    onClick={() => showNext({ item: posts[posts.length - 1] })}
+                    disabled={postsEnd}
+                  >
+                    ถัดไป
+                  </Button>
+                </Group>
+              </>
+            )}
           </Stack>
         </Container>
       </div>
