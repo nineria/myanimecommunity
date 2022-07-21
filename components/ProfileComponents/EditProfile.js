@@ -178,6 +178,7 @@ function ProfileForm({ user, userRef, setOpened }) {
           });
         });
       await firestore.collection("users").doc(auth.currentUser.uid).delete();
+      await auth.currentUser.delete();
       router.push("/");
     } catch (error) {
       console.log("ERROR => ", auth.currentUser.uid, error);
