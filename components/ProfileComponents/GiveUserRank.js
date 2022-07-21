@@ -102,7 +102,6 @@ export function GiveAndRemoveRank({ user, userRanks }) {
   const handleChangeRank = async () => {
     setLoading(true);
 
-    const batch = firestore.batch();
     const uid = await getUserWithUsername(user.username);
 
     const setRanks = async (item) => {

@@ -14,9 +14,17 @@ import {
   Card,
   LoadingOverlay,
   TextInput,
+  Modal,
+  Title,
+  Paper,
 } from "@mantine/core";
 
-import { getUserWithUsername } from "@lib/firebase";
+import {
+  auth,
+  firestore,
+  getUserWithUsername,
+  postToJSON,
+} from "@lib/firebase";
 import AuthCheck from "@components/AuthCheck";
 import { showNotification } from "@mantine/notifications";
 import { Check } from "tabler-icons-react";
@@ -25,6 +33,8 @@ import {
   DropzoneProfileImage,
 } from "@components/Dropzone";
 import { useRouter } from "next/router";
+import { deleteUser } from "firebase/auth";
+import { useModals } from "@mantine/modals";
 
 export default function EditProfile({ user, setOpened }) {
   const [userRef, setUserRef] = useState();
@@ -57,6 +67,12 @@ function ProfileForm({ user, userRef, setOpened }) {
 
   const [loading, setLoading] = useState(false);
 
+  const [usernameValid, setUsernameValid] = useState(false);
+  const [confirmValid, setConfirmValid] = useState(false);
+  const [deleteUsername, setDeleteUsername] = useState("");
+  const [deleteConfirm, setDeleteConfirm] = useState("");
+  const [openedConfirm, setOpenedConfirm] = useState(false);
+
   const HandleChange = async (values) => {
     setLoading(true);
     await userRef.update({
@@ -84,6 +100,8 @@ function ProfileForm({ user, userRef, setOpened }) {
     router.replace(router.asPath);
   };
 
+  const modals = useModals();
+
   const form = useForm({
     initialValues: {
       firstName: user.firstName,
@@ -95,9 +113,149 @@ function ProfileForm({ user, userRef, setOpened }) {
     },
   });
 
+  const loginAgain = () => {
+    const id = modals.openModal({
+      title: (
+        <Stack>
+          <Text size="sm">
+            คุณจำเป็นต้อง <b>เข้าสู่ระบบ</b> ใหม่อีกครั้งเพื่อยืนยันตัวตน
+            และดำเนินการต่อ
+          </Text>
+        </Stack>
+      ),
+      withCloseButton: false,
+      zIndex: "999",
+      centered: true,
+      classNames: {
+        modal: "bg-foreground",
+        overlay: "bg-background",
+      },
+      size: "sm",
+      children: (
+        <Stack size="xs">
+          <Group position="right">
+            <Button
+              className="bg-background text-title hover:bg-background hover:opacity-75"
+              size="xs"
+              onClick={() => {
+                modals.closeModal(id);
+                setOpenedConfirm(false);
+              }}
+            >
+              ยกเลิก
+            </Button>
+            <Button
+              type="submit"
+              className="bg-red-500 hover:bg-red-500 hover:opacity-75"
+              size="xs"
+              onClick={() => {
+                auth.signOut();
+                router.push("/");
+              }}
+            >
+              ออกจากระบบ
+            </Button>
+          </Group>
+        </Stack>
+      ),
+    });
+  };
+
+  const deleteAccount = async () => {
+    const uid = auth.currentUser.uid;
+
+    auth.currentUser
+      .delete()
+      .then(() => {
+        firestore.collection("usernames").doc(user.username).delete();
+        firestore.collection("users").docs(uid).delete();
+      })
+      .catch(() => {
+        loginAgain();
+      });
+  };
+
+  const checkUsername = (e) => {
+    if (e.target.value !== user.username) setUsernameValid(false);
+    else setUsernameValid(true);
+  };
+
+  const checkConfirm = (e) => {
+    if (e.target.value !== "ลบบัญชีส่วนบุคคลของฉัน") setConfirmValid(false);
+    else setConfirmValid(true);
+  };
+
   return (
     <form onSubmit={form.onSubmit((values) => HandleChange(values))}>
       <LoadingOverlay visible={loading} />
+      <Modal
+        size="lg"
+        opened={openedConfirm}
+        onClose={() => setOpenedConfirm(false)}
+        withCloseButton={false}
+        closeOnClickOutside={false}
+        centered
+        classNames={{
+          modal: "bg-foreground",
+          overlay: "bg-background",
+          title: "text-title",
+        }}
+      >
+        {openedConfirm && (
+          <Stack spacing="xl">
+            <Stack>
+              <Title order={2} align="center" mb="sm">
+                ลบบัญชีส่วนบุคคล
+              </Title>
+              <Text align="center">
+                MyAnimeCommunity จะลบบัญชี และข้อมูลส่วนบุคคลทั้งหมดของคุณ
+                แต่โพสต์ของคุณอาจยังปรากฏอยู่
+              </Text>
+              <Text align="center">
+                MyAnimeCommunity
+                แนะนำให้คุณลบโพสต์ทั้งหมดออกด้วยตนเองก่อนลบบัญชี
+              </Text>
+              <div className="bg-[#ff0000] rounded-md py-2">
+                <Text align="center" color="white">
+                  การดำเนินการนี้ไม่สามารถย้อนกลับได้ โปรดตรวจสอบให้แน่ใจ
+                </Text>
+              </div>
+            </Stack>
+            <Divider />
+            <Stack>
+              <Text>
+                กรอกชื่อ <b>{user.username}</b> เพื่อดำเนินการต่อ:
+              </Text>
+              <TextInput onChange={checkUsername} />
+              <Text>
+                เพื่อทำการยืนยัน ให้พิมพ์ <b>ลบบัญชีส่วนบุคคลของฉัน</b>{" "}
+                ด้านล่าง:
+              </Text>
+              <TextInput onChange={checkConfirm} />
+            </Stack>
+            <Stack size="xs">
+              <Group position="right">
+                <Button
+                  className="bg-background text-title hover:bg-background hover:opacity-75"
+                  size="xs"
+                  onClick={() => setOpenedConfirm(false)}
+                >
+                  ยกเลิก
+                </Button>
+                <Button
+                  disabled={usernameValid && confirmValid ? false : true}
+                  type="submit"
+                  className="bg-[#ff0000] hover:bg-[#ff0000] hover:opacity-75"
+                  size="xs"
+                  onClick={() => deleteAccount()}
+                >
+                  ลบบัญชี
+                </Button>
+              </Group>
+            </Stack>
+          </Stack>
+        )}
+      </Modal>
       <Stack spacing="sm">
         <Card p="md" radius="sm" className="bg-foreground">
           <Card.Section
@@ -162,7 +320,10 @@ function ProfileForm({ user, userRef, setOpened }) {
           }}
         />
         <Divider label="เปลี่ยนรหัสผ่าน" labelPosition="center" />
-
+        <Text size="xs" color="red">
+          ทางเว็บไซต์ MyAnimeCommunity
+          ปิดปรับปรุงระบบการเปลี่ยนแปลงรหัสผ่านใหม่ชั่วคราว
+        </Text>
         <InputWrapper label="รหัสผ่านเดิม">
           <PasswordInput
             disabled
@@ -183,11 +344,29 @@ function ProfileForm({ user, userRef, setOpened }) {
             }}
           />
         </InputWrapper>
-        <Text size="xs" color="red">
-          ทางเว็บไซต์ MyAnimeCommunity
-          ปิดปรับปรุงระบบการเปลี่ยนแปลงรหัสผ่านใหม่ชั่วคราว
-        </Text>
-        <Group spacing="xs" position="right">
+        <Divider label="ลบบัญชีส่วนบุคคล" labelPosition="center" />
+
+        <div className="border-[1px]  p-4 border-[#ff0000] rounded-md">
+          <Stack>
+            <Title order={2}>ลบบัญชีส่วนบุคคล</Title>
+            <Text>
+              ลบบัญชีส่วนบุคคลของคุณ และข้อมูลส่วนบุคคลทั้งหมดออกอย่างถาวร
+              จากแพลตฟอร์ม MyAnimeCommunity การกระทำนี้ไม่สามารถย้อนกลับได้
+              โปรดดำเนินการต่อด้วยความระมัดระวัง
+            </Text>
+            <Group>
+              <Button
+                type="submit"
+                className="bg-[#ff0000] hover:bg-[#ff0000] hover:opacity-75"
+                size="xs"
+                onClick={() => setOpenedConfirm(true)}
+              >
+                ลบบัญชี
+              </Button>
+            </Group>
+          </Stack>
+        </div>
+        <Group spacing="xs" position="right" mt="xl">
           <Button
             size="xs"
             onClick={() => setOpened(false)}

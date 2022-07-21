@@ -9,7 +9,12 @@ import AuthCheck from "@components/AuthCheck";
 import { StatsGridIcons } from "@components/ProfileComponents/StatsGridIcons";
 import StatsSegments from "@components/ProfileComponents/StatsSegments";
 import { TableSort } from "@components/ProfileComponents/TableSort";
-import { getUserWithUsername, postToJSON } from "@lib/firebase";
+import {
+  firestore,
+  GetAllUsers,
+  getUserWithUsername,
+  postToJSON,
+} from "@lib/firebase";
 import Loading from "@components/Loading";
 import { useThemeContext } from "@lib/useTheme";
 import { useRouter } from "next/router";
@@ -60,66 +65,14 @@ export default function UserProfilePage({ user, posts }) {
 
       setUserRef(userDoc);
     };
+
     setTheme(localData);
     getUserRef();
   }, [setTheme, posts, router, user, username]);
 
-  // const [totalLikes, setTotalLike] = useState(0);
-
-  // useEffect(() => {
-  //   let total = 0;
-  //   const setTotal = () => {
-  //     posts.map((item) => (total = total + item.likes));
-  //   };
-  //   setTotal();
-  //   setTotalLike(total);
-  // }, [posts]);
-
   // Multiple Percentage Calculator
   // p = ( x / y ) * 100
   // Ex 100 (10 / 73) * 100
-
-  // setTimeout(function () {
-  //   setLoading(false);
-  // }, 500);
-
-  // const typeProps = [
-  //   {
-  //     name: "Action",
-  //     color: {
-  //       from: "indigo",
-  //       to: "cyan",
-  //     },
-  //   },
-  //   {
-  //     name: "Drama",
-  //     color: {
-  //       from: "teal",
-  //       to: "lime",
-  //     },
-  //   },
-  //   {
-  //     name: "School",
-  //     color: {
-  //       from: "teal",
-  //       to: "blue",
-  //     },
-  //   },
-  //   {
-  //     name: "Love",
-  //     color: {
-  //       from: "orange",
-  //       to: "red",
-  //     },
-  //   },
-  //   {
-  //     name: "Comedy",
-  //     color: {
-  //       from: "#ed6ea0",
-  //       to: "#ec8c69",
-  //     },
-  //   },
-  // ];
 
   // const socialProps = [
   //   {

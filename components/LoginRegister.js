@@ -318,18 +318,29 @@ function Register() {
   const [isValid, setIsValid] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const setDefaultRank = async (uid) => {
+    const ref = firestore
+      .collection("users")
+      .doc(`${uid}`)
+      .collection("ranks")
+      .doc();
+
+    const setRank = {
+      slug: ref.id,
+      color: {
+        form: "#36D1DC",
+        to: "#5B86E5",
+      },
+      label: "สมาชิกใหม่",
+    };
+
+    await ref.set(setRank);
+  };
+
   const onSubmit = async (values) => {
     // Create refs for both documents
     const userDoc = firestore.doc(`users/${user.uid}`);
-    const ranksDoc = firestore.doc(
-      `users/${user.uid}/ranks/${{
-        color: {
-          form: "#36D1DC",
-          to: "#5B86E5",
-        },
-        label: "สมาชิกใหม่",
-      }}`
-    );
+
     const usernameDoc = firestore.doc(`usernames/${formValue}`);
 
     // Commit both docs together as a batch write.
@@ -343,9 +354,9 @@ function Register() {
       avatar: user?.photoURL,
     });
     batch.set(usernameDoc, { uid: user.uid });
-    batch.set(ranksDoc);
-
     await batch.commit();
+
+    setDefaultRank(user.uid);
   };
 
   const onChange = (e) => {
