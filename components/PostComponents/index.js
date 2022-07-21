@@ -341,6 +341,9 @@ function MainPost({ post, postRef }) {
           ? "NEWS"
           : "OTHER"}
       </p>
+      <span className="text-title text-sm">
+        ที่มา: {post.credit === "<p><br></p>" && "Original"}
+      </span>
       <RichTextEditor
         readOnly
         value={post.credit}

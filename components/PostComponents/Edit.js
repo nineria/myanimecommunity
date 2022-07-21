@@ -21,10 +21,6 @@ const schema = z.object({
     .string()
     .min(10, { message: "หัวข้อโพสต์ต้องมีอย่างน้อย 10 ตัวอักษร" })
     .max(120, { message: "หัวข้อโพสต์ต้องไม่เกิน 120 ตัวอักษร" }),
-  credit: z.string().min(1, {
-    message:
-      "กรุณาใส่แหล่งที่มาหรืออ้างอิง กรณีข้อมูลในโพสต์เป็นของท่านเองให้เขียนว่า Original",
-  }),
 });
 
 export default function Edit({ post, postRef, setOpened }) {
