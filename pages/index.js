@@ -32,8 +32,8 @@ export default function HomePage(props) {
   useEffect(() => {
     const localData = localStorage.getItem("themes");
     if (localData == null) {
-      localStorage.setItem("themes", "red");
-      setTheme("red");
+      localStorage.setItem("themes", "red-light");
+      setTheme("red-light");
     }
     setTheme(localData);
   }, [setTheme]);

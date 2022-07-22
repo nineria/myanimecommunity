@@ -1,6 +1,6 @@
 import { Button, Group, Stack, Text, useMantineTheme } from "@mantine/core";
 import { Upload, Photo, X } from "tabler-icons-react";
-import { Dropzone, IMAGE_MIME_TYPE, MIME_TYPES } from "@mantine/dropzone";
+import { Dropzone, MIME_TYPES } from "@mantine/dropzone";
 import { useModals } from "@mantine/modals";
 import { useState } from "react";
 
@@ -18,7 +18,6 @@ const imageUpload = (image) =>
     )
       .then((response) => response.json())
       .then((result) => resolve(result.data.url))
-      // .then((result) => setImageURL(result.data.url))
       .catch(() => reject(new Error("Upload failed")));
   });
 
@@ -47,7 +46,7 @@ const dropzoneChildren = (status) => (
         ลากรูปภาพมาที่นี่ หรือคลิกเพื่อเลือกไฟล์
       </Text>
       <Text size="sm" inline mt={7}>
-        ประเภทไฟล์ที่รองรับ PNG, JPEG และ SVG ขนาดไฟล์ไม่ควรเกิน 5MB
+        ประเภทไฟล์ที่รองรับ PNG, JPEG, WEBP และ SVG ขนาดไฟล์ไม่ควรเกิน 5MB
       </Text>
     </div>
   </Group>
@@ -69,7 +68,7 @@ export function DropzoneProfileImage({ setImage }) {
         <Stack>
           <Text size="sm">
             ขนาดความกว้างของไฟล์จะต้องไม่เกิน 1024px
-            และประเภทของไฟล์จะต้องอยู่ในรูปแบบ PNG, JPEG หรือ SVG เท่านั้น
+            และประเภทของไฟล์จะต้องอยู่ในรูปแบบ PNG, JPEG, WEBP หรือ SVG เท่านั้น
           </Text>
           <Button
             type="submit"
@@ -107,7 +106,6 @@ export function DropzoneProfileImage({ setImage }) {
       loading={loading}
       multiple={false}
       onDrop={(file) => handleImageUpload(file)}
-      //   onDrop={(files) => console.log("accepted files", files)}
       onReject={openConfirmModal}
       maxSize={3 * 1024 ** 2}
       accept={[
@@ -137,7 +135,7 @@ export function DropzoneProfileAvatar({ setImage }) {
         <Stack>
           <Text size="sm">
             ขนาดความกว้างของไฟล์จะต้องไม่เกิน 512px
-            และประเภทของไฟล์จะต้องอยู่ในรูปแบบ PNG, JPEG หรือ SVG เท่านั้น
+            และประเภทของไฟล์จะต้องอยู่ในรูปแบบ PNG, JPEG, WEBP หรือ SVG เท่านั้น
           </Text>
           <Button
             type="submit"
@@ -177,7 +175,6 @@ export function DropzoneProfileAvatar({ setImage }) {
       radius="100px"
       multiple={false}
       onDrop={(file) => handleImageUpload(file)}
-      //   onDrop={(files) => console.log("accepted files", files)}
       onReject={openConfirmModal}
       maxSize={3 * 512 ** 2}
       accept={[
@@ -216,7 +213,7 @@ export function DropzoneImage({ setImage }) {
         <Stack>
           <Text size="sm">
             ขนาดความกว้างของไฟล์จะต้องไม่เกิน 1024px
-            และประเภทของไฟล์จะต้องอยู่ในรูปแบบ PNG, JPEG หรือ SVG เท่านั้น
+            และประเภทของไฟล์จะต้องอยู่ในรูปแบบ PNG, JPEG, WEBP หรือ SVG เท่านั้น
           </Text>
           <Button
             type="submit"
@@ -255,7 +252,6 @@ export function DropzoneImage({ setImage }) {
       loading={loading}
       multiple={false}
       onDrop={(file) => handleImageUpload(file)}
-      //   onDrop={(files) => console.log("accepted files", files)}
       onReject={openConfirmModal}
       maxSize={3 * 1024 ** 2}
       accept={[

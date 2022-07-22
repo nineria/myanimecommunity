@@ -55,8 +55,8 @@ export default function UserProfilePage({ user, users, posts }) {
     if (!user || !posts) router.push("/404");
     const localData = localStorage.getItem("themes");
     if (localData == null) {
-      localStorage.setItem("themes", "red");
-      setTheme("red");
+      localStorage.setItem("themes", "red-light");
+      setTheme("red-light");
     }
 
     const getUserRef = async () => {

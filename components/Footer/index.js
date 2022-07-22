@@ -1,11 +1,9 @@
-import React, { useState } from "react";
 import Link from "next/link";
 // Components
 import { Text, Container, ActionIcon, Group, Divider } from "@mantine/core";
 // Icons, Logo
 import {
   BrandTwitter,
-  BrandYoutube,
   BrandInstagram,
   BrandFacebook,
   BrandGithub,

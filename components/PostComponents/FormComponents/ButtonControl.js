@@ -1,10 +1,9 @@
-import React from "react";
 // Components
 import { Button, Group, Stack, Text } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 // import { useModals } from "@mantine/modals";
 // Icons
-import { Check, X } from "tabler-icons-react";
+import { X } from "tabler-icons-react";
 import { useModals } from "@mantine/modals";
 import { useRouter } from "next/router";
 

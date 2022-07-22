@@ -1,7 +1,7 @@
 // import MarkdownPreview from "@components/MarkdownPreview";
 import React, { useContext, useState } from "react";
 // Components
-import { Avatar, Button, Modal, Stack, Tabs, Text } from "@mantine/core";
+import { Avatar, Button, Modal, Stack, Text } from "@mantine/core";
 import WebsiteRulePage from "@components/WebsiteRule";
 import RichTextEditor from "@components/RichText";
 import { UserContext } from "@lib/context";
@@ -13,8 +13,7 @@ import WebsiteRule from "@components/WebsiteRule";
 import { useRouter } from "next/router";
 import { useModals } from "@mantine/modals";
 import Link from "next/link";
-import AuthCheck from "@components/AuthCheck";
-import { LoginPopUp } from "@components/LoginRegister";
+
 import Verify from "@components/Verify";
 
 const handleImageUpload = (image) =>

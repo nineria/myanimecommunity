@@ -1,5 +1,3 @@
-import React from "react";
-// Components
 import Post from "@components/HomeComponents/Post";
 
 export default function ResultSample({ posts }) {

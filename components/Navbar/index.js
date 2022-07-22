@@ -13,7 +13,7 @@ import { navbarProperty } from "./DummyData";
 import LoginRegisterSmallScreen from "./LoginRegisterSmallScreen";
 
 export default function Navbar({ page, isBusy = false }) {
-  const { user, username, userData } = useContext(UserContext); // User data
+  const { username, userData } = useContext(UserContext); // User data
 
   const [toggle, setToggle] = useState(false);
 

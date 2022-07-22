@@ -1,13 +1,8 @@
-import { UserContext } from "@lib/context";
-import { useContext } from "react";
 import {
   MoodConfuzed,
   MoodCrazyHappy,
   MoodHappy,
   MoodSuprised,
-  Settings,
-  Users,
-  ZoomQuestion,
 } from "tabler-icons-react";
 
 export const accessMenuProperty = [

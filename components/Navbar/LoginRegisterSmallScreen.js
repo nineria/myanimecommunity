@@ -1,5 +1,3 @@
-import React from "react";
-// Components
 import { Menu } from "@mantine/core";
 import { LoginPopUp } from "../LoginRegister";
 

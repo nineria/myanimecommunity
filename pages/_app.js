@@ -34,8 +34,8 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     const localData = localStorage.getItem("themes");
     if (localData == null) {
-      localStorage.setItem("themes", "red");
-      setTheme("red");
+      localStorage.setItem("themes", "red-light");
+      setTheme("red-light");
     }
     handleToggleColorScheme(localData);
     setTheme(localData);

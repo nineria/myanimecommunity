@@ -1,13 +1,3 @@
-// export default function UsersManagement() {
-//   return (
-//     <Card p="md" radius="sm" className="bg-foreground">
-//       <Stack>
-//         <Title order={3}>จัดการผู้ใช้</Title>
-//       </Stack>
-//     </Card>
-//   );
-// }
-
 import React, { useContext, useState } from "react";
 // Components
 import {
@@ -21,14 +11,10 @@ import {
   TextInput,
   Card,
   Anchor,
-  Progress,
 } from "@mantine/core";
 // Icons
 import { Selector, ChevronDown, ChevronUp, Search } from "tabler-icons-react";
 import Link from "next/link";
-import { UserContext } from "@lib/context";
-import { useEffect } from "react";
-import { firestore, getUserWithUsername, postToJSON } from "@lib/firebase";
 
 const useStyles = createStyles(() => ({
   th: {

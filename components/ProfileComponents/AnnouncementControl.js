@@ -1,7 +1,7 @@
 import Announcement from "@components/Announcement";
 import AddAnnouncement from "@components/Announcement/Add";
 import { firestore, postToJSON } from "@lib/firebase";
-import { Card, Input, InputWrapper, Stack, Text, Title } from "@mantine/core";
+import { Card, InputWrapper, Stack, Title } from "@mantine/core";
 import React, { useState } from "react";
 import { useEffect } from "react";
 
@@ -31,13 +31,6 @@ export default function AnnouncementControl() {
     announcements.filter((item) => {
       return item.published === false;
     });
-
-  // {names.filter(name => name.includes('J')).map(filteredName => (
-  //   <li>
-  //     {filteredName}
-  //   </li>
-  // ))}
-  // .map((item, index) => <Announcement key={index} {...item} />);
 
   return (
     <Card p="md" radius="sm" className="bg-foreground">

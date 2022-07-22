@@ -1,13 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 // Components
-import {
-  Avatar,
-  Button,
-  Group,
-  Modal,
-  Text,
-  TypographyStylesProvider,
-} from "@mantine/core";
+import { Avatar, Button, Group, Modal, Text } from "@mantine/core";
 // Icons
 import {
   AlertTriangle,

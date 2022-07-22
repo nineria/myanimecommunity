@@ -1,4 +1,3 @@
-import React from "react";
 // Components
 import { Divider, Group, Text } from "@mantine/core";
 import Themes from "./Themes";

@@ -9,13 +9,9 @@ import { useDocumentData } from "react-firebase-hooks/firestore";
 import {
   Anchor,
   Breadcrumbs,
-  Center,
   Container,
   Group,
-  Loader,
   Pagination,
-  Paper,
-  Skeleton,
   Stack,
   Text,
 } from "@mantine/core";
@@ -25,65 +21,10 @@ import Comment from "@components/PostComponents/Comment";
 import { Star } from "tabler-icons-react";
 import Loading from "@components/Loading";
 import Metatags from "@components/Metatags";
-import LoginRegister, { LoginPopUp } from "@components/LoginRegister";
-import { Animate } from "react-simple-animate";
+import LoginRegister from "@components/LoginRegister";
 import Logo from "@components/Logo";
 import { useContext } from "react";
 import { UserContext } from "@lib/context";
-import Verify from "@components/Verify";
-
-// export async function getStaticProps({ params }) {
-//   try {
-//     const { username, slug } = params;
-
-//     const userDoc = await getUserWithUsername(username);
-
-//     let post;
-//     let path;
-
-//     if (userDoc) {
-//       const postRef = userDoc.ref.collection("posts").doc(slug);
-
-//       post = postToJSON(await postRef.get());
-
-//       path = postRef.path;
-//     }
-
-//     return {
-//       props: { post, path },
-//       revalidate: 5000,
-//     };
-//   } catch (error) {
-//     return {
-//       props: null,
-//     };
-//   }
-// }
-
-// export async function getStaticPaths() {
-//   // Improve my using Admin SDK to select empty docs
-//   const snapshot = await firestore.collectionGroup("posts").get();
-
-//   const paths = snapshot.docs.map((doc) => {
-//     const { slug, username } = doc.data();
-//     return {
-//       params: {
-//         username,
-//         slug,
-//       },
-//     };
-//   });
-
-//   return {
-//     // must be in this format:
-//     // paths: [
-//     //   { params: { username, slug }}
-//     // ],
-//     paths,
-//     fallback: false,
-//     // fallback can be  true if you want to show a fallback version of page
-//   };
-// }
 
 export async function getServerSideProps({ query }) {
   try {

@@ -72,8 +72,8 @@ export default function SettingPage({ posts, localTheme }) {
   useEffect(() => {
     const localData = localStorage.getItem("themes");
     if (localData == null) {
-      localStorage.setItem("themes", "red");
-      setTheme("red");
+      localStorage.setItem("themes", "red-light");
+      setTheme("red-light");
     }
     if (localData === "red-light") toggleColorScheme("light");
     else toggleColorScheme("dark");

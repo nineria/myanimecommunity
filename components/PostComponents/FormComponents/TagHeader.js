@@ -1,8 +1,7 @@
-import React, { useState } from "react";
 // Components
 import { Badge, Group, InputWrapper, MultiSelect } from "@mantine/core";
 // Icons
-import { Tag, X } from "tabler-icons-react";
+import { Tag } from "tabler-icons-react";
 
 const tagsData = [
   {
