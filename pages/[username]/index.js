@@ -9,20 +9,15 @@ import AuthCheck from "@components/AuthCheck";
 import { StatsGridIcons } from "@components/ProfileComponents/StatsGridIcons";
 import StatsSegments from "@components/ProfileComponents/StatsSegments";
 import { TableSort } from "@components/ProfileComponents/TableSort";
-import {
-  firestore,
-  GetAllUsers,
-  getUserWithUsername,
-  postToJSON,
-} from "@lib/firebase";
+import { firestore, getUserWithUsername, postToJSON } from "@lib/firebase";
 import Loading from "@components/Loading";
 import { useThemeContext } from "@lib/useTheme";
 import { useRouter } from "next/router";
 import Metatags from "@components/Metatags";
 import AdminCheck from "@components/AdminCheck";
 import AnnouncementControl from "@components/ProfileComponents/AnnouncementControl";
-import GiveUserRank from "@components/ProfileComponents/GiveUserRank";
 import ReportFormUser from "@components/ProfileComponents/ReportFormUser";
+import UserManagement from "@components/ProfileComponents/UserManagement";
 
 export async function getServerSideProps({ query }) {
   const { username } = query;
@@ -30,20 +25,30 @@ export async function getServerSideProps({ query }) {
   const userDoc = await getUserWithUsername(username);
 
   let user = null;
+  let users = [];
   let posts = null;
 
   if (userDoc) {
     user = userDoc.data();
     const postsQuery = userDoc.ref.collection("posts").limit(10);
     posts = (await postsQuery.get()).docs.map(postToJSON);
+
+    await firestore
+      .collection("users")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          users.push(doc.data());
+        });
+      });
   }
 
   return {
-    props: { user, posts },
+    props: { user, users, posts },
   };
 }
 
-export default function UserProfilePage({ user, posts }) {
+export default function UserProfilePage({ user, users, posts }) {
   const { setTheme } = useThemeContext();
 
   const router = useRouter();
@@ -122,7 +127,7 @@ export default function UserProfilePage({ user, posts }) {
                     <div id="announcementControl">
                       <AnnouncementControl />
                     </div>
-                    <GiveUserRank />
+                    {users && <UsersManagement users={users} />}
                     <ReportFormUser />
                   </AdminCheck>
                 )}

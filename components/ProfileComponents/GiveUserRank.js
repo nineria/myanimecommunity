@@ -1,41 +1,17 @@
-import {
-  auth,
-  firestore,
-  getUserWithUsername,
-  postToJSON,
-} from "@lib/firebase";
+import { firestore, getUserWithUsername } from "@lib/firebase";
 import {
   Badge,
-  Box,
   Button,
-  Card,
   Group,
-  Input,
   InputWrapper,
   LoadingOverlay,
   Modal,
   MultiSelect,
-  Select,
   Stack,
-  Text,
-  TextInput,
-  Title,
 } from "@mantine/core";
-import { useModals } from "@mantine/modals";
 import { useRouter } from "next/router";
-import React, { forwardRef, useRef, useState } from "react";
-import { useEffect } from "react";
-import { MilitaryRank, Plus } from "tabler-icons-react";
-
-export default function GiveUserRank() {
-  return (
-    <Card p="md" radius="sm" className="bg-foreground">
-      <Stack>
-        <Title order={3}>จัดการผู้ใช้</Title>
-      </Stack>
-    </Card>
-  );
-}
+import React, { useState } from "react";
+import { Plus } from "tabler-icons-react";
 
 const ranksData = [
   {
@@ -90,7 +66,7 @@ const ranksData = [
   },
 ];
 
-export function GiveAndRemoveRank({ user, userRanks }) {
+export default function GiveUserRanks({ user, userRanks }) {
   const [opened, setOpened] = useState();
 
   const [loading, setLoading] = useState(false);

@@ -16,15 +16,9 @@ import {
   TextInput,
   Modal,
   Title,
-  Paper,
 } from "@mantine/core";
 
-import {
-  auth,
-  firestore,
-  getUserWithUsername,
-  postToJSON,
-} from "@lib/firebase";
+import { auth, firestore, getUserWithUsername } from "@lib/firebase";
 import AuthCheck from "@components/AuthCheck";
 import { showNotification } from "@mantine/notifications";
 import { Check } from "tabler-icons-react";
@@ -33,7 +27,6 @@ import {
   DropzoneProfileImage,
 } from "@components/Dropzone";
 import { useRouter } from "next/router";
-import { deleteUser } from "firebase/auth";
 import { useModals } from "@mantine/modals";
 
 export default function EditProfile({ user, setOpened }) {

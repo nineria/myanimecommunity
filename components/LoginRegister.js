@@ -6,6 +6,7 @@ import {
   facebookAuthProvider,
   firestore,
   googleAuthProvider,
+  serverTimestamp,
 } from "@lib/firebase";
 // Components
 import {
@@ -83,6 +84,7 @@ export default function LoginRegister({ center = false }) {
         size="md"
         opened={openedLogin}
         onClose={() => setOpenedLogin(false)}
+        closeOnClickOutside={false}
         classNames={{
           modal: "bg-foreground",
           overlay: "bg-background",
@@ -111,6 +113,7 @@ export default function LoginRegister({ center = false }) {
         size="lg"
         opened={openedRegister}
         onClose={() => setOpenedRegister(false)}
+        closeOnClickOutside={false}
         classNames={{
           modal: "bg-foreground",
           overlay: "bg-background",
@@ -233,8 +236,8 @@ export function LoginPopUp({ setOpenedRegister }) {
       <div className="flex flex-row gap-2 text-content">
         <AlertTriangle size={14} className="mt-1" />
         <Text size="xs">
-          ขออภัยในความไม่สะดวก - ขณะทางเว็บไซต์ MyAnimeCommunity
-          กำลังปรับปรุงระบบการเข้าสู่ระบบ
+          ขออภัยในความไม่สะดวก - ทางเว็บไซต์ MyAnimeCommunity
+          กำลังปิดปรับปรุงระบบการเข้าสู่ระบบด้วย อีเมล และ รหัสผ่าน
         </Text>
       </div>
       <Text size="xs">
@@ -352,6 +355,7 @@ function Register() {
       username: formValue,
       email: values.email || "",
       avatar: user?.photoURL,
+      createdAt: serverTimestamp(),
     });
     batch.set(usernameDoc, { uid: user.uid });
     await batch.commit();
@@ -533,14 +537,6 @@ function Register() {
           ลงทะเบียน
         </Button>
       </Stack>
-      {/* <h3>Debug State</h3>
-            <div>
-              Username: {formUsername}
-              <br />
-              Loading: {loading.toString()}
-              <br />
-              Username Valid: {isValid.toString()}
-            </div> */}
     </form>
   );
 }

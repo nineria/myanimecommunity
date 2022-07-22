@@ -19,7 +19,7 @@ import { AlertTriangle, Edit, X } from "tabler-icons-react";
 import { kFormatter } from "@components/Calculator";
 import EditProfile from "./EditProfile";
 import { UserContext } from "@lib/context";
-import { GiveAndRemoveRank } from "./GiveUserRank";
+import GiveUserRanks from "./GiveUserRank";
 import { getUserWithUsername } from "@lib/firebase";
 import { useRouter } from "next/router";
 import { useModals } from "@mantine/modals";
@@ -229,7 +229,7 @@ export default function UserCardImage({ user, userRef, posts }) {
 
           {/* Give User rank */}
           <AdminCheck fallback={<></>}>
-            <GiveAndRemoveRank user={user} userRanks={userRanks} />
+            <GiveUserRanks user={user} userRanks={userRanks} />
           </AdminCheck>
         </div>
         <Group mt="md" position="center" spacing={50}>

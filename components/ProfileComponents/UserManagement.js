@@ -1,3 +1,13 @@
+// export default function UsersManagement() {
+//   return (
+//     <Card p="md" radius="sm" className="bg-foreground">
+//       <Stack>
+//         <Title order={3}>จัดการผู้ใช้</Title>
+//       </Stack>
+//     </Card>
+//   );
+// }
+
 import React, { useContext, useState } from "react";
 // Components
 import {
@@ -17,6 +27,8 @@ import {
 import { Selector, ChevronDown, ChevronUp, Search } from "tabler-icons-react";
 import Link from "next/link";
 import { UserContext } from "@lib/context";
+import { useEffect } from "react";
+import { firestore, postToJSON } from "@lib/firebase";
 
 const useStyles = createStyles(() => ({
   th: {
@@ -47,8 +59,6 @@ function filterData(data, search) {
   const keys = Object.keys(data[0]);
   const query = search.toLocaleLowerCase().trim();
 
-  console.log(data[0]);
-
   return data.filter((item) =>
     keys.some((key) =>
       item[key]?.toString()?.toLocaleLowerCase()?.includes(query)
@@ -73,28 +83,24 @@ function sortData(data, payload) {
   );
 }
 
-export function TableSort({ user, posts }) {
-  const { username } = useContext(UserContext);
-
+export default function UserManagement({ users }) {
   const [search, setSearch] = useState("");
-  const [sortedData, setSortedData] = useState(posts);
+  const [sortedData, setSortedData] = useState(users);
   const [sortBy, setSortBy] = useState(null);
   const [reverseSortDirection, setReverseSortDirection] = useState(false);
-
-  const { classes, theme } = useStyles();
 
   const setSorting = (field) => {
     const reversed = field === sortBy ? !reverseSortDirection : false;
     setReverseSortDirection(reversed);
     setSortBy(field);
-    setSortedData(sortData(posts, { sortBy: field, reversed, search }));
+    setSortedData(sortData(users, { sortBy: field, reversed, search }));
   };
 
   const handleSearchChange = (event) => {
     const { value } = event.currentTarget;
     setSearch(value);
     setSortedData(
-      sortData(posts, {
+      sortData(users, {
         sortBy,
         reversed: reverseSortDirection,
         search: value,
@@ -103,16 +109,7 @@ export function TableSort({ user, posts }) {
   };
 
   const rows = sortedData.map((row) => {
-    const totalReviews = row.likes + row.stars;
-    const positiveReviews = (row.likes / totalReviews) * 100;
-    const negativeReviews = (row.stars / totalReviews) * 100;
-
     const createdAtTimestamp =
-      typeof row?.createdAt === "number"
-        ? new Date(row.createdAt)
-        : row.createdAt?.toDate();
-
-    const updatedAtTimestamp =
       typeof row?.createdAt === "number"
         ? new Date(row.createdAt)
         : row.createdAt?.toDate();
@@ -122,25 +119,9 @@ export function TableSort({ user, posts }) {
       month: "short",
       day: "numeric",
     });
-    const updatedAt = updatedAtTimestamp?.toLocaleDateString("th-th", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
 
     return (
-      <tr key={row.title}>
-        <td>
-          <Anchor size="sm">
-            <Link href={`/posts/${row.username}/${row.slug}`}>
-              <a target="_blank" rel="noreferrer">
-                {row.title}
-              </a>
-            </Link>
-          </Anchor>
-        </td>
-        <td>{createdAt}</td>
-        <td>{updatedAt}</td>
+      <tr key={row.username}>
         <td>
           <Anchor size="sm">
             <Link href={`/${row.username}`}>
@@ -150,42 +131,16 @@ export function TableSort({ user, posts }) {
             </Link>
           </Anchor>
         </td>
-        {/* <td>{Intl.NumberFormat().format(row.view)}</td> */}
         <td>
-          <Group position="apart">
-            <Text size="xs" color="teal" weight={700}>
-              {row.likes === 0 || row.stars === 0
-                ? 0
-                : positiveReviews.toFixed(0)}
-              %
-            </Text>
-            <Text size="xs" color="red" weight={700}>
-              {row.likes === 0 || row.stars === 0
-                ? 0
-                : negativeReviews.toFixed(0)}
-              %
-            </Text>
-          </Group>
-          <Progress
-            classNames={{ bar: classes.progressBar }}
-            sections={[
-              {
-                value: positiveReviews,
-                color:
-                  theme.colorScheme === "dark"
-                    ? theme.colors.teal[8]
-                    : theme.colors.teal[6],
-              },
-              {
-                value: negativeReviews,
-                color:
-                  theme.colorScheme === "dark"
-                    ? theme.colors.red[8]
-                    : theme.colors.red[6],
-              },
-            ]}
-          />
+          {row.firstName} {row.lastName}
         </td>
+        <td>
+          {row.email || (
+            <span className="text-red-500">ยังไม่ได้ยืนยัน Email</span>
+          )}
+        </td>
+        <td>{row.rule}</td>
+        <td>{createdAt || "-"}</td>
       </tr>
     );
   });
@@ -193,16 +148,9 @@ export function TableSort({ user, posts }) {
   return (
     <Card p="md" radius="sm" className="bg-foreground">
       <ScrollArea>
-        {username === user.username ? (
-          <Text size="xl" weight={700} mb="sm">
-            การจัดการโพสต์
-          </Text>
-        ) : (
-          <Text size="xl" weight={700} mb="sm">
-            โพสต์ทั้งหมดของ {user.username}
-          </Text>
-        )}
-
+        <Text size="xl" weight={700} mb="sm">
+          จัดการผู้ใช้
+        </Text>
         <TextInput
           placeholder="ค้นหา"
           mb="md"
@@ -222,13 +170,42 @@ export function TableSort({ user, posts }) {
           <thead>
             <tr>
               <Th
-                sorted={sortBy === "title"}
+                sorted={sortBy === "username"}
                 reversed={reverseSortDirection}
-                onSort={() => setSorting("title")}
+                onSort={() => setSorting("username")}
               >
-                หัวข้อ
+                ชื่อผู้ใช้
               </Th>
               <Th
+                sorted={sortBy === "firstName"}
+                reversed={reverseSortDirection}
+                onSort={() => setSorting("firstName")}
+              >
+                ชื่อ-นามสกุล
+              </Th>
+              <Th
+                sorted={sortBy === "email"}
+                reversed={reverseSortDirection}
+                onSort={() => setSorting("email")}
+              >
+                อีเมล
+              </Th>
+
+              <Th
+                sorted={sortBy === "rule"}
+                reversed={reverseSortDirection}
+                onSort={() => setSorting("rule")}
+              >
+                สถานะ
+              </Th>
+              <Th
+              // sorted={sortBy === "rule"}
+              // reversed={reverseSortDirection}
+              // onSort={() => setSorting("rule")}
+              >
+                วันที่เข้าร่วม
+              </Th>
+              {/* <Th
                 sorted={sortBy === "createdAt"}
                 reversed={reverseSortDirection}
                 onSort={() => setSorting("createdAt")}
@@ -248,19 +225,12 @@ export function TableSort({ user, posts }) {
                 onSort={() => setSorting("username")}
               >
                 ผู้เขียน
-              </Th>
-              {/* <Th
-                sorted={sortBy === "view"}
-                reversed={reverseSortDirection}
-                onSort={() => setSorting("view")}
-              >
-                เข้าชม
               </Th> */}
-              <th>
+              {/* <th>
                 <Text weight={500} size="sm" className="text-title">
                   ความนิยม
                 </Text>
-              </th>
+              </th> */}
             </tr>
           </thead>
           <tbody>
@@ -268,7 +238,7 @@ export function TableSort({ user, posts }) {
               rows
             ) : (
               <tr>
-                <td colSpan={Object.keys(posts[0]).length}>
+                <td colSpan={Object.keys(users[0]).length}>
                   <Text weight={500} align="center" size="sm">
                     ไม่พบรายการที่ค้นหา
                   </Text>
