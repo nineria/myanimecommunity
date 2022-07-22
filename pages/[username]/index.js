@@ -127,7 +127,7 @@ export default function UserProfilePage({ user, users, posts }) {
                     <div id="announcementControl">
                       <AnnouncementControl />
                     </div>
-                    {users && <UsersManagement users={users} />}
+                    {users && <UserManagement users={users} />}
                     <ReportFormUser />
                   </AdminCheck>
                 )}
