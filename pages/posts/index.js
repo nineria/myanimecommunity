@@ -52,7 +52,6 @@ export default function PostsPage(props) {
   const [page, setPage] = useState(1);
 
   const showNext = ({ item }) => {
-    if (posts.length <= LIMIT) return setPostsEnd(true);
     setLoading(true);
     setPostsEnd(false);
     const fetchNextData = async () => {
