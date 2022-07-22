@@ -25,22 +25,16 @@ export async function getServerSideProps({ query }) {
   const userDoc = await getUserWithUsername(username);
 
   let user = null;
-  let users = [];
+  let users = null;
   let posts = null;
 
   if (userDoc) {
-    user = userDoc.data();
+    user = postToJSON(userDoc);
     const postsQuery = userDoc.ref.collection("posts").limit(10);
     posts = (await postsQuery.get()).docs.map(postToJSON);
 
-    await firestore
-      .collection("users")
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          users.push(doc.data());
-        });
-      });
+    const usersRef = firestore.collection("users");
+    users = (await usersRef.get()).docs.map(postToJSON);
   }
 
   return {

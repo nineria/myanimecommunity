@@ -28,7 +28,7 @@ import { Selector, ChevronDown, ChevronUp, Search } from "tabler-icons-react";
 import Link from "next/link";
 import { UserContext } from "@lib/context";
 import { useEffect } from "react";
-import { firestore, postToJSON } from "@lib/firebase";
+import { firestore, getUserWithUsername, postToJSON } from "@lib/firebase";
 
 const useStyles = createStyles(() => ({
   th: {
@@ -139,7 +139,7 @@ export default function UserManagement({ users }) {
             <span className="text-red-500">ยังไม่ได้ยืนยัน Email</span>
           )}
         </td>
-        <td>{row.rule}</td>
+        {/* <td>{row.rule}</td> */}
         <td>{createdAt || "-"}</td>
       </tr>
     );
@@ -191,19 +191,19 @@ export default function UserManagement({ users }) {
                 อีเมล
               </Th>
 
-              <Th
+              {/* <Th
                 sorted={sortBy === "rule"}
                 reversed={reverseSortDirection}
                 onSort={() => setSorting("rule")}
               >
                 สถานะ
-              </Th>
+              </Th> */}
               <Th
-              // sorted={sortBy === "rule"}
-              // reversed={reverseSortDirection}
-              // onSort={() => setSorting("rule")}
+                sorted={sortBy === "createdAt"}
+                reversed={reverseSortDirection}
+                onSort={() => setSorting("createdAt")}
               >
-                วันที่เข้าร่วม
+                เข้าร่วมเมื่อ
               </Th>
               {/* <Th
                 sorted={sortBy === "createdAt"}
