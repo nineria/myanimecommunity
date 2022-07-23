@@ -10,7 +10,7 @@ import {
   Trash,
 } from "tabler-icons-react";
 import RichTextEditor from "@components/RichText";
-import { getUserWithUsername } from "@lib/firebase";
+import { auth, firestore, getUserWithUsername } from "@lib/firebase";
 import EditComment from "./EditComment";
 import { UserContext } from "@lib/context";
 import AuthorCheck from "@components/AuthorCheck";
@@ -20,6 +20,8 @@ import Link from "next/link";
 
 export default function Comment({ post, comment }) {
   const [commentRef, setCommentRef] = useState();
+  const [likes, setLikes] = useState();
+  const [likeState, setLikeState] = useState(false);
 
   useEffect(() => {
     const getComments = async () => {
@@ -33,16 +35,48 @@ export default function Comment({ post, comment }) {
       setCommentRef(comments);
     };
 
+    const getLikes = async () => {
+      const userStatistics = firestore
+        .collection("users")
+        .doc(post.uid)
+        .collection("posts")
+        .doc(post.slug)
+        .collection("comments")
+        .doc(comment.slug)
+        .collection("likes");
+
+      const userStatisticsPosts = await (
+        await userStatistics.get()
+      ).docs.map((data) => data.data());
+
+      const starsArray = userStatisticsPosts.map((likes) => likes.like);
+
+      if (starsArray.length === 0) setLikes(0);
+      else {
+        setLikeState(true);
+        setLikes(average(starsArray));
+      }
+    };
+
+    getLikes();
     getComments();
   }, [post, comment]);
 
   return (
     <div className="bg-foreground rounded-sm">
       <PostLayout>
-        {post && <LeftMenu comment={comment} />}
-        {post && <TopMenu comment={comment} />}
+        {post && <LeftMenu comment={comment} likes={likes} />}
+        {post && <TopMenu comment={comment} likes={likes} />}
         {post && (
-          <MainPost comment={comment} commentRef={commentRef} post={post} />
+          <MainPost
+            comment={comment}
+            commentRef={commentRef}
+            post={post}
+            likes={likes}
+            setLikes={setLikes}
+            likeState={likeState}
+            setLikeState={setLikeState}
+          />
         )}
       </PostLayout>
     </div>
@@ -98,10 +132,6 @@ function LeftMenu({ comment }) {
           <CalendarMinus size={14} />
           <p>: {date}</p>
         </div>
-        <div className="flex flex-row items-center text-xs gap-2">
-          <ThumbUp size={14} />
-          <p>: {comment.likes}</p>
-        </div>
       </div>
     </div>
   );
@@ -145,7 +175,15 @@ function TopMenu({ comment }) {
   );
 }
 
-function MainPost({ comment, commentRef, post }) {
+function MainPost({
+  comment,
+  commentRef,
+  post,
+  likes,
+  setLikes,
+  likeState,
+  setLikeState,
+}) {
   const [opened, setOpened] = useState(false);
 
   const { user } = useContext(UserContext);
@@ -157,6 +195,69 @@ function MainPost({ comment, commentRef, post }) {
     month: "short",
     day: "numeric",
   });
+
+  const handleLike = async () => {
+    const uid = auth.currentUser.uid;
+
+    let exist = false;
+    let change = "";
+
+    const userStatistics = firestore
+      .collection("users")
+      .doc(post.uid)
+      .collection("posts")
+      .doc(post.slug)
+      .collection("comments")
+      .doc(comment.slug)
+      .collection("likes");
+
+    const userStatisticsPosts = await (
+      await userStatistics.get()
+    ).docs.map((data) => data.data());
+
+    userStatisticsPosts.map((like) => {
+      if (like.uid === uid) {
+        exist = true;
+        change = like.slug;
+        return;
+      }
+    });
+
+    if (exist) {
+      setLikeState(false);
+      const ref = firestore
+        .collection("users")
+        .doc(post.uid)
+        .collection("posts")
+        .doc(post.slug)
+        .collection("comments")
+        .doc(comment.slug)
+        .collection("likes")
+        .doc(change);
+
+      await ref.delete();
+      setLikes(likes - 1);
+    } else {
+      setLikeState(true);
+      const ref = firestore
+        .collection("users")
+        .doc(post.uid)
+        .collection("posts")
+        .doc(post.slug)
+        .collection("comments")
+        .doc(comment.slug)
+        .collection("likes")
+        .doc();
+
+      await ref.set({
+        slug: ref.id,
+        like: 1,
+        uid: uid,
+      });
+
+      setLikes(likes + 1);
+    }
+  };
 
   return (
     <div className="relative mt-11 md:mt-0 text-title text-opacity-90 w-full min-h-[100px]">
@@ -233,9 +334,19 @@ function MainPost({ comment, commentRef, post }) {
             รายงานโพสต์
           </div>
           <Group position="right">
-            <div className="flex flex-row gap-1 items-end hover:underline cursor-pointer ">
+            <div
+              className={`flex flex-row gap-1 items-end hover:underline cursor-pointer ${
+                likeState ? "text-content" : "text-title"
+              }`}
+              onClick={() => handleLike()}
+            >
               <ThumbUp size={14} />
-              {comment.likes} ถูกใจ
+              {likes}{" "}
+              {!likeState ? (
+                <p>ถูกใจ</p>
+              ) : (
+                <p className="text-content">เลิกถูกใจ</p>
+              )}
             </div>
           </Group>
         </Group>

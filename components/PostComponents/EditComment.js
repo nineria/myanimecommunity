@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 // Hooks
 import { useForm } from "@mantine/hooks";
 // Components
-import { Button, Group, InputWrapper, Stack, Tabs, Text } from "@mantine/core";
+import { Button, Group, InputWrapper, Stack, Text } from "@mantine/core";
 import AuthCheck from "@components/AuthCheck";
 import { firestore, serverTimestamp } from "@lib/firebase";
 import RichTextEditor from "@components/RichText";
@@ -162,42 +162,24 @@ function CommentForm({ comment, commentRef, setOpened }) {
         label="คอมเมนต์"
         description="แก้ไขรายระเอียดคอมเมนต์ เช่น ข้อความ รูปภาพ วิดีโอ รวมไปถึง Link ต่างๆ"
       >
-        <Tabs
-          variant="default"
+        <RichTextEditor
+          controls={[
+            ["bold", "italic", "underline", "link"],
+            ["h3", "h4"],
+            ["image", "video"],
+          ]}
+          sticky={true}
+          stickyOffset={-55}
+          {...form.getInputProps("content")}
+          placeholder="รายระเอียดเนื้อหาของโพตส์ เช่น รูปภาพ หรือ วิดีโอ รวมไปถึง Link ต่างๆ"
+          onImageUpload={handleImageUpload}
           classNames={{
-            tabLabel: "text-title",
+            root: "bg-black/5 text-title border-[#fff] border-opacity-20",
+            toolbar: "bg-foreground text-title",
+            toolbarControl:
+              "bg-foreground border-title border-opacity-20 hover:bg-background",
           }}
-        >
-          <Tabs.Tab label="เขียน">
-            <RichTextEditor
-              controls={[
-                ["bold", "italic", "underline", "link"],
-                ["h3", "h4"],
-                ["image", "video"],
-              ]}
-              sticky={true}
-              stickyOffset={-55}
-              {...form.getInputProps("content")}
-              placeholder="รายระเอียดเนื้อหาของโพตส์ เช่น รูปภาพ หรือ วิดีโอ รวมไปถึง Link ต่างๆ"
-              onImageUpload={handleImageUpload}
-              classNames={{
-                root: "bg-black/5 text-title border-[#fff] border-opacity-20",
-                toolbar: "bg-foreground text-title",
-                toolbarControl:
-                  "bg-foreground border-title border-opacity-20 hover:bg-background",
-              }}
-            />
-          </Tabs.Tab>
-          <Tabs.Tab label="ตัวอย่าง">
-            <RichTextEditor
-              readOnly
-              {...form.getInputProps("content")}
-              classNames={{
-                root: "bg-black/10 text-title border-[#fff] border-opacity-20",
-              }}
-            />
-          </Tabs.Tab>
-        </Tabs>
+        />
       </InputWrapper>
 
       <WebsiteRule />

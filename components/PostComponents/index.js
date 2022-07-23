@@ -278,13 +278,6 @@ function LeftMenu({ post, userRanks, stars, likes }) {
               {user.username}
             </Text>
           </Link>
-          {/* <p
-            className={`${
-              user.rule === "ผู้ดูแลระบบ" ? "text-yellow-400" : "text-title"
-            } text-xs`}
-          >
-            {user.rule}
-          </p> */}
         </div>
       )}
       <div className="flex flex-col gap-1 mt-4">
@@ -305,7 +298,7 @@ function LeftMenu({ post, userRanks, stars, likes }) {
             </Badge>
           ))}
       </div>
-      <div className="flex flex-col mt-4 text-title text-opacity-80">
+      <div className="flex flex-col mt-4 gap-1 text-title text-opacity-80">
         <div className="flex flex-row items-center text-xs gap-1">
           <CalendarMinus size={14} /> : <p> {date}</p>
         </div>
