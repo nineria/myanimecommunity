@@ -20,7 +20,7 @@ import {
   ThumbUp,
   Trash,
 } from "tabler-icons-react";
-import { getUserWithUsername } from "@lib/firebase";
+import { auth, firestore, getUserWithUsername } from "@lib/firebase";
 import AuthCheck from "@components/AuthCheck";
 import RichTextEditor from "@components/RichText";
 import AuthorCheck from "@components/AuthorCheck";
@@ -30,8 +30,9 @@ import Link from "next/link";
 
 export default function PostComponents({ post, postRef }) {
   const [userRanks, setUserRanks] = useState(null);
-
-  console.log(userRanks);
+  const [stars, setStars] = useState();
+  const [likes, setLikes] = useState();
+  const [likeState, setLikeState] = useState(false);
 
   useEffect(() => {
     const getRanks = async () => {
@@ -47,16 +48,82 @@ export default function PostComponents({ post, postRef }) {
       setUserRanks(ranks);
     };
 
+    const average = (array) => array.reduce((a, b) => a + b) / array.length;
+
+    const getStars = async () => {
+      const userStatistics = firestore
+        .collection("users")
+        .doc(post.uid)
+        .collection("posts")
+        .doc(post.slug)
+        .collection("stars");
+
+      const userStatisticsPosts = await (
+        await userStatistics.get()
+      ).docs.map((data) => data.data());
+
+      const starsArray = userStatisticsPosts.map((stars) => stars.stars);
+
+      if (starsArray.length === 0) setStars(0);
+      else setStars(average(starsArray));
+    };
+
+    const getLikes = async () => {
+      const userStatistics = firestore
+        .collection("users")
+        .doc(post.uid)
+        .collection("posts")
+        .doc(post.slug)
+        .collection("likes");
+
+      const userStatisticsPosts = await (
+        await userStatistics.get()
+      ).docs.map((data) => data.data());
+
+      const starsArray = userStatisticsPosts.map((likes) => likes.like);
+
+      if (starsArray.length === 0) setLikes(0);
+      else {
+        setLikeState(true);
+        setLikes(average(starsArray));
+      }
+    };
+
     getRanks();
+    getStars();
+    getLikes();
   }, [post.username]);
 
   return (
     <div className="bg-foreground rounded-sm">
       {/* Left menu */}
       <PostLayout>
-        {post && <LeftMenu post={post} userRanks={userRanks} />}
-        {post && <TopMenu post={post} userRanks={userRanks} />}
-        {post && <MainPost post={post} postRef={postRef} />}
+        {post && (
+          <LeftMenu
+            post={post}
+            userRanks={userRanks}
+            stars={stars}
+            likes={likes}
+          />
+        )}
+        {post && (
+          <TopMenu
+            post={post}
+            userRanks={userRanks}
+            stars={stars}
+            likes={likes}
+          />
+        )}
+        {post && (
+          <MainPost
+            post={post}
+            postRef={postRef}
+            likes={likes}
+            setLikes={setLikes}
+            likeState={likeState}
+            setLikeState={setLikeState}
+          />
+        )}
       </PostLayout>
     </div>
   );
@@ -80,7 +147,7 @@ function PostLayout(props) {
   );
 }
 
-function TopMenu({ post, userRanks }) {
+function TopMenu({ post, userRanks, stars, likes }) {
   const [user, setUser] = useState();
 
   useEffect(() => {
@@ -153,22 +220,22 @@ function TopMenu({ post, userRanks }) {
       )}
 
       <div className="flex flex-row justify-around mt-4 text-title text-opacity-80">
-        <div className="flex flex-row items-center text-xs gap-2">
-          <CalendarMinus size={14} /> สร้าง: {date}
+        <div className="flex flex-row flex-wrap items-center text-xs gap-2">
+          <CalendarMinus size={14} /> สร้าง : {date}
         </div>
-        <div className="flex flex-row items-center text-xs gap-2">
-          <Star size={14} /> ระดับ: {post.stars} ดาว
+        <div className="flex flex-row flex-wrap items-center text-xs gap-2">
+          <Star size={14} /> คะแนน : {stars} ดาว
         </div>
-        <div className="flex flex-row items-center text-xs gap-2">
+        <div className="flex flex-row flex-wrap items-center text-xs gap-2">
           <ThumbUp size={14} />
-          ถูกใจ: {post.likes} คน
+          ถูกใจ : {likes} คน
         </div>
       </div>
     </div>
   );
 }
 
-function LeftMenu({ post, userRanks }) {
+function LeftMenu({ post, userRanks, stars, likes }) {
   const [user, setUser] = useState();
 
   useEffect(() => {
@@ -190,6 +257,8 @@ function LeftMenu({ post, userRanks }) {
     month: "short",
     day: "numeric",
   });
+
+  // const stars =
 
   return (
     <div className="px-2 py-4">
@@ -237,24 +306,21 @@ function LeftMenu({ post, userRanks }) {
           ))}
       </div>
       <div className="flex flex-col mt-4 text-title text-opacity-80">
-        <div className="flex flex-row items-center text-xs gap-2">
-          <CalendarMinus size={14} />
-          <p>: {date}</p>
+        <div className="flex flex-row items-center text-xs gap-1">
+          <CalendarMinus size={14} /> : <p> {date}</p>
         </div>
-        <div className="flex flex-row items-center text-xs gap-2">
-          <Star size={14} />
-          <p>: {post.stars}</p>
+        <div className="flex flex-row items-center text-xs gap-1">
+          <Star size={14} /> : <p> {stars}</p>
         </div>
-        <div className="flex flex-row items-center text-xs gap-2">
-          <ThumbUp size={14} />
-          <p>: {post.likes}</p>
+        <div className="flex flex-row items-center text-xs gap-1">
+          <ThumbUp size={14} /> : <p> {likes}</p>
         </div>
       </div>
     </div>
   );
 }
 
-function MainPost({ post, postRef }) {
+function MainPost({ post, postRef, likes, setLikes, likeState, setLikeState }) {
   const [opened, setOpened] = useState(false);
 
   const { user } = useContext(UserContext);
@@ -269,6 +335,63 @@ function MainPost({ post, postRef }) {
     month: "short",
     day: "numeric",
   });
+
+  const handleLike = async () => {
+    const uid = auth.currentUser.uid;
+
+    let exist = false;
+    let change = "";
+
+    const userStatistics = firestore
+      .collection("users")
+      .doc(post.uid)
+      .collection("posts")
+      .doc(post.slug)
+      .collection("likes");
+
+    const userStatisticsPosts = await (
+      await userStatistics.get()
+    ).docs.map((data) => data.data());
+
+    userStatisticsPosts.map((like) => {
+      if (like.uid === uid) {
+        exist = true;
+        change = like.slug;
+        return;
+      }
+    });
+
+    if (exist) {
+      setLikeState(false);
+      const ref = firestore
+        .collection("users")
+        .doc(post.uid)
+        .collection("posts")
+        .doc(post.slug)
+        .collection("likes")
+        .doc(change);
+
+      await ref.delete();
+      setLikes(likes - 1);
+    } else {
+      setLikeState(true);
+      const ref = firestore
+        .collection("users")
+        .doc(post.uid)
+        .collection("posts")
+        .doc(post.slug)
+        .collection("likes")
+        .doc();
+
+      await ref.set({
+        slug: ref.id,
+        like: 1,
+        uid: uid,
+      });
+
+      setLikes(likes + 1);
+    }
+  };
 
   return (
     <div className="relative p-2 text-title text-opacity-90 w-full ">
@@ -359,9 +482,19 @@ function MainPost({ post, postRef }) {
           </div>
           <Group position="right">
             {/* <Like postRef={postRef} /> */}
-            <div className="flex flex-row gap-1 items-end hover:underline cursor-pointer ">
+            <div
+              className={`flex flex-row gap-1 items-end hover:underline cursor-pointer ${
+                likeState ? "text-content" : "text-title"
+              }`}
+              onClick={() => handleLike()}
+            >
               <ThumbUp size={14} />
-              {post.likes} ถูกใจ
+              {likes}{" "}
+              {!likeState ? (
+                <p>ถูกใจ</p>
+              ) : (
+                <p className="text-content">เลิกถูกใจ</p>
+              )}
             </div>
           </Group>
         </Group>

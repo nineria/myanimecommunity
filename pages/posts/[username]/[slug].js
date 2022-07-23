@@ -4,11 +4,17 @@ import Navbar from "@components/Navbar";
 import PostComponents from "@components/PostComponents";
 
 import Top from "@components/PostComponents/Top";
-import { firestore, getUserWithUsername, postToJSON } from "@lib/firebase";
+import {
+  auth,
+  firestore,
+  getUserWithUsername,
+  postToJSON,
+} from "@lib/firebase";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import {
   Anchor,
   Breadcrumbs,
+  Button,
   Container,
   Group,
   Pagination,
@@ -18,13 +24,15 @@ import {
 import React, { useEffect, useState } from "react";
 import CreateComment from "@components/PostComponents/CreateComment";
 import Comment from "@components/PostComponents/Comment";
-import { Star } from "tabler-icons-react";
+import { Check, Refresh, Star, X } from "tabler-icons-react";
 import Loading from "@components/Loading";
 import Metatags from "@components/Metatags";
 import LoginRegister from "@components/LoginRegister";
 import Logo from "@components/Logo";
 import { useContext } from "react";
 import { UserContext } from "@lib/context";
+import { useModals } from "@mantine/modals";
+import { showNotification } from "@mantine/notifications";
 
 export async function getServerSideProps({ query }) {
   try {
@@ -126,16 +134,7 @@ export default function PostPage(props) {
               }}
             />
             <AuthCheck fallback={<></>}>
-              <Group position="right" spacing="4px" className="text-content">
-                <Star size={14} />
-                <Star size={14} />
-                <Star size={14} />
-                <Star size={14} />
-                <Star size={14} />
-                <Text size="xs" weight={600} mx="xs">
-                  0 ดาว
-                </Text>
-              </Group>
+              <GivePostStars post={post} />
             </AuthCheck>
           </Group>
           {activePage === 1 ? (
@@ -189,5 +188,194 @@ export default function PostPage(props) {
       </Container>
       <Footer />
     </div>
+  );
+}
+
+function GivePostStars({ post }) {
+  const [stars, setStars] = useState(0);
+
+  const modals = useModals();
+
+  const handleGiveStars = (value) => {
+    const handleOnClick = async () => {
+      const uid = auth.currentUser.uid;
+
+      let exist = false;
+      let change = "";
+
+      const userStatistics = firestore
+        .collection("users")
+        .doc(post.uid)
+        .collection("posts")
+        .doc(post.slug)
+        .collection("stars");
+
+      const userStatisticsPosts = await (
+        await userStatistics.get()
+      ).docs.map((data) => data.data());
+
+      userStatisticsPosts.map((star) => {
+        if (star.uid === uid) {
+          if (star.stars === value) {
+            exist = true;
+            return;
+          }
+          change = star.slug;
+          return;
+        }
+      });
+
+      if (exist) {
+        showNotification({
+          color: "red",
+          title: `คุณได้ให้คะแนนโพสต์นี้ไปแล้ว`,
+          icon: <X size={18} />,
+          classNames: {
+            root: "bg-foreground border-red-400",
+          },
+        });
+
+        modals.closeModal(id);
+      } else {
+        if (change !== "") {
+          showNotification({
+            color: "yellow",
+            title: `คุณได้เปลี่ยนคะแนนโพสต์นี้เป็น ${value} ดาว`,
+            icon: <Refresh size={18} />,
+            classNames: {
+              root: "bg-foreground border-yellow-400",
+            },
+          });
+
+          const ref = firestore
+            .collection("users")
+            .doc(post.uid)
+            .collection("posts")
+            .doc(post.slug)
+            .collection("stars")
+            .doc(change);
+
+          await ref.update({
+            stars: value,
+          });
+
+          modals.closeModal(id);
+        } else {
+          const ref = firestore
+            .collection("users")
+            .doc(post.uid)
+            .collection("posts")
+            .doc(post.slug)
+            .collection("stars")
+            .doc();
+
+          await ref.set({
+            stars: value,
+            slug: ref.id,
+            uid: uid,
+          });
+
+          showNotification({
+            color: "teal",
+            title: `คุณได้ให้คะแนนโพสต์นี้ ${value} ดาว`,
+            icon: <Check size={18} />,
+            classNames: {
+              root: "bg-foreground border-teal-400",
+            },
+          });
+
+          modals.closeModal(id);
+        }
+      }
+    };
+
+    const id = modals.openModal({
+      title: (
+        <Stack>
+          <Text size="sm">ให้คะแนนโพสต์นี้ {value} ดาว?</Text>
+        </Stack>
+      ),
+      zIndex: "999",
+      centered: true,
+      classNames: {
+        modal: "bg-foreground",
+        overlay: "bg-background",
+      },
+      size: "sm",
+      children: (
+        <Stack size="xs">
+          <Group position="right">
+            <Button
+              className="bg-background text-title hover:bg-background hover:opacity-75"
+              size="xs"
+              onClick={() => modals.closeModal(id)}
+            >
+              ยกเลิก
+            </Button>
+            <Button
+              type="submit"
+              className="bg-red-500 hover:bg-red-500 hover:opacity-75"
+              size="xs"
+              onClick={() => handleOnClick()}
+            >
+              ให้คะแนน
+            </Button>
+          </Group>
+        </Stack>
+      ),
+    });
+  };
+  return (
+    <Group position="right" spacing="4px" className="text-content">
+      <Star
+        size={14}
+        className={`cursor-pointer ${
+          stars > 0 ? "text-center" : "text-[#fff] "
+        }`}
+        onClick={() => handleGiveStars(1)}
+        onMouseEnter={() => setStars(1)}
+        onMouseLeave={() => setStars(1)}
+      />
+      <Star
+        size={14}
+        className={`cursor-pointer ${
+          stars > 1 ? "text-center" : "text-[#fff] "
+        }`}
+        onClick={() => handleGiveStars(2)}
+        onMouseEnter={() => setStars(2)}
+        onMouseLeave={() => setStars(2)}
+      />
+      <Star
+        size={14}
+        className={`cursor-pointer ${
+          stars > 2 ? "text-center" : "text-[#fff] "
+        }`}
+        onClick={() => handleGiveStars(3)}
+        onMouseEnter={() => setStars(3)}
+        onMouseLeave={() => setStars(3)}
+      />
+      <Star
+        size={14}
+        className={`cursor-pointer ${
+          stars > 3 ? "text-center" : "text-[#fff] "
+        }`}
+        onClick={() => handleGiveStars(4)}
+        onMouseEnter={() => setStars(4)}
+        onMouseLeave={() => setStars(4)}
+      />
+      <Star
+        size={14}
+        className={`cursor-pointer ${
+          stars > 4 ? "text-center" : "text-[#fff] "
+        }`}
+        onClick={() => handleGiveStars(5)}
+        onMouseEnter={() => setStars(5)}
+        onMouseLeave={() => setStars(5)}
+      />
+      <Text size="xs" weight={600} mx="xs" className="w-10">
+        <span className="w-10 mr-2">{stars}</span>
+        ดาว
+      </Text>
+    </Group>
   );
 }
