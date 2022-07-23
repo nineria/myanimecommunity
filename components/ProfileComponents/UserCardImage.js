@@ -26,13 +26,11 @@ import { useModals } from "@mantine/modals";
 import { showNotification } from "@mantine/notifications";
 import AdminCheck from "@components/AdminCheck";
 
-export default function UserCardImage({ user, userRef, posts }) {
+export default function UserCardImage({ user, posts, statistics }) {
   const { username } = useContext(UserContext);
 
   const [opened, setOpened] = useState(false);
   const [editOpened, setEditOpened] = useState(false);
-
-  const [totalLikes, setTotalLike] = useState(0);
 
   const [userRanks, setUserRanks] = useState(null);
 
@@ -41,11 +39,6 @@ export default function UserCardImage({ user, userRef, posts }) {
   const modals = useModals();
 
   useEffect(() => {
-    let total = 0;
-    const setTotal = () => {
-      posts.map((item) => (total = total + item.likes));
-    };
-
     const getRanks = async () => {
       const userDoc = await getUserWithUsername(user.username);
 
@@ -60,9 +53,6 @@ export default function UserCardImage({ user, userRef, posts }) {
     };
 
     getRanks();
-
-    setTotal();
-    setTotalLike(total);
   }, [posts, user.username]);
 
   const removeUserRank = (slug, label) => {
@@ -232,32 +222,43 @@ export default function UserCardImage({ user, userRef, posts }) {
             <GiveUserRanks user={user} userRanks={userRanks} />
           </AdminCheck>
         </div>
-        <Group mt="md" position="center" spacing={50}>
-          <div>
-            <Text align="center" size="lg" weight={500}>
-              {kFormatter(totalLikes)}
-            </Text>
-            <Text align="center" size="sm" color="dimmed">
-              ถูกใจ
-            </Text>
-          </div>
-          <div>
-            <Text align="center" size="lg" weight={500}>
-              {kFormatter(posts.length)}
-            </Text>
-            <Text align="center" size="sm" color="dimmed">
-              โพสต์
-            </Text>
-          </div>
-          <div>
-            <Text align="center" size="lg" weight={500}>
-              {kFormatter(0)}
-            </Text>
-            <Text align="center" size="sm" color="dimmed">
-              คอมเมนต์
-            </Text>
-          </div>
-        </Group>
+
+        {statistics && (
+          <Group mt="md" position="center" spacing={50}>
+            <div>
+              <Text align="center" size="lg" weight={500}>
+                {kFormatter(statistics.likes)}
+              </Text>
+              <Text align="center" size="sm" color="dimmed">
+                ถูกใจ
+              </Text>
+            </div>
+            <div>
+              <Text align="center" size="lg" weight={500}>
+                {kFormatter(statistics.stars)}
+              </Text>
+              <Text align="center" size="sm" color="dimmed">
+                ดาว
+              </Text>
+            </div>
+            <div>
+              <Text align="center" size="lg" weight={500}>
+                {kFormatter(statistics.posts)}
+              </Text>
+              <Text align="center" size="sm" color="dimmed">
+                โพสต์
+              </Text>
+            </div>
+            <div>
+              <Text align="center" size="lg" weight={500}>
+                {kFormatter(statistics.comments)}
+              </Text>
+              <Text align="center" size="sm" color="dimmed">
+                คอมเมนต์
+              </Text>
+            </div>
+          </Group>
+        )}
         <ReportUser opened={opened} setOpened={setOpened} />
 
         <Modal

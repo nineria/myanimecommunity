@@ -25,6 +25,7 @@ export async function getServerSideProps({ query }) {
   const userDoc = await getUserWithUsername(username);
 
   let user = null;
+  let statistics = null;
   let users = null;
   let posts = null;
 
@@ -34,15 +35,19 @@ export async function getServerSideProps({ query }) {
     posts = (await postsQuery.get()).docs.map(postToJSON);
 
     const usersRef = firestore.collection("users");
+
     users = (await usersRef.get()).docs.map(postToJSON);
+
+    const userStatistics = firestore.collection("statistics").doc(userDoc.id);
+    statistics = (await userStatistics.get()).data();
   }
 
   return {
-    props: { user, users, posts },
+    props: { user, statistics, users, posts },
   };
 }
 
-export default function UserProfilePage({ user, users, posts }) {
+export default function UserProfilePage({ user, users, statistics, posts }) {
   const { setTheme } = useThemeContext();
 
   const router = useRouter();
@@ -61,7 +66,6 @@ export default function UserProfilePage({ user, users, posts }) {
 
     const getUserRef = async () => {
       const userDoc = await getUserWithUsername(username);
-
       setUserRef(userDoc);
     };
 
@@ -108,9 +112,14 @@ export default function UserProfilePage({ user, users, posts }) {
               end={{ transform: "translateY(0%)", opacity: "1" }}
             >
               <Stack spacing="xs">
-                <UserCardImage user={user} userRef={userRef} posts={posts} />
-                <StatsGridIcons user={user} posts={posts} />
-                <StatsSegments user={user} />
+                <UserCardImage
+                  user={user}
+                  userRef={userRef}
+                  posts={posts}
+                  statistics={statistics}
+                />
+                <StatsGridIcons statistics={statistics} />
+                <StatsSegments user={user} statistics={statistics} />
                 {posts[0] && <TableSort user={user} posts={posts} />}
 
                 {username === user.username && (

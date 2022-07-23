@@ -141,7 +141,7 @@ export function TableSort({ user, posts }) {
         </td>
         <td>{createdAt}</td>
         <td>{updatedAt}</td>
-        <td>
+        {/* <td>
           <Anchor size="sm">
             <Link href={`/${row.username}`}>
               <a target="_blank" rel="noreferrer">
@@ -149,7 +149,7 @@ export function TableSort({ user, posts }) {
               </a>
             </Link>
           </Anchor>
-        </td>
+        </td> */}
         {/* <td>{Intl.NumberFormat().format(row.view)}</td> */}
         <td>
           <Group position="apart">
@@ -242,13 +242,13 @@ export function TableSort({ user, posts }) {
               >
                 แก้ไขล่าสุด
               </Th>
-              <Th
+              {/* <Th
                 sorted={sortBy === "username"}
                 reversed={reverseSortDirection}
                 onSort={() => setSorting("username")}
               >
                 ผู้เขียน
-              </Th>
+              </Th> */}
               {/* <Th
                 sorted={sortBy === "view"}
                 reversed={reverseSortDirection}
