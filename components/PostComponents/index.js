@@ -92,7 +92,7 @@ export default function PostComponents({ post, postRef }) {
     getRanks();
     getStars();
     getLikes();
-  }, [post.username]);
+  }, [post]);
 
   return (
     <div className="bg-foreground rounded-sm">
