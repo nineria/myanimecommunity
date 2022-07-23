@@ -49,13 +49,19 @@ export default function Comment({ post, comment }) {
         await userStatistics.get()
       ).docs.map((data) => data.data());
 
+      const uid = auth.currentUser.uid;
+
+      userStatisticsPosts.map((like) => {
+        if (like.uid === uid) {
+          setLikeState(true);
+          return;
+        }
+      });
+
       const starsArray = userStatisticsPosts.map((likes) => likes.like);
 
       if (starsArray.length === 0) setLikes(0);
-      else {
-        setLikeState(true);
-        setLikes(average(starsArray));
-      }
+      else setLikes(average(starsArray));
     };
 
     getLikes();
