@@ -6,7 +6,10 @@ import { Container, Stack, Title } from "@mantine/core";
 import { Footer } from "@components/Footer";
 import UserCardImage from "@components/ProfileComponents/UserCardImage";
 import AuthCheck from "@components/AuthCheck";
-import { StatsGridIcons } from "@components/ProfileComponents/StatsGridIcons";
+import {
+  StatsGridIcons,
+  StatsGridIconsAdmin,
+} from "@components/ProfileComponents/StatsGridIcons";
 import StatsSegments from "@components/ProfileComponents/StatsSegments";
 import { TableSort } from "@components/ProfileComponents/TableSort";
 import { firestore, getUserWithUsername, postToJSON } from "@lib/firebase";
@@ -26,6 +29,7 @@ export async function getServerSideProps({ query }) {
 
   let user = null;
   let statistics = null;
+  let statisticsAdmin = null;
   let users = null;
   let posts = null;
 
@@ -40,14 +44,25 @@ export async function getServerSideProps({ query }) {
 
     const userStatistics = firestore.collection("statistics").doc(userDoc.id);
     statistics = (await userStatistics.get()).data();
+
+    const usersStatistics = firestore.collection("statistics");
+    statisticsAdmin = (await usersStatistics.get()).docs.map((doc) =>
+      doc.data()
+    );
   }
 
   return {
-    props: { user, statistics, users, posts },
+    props: { user, statistics, statisticsAdmin, users, posts },
   };
 }
 
-export default function UserProfilePage({ user, users, statistics, posts }) {
+export default function UserProfilePage({
+  user,
+  users,
+  statistics,
+  statisticsAdmin,
+  posts,
+}) {
   const { setTheme } = useThemeContext();
 
   const router = useRouter();
@@ -127,10 +142,12 @@ export default function UserProfilePage({ user, users, statistics, posts }) {
                     <Title order={2} align="center" className="text-title mt-4">
                       ส่วนของผู้ดูแลระบบ
                     </Title>
+
+                    <StatsGridIconsAdmin statistics={statisticsAdmin} />
+                    {users && <UserManagement users={users} />}
                     <div id="announcementControl">
                       <AnnouncementControl />
                     </div>
-                    {users && <UserManagement users={users} />}
                     <ReportFormUser />
                   </AdminCheck>
                 )}

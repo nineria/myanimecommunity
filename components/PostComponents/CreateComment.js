@@ -35,7 +35,7 @@ const handleImageUpload = (image) =>
 
 export default function CreateComment({ post }) {
   const modals = useModals();
-  const { userData, username } = useContext(UserContext);
+  const { userData } = useContext(UserContext);
   const [value, onChange] = useState("");
 
   const router = useRouter();
