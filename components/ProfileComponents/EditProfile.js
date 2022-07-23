@@ -159,6 +159,10 @@ function ProfileForm({ user, userRef, setOpened }) {
 
   const deleteAccount = async () => {
     try {
+      await firestore
+        .collection("statistics")
+        .doc(auth.currentUser.uid)
+        .delete();
       await firestore.collection("usernames").doc(user.username).delete();
       await firestore
         .collection("users")

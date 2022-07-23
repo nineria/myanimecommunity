@@ -346,6 +346,8 @@ function Register() {
 
     const usernameDoc = firestore.doc(`usernames/${formValue}`);
 
+    const userStatistics = firestore.collection("statistics").doc(user.uid);
+
     // Commit both docs together as a batch write.
     const batch = firestore.batch();
     batch.set(userDoc, {
@@ -356,8 +358,10 @@ function Register() {
       email: values.email || "",
       avatar: user?.photoURL,
       createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
     });
     batch.set(usernameDoc, { uid: user.uid });
+    batch.set(userStatistics, { comments: 0, likes: 0, posts: 0, stars: 0 });
     await batch.commit();
 
     setDefaultRank(user.uid);
@@ -416,29 +420,6 @@ function Register() {
       confirmPassword: "",
       websiteRule: false,
       privacyPolicy: false,
-      stats: [
-        {
-          label: "ถูกใจ",
-          color: "#47d6ab",
-          diff: 0,
-          part: 0,
-          value: 0,
-        },
-        {
-          label: "โพสต์",
-          color: "#7952B3",
-          diff: 0,
-          part: 0,
-          value: 0,
-        },
-        {
-          label: "คอมเมนต์",
-          color: "#4fcdf7",
-          diff: 0,
-          part: 0,
-          value: 0,
-        },
-      ],
       rule: "สมาชิก",
     },
   });

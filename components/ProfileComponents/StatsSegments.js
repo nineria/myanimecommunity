@@ -6,18 +6,35 @@ import { ArrowUpRight, DeviceAnalytics } from "tabler-icons-react";
 // Tools
 import { kFormatter } from "@components/Calculator";
 
-export default function StatsSegments({ user, statistics }) {
-  console.log(statistics);
-  const total = statistics.likes + statistics.posts + statistics.comments;
-  const segments = user.stats.map((segment) => ({
-    value: segment.part,
-    color: segment.color,
-    label: segment.part > 10 ? `${segment.part}%` : null,
-  }));
+const likeColor = "#A8E6CF";
+const starColor = "#FDFFAB";
+const postColor = "#FFD3B6";
+const commentColor = "#A8E6CF";
 
-  const stat = {
-    color: "#fff",
-  };
+export default function StatsSegments({ statistics }) {
+  const total = statistics.likes + statistics.posts + statistics.comments;
+  const segments = [
+    {
+      value: (statistics.likes * 100) / total,
+      color: likeColor,
+      label: "ถูกใจ" > 10 ? "ถูกใจ" : `${statistics.likes}%`,
+    },
+    {
+      value: (statistics.stars * 100) / total,
+      color: starColor,
+      label: "ดาว" > 10 ? "ดาว" : `${statistics.likes}%`,
+    },
+    {
+      value: (statistics.posts * 100) / total,
+      color: postColor,
+      label: "โพสต์" > 10 ? "โพสต์" : `${statistics.posts}%`,
+    },
+    {
+      value: (statistics.comments * 100) / total,
+      color: commentColor,
+      label: "คอมเมนต์" > 10 ? "คอมเมนต์" : `${statistics.comments}%`,
+    },
+  ];
 
   return (
     <Paper p="md" radius="sm" className="bg-foreground">
@@ -40,7 +57,7 @@ export default function StatsSegments({ user, statistics }) {
       </Group>
 
       <Text color="dimmed" size="sm">
-        จำนวน ถูกใจ, โพสต์, คอมเมนต์, เมื่อเทียบกับเดือนก่อน
+        จำนวน ถูกใจ, ดาว, โพสต์, คอมเมนต์
       </Text>
 
       <Progress
@@ -49,9 +66,9 @@ export default function StatsSegments({ user, statistics }) {
         classNames={{ label: "text-sm leading-none" }}
         mt={40}
       />
-      <SimpleGrid cols={3} breakpoints={[{ maxWidth: "xs", cols: 1 }]} mt="xl">
+      <SimpleGrid cols={4} breakpoints={[{ maxWidth: "xs", cols: 1 }]} mt="xl">
         <Box
-          sx={{ borderBottomColor: "#47d6ab" }}
+          sx={{ borderBottomColor: likeColor }}
           className="pb-[5px] border-b-[3px]"
         >
           <Text transform="uppercase" size="sm" color="dimmed" weight={700}>
@@ -60,13 +77,38 @@ export default function StatsSegments({ user, statistics }) {
 
           <Group position="apart" align="flex-end" spacing={0}>
             <Text weight={700}>{kFormatter(statistics.likes)}</Text>
-            <Text color="#47d6ab" weight={700} size="sm" className="leading-4">
+            <Text
+              color={likeColor}
+              weight={700}
+              size="sm"
+              className="leading-4"
+            >
               {statistics.likes}%
             </Text>
           </Group>
         </Box>
         <Box
-          sx={{ borderBottomColor: "#7952B3" }}
+          sx={{ borderBottomColor: starColor }}
+          className="pb-[5px] border-b-[3px]"
+        >
+          <Text transform="uppercase" size="sm" color="dimmed" weight={700}>
+            ดาว
+          </Text>
+
+          <Group position="apart" align="flex-end" spacing={0}>
+            <Text weight={700}>{kFormatter(statistics.stars)}</Text>
+            <Text
+              color={starColor}
+              weight={700}
+              size="sm"
+              className="leading-4"
+            >
+              {statistics.stars}%
+            </Text>
+          </Group>
+        </Box>
+        <Box
+          sx={{ borderBottomColor: postColor }}
           className="pb-[5px] border-b-[3px]"
         >
           <Text transform="uppercase" size="sm" color="dimmed" weight={700}>
@@ -75,13 +117,18 @@ export default function StatsSegments({ user, statistics }) {
 
           <Group position="apart" align="flex-end" spacing={0}>
             <Text weight={700}>{kFormatter(statistics.posts)}</Text>
-            <Text color="#7952B3" weight={700} size="sm" className="leading-4">
+            <Text
+              color={postColor}
+              weight={700}
+              size="sm"
+              className="leading-4"
+            >
               {statistics.posts}%
             </Text>
           </Group>
         </Box>
         <Box
-          sx={{ borderBottomColor: "#4fcdf7" }}
+          sx={{ borderBottomColor: commentColor }}
           className="pb-[5px] border-b-[3px]"
         >
           <Text transform="uppercase" size="sm" color="dimmed" weight={700}>
@@ -90,7 +137,12 @@ export default function StatsSegments({ user, statistics }) {
 
           <Group position="apart" align="flex-end" spacing={0}>
             <Text weight={700}>{kFormatter(statistics.comments)}</Text>
-            <Text color="#4fcdf7" weight={700} size="sm" className="leading-4">
+            <Text
+              color={commentColor}
+              weight={700}
+              size="sm"
+              className="leading-4"
+            >
               {statistics.comments}%
             </Text>
           </Group>

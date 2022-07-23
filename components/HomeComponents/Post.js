@@ -10,7 +10,7 @@ import { Modal } from "@mantine/core";
 import { ChevronUp, Edit as EditIcon } from "tabler-icons-react";
 import AdminCheck from "@components/AdminCheck";
 
-export default function Post({ today, homePosts, description, disabled }) {
+export default function Post({ today, homePosts, disabled }) {
   const { user } = useContext(UserContext);
 
   const [toggle, setTogle] = useState(true);
@@ -135,10 +135,10 @@ export default function Post({ today, homePosts, description, disabled }) {
               disabled={disabled}
               post={{
                 posts: {
-                  length: 10,
+                  length: 1,
                 },
                 comments: {
-                  length: 7,
+                  length: 1,
                 },
               }}
             />

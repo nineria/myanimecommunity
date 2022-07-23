@@ -261,6 +261,14 @@ function GivePostStars({ post }) {
 
           modals.closeModal(id);
         } else {
+          const uid = auth.currentUser.uid;
+
+          const userStatistics = firestore.collection("statistics").doc(uid);
+          const userStatisticsPosts = (await userStatistics.get()).data();
+          await userStatistics.update({
+            stars: userStatisticsPosts.stars + 1,
+          });
+
           const ref = firestore
             .collection("users")
             .doc(post.uid)

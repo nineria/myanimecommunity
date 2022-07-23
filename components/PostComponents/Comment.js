@@ -58,10 +58,8 @@ export default function Comment({ post, comment }) {
         }
       });
 
-      const starsArray = userStatisticsPosts.map((likes) => likes.like);
-
-      if (starsArray.length === 0) setLikes(0);
-      else setLikes(average(starsArray));
+      if (userStatisticsPosts.length === 0) setLikes(0);
+      else setLikes(userStatisticsPosts.length);
     };
 
     getLikes();
@@ -231,6 +229,13 @@ function MainPost({
 
     if (exist) {
       setLikeState(false);
+
+      const userStatistics = firestore.collection("statistics").doc(uid);
+      const userStatisticsPosts = (await userStatistics.get()).data();
+      await userStatistics.update({
+        likes: userStatisticsPosts.likes - 1,
+      });
+
       const ref = firestore
         .collection("users")
         .doc(post.uid)
@@ -245,6 +250,12 @@ function MainPost({
       setLikes(likes - 1);
     } else {
       setLikeState(true);
+      const userStatistics = firestore.collection("statistics").doc(uid);
+      const userStatisticsPosts = (await userStatistics.get()).data();
+      await userStatistics.update({
+        likes: userStatisticsPosts.likes + 1,
+      });
+
       const ref = firestore
         .collection("users")
         .doc(post.uid)
