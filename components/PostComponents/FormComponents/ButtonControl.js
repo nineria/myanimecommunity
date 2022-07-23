@@ -6,8 +6,9 @@ import { showNotification } from "@mantine/notifications";
 import { X } from "tabler-icons-react";
 import { useModals } from "@mantine/modals";
 import { useRouter } from "next/router";
+import { firestore } from "@lib/firebase";
 
-export function ButtonControl({ setOpened, postRef, type }) {
+export function ButtonControl({ setOpened, post, postRef, type }) {
   const modals = useModals();
 
   const router = useRouter();
@@ -15,6 +16,12 @@ export function ButtonControl({ setOpened, postRef, type }) {
   const handleDelete = () => {
     const handleOnClick = async () => {
       await postRef.delete();
+
+      const userStatistics = firestore.collection("statistics").doc(post.uid);
+      const userStatisticsPosts = (await userStatistics.get()).data();
+      await userStatistics.update({
+        posts: userStatisticsPosts.posts - 1,
+      });
 
       showNotification({
         color: "red",

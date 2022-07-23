@@ -75,6 +75,13 @@ export default function CreateComment({ post }) {
     }
 
     const uid = auth.currentUser.uid;
+
+    const userStatistics = firestore.collection("statistics").doc(uid);
+    const userStatisticsPosts = (await userStatistics.get()).data();
+    await userStatistics.update({
+      comments: userStatisticsPosts.comments + 1,
+    });
+
     const ref = firestore
       .collection("users")
       .doc(post.uid)

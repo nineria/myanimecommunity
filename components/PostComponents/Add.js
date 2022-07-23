@@ -43,7 +43,14 @@ export default function Add({ setOpened }) {
       .doc(uid)
       .collection("posts")
       .doc();
+
     try {
+      const userStatistics = firestore.collection("statistics").doc(uid);
+      const userStatisticsPosts = (await userStatistics.get()).data();
+      await userStatistics.update({
+        posts: userStatisticsPosts.posts + 1,
+      });
+
       const data = {
         slug: ref.id,
         tag: tags,

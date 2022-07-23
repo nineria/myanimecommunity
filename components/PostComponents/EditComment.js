@@ -4,7 +4,7 @@ import { useForm } from "@mantine/hooks";
 // Components
 import { Button, Group, InputWrapper, Stack, Tabs, Text } from "@mantine/core";
 import AuthCheck from "@components/AuthCheck";
-import { serverTimestamp } from "@lib/firebase";
+import { firestore, serverTimestamp } from "@lib/firebase";
 import RichTextEditor from "@components/RichText";
 import { showNotification } from "@mantine/notifications";
 import { Check, X } from "tabler-icons-react";
@@ -45,9 +45,9 @@ export default function EditComment({ comment, commentRef, setOpened, post }) {
   );
 }
 
-function CommentForm({ comment, commentRef, setOpened, post }) {
+function CommentForm({ comment, commentRef, setOpened }) {
   const router = useRouter();
-
+  console.log(comment);
   const { userData } = useContext(UserContext);
 
   const modals = useModals();
@@ -94,6 +94,14 @@ function CommentForm({ comment, commentRef, setOpened, post }) {
 
   const handleDelete = () => {
     const handleOnClick = async () => {
+      const userStatistics = firestore
+        .collection("statistics")
+        .doc(comment.uid);
+      const userStatisticsPosts = (await userStatistics.get()).data();
+      await userStatistics.update({
+        comments: userStatisticsPosts.comments - 1,
+      });
+
       await commentRef.delete();
 
       showNotification({
