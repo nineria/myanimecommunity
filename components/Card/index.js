@@ -11,13 +11,53 @@ import {
 // Icons
 import { Clock, Star, ThumbUp } from "tabler-icons-react";
 import { kFormatter } from "@components/Calculator";
+import { firestore } from "@lib/firebase";
 
 export default function Card({ posts, layout }) {
   const [data, setData] = useState(posts);
+  const [stars, setStars] = useState();
+  const [likes, setLikes] = useState();
 
   useEffect(() => {
-    setData(posts);
-  }, [posts]);
+    const average = (array) => array.reduce((a, b) => a + b) / array.length;
+
+    const getStars = async () => {
+      const userStatistics = firestore
+        .collection("users")
+        .doc(posts.uid)
+        .collection("posts")
+        .doc(posts.slug)
+        .collection("stars");
+
+      const userStatisticsPosts = await (
+        await userStatistics.get()
+      ).docs.map((data) => data.data());
+
+      const starsArray = userStatisticsPosts.map((stars) => stars.stars);
+
+      if (starsArray.length === 0) setStars(0);
+      else setStars(average(starsArray));
+    };
+
+    const getLikes = async () => {
+      const userStatistics = firestore
+        .collection("users")
+        .doc(posts.uid)
+        .collection("posts")
+        .doc(posts.slug)
+        .collection("likes");
+
+      const userStatisticsPosts = await (
+        await userStatistics.get()
+      ).docs.map((data) => data.data());
+
+      if (userStatisticsPosts.length === 0) setLikes(0);
+      else setLikes(userStatisticsPosts.length);
+    };
+
+    getStars();
+    getLikes();
+  }, []);
 
   const createdAt =
     typeof data?.createdAt === "number"
@@ -71,11 +111,11 @@ export default function Card({ posts, layout }) {
                 </div>
                 <div className="flex flex-row gap-1 items-center">
                   <ThumbUp size={14} className="text-content" />
-                  <p className="opacity-80">{kFormatter(data.likes)}</p>
+                  <p className="opacity-80">{kFormatter(likes)}</p>
                 </div>
                 <div className="flex flex-row gap-1 items-center">
                   <Star size={14} className="text-content" />
-                  <p className="opacity-80">{kFormatter(data.stars)}</p>
+                  <p className="opacity-80">{kFormatter(stars)}</p>
                 </div>
               </div>
             </div>
@@ -97,10 +137,22 @@ export default function Card({ posts, layout }) {
       ) : (
         <div>
           <div className="md:flex md:visible hidden w-full">
-            <ScreenLarge data={data} badges={badges} date={date} />
+            <ScreenLarge
+              data={data}
+              badges={badges}
+              date={date}
+              likes={likes}
+              stars={stars}
+            />
           </div>
           <div className="md:hidden visible w-full">
-            <ScreenSmall data={data} badges={badges} date={date} />
+            <ScreenSmall
+              data={data}
+              badges={badges}
+              date={date}
+              likes={likes}
+              stars={stars}
+            />
           </div>
         </div>
       )}
@@ -108,7 +160,7 @@ export default function Card({ posts, layout }) {
   );
 }
 
-function ScreenSmall({ data, badges, date }) {
+function ScreenSmall({ data, badges, date, likes, stars }) {
   return (
     <AspectRatio ratio={16 / 9}>
       <div className="relative flex flex-col rounded-sm shadow-md cursor-pointer hover:brightness-90">
@@ -136,11 +188,11 @@ function ScreenSmall({ data, badges, date }) {
             </div>
             <div className="flex flex-row gap-1 items-center">
               <ThumbUp size={14} className="text-content" />
-              <p className="opacity-80">{kFormatter(data.likes)}</p>
+              <p className="opacity-80">{kFormatter(likes)}</p>
             </div>
             <div className="flex flex-row gap-1 items-center">
               <Star size={14} className="text-content" />
-              <p className="opacity-80">{kFormatter(data.stars)}</p>
+              <p className="opacity-80">{kFormatter(stars)}</p>
             </div>
           </div>
         </div>
@@ -162,7 +214,7 @@ function ScreenSmall({ data, badges, date }) {
   );
 }
 
-function ScreenLarge({ data, badges, date }) {
+function ScreenLarge({ data, badges, date, likes, stars }) {
   return (
     <div className="flex flex-row rounded-sm shadow-md w-full cursor-pointer hover:brightness-90">
       <div className="relative w-[300px] h-[100px] overflow-hidden">
@@ -203,11 +255,11 @@ function ScreenLarge({ data, badges, date }) {
           </div>
           <div className="flex flex-row gap-1 items-center">
             <ThumbUp size={14} className="text-content" />
-            <p className="opacity-80">{kFormatter(data.likes)}</p>
+            <p className="opacity-80">{kFormatter(likes)}</p>
           </div>
           <div className="flex flex-row gap-1 items-center">
             <Star size={14} className="text-content" />
-            <p className="opacity-80">{kFormatter(data.stars)}</p>
+            <p className="opacity-80">{kFormatter(stars)}</p>
           </div>
         </div>
         <div className="absolute right-2 bottom-2">
