@@ -464,13 +464,13 @@ function MainPost({ post, postRef, likes, setLikes, likeState, setLikeState }) {
 
       <Space h="50px" />
       <p className="absolute select-none bottom-20 right-6 font-bold leading-none uppercase opacity-[0.03] text-[120px] md:text-[150px] text-right tracking-tighter">
-        {post.tag[0] === "คำถาม"
+        {post.tag[0].label === "คำถาม"
           ? "QUESTION"
-          : post.tag[0] === "รีวิว"
+          : post.tag[0].label === "รีวิว"
           ? "REVIEW"
-          : post.tag[0] === "สปอย"
+          : post.tag[0].label === "สปอย"
           ? "SPOILER"
-          : post.tag[0] === "ข่าวสาร"
+          : post.tag[0].label === "ข่าวสาร"
           ? "NEWS"
           : "OTHER"}
       </p>

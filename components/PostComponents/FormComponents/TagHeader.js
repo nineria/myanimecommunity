@@ -57,11 +57,6 @@ const tagsData = [
 ];
 
 export default function TagHeader({ data, setData }) {
-  const handleDeleteTag = (label) => {
-    data.pop(label);
-    setData(data);
-  };
-
   const tag =
     data &&
     data.map((item, index) => {
@@ -95,23 +90,6 @@ export default function TagHeader({ data, setData }) {
         onChange={(value) => setData(value)}
         placeholder="เลือกประเภทของโพสต์"
       />
-
-      {/* <Group
-        spacing="4px"
-        className="bg-accent bg-opacity-50 border-title border-opacity-20 border-[1px] rounded-md p-1"
-      >
-        {tags}
-
-        <Input
-          icon={<Tag size={14} />}
-          placeholder="เพิ่ม"
-          onKeyDown={handleKeyDown}
-          classNames={{
-            input: "bg-transparent bg-opacity-50 max-w-[100px]  border-none",
-          }}
-          size="xs"
-        />
-      </Group> */}
     </InputWrapper>
   );
 }

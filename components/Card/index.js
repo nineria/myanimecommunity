@@ -121,13 +121,13 @@ export default function Card({ posts, layout }) {
             </div>
             <div className="absolute bottom-1 right-2">
               <h1 className="text-6xl text-title tracking-tighter font-bold opacity-5 uppercase">
-                {data.tag[0] === "คำถาม"
+                {data.tag[0].label === "คำถาม"
                   ? "QUESTION"
-                  : data.tag[0] === "รีวิว"
+                  : data.tag[0].label === "รีวิว"
                   ? "REVIEW"
-                  : data.tag[0] === "สปอย"
+                  : data.tag[0].label === "สปอย"
                   ? "SPOILER"
-                  : data.tag[0] === "ข่าวสาร"
+                  : data.tag[0].label === "ข่าวสาร"
                   ? "NEWS"
                   : "OTHER"}
               </h1>
@@ -198,13 +198,13 @@ function ScreenSmall({ data, badges, date, likes, stars }) {
         </div>
         <div className="absolute bottom-1 right-2">
           <h1 className="text-6xl text-title font-bold tracking-tighter opacity-5 uppercase">
-            {data.tag[0] === "คำถาม"
+            {data.tag[0].label === "คำถาม"
               ? "QUESTION"
-              : data.tag[0] === "รีวิว"
+              : data.tag[0].label === "รีวิว"
               ? "REVIEW"
-              : data.tag[0] === "สปอย"
+              : data.tag[0].label === "สปอย"
               ? "SPOILER"
-              : data.tag[0] === "ข่าวสาร"
+              : data.tag[0].label === "ข่าวสาร"
               ? "NEWS"
               : "OTHER"}
           </h1>
@@ -264,13 +264,13 @@ function ScreenLarge({ data, badges, date, likes, stars }) {
         </div>
         <div className="absolute right-2 bottom-2">
           <h1 className="text-8xl font-bold tracking-tighter opacity-5 uppercase">
-            {data.tag[0] === "คำถาม"
+            {data.tag[0].label === "คำถาม"
               ? "QUESTION"
-              : data.tag[0] === "รีวิว"
+              : data.tag[0].label === "รีวิว"
               ? "REVIEW"
-              : data.tag[0] === "สปอย"
+              : data.tag[0].label === "สปอย"
               ? "SPOILER"
-              : data.tag[0] === "ข่าวสาร"
+              : data.tag[0].label === "ข่าวสาร"
               ? "NEWS"
               : "OTHER"}
           </h1>
