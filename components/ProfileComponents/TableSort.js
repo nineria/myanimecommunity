@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 // Components
 import {
   createStyles,
@@ -17,6 +17,7 @@ import {
 import { Selector, ChevronDown, ChevronUp, Search } from "tabler-icons-react";
 import Link from "next/link";
 import { UserContext } from "@lib/context";
+import { getUserWithUsername, postToJSON } from "@lib/firebase";
 
 const useStyles = createStyles(() => ({
   th: {
@@ -73,7 +74,7 @@ function sortData(data, payload) {
   );
 }
 
-export function TableSort({ user, posts }) {
+export function TableSort({ user, posts, statistics }) {
   const { username } = useContext(UserContext);
 
   const [search, setSearch] = useState("");
@@ -103,9 +104,9 @@ export function TableSort({ user, posts }) {
   };
 
   const rows = sortedData.map((row) => {
-    const totalReviews = row.likes + row.stars;
-    const positiveReviews = (row.likes / totalReviews) * 100;
-    const negativeReviews = (row.stars / totalReviews) * 100;
+    const totalReviews = statistics.likes + statistics.stars;
+    const positiveReviews = (statistics.likes / totalReviews) * 100;
+    const negativeReviews = (statistics.stars / totalReviews) * 100;
 
     const createdAtTimestamp =
       typeof row?.createdAt === "number"
@@ -142,25 +143,15 @@ export function TableSort({ user, posts }) {
         <td>{createdAt}</td>
         <td>{updatedAt}</td>
         {/* <td>
-          <Anchor size="sm">
-            <Link href={`/${row.username}`}>
-              <a target="_blank" rel="noreferrer">
-                {row.username}
-              </a>
-            </Link>
-          </Anchor>
-        </td> */}
-        {/* <td>{Intl.NumberFormat().format(row.view)}</td> */}
-        <td>
           <Group position="apart">
             <Text size="xs" color="teal" weight={700}>
-              {row.likes === 0 || row.stars === 0
+              {statistics.likes === 0 || statistics.stars === 0
                 ? 0
                 : positiveReviews.toFixed(0)}
               %
             </Text>
             <Text size="xs" color="red" weight={700}>
-              {row.likes === 0 || row.stars === 0
+              {statistics.likes === 0 || statistics.stars === 0
                 ? 0
                 : negativeReviews.toFixed(0)}
               %
@@ -185,7 +176,7 @@ export function TableSort({ user, posts }) {
               },
             ]}
           />
-        </td>
+        </td> */}
       </tr>
     );
   });
@@ -256,11 +247,11 @@ export function TableSort({ user, posts }) {
               >
                 เข้าชม
               </Th> */}
-              <th>
+              {/* <th>
                 <Text weight={500} size="sm" className="text-title">
                   ความนิยม
                 </Text>
-              </th>
+              </th> */}
             </tr>
           </thead>
           <tbody>

@@ -10,7 +10,9 @@ import {
   StatsGridIcons,
   StatsGridIconsAdmin,
 } from "@components/ProfileComponents/StatsGridIcons";
-import StatsSegments from "@components/ProfileComponents/StatsSegments";
+import StatsSegments, {
+  StatsSegmentsAdmin,
+} from "@components/ProfileComponents/StatsSegments";
 import { TableSort } from "@components/ProfileComponents/TableSort";
 import { firestore, getUserWithUsername, postToJSON } from "@lib/firebase";
 import Loading from "@components/Loading";
@@ -35,7 +37,7 @@ export async function getServerSideProps({ query }) {
 
   if (userDoc) {
     user = postToJSON(userDoc);
-    const postsQuery = userDoc.ref.collection("posts").limit(10);
+    const postsQuery = userDoc.ref.collection("posts");
     posts = (await postsQuery.get()).docs.map(postToJSON);
 
     const usersRef = firestore.collection("users");
@@ -135,7 +137,13 @@ export default function UserProfilePage({
                 />
                 <StatsGridIcons statistics={statistics} />
                 <StatsSegments user={user} statistics={statistics} />
-                {posts[0] && <TableSort user={user} posts={posts} />}
+                {posts[0] && (
+                  <TableSort
+                    user={user}
+                    posts={posts}
+                    statistics={statistics}
+                  />
+                )}
 
                 {username === user.username && (
                   <AdminCheck>
@@ -144,6 +152,7 @@ export default function UserProfilePage({
                     </Title>
 
                     <StatsGridIconsAdmin statistics={statisticsAdmin} />
+                    <StatsSegmentsAdmin statistics={statisticsAdmin} />
                     {users && <UserManagement users={users} />}
                     <div id="announcementControl">
                       <AnnouncementControl />
