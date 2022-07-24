@@ -1,4 +1,3 @@
-import Announcement from "@components/Announcement";
 import Navbar from "@components/Navbar";
 import React, { useState } from "react";
 import PostsMenuController from "@components/PostComponents/MenuController";
@@ -12,9 +11,10 @@ import {
   Stack,
 } from "@mantine/core";
 import { Footer } from "@components/Footer";
-import { firestore, fromMillis, postToJSON } from "@lib/firebase";
+import { firestore, fromMillis, postToJSON } from "lib/firebase";
 import Metatags from "@components/Metatags";
 import Loading from "@components/Loading";
+import Announcement from "@components/Announcement";
 
 // Max post to query per page
 const LIMIT = 12;

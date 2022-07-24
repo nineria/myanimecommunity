@@ -8,12 +8,13 @@ import {
   BrandFacebook,
   BrandGithub,
 } from "tabler-icons-react";
-import MyAniLogo from "@components/Navbar/MyAniLogo";
+import MyAniLogo from "components/Navbar/MyAniLogo";
 import { useContext } from "react";
-import { UserContext } from "@lib/context";
+import { UserContext } from "lib/context";
 
 export function Footer() {
   const { username } = useContext(UserContext);
+
   const data = [
     {
       title: "ชุมชนคนรักอนิเมะ",

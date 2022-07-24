@@ -1,6 +1,6 @@
-import Announcement from "@components/Announcement";
-import AddAnnouncement from "@components/Announcement/Add";
-import { firestore, postToJSON } from "@lib/firebase";
+import Announcement from "components/Announcement";
+import AddAnnouncement from "components/Announcement/Add";
+import { firestore, postToJSON } from "lib/firebase";
 import { Card, InputWrapper, Stack, Title } from "@mantine/core";
 import React, { useState } from "react";
 import { useEffect } from "react";

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 // Components
-import Add from "@components/PostComponents/Add";
+import Add from "components/PostComponents/Add";
 import {
   Box,
   Button,
@@ -13,12 +13,12 @@ import {
 } from "@mantine/core";
 // Icons
 import { Edit, LayoutGrid, ListDetails } from "tabler-icons-react";
-import AuthCheck from "@components/AuthCheck";
-import { UserContext } from "@lib/context";
-import AdminCheck from "@components/AdminCheck";
-import AddAnnouncement from "@components/Announcement/Add";
+import AuthCheck from "hooks/AuthCheck";
+import { UserContext } from "lib/context";
+import AdminCheck from "hooks/AdminCheck";
+import AddAnnouncement from "components/Announcement/Add";
 import Link from "next/link";
-import Verify from "@components/Verify";
+import Verify from "components/Verify";
 
 export default function PostsMenuController({ layout, setLayout }) {
   const { user, userData, username } = useContext(UserContext);

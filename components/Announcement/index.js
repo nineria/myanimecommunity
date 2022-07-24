@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 // Context
-import { useThemeContext } from "@lib/useTheme";
+import { useThemeContext } from "lib/useTheme";
 // Icons
 import { Animate } from "react-simple-animate";
-import { AlertCircle, Disabled, X } from "tabler-icons-react";
+import { AlertCircle, X } from "tabler-icons-react";
 import { Button, Group, Stack, Text } from "@mantine/core";
 import EditAnnouncement from "./Edit";
 import { useContext } from "react";
-import { UserContext } from "@lib/context";
-import AdminCheck from "@components/AdminCheck";
-import { firestore } from "@lib/firebase";
+import { UserContext } from "lib/context";
+import AdminCheck from "hooks/AdminCheck";
+import { firestore } from "lib/firebase";
 import { useModals } from "@mantine/modals";
 import { showNotification } from "@mantine/notifications";
 import { useRouter } from "next/router";

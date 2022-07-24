@@ -1,9 +1,9 @@
 import React, { forwardRef, useCallback, useEffect } from "react";
 // Context
-import { useThemeContext } from "@lib/useTheme";
+import { useThemeContext } from "lib/useTheme";
 // Components
 import { Group, Select, Text, useMantineColorScheme } from "@mantine/core";
-import ResultSample from "./ThemeComponents/ResultSample";
+import ResultSample from "./ResultSample";
 
 export default function Themes(props) {
   const { theme, setTheme } = useThemeContext();

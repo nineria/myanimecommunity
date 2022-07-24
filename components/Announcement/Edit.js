@@ -13,7 +13,7 @@ import { z } from "zod";
 import { showNotification } from "@mantine/notifications";
 import { AlertCircle, Check, Edit as EditIcon } from "tabler-icons-react";
 import { useRouter } from "next/router";
-import { firestore, serverTimestamp } from "@lib/firebase";
+import { firestore, serverTimestamp } from "lib/firebase";
 
 const schema = z.object({
   title: z

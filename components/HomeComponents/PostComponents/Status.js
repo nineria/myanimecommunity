@@ -4,7 +4,6 @@ import Link from "next/link";
 import Stats from "./Stats";
 // Icons
 import { Messages } from "tabler-icons-react";
-import { comment } from "postcss";
 
 export default function Status({ header, headerLink, body, date, post }) {
   return (

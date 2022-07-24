@@ -1,4 +1,4 @@
-import { firestore, getUserWithUsername } from "@lib/firebase";
+import { firestore, getUserWithUsername } from "lib/firebase";
 import {
   Badge,
   Button,

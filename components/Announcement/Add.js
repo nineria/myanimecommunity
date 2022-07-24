@@ -14,9 +14,9 @@ import { useForm, zodResolver } from "@mantine/form";
 import { z } from "zod";
 import { showNotification } from "@mantine/notifications";
 import { AlertCircle, Check, Speakerphone } from "tabler-icons-react";
-import { UserContext } from "@lib/context";
+import { UserContext } from "lib/context";
 import { useRouter } from "next/router";
-import { auth, firestore, serverTimestamp } from "@lib/firebase";
+import { auth, firestore, serverTimestamp } from "lib/firebase";
 
 const schema = z.object({
   title: z

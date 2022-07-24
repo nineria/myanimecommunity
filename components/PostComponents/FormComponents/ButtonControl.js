@@ -6,7 +6,7 @@ import { showNotification } from "@mantine/notifications";
 import { X } from "tabler-icons-react";
 import { useModals } from "@mantine/modals";
 import { useRouter } from "next/router";
-import { firestore } from "@lib/firebase";
+import { firestore } from "lib/firebase";
 
 export function ButtonControl({ setOpened, post, postRef, type }) {
   const modals = useModals();

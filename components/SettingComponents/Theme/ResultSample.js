@@ -1,4 +1,4 @@
-import Post from "@components/HomeComponents/Post";
+import Post from "components/HomeComponents/Post";
 
 export default function ResultSample({ posts }) {
   return (

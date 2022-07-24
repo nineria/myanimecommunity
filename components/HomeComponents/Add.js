@@ -10,10 +10,10 @@ import Header from "./PostComponents/Header";
 import Title from "./PostComponents/Title";
 // Icons
 import { Check } from "tabler-icons-react";
-import { auth, firestore, serverTimestamp } from "@lib/firebase";
-import { UserContext } from "@lib/context";
+import { auth, firestore, serverTimestamp } from "lib/firebase";
+import { UserContext } from "lib/context";
 import { useRouter } from "next/router";
-import WebsiteRule from "@components/WebsiteRule";
+import WebsiteRule from "components/WebsiteRule";
 
 export default function Add({ setOpened }) {
   const { username } = useContext(UserContext);

@@ -18,16 +18,14 @@ import {
   Title,
 } from "@mantine/core";
 
-import { auth, firestore, getUserWithUsername } from "@lib/firebase";
-import AuthCheck from "@components/AuthCheck";
+import { auth, firestore, getUserWithUsername } from "lib/firebase";
+import AuthCheck from "hooks/AuthCheck";
 import { showNotification } from "@mantine/notifications";
 import { Check } from "tabler-icons-react";
-import {
-  DropzoneProfileAvatar,
-  DropzoneProfileImage,
-} from "@components/Dropzone";
 import { useRouter } from "next/router";
 import { useModals } from "@mantine/modals";
+import { DropzoneProfileImage } from "@components/Dropzone/DropzoneProfileImage";
+import { DropzoneProfileAvatar } from "@components/Dropzone/DropzoneProfileAvatar";
 
 export default function EditProfile({ user, setOpened }) {
   const [userRef, setUserRef] = useState();
@@ -63,6 +61,7 @@ function ProfileForm({ user, userRef, setOpened }) {
   const [usernameValid, setUsernameValid] = useState(false);
   const [confirmValid, setConfirmValid] = useState(false);
   const [openedConfirm, setOpenedConfirm] = useState(false);
+  const [editOpened, setEditOpened] = useState(false);
 
   const HandleChange = async (values) => {
     setLoading(true);
@@ -194,201 +193,216 @@ function ProfileForm({ user, userRef, setOpened }) {
   };
 
   return (
-    <form onSubmit={form.onSubmit((values) => HandleChange(values))}>
-      <LoadingOverlay visible={loading} />
+    <>
       <Modal
-        size="lg"
-        opened={openedConfirm}
-        onClose={() => setOpenedConfirm(false)}
-        withCloseButton={false}
+        size="xl"
+        opened={editOpened}
+        onClose={() => setEditOpened(false)}
         closeOnClickOutside={false}
+        title="แก้ไขข้อมูลส่วนตัว"
         centered
         classNames={{
           modal: "bg-foreground",
           overlay: "bg-background",
           title: "text-title",
         }}
-      >
-        {openedConfirm && (
-          <Stack spacing="xl">
-            <Stack>
-              <Title order={2} align="center" mb="sm">
-                ลบบัญชีส่วนบุคคล
-              </Title>
-              <Text align="center">
-                MyAnimeCommunity จะลบบัญชี และข้อมูลส่วนบุคคลทั้งหมดของคุณ
-                แต่โพสต์ของคุณอาจยังปรากฏอยู่
-              </Text>
-              <Text align="center">
-                MyAnimeCommunity
-                แนะนำให้คุณลบโพสต์ทั้งหมดออกด้วยตนเองก่อนลบบัญชี
-              </Text>
-              <div className="bg-[#ff0000] rounded-md py-2">
-                <Text align="center" color="white">
-                  การดำเนินการนี้ไม่สามารถย้อนกลับได้ โปรดตรวจสอบให้แน่ใจ
+      ></Modal>
+      <form onSubmit={form.onSubmit((values) => HandleChange(values))}>
+        <LoadingOverlay visible={loading} />
+        <Modal
+          size="lg"
+          opened={openedConfirm}
+          onClose={() => setOpenedConfirm(false)}
+          withCloseButton={false}
+          closeOnClickOutside={false}
+          centered
+          classNames={{
+            modal: "bg-foreground",
+            overlay: "bg-background",
+            title: "text-title",
+          }}
+        >
+          {openedConfirm && (
+            <Stack spacing="xl">
+              <Stack>
+                <Title order={2} align="center" mb="sm">
+                  ลบบัญชีส่วนบุคคล
+                </Title>
+                <Text align="center">
+                  MyAnimeCommunity จะลบบัญชี และข้อมูลส่วนบุคคลทั้งหมดของคุณ
+                  แต่โพสต์ของคุณอาจยังปรากฏอยู่
                 </Text>
-              </div>
+                <Text align="center">
+                  MyAnimeCommunity
+                  แนะนำให้คุณลบโพสต์ทั้งหมดออกด้วยตนเองก่อนลบบัญชี
+                </Text>
+                <div className="bg-[#ff0000] rounded-md py-2">
+                  <Text align="center" color="white">
+                    การดำเนินการนี้ไม่สามารถย้อนกลับได้ โปรดตรวจสอบให้แน่ใจ
+                  </Text>
+                </div>
+              </Stack>
+              <Divider />
+              <Stack>
+                <Text>
+                  กรอกชื่อ <b>{user.username}</b> เพื่อดำเนินการต่อ:
+                </Text>
+                <TextInput onChange={checkUsername} />
+                <Text>
+                  เพื่อทำการยืนยัน ให้พิมพ์ <b>ลบบัญชีส่วนบุคคลของฉัน</b>{" "}
+                  ด้านล่าง:
+                </Text>
+                <TextInput onChange={checkConfirm} />
+              </Stack>
+              <Stack size="xs">
+                <Group position="right">
+                  <Button
+                    className="bg-background text-title hover:bg-background hover:opacity-75"
+                    size="xs"
+                    onClick={() => setOpenedConfirm(false)}
+                  >
+                    ยกเลิก
+                  </Button>
+                  <Button
+                    disabled={usernameValid && confirmValid ? false : true}
+                    className="bg-[#ff0000] hover:bg-[#ff0000] hover:opacity-75"
+                    size="xs"
+                    onClick={() => deleteAccount()}
+                  >
+                    ลบบัญชี
+                  </Button>
+                </Group>
+              </Stack>
             </Stack>
-            <Divider />
+          )}
+        </Modal>
+        <Stack spacing="sm">
+          <Card p="md" radius="sm" className="bg-foreground">
+            <Card.Section
+              sx={{
+                backgroundImage: `url(${image || user.image})`,
+                height: 260,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            >
+              <DropzoneProfileImage setImage={setImage} />
+            </Card.Section>
+            <div className="relative w-fit">
+              <Avatar
+                src={avatar || user.avatar}
+                size={120}
+                radius={120}
+                mx="auto"
+                mt={-60}
+                className="border-2 border-foreground"
+              />
+              <DropzoneProfileAvatar setImage={setAvatar} />
+            </div>
+          </Card>
+          <Divider label="ยืนยันตัวตน" labelPosition="center" />
+          <Group grow>
+            <TextInput
+              label="ชื่อจริง"
+              required
+              {...form.getInputProps("firstName")}
+              placeholder="ชื่อจริงของคุณ"
+              classNames={{
+                input: "bg-accent bg-opacity-50",
+              }}
+            />
+            <TextInput
+              label="นามสกุล"
+              required
+              {...form.getInputProps("lastName")}
+              placeholder="นามสกุลของคุณ"
+              classNames={{
+                input: "bg-accent bg-opacity-50",
+              }}
+            />
+          </Group>
+          <TextInput
+            required
+            label="ยืนยันอีเมล (Email)"
+            {...form.getInputProps("email")}
+            placeholder="อีเมลของคุณ"
+            classNames={{
+              input: "bg-accent bg-opacity-50",
+            }}
+          />
+
+          <TextInput
+            label="เบอร์โทรศัพท์"
+            {...form.getInputProps("phoneNumber")}
+            placeholder="เบอร์โทรศัพท์ของคุณ"
+            classNames={{
+              input: "bg-accent bg-opacity-50",
+            }}
+          />
+          <Divider label="เปลี่ยนรหัสผ่าน" labelPosition="center" />
+          <Text size="xs" color="red">
+            ทางเว็บไซต์ MyAnimeCommunity
+            ปิดปรับปรุงระบบการเปลี่ยนแปลงรหัสผ่านใหม่ชั่วคราว
+          </Text>
+          <InputWrapper label="รหัสผ่านเดิม">
+            <PasswordInput
+              disabled
+              {...form.getInputProps("password")}
+              placeholder="รหัสผ่านเดิมของคุณ"
+              classNames={{
+                input: "bg-accent bg-opacity-50",
+              }}
+            />
+          </InputWrapper>
+          <InputWrapper label="รหัสผ่านใหม่">
+            <PasswordInput
+              disabled
+              {...form.getInputProps("password")}
+              placeholder="รหัสผ่านใหม่เดิมของคุณ"
+              classNames={{
+                input: "bg-accent bg-opacity-50",
+              }}
+            />
+          </InputWrapper>
+          <Divider label="ลบบัญชีส่วนบุคคล" labelPosition="center" />
+
+          <div className="border-[1px]  p-4 border-[#ff0000] rounded-md">
             <Stack>
+              <Title order={2}>ลบบัญชีส่วนบุคคล</Title>
               <Text>
-                กรอกชื่อ <b>{user.username}</b> เพื่อดำเนินการต่อ:
+                ลบบัญชีส่วนบุคคลของคุณ และข้อมูลส่วนบุคคลทั้งหมดออกอย่างถาวร
+                จากแพลตฟอร์ม MyAnimeCommunity การกระทำนี้ไม่สามารถย้อนกลับได้
+                โปรดดำเนินการต่อด้วยความระมัดระวัง
               </Text>
-              <TextInput onChange={checkUsername} />
-              <Text>
-                เพื่อทำการยืนยัน ให้พิมพ์ <b>ลบบัญชีส่วนบุคคลของฉัน</b>{" "}
-                ด้านล่าง:
-              </Text>
-              <TextInput onChange={checkConfirm} />
-            </Stack>
-            <Stack size="xs">
-              <Group position="right">
+              <Group>
                 <Button
-                  className="bg-background text-title hover:bg-background hover:opacity-75"
-                  size="xs"
-                  onClick={() => setOpenedConfirm(false)}
-                >
-                  ยกเลิก
-                </Button>
-                <Button
-                  disabled={usernameValid && confirmValid ? false : true}
                   className="bg-[#ff0000] hover:bg-[#ff0000] hover:opacity-75"
                   size="xs"
-                  onClick={() => deleteAccount()}
+                  onClick={() => setOpenedConfirm(true)}
                 >
                   ลบบัญชี
                 </Button>
               </Group>
             </Stack>
-          </Stack>
-        )}
-      </Modal>
-      <Stack spacing="sm">
-        <Card p="md" radius="sm" className="bg-foreground">
-          <Card.Section
-            sx={{
-              backgroundImage: `url(${image || user.image})`,
-              height: 260,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-          >
-            <DropzoneProfileImage setImage={setImage} />
-          </Card.Section>
-          <div className="relative w-fit">
-            <Avatar
-              src={avatar || user.avatar}
-              size={120}
-              radius={120}
-              mx="auto"
-              mt={-60}
-              className="border-2 border-foreground"
-            />
-            <DropzoneProfileAvatar setImage={setAvatar} />
           </div>
-        </Card>
-        <Divider label="ยืนยันตัวตน" labelPosition="center" />
-        <Group grow>
-          <TextInput
-            label="ชื่อจริง"
-            required
-            {...form.getInputProps("firstName")}
-            placeholder="ชื่อจริงของคุณ"
-            classNames={{
-              input: "bg-accent bg-opacity-50",
-            }}
-          />
-          <TextInput
-            label="นามสกุล"
-            required
-            {...form.getInputProps("lastName")}
-            placeholder="นามสกุลของคุณ"
-            classNames={{
-              input: "bg-accent bg-opacity-50",
-            }}
-          />
-        </Group>
-        <TextInput
-          required
-          label="ยืนยันอีเมล (Email)"
-          {...form.getInputProps("email")}
-          placeholder="อีเมลของคุณ"
-          classNames={{
-            input: "bg-accent bg-opacity-50",
-          }}
-        />
-
-        <TextInput
-          label="เบอร์โทรศัพท์"
-          {...form.getInputProps("phoneNumber")}
-          placeholder="เบอร์โทรศัพท์ของคุณ"
-          classNames={{
-            input: "bg-accent bg-opacity-50",
-          }}
-        />
-        <Divider label="เปลี่ยนรหัสผ่าน" labelPosition="center" />
-        <Text size="xs" color="red">
-          ทางเว็บไซต์ MyAnimeCommunity
-          ปิดปรับปรุงระบบการเปลี่ยนแปลงรหัสผ่านใหม่ชั่วคราว
-        </Text>
-        <InputWrapper label="รหัสผ่านเดิม">
-          <PasswordInput
-            disabled
-            {...form.getInputProps("password")}
-            placeholder="รหัสผ่านเดิมของคุณ"
-            classNames={{
-              input: "bg-accent bg-opacity-50",
-            }}
-          />
-        </InputWrapper>
-        <InputWrapper label="รหัสผ่านใหม่">
-          <PasswordInput
-            disabled
-            {...form.getInputProps("password")}
-            placeholder="รหัสผ่านใหม่เดิมของคุณ"
-            classNames={{
-              input: "bg-accent bg-opacity-50",
-            }}
-          />
-        </InputWrapper>
-        <Divider label="ลบบัญชีส่วนบุคคล" labelPosition="center" />
-
-        <div className="border-[1px]  p-4 border-[#ff0000] rounded-md">
-          <Stack>
-            <Title order={2}>ลบบัญชีส่วนบุคคล</Title>
-            <Text>
-              ลบบัญชีส่วนบุคคลของคุณ และข้อมูลส่วนบุคคลทั้งหมดออกอย่างถาวร
-              จากแพลตฟอร์ม MyAnimeCommunity การกระทำนี้ไม่สามารถย้อนกลับได้
-              โปรดดำเนินการต่อด้วยความระมัดระวัง
-            </Text>
-            <Group>
-              <Button
-                className="bg-[#ff0000] hover:bg-[#ff0000] hover:opacity-75"
-                size="xs"
-                onClick={() => setOpenedConfirm(true)}
-              >
-                ลบบัญชี
-              </Button>
-            </Group>
-          </Stack>
-        </div>
-        <Group spacing="xs" position="right" mt="xl">
-          <Button
-            size="xs"
-            onClick={() => setOpened(false)}
-            className="bg-gray-500 hover:bg-gray-500 hover:opacity-75"
-          >
-            ยกเลิก
-          </Button>
-          <Button
-            type="submit"
-            size="xs"
-            className="bg-green-500 hover:bg-green-500 hover:opacity-75"
-          >
-            ยืนยัน
-          </Button>
-        </Group>
-      </Stack>
-    </form>
+          <Group spacing="xs" position="right" mt="xl">
+            <Button
+              size="xs"
+              onClick={() => setOpened(false)}
+              className="bg-gray-500 hover:bg-gray-500 hover:opacity-75"
+            >
+              ยกเลิก
+            </Button>
+            <Button
+              type="submit"
+              size="xs"
+              className="bg-green-500 hover:bg-green-500 hover:opacity-75"
+            >
+              ยืนยัน
+            </Button>
+          </Group>
+        </Stack>
+      </form>
+    </>
   );
 }

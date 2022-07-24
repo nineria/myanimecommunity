@@ -9,13 +9,13 @@ import {
   ThumbUp,
   Trash,
 } from "tabler-icons-react";
-import RichTextEditor from "@components/RichText";
-import { auth, firestore, getUserWithUsername } from "@lib/firebase";
+import RichTextEditor from "utils/RichText";
+import { auth, firestore, getUserWithUsername } from "lib/firebase";
 import EditComment from "./EditComment";
-import { UserContext } from "@lib/context";
-import AuthorCheck from "@components/AuthorCheck";
-import AdminCheck from "@components/AdminCheck";
-import AuthCheck from "@components/AuthCheck";
+import { UserContext } from "lib/context";
+import AuthorCheck from "hooks/AuthorCheck";
+import AdminCheck from "hooks/AdminCheck";
+import AuthCheck from "hooks/AuthCheck";
 import Link from "next/link";
 
 export default function Comment({ post, comment }) {

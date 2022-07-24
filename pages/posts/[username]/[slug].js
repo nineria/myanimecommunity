@@ -1,15 +1,10 @@
-import AuthCheck from "@components/AuthCheck";
-import { Footer } from "@components/Footer";
-import Navbar from "@components/Navbar";
-import PostComponents from "@components/PostComponents";
+import AuthCheck from "hooks/AuthCheck";
+import { Footer } from "components/Footer";
+import Navbar from "components/Navbar";
+import PostComponents from "components/PostComponents";
 
-import Top from "@components/PostComponents/Top";
-import {
-  auth,
-  firestore,
-  getUserWithUsername,
-  postToJSON,
-} from "@lib/firebase";
+import Top from "components/PostComponents/Top";
+import { auth, firestore, getUserWithUsername, postToJSON } from "lib/firebase";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import {
   Anchor,
@@ -22,13 +17,13 @@ import {
   Text,
 } from "@mantine/core";
 import React, { useEffect, useState } from "react";
-import CreateComment from "@components/PostComponents/CreateComment";
-import Comment from "@components/PostComponents/Comment";
+import CreateComment from "components/PostComponents/CreateComment";
+import Comment from "components/PostComponents/Comment";
 import { Check, Refresh, Star, X } from "tabler-icons-react";
 import Loading from "@components/Loading";
-import Metatags from "@components/Metatags";
+import Metatags from "components/Metatags";
 import LoginRegister from "@components/LoginRegister";
-import Logo from "@components/Logo";
+import Logo from "components/Logo";
 import { useContext } from "react";
 import { UserContext } from "@lib/context";
 import { useModals } from "@mantine/modals";

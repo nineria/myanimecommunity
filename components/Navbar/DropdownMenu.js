@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import Link from "next/link";
 // Components
 import { Avatar, Group, Indicator, Menu, Text } from "@mantine/core";
-import { accessMenuProperty } from "./DummyData";
+import { accessMenuProperty } from "@constants/NavbarData";
 // Icons
 import { Logout, Settings, Users, ZoomQuestion } from "tabler-icons-react";
 import { UserContext } from "@lib/context";

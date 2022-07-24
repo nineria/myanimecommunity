@@ -1,13 +1,13 @@
-import { Container, Skeleton, useMantineColorScheme } from "@mantine/core";
+import { Container, useMantineColorScheme } from "@mantine/core";
 import SettingComponents from "@components/SettingComponents/index.js";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { Footer } from "@components/Footer/index.js";
 import { useThemeContext } from "@lib/useTheme";
 import { Animate } from "react-simple-animate";
 import { UserContext } from "@lib/context";
 import Navbar from "@components/Navbar";
 import PageNotFound from "./404.js";
-import AuthCheck from "@components/AuthCheck.js";
+import AuthCheck from "@hooks/AuthCheck.js";
 import Loading from "@components/Loading.js";
 import { firestore, postToJSON } from "@lib/firebase.js";
 import Metatags from "@components/Metatags.js";
@@ -20,7 +20,7 @@ export async function getServerSideProps() {
 
   const posts = (await postsQuery.get()).docs.map(postToJSON);
 
-  const localTheme = await [
+  const localTheme = [
     {
       color: ["bg-[#ec5555]", "bg-[#181a1d]"],
       label: "ROSE",
@@ -58,6 +58,7 @@ export async function getServerSideProps() {
       description: "Light theme",
     },
   ];
+
   // Pass data to the page via props
   return { props: { posts, localTheme } };
 }

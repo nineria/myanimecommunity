@@ -1,6 +1,6 @@
 import React from "react";
 // Components
-import { Grid, Input, InputWrapper, Stack, TextInput } from "@mantine/core";
+import { Stack, TextInput } from "@mantine/core";
 
 export default function Header(props) {
   return (

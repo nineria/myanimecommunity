@@ -1,14 +1,14 @@
 import React, { useState, useContext } from "react";
 import Link from "next/link";
 // Context
-import { UserContext } from "@lib/context";
+import { UserContext } from "lib/context";
 // Components
 import Edit from "./Edit";
 import Status from "./PostComponents/Status";
 import { Modal } from "@mantine/core";
 // Icons
 import { ChevronUp, Edit as EditIcon } from "tabler-icons-react";
-import AdminCheck from "@components/AdminCheck";
+import AdminCheck from "hooks/AdminCheck";
 
 export default function Post({ today, homePosts, disabled }) {
   const { user } = useContext(UserContext);

@@ -13,7 +13,7 @@ import {
 } from "@mantine/core";
 import { Footer } from "@components/Footer";
 import { firestore, postToJSON } from "@lib/firebase";
-import Metatags from "@components/Metatags";
+import Metatags from "widgets/Metatags";
 import Loading from "@components/Loading";
 
 // Max post to query per page

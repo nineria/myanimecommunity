@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 // Context
-import { useThemeContext } from "@lib/useTheme";
+import { useThemeContext } from "lib/useTheme";
 // Components
-import PostsMenuController from "@components/Post/MenuController";
-import PostLayout from "@components/Post/PostLayout";
+import PostsMenuController from "components/Post/MenuController";
+import PostLayout from "components/Post/PostLayout";
 // Icons
 import { Settings } from "tabler-icons-react";
 

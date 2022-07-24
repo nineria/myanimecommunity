@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 // Components
 import {
   createStyles,
@@ -17,7 +17,6 @@ import {
 import { Selector, ChevronDown, ChevronUp, Search } from "tabler-icons-react";
 import Link from "next/link";
 import { UserContext } from "@lib/context";
-import { getUserWithUsername, postToJSON } from "@lib/firebase";
 
 const useStyles = createStyles(() => ({
   th: {

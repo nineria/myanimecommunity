@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 // Components
-import { useThemeContext } from "@lib/useTheme";
+import { useThemeContext } from "lib/useTheme";
 import { Button, Card, Group, List, Stack, Title } from "@mantine/core";
 import { useModals } from "@mantine/modals";
 

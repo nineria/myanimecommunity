@@ -1,7 +1,7 @@
 import React from "react";
 // Components
 import { InputWrapper, TextInput } from "@mantine/core";
-import RichTextEditor from "@components/RichText";
+import RichTextEditor from "utils/RichText";
 
 export function PostHeader(props) {
   return (

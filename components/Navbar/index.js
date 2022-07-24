@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { useRouter } from "next/router";
 // Context
-import { UserContext } from "@lib/context";
+import { UserContext } from "lib/context";
 import { auth } from "@lib/firebase";
 // Components
 import { Container } from "@mantine/core";
@@ -9,7 +9,7 @@ import MyAniLogo from "./MyAniLogo";
 import UserMenu from "./DropdownMenu";
 import Login from "../LoginRegister";
 import NavbarMenu from "./NavbarMenu";
-import { navbarProperty } from "./DummyData";
+import { navbarProperty } from "@constants/NavbarData";
 import LoginRegisterSmallScreen from "./LoginRegisterSmallScreen";
 
 export default function Navbar({ page, isBusy = false }) {

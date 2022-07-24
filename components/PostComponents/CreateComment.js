@@ -1,11 +1,11 @@
-// import MarkdownPreview from "@components/MarkdownPreview";
+// import MarkdownPreview from "@@components/MarkdownPreview";
 import React, { useContext, useState } from "react";
 // Components
 import { Avatar, Button, Modal, Stack, Text } from "@mantine/core";
 import WebsiteRulePage from "@components/WebsiteRule";
-import RichTextEditor from "@components/RichText";
-import { UserContext } from "@lib/context";
-import { auth, firestore, serverTimestamp } from "@lib/firebase";
+import RichTextEditor from "utils/RichText";
+import { UserContext } from "lib/context";
+import { auth, firestore, serverTimestamp } from "lib/firebase";
 import { showNotification } from "@mantine/notifications";
 import { Check } from "tabler-icons-react";
 import Logo from "@components/Logo";

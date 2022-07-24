@@ -20,12 +20,12 @@ import {
   ThumbUp,
   Trash,
 } from "tabler-icons-react";
-import { auth, firestore, getUserWithUsername } from "@lib/firebase";
-import AuthCheck from "@components/AuthCheck";
-import RichTextEditor from "@components/RichText";
-import AuthorCheck from "@components/AuthorCheck";
-import AdminCheck from "@components/AdminCheck";
-import { UserContext } from "@lib/context";
+import { auth, firestore, getUserWithUsername } from "lib/firebase";
+import AuthCheck from "hooks/AuthCheck";
+import RichTextEditor from "utils/RichText";
+import AuthorCheck from "hooks/AuthorCheck";
+import AdminCheck from "hooks/AdminCheck";
+import { UserContext } from "lib/context";
 import Link from "next/link";
 
 export default function PostComponents({ post, postRef }) {

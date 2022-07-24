@@ -1,4 +1,4 @@
-import { UserContext } from "@lib/context";
+import { UserContext } from "lib/context";
 import { Button, Group, Stack, Text } from "@mantine/core";
 import { useModals } from "@mantine/modals";
 import { useRouter } from "next/router";

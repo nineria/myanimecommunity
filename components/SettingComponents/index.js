@@ -1,6 +1,6 @@
 // Components
 import { Divider, Group, Text } from "@mantine/core";
-import Themes from "./Themes";
+import Themes from "./Theme";
 // Icons
 import { Settings } from "tabler-icons-react";
 

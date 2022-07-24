@@ -10,8 +10,8 @@ import {
 } from "@mantine/core";
 // Icons
 import { Clock, Star, ThumbUp } from "tabler-icons-react";
-import { kFormatter } from "@components/Calculator";
-import { firestore } from "@lib/firebase";
+import { kFormatter } from "utils/Calculator";
+import { firestore } from "lib/firebase";
 
 export default function Card({ posts, layout }) {
   const [data, setData] = useState(posts);

@@ -3,14 +3,14 @@ import React, { useContext } from "react";
 import { useForm } from "@mantine/hooks";
 // Components
 import { Button, Group, InputWrapper, Stack, Text } from "@mantine/core";
-import AuthCheck from "@components/AuthCheck";
-import { firestore, serverTimestamp } from "@lib/firebase";
-import RichTextEditor from "@components/RichText";
+import AuthCheck from "hooks/AuthCheck";
+import { firestore, serverTimestamp } from "lib/firebase";
+import RichTextEditor from "utils/RichText";
 import { showNotification } from "@mantine/notifications";
 import { Check, X } from "tabler-icons-react";
 import { useModals } from "@mantine/modals";
-import WebsiteRule from "@components/WebsiteRule";
-import { UserContext } from "@lib/context";
+import WebsiteRule from "components/WebsiteRule";
+import { UserContext } from "lib/context";
 import { useRouter } from "next/router";
 
 const handleImageUpload = (image) =>

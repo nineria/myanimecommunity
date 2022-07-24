@@ -1,5 +1,5 @@
 // Components
-import Card from "@components/Card";
+import Card from "components/Card";
 import { Grid, Stack } from "@mantine/core";
 import { Animate } from "react-simple-animate";
 

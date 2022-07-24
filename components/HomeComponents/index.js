@@ -1,14 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 // Context
-import { UserContext } from "@lib/context";
+import { UserContext } from "lib/context";
 // Components
 import Post from "./Post";
-import Add from "@components/HomeComponents/Add";
+import Add from "components/HomeComponents/Add";
 import { Button, Container, Modal } from "@mantine/core";
 // Icons
 import { Animate } from "react-simple-animate";
-import AdminCheck from "@components/AdminCheck";
-import { firestore } from "@lib/firebase";
+import AdminCheck from "hooks/AdminCheck";
+import { firestore } from "lib/firebase";
 
 export const admin = "ผู้ดูแลระบบ";
 

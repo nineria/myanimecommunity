@@ -1,6 +1,6 @@
 // Components
 import { Card, InputWrapper } from "@mantine/core";
-import { DropzoneImage } from "@components/Dropzone";
+import { DropzoneImage } from "@components/Dropzone/DropzoneImage";
 
 export default function PostImage({ image, setImage }) {
   return (

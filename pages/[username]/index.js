@@ -1,28 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Animate } from "react-simple-animate";
-import { UserContext } from "@lib/context";
+import { UserContext } from "lib/context";
 import Navbar from "@components/Navbar";
-import { Container, Stack, Title } from "@mantine/core";
+import { Container } from "@mantine/core";
 import { Footer } from "@components/Footer";
-import UserCardImage from "@components/ProfileComponents/UserCardImage";
-import AuthCheck from "@components/AuthCheck";
-import {
-  StatsGridIcons,
-  StatsGridIconsAdmin,
-} from "@components/ProfileComponents/StatsGridIcons";
-import StatsSegments, {
-  StatsSegmentsAdmin,
-} from "@components/ProfileComponents/StatsSegments";
-import { TableSort } from "@components/ProfileComponents/TableSort";
+import AuthCheck from "hooks/AuthCheck";
 import { firestore, getUserWithUsername, postToJSON } from "@lib/firebase";
 import Loading from "@components/Loading";
 import { useThemeContext } from "@lib/useTheme";
 import { useRouter } from "next/router";
 import Metatags from "@components/Metatags";
-import AdminCheck from "@components/AdminCheck";
-import AnnouncementControl from "@components/ProfileComponents/AnnouncementControl";
-import ReportFormUser from "@components/ProfileComponents/ReportFormUser";
-import UserManagement from "@components/ProfileComponents/UserManagement";
+import ProfileComponents from "@components/ProfileComponents";
 
 export async function getServerSideProps({ query }) {
   const { username } = query;
@@ -128,39 +116,14 @@ export default function UserProfilePage({
               }}
               end={{ transform: "translateY(0%)", opacity: "1" }}
             >
-              <Stack spacing="xs">
-                <UserCardImage
-                  user={user}
-                  userRef={userRef}
-                  posts={posts}
-                  statistics={statistics}
-                />
-                <StatsGridIcons statistics={statistics} />
-                <StatsSegments user={user} statistics={statistics} />
-                {posts[0] && (
-                  <TableSort
-                    user={user}
-                    posts={posts}
-                    statistics={statistics}
-                  />
-                )}
-
-                {username === user.username && (
-                  <AdminCheck>
-                    <Title order={2} align="center" className="text-title mt-4">
-                      ส่วนของผู้ดูแลระบบ
-                    </Title>
-
-                    <StatsGridIconsAdmin statistics={statisticsAdmin} />
-                    <StatsSegmentsAdmin statistics={statisticsAdmin} />
-                    {users && <UserManagement users={users} />}
-                    <div id="announcementControl">
-                      <AnnouncementControl />
-                    </div>
-                    <ReportFormUser />
-                  </AdminCheck>
-                )}
-              </Stack>
+              <ProfileComponents
+                user={user}
+                userRef={userRef}
+                users={users}
+                statistics={statistics}
+                statisticsAdmin={statisticsAdmin}
+                posts={posts}
+              />
             </Animate>
           )}
         </Container>
