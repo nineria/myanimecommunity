@@ -57,7 +57,7 @@ export default function Card({ posts, layout }) {
 
     getStars();
     getLikes();
-  }, []);
+  }, [posts]);
 
   const createdAt =
     typeof data?.createdAt === "number"
