@@ -6,7 +6,7 @@ import EditProfile from "../EditProfile";
 import { UserContext } from "lib/context";
 import { getUserWithUsername } from "lib/firebase";
 import Report from "components/Report";
-import Statistics from "./statistics";
+import Statistics from "./Statistics";
 import UserRanks from "./UserRanks";
 import { Edit } from "tabler-icons-react";
 
