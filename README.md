@@ -32,4 +32,4 @@ $PROJECT_ROOT
 
 ## License
 
-MIT
+GPL-3.0 license
