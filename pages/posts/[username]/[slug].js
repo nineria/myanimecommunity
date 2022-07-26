@@ -4,17 +4,27 @@ import Navbar from "components/Navbar";
 import PostComponents from "components/PostComponents";
 
 import Top from "components/PostComponents/Top";
-import { auth, firestore, getUserWithUsername, postToJSON } from "lib/firebase";
+import {
+  auth,
+  firestore,
+  getUserWithUid,
+  getUserWithUsername,
+  postToJSON,
+} from "lib/firebase";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import {
   Anchor,
+  Avatar,
   Breadcrumbs,
   Button,
   Container,
+  Divider,
   Group,
+  Modal,
   Pagination,
   Stack,
   Text,
+  Tooltip,
 } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import CreateComment from "components/PostComponents/CreateComment";
@@ -28,6 +38,7 @@ import { useContext } from "react";
 import { UserContext } from "@lib/context";
 import { useModals } from "@mantine/modals";
 import { showNotification } from "@mantine/notifications";
+import { useMemo } from "react";
 
 export async function getServerSideProps({ query }) {
   try {
@@ -187,9 +198,41 @@ export default function PostPage(props) {
 }
 
 function GivePostStars({ post }) {
-  const [stars, setStars] = useState(0);
+  const [_stars, _setStars] = useState("");
+  const [stars, setStars] = useState("");
+  const [defaultStars, setDefaultStars] = useState("");
+  const [opened, setOpened] = useState(false);
 
   const modals = useModals();
+
+  useEffect(() => {
+    const average = (array) => array.reduce((a, b) => a + b) / array.length;
+
+    const getStars = async () => {
+      const starsRef = firestore
+        .collection("users")
+        .doc(post.uid)
+        .collection("posts")
+        .doc(post.slug)
+        .collection("stars");
+
+      const stars = await (
+        await starsRef.get()
+      ).docs.map((data) => data.data());
+
+      const starsArray = stars.map((stars) => stars.stars);
+
+      if (starsArray.length === 0) {
+        _setStars(0);
+        setDefaultStars("0");
+      } else {
+        _setStars(average(starsArray));
+        setDefaultStars(starsArray.length);
+      }
+    };
+
+    getStars();
+  }, [post.slug, post.uid]);
 
   const handleGiveStars = (value) => {
     const handleOnClick = async () => {
@@ -295,7 +338,7 @@ function GivePostStars({ post }) {
     const id = modals.openModal({
       title: (
         <Stack>
-          <Text size="sm">ให้คะแนนโพสต์นี้ {value} ดาว?</Text>
+          <Text size="sm">ให้คะแนนโพสต์นี้ {value} ดาวหรือไม่?</Text>
         </Stack>
       ),
       zIndex: "999",
@@ -328,57 +371,175 @@ function GivePostStars({ post }) {
       ),
     });
   };
+
   return (
-    <Group position="right" spacing="4px" className="text-content">
-      <Star
-        size={14}
-        className={`cursor-pointer ${
-          stars > 0 ? "text-center" : "text-[#fff] "
-        }`}
-        onClick={() => handleGiveStars(1)}
-        onMouseEnter={() => setStars(1)}
-        onMouseLeave={() => setStars(1)}
-      />
-      <Star
-        size={14}
-        className={`cursor-pointer ${
-          stars > 1 ? "text-center" : "text-[#fff] "
-        }`}
-        onClick={() => handleGiveStars(2)}
-        onMouseEnter={() => setStars(2)}
-        onMouseLeave={() => setStars(2)}
-      />
-      <Star
-        size={14}
-        className={`cursor-pointer ${
-          stars > 2 ? "text-center" : "text-[#fff] "
-        }`}
-        onClick={() => handleGiveStars(3)}
-        onMouseEnter={() => setStars(3)}
-        onMouseLeave={() => setStars(3)}
-      />
-      <Star
-        size={14}
-        className={`cursor-pointer ${
-          stars > 3 ? "text-center" : "text-[#fff] "
-        }`}
-        onClick={() => handleGiveStars(4)}
-        onMouseEnter={() => setStars(4)}
-        onMouseLeave={() => setStars(4)}
-      />
-      <Star
-        size={14}
-        className={`cursor-pointer ${
-          stars > 4 ? "text-center" : "text-[#fff] "
-        }`}
-        onClick={() => handleGiveStars(5)}
-        onMouseEnter={() => setStars(5)}
-        onMouseLeave={() => setStars(5)}
-      />
-      <Text size="xs" weight={600} mx="xs" className="w-10">
-        <span className="w-10 mr-2">{stars}</span>
-        ดาว
-      </Text>
-    </Group>
+    <>
+      <Group position="right" spacing="4px">
+        <Text
+          size="xs"
+          weight={600}
+          mx="xs"
+          className="text-content text-right hover:underline cursor-pointer"
+          onClick={() => setOpened(true)}
+        >
+          <span>{stars}</span>
+        </Text>
+        <Star
+          size={16}
+          className={`cursor-pointer ${
+            _stars > 0 ? "text-content" : "text-[#fff] "
+          }`}
+          onClick={() => handleGiveStars(1)}
+          onMouseEnter={() => {
+            setStars("แย่มาก"), _setStars(1);
+          }}
+          onMouseLeave={() => setStars("")}
+        />
+        <Star
+          size={16}
+          className={`cursor-pointer ${
+            _stars > 1 ? "text-content" : "text-[#fff] "
+          }`}
+          onClick={() => handleGiveStars(2)}
+          onMouseEnter={() => {
+            setStars("แย่"), _setStars(2);
+          }}
+          onMouseLeave={() => setStars("")}
+        />
+        <Star
+          size={16}
+          className={`cursor-pointer ${
+            _stars > 2 ? "text-content" : "text-[#fff] "
+          }`}
+          onClick={() => handleGiveStars(3)}
+          onMouseEnter={() => {
+            setStars("ทั่วไป"), _setStars(3);
+          }}
+          onMouseLeave={() => setStars("")}
+        />
+        <Star
+          size={16}
+          className={`cursor-pointer ${
+            _stars > 3 ? "text-content" : "text-[#fff] "
+          }`}
+          onClick={() => handleGiveStars(4)}
+          onMouseEnter={() => {
+            setStars("ดี"), _setStars(4);
+          }}
+          onMouseLeave={() => setStars("")}
+        />
+        <Star
+          size={16}
+          className={`cursor-pointer ${
+            _stars > 4 ? "text-content" : "text-[#fff] "
+          }`}
+          onClick={() => handleGiveStars(5)}
+          onMouseEnter={() => {
+            setStars("ดีมาก"), _setStars(5);
+          }}
+          onMouseLeave={() => setStars("")}
+        />
+        <Text
+          size="xs"
+          weight={600}
+          mx="xs"
+          className="text-right hover:underline hover:text-content cursor-pointer"
+          onClick={() => setOpened(true)}
+        >
+          <span>• {defaultStars} คน</span>
+        </Text>
+      </Group>
+      {/* <Modal
+        size="lg"
+        opened={opened}
+        onClose={() => setOpened(false)}
+        title={post.title}
+        centered
+        classNames={{
+          modal: "bg-foreground",
+          overlay: "bg-background",
+          title: "text-title",
+        }}
+      >
+        {opened && <UsersStared post={post} />}
+      </Modal> */}
+    </>
+  );
+}
+
+function UsersStared({ post }) {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const getUserStared = async () => {
+      let _users = [];
+      const starsRef = firestore
+        .collection("users")
+        .doc(post.uid)
+        .collection("posts")
+        .doc(post.slug)
+        .collection("stars");
+
+      const stars = await (
+        await starsRef.get()
+      ).docs.map((data) => data.data());
+
+      stars.map(async (stars) => {
+        await firestore
+          .collection("users")
+          .doc(stars.uid)
+          .get()
+          .then((user) => _users.push(user.data()));
+      });
+
+      setUsers(_users);
+    };
+
+    getUserStared();
+  }, []);
+
+  console.log(users);
+
+  return (
+    <Stack size="xs">
+      <Divider />
+      {/* {users &&
+        users.map((data, index) => (
+          <div
+            key={index}
+            className="flex flex-row justify-between items-center "
+          >
+            <Group>
+              <Avatar radius={100} src={data.user?.avatar} />
+              <div className="flex flex-col">
+                <Text>{data.user?.username}</Text>
+                <Text size="xs">{data.user?.rule}</Text>
+              </div>
+            </Group>
+            <div className="flex flex-row">
+              <Star
+                size={16}
+                className={data.stars > 0 ? "text-content" : "text-[#fff]"}
+              />
+              <Star
+                size={16}
+                className={data.stars > 1 ? "text-content" : "text-[#fff]"}
+              />
+              <Star
+                size={16}
+                className={data.stars > 2 ? "text-content" : "text-[#fff]"}
+              />
+              <Star
+                size={16}
+                className={data.stars > 3 ? "text-content" : "text-[#fff]"}
+              />
+              <Star
+                size={16}
+                className={data.stars > 4 ? "text-content" : "text-[#fff]"}
+              />
+            </div>
+          </div>
+        ))} */}
+    </Stack>
   );
 }

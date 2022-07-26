@@ -87,11 +87,7 @@ export default function Card({ posts, layout }) {
       {layout === "grid" ? (
         <AspectRatio ratio={16 / 9}>
           <div className="relative flex flex-col rounded-sm shadow-md cursor-pointer hover:brightness-90">
-            <Image
-              className="h-full w-full mb-16"
-              src={data.image}
-              alt={data.title}
-            />
+            <Image className="mb-16" src={data.image} alt={data.title} />
             <div className="absolute bottom-14 left-2 flex flex-row gap-1 z-10 text-sm">
               {badges}
             </div>
@@ -164,11 +160,7 @@ function ScreenSmall({ data, badges, date, likes, stars }) {
   return (
     <AspectRatio ratio={16 / 9}>
       <div className="relative flex flex-col rounded-sm shadow-md cursor-pointer hover:brightness-90">
-        <Image
-          className="h-full w-full mb-16"
-          src={data.image}
-          alt={data.title}
-        />
+        <Image className="mb-16" src={data.image} alt={data.title} />
         <div className="absolute bottom-14 left-2 flex flex-row gap-1 z-10 text-sm">
           {badges}
         </div>
