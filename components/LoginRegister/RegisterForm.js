@@ -1,6 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { firestore, serverTimestamp } from "lib/firebase";
-// Components
 import {
   Button,
   Checkbox,
@@ -9,7 +8,6 @@ import {
   Stack,
   TextInput,
 } from "@mantine/core";
-// Icons
 import { Mail } from "tabler-icons-react";
 import { UserContext } from "lib/context";
 import { useForm, zodResolver } from "@mantine/form";

@@ -1,5 +1,4 @@
-import React, { useContext, useState } from "react";
-// Components
+import React, { useState } from "react";
 import {
   createStyles,
   Table,
@@ -12,7 +11,6 @@ import {
   Card,
   Anchor,
 } from "@mantine/core";
-// Icons
 import { Selector, ChevronDown, ChevronUp, Search } from "tabler-icons-react";
 import Link from "next/link";
 

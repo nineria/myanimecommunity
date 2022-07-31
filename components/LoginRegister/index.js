@@ -1,35 +1,5 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
-import Link from "next/link";
-// Context
-import {
-  auth,
-  facebookAuthProvider,
-  firestore,
-  googleAuthProvider,
-  serverTimestamp,
-} from "lib/firebase";
-// Components
-import {
-  Button,
-  Checkbox,
-  Divider,
-  Group,
-  Image,
-  Modal,
-  PasswordInput,
-  Stack,
-  Text,
-  TextInput,
-} from "@mantine/core";
-// Icons
-import { AlertTriangle, Mail } from "tabler-icons-react";
-import { useRouter } from "next/router";
-import { UserContext } from "lib/context";
-import { useForm, zodResolver } from "@mantine/form";
-import { z } from "zod";
-import AgreeWebsiteRule from "../WebsiteRule/AgreeWebsiteRule";
-import PrivacyPolicy from "../PrivacyPolicy";
-import debounce from "lodash.debounce";
+import React, { useState } from "react";
+import { Button, Modal, Text } from "@mantine/core";
 import { LoginPopUp } from "./LoginPopUp";
 import { RegisterPopUp } from "./RegisterPopUp";
 

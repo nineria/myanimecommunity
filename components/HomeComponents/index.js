@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 // Context
 import { UserContext } from "lib/context";
 // Components
-import Post from "./Post";
+import Post from "./Elements/Body";
 import Add from "components/HomeComponents/Add";
 import { Button, Container, Modal } from "@mantine/core";
 // Icons

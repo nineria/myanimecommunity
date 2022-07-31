@@ -8,7 +8,7 @@ import { StatsGridIcons } from "./StatsGridIcons/StatsGridIcons";
 import { StatsGridIconsAdmin } from "./StatsGridIcons/StatsGridIconsAdmin";
 import StatsSegments from "./StatsSegments/StatsSegments";
 import StatsSegmentsAdmin from "./StatsSegments/StatsSegmentsAdmin";
-import { TableSort } from "./TableSort";
+import { TableSort } from "./PostsTableSort";
 import UserCardImage from "./UserCardImage";
 import UserManagement from "./UserManagement";
 

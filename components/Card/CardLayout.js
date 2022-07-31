@@ -3,7 +3,7 @@ import Card from "components/Card";
 import { Grid, Stack } from "@mantine/core";
 import { Animate } from "react-simple-animate";
 
-export default function PostLayout({ posts, layout }) {
+export default function CardLayout({ posts, layout }) {
   const postGrids = posts.map((data, index) => (
     <Grid.Col key={index} xs={6} md={4}>
       <Card layout={layout} posts={data} />

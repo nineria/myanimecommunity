@@ -1,7 +1,5 @@
-// import MarkdownPreview from "@@components/MarkdownPreview";
 import React, { useContext, useState } from "react";
-// Components
-import { Avatar, Button, Modal, Stack, Text } from "@mantine/core";
+import { Button, Modal, Stack, Text } from "@mantine/core";
 import WebsiteRulePage from "@components/WebsiteRule";
 import RichTextEditor from "utils/RichText";
 import { UserContext } from "lib/context";
@@ -12,9 +10,8 @@ import Logo from "@components/Logo";
 import WebsiteRule from "@components/WebsiteRule";
 import { useRouter } from "next/router";
 import { useModals } from "@mantine/modals";
-import Link from "next/link";
-
 import Verify from "@components/Verify";
+import LeftMenuAdd from "./Elements/LeftMenuAdd";
 
 const handleImageUpload = (image) =>
   new Promise((resolve, reject) => {
@@ -33,7 +30,7 @@ const handleImageUpload = (image) =>
       .catch(() => reject(new Error("Upload failed")));
   });
 
-export default function CreateComment({ post }) {
+export default function Add({ post }) {
   const modals = useModals();
   const { userData } = useContext(UserContext);
   const [value, onChange] = useState("");
@@ -117,7 +114,7 @@ export default function CreateComment({ post }) {
   return (
     <div className="bg-foreground rounded-sm">
       <div className="flex md:flex-row flex-col">
-        <LeftMenu data={userData} />
+        <LeftMenuAdd data={userData} />
         <div className="md:block hidden px-[0.5px] bg-white opacity-50"></div>
         <div className="p-2 text-title w-full">
           <div className="border-[1px] border-white border-opacity-10 rounded-sm p-2">
@@ -172,54 +169,6 @@ export default function CreateComment({ post }) {
               )}
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function LeftMenu({ data }) {
-  return (
-    <div className="px-2 md:py-4 pb-2 mt-2">
-      <div className="flex md:flex-col flex-row gap-2 items-center md:w-[100px]">
-        <div className="md:block hidden">
-          <Link href={`/${data?.username}`}>
-            <Avatar
-              radius="xl"
-              size="lg"
-              src={data?.avatar}
-              alt={data?.username}
-              className="cursor-pointer"
-            />
-          </Link>
-        </div>
-        <div className="md:hidden visible">
-          <Link href={`/${data?.username}`}>
-            <Avatar
-              radius="xl"
-              size="md"
-              src={data?.avatar}
-              alt={data?.username}
-              className="cursor-pointer"
-            />
-          </Link>
-        </div>
-        <div className="block  md:text-center text-left">
-          <Link href={`/${data?.username}`}>
-            <Text
-              color="red"
-              className="md:text-base text-sm cursor-pointer hover:underline"
-            >
-              {data?.username}
-            </Text>
-          </Link>
-          <p
-            className={`${
-              data?.rule === "ผู้ดูแลระบบ" ? "text-yellow-400" : "text-title"
-            } text-xs`}
-          >
-            {data?.rule}
-          </p>
         </div>
       </div>
     </div>

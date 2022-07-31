@@ -2,7 +2,7 @@ import Announcement from "@components/Announcement";
 import Navbar from "@components/Navbar";
 import React, { useEffect, useState } from "react";
 import PostsMenuController from "@components/PostComponents/MenuController";
-import PostLayout from "@components/PostComponents/PostLayout";
+import PostLayout from "@components/Card/CardLayout";
 import {
   Anchor,
   Breadcrumbs,

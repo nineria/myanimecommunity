@@ -2,33 +2,23 @@ import AuthCheck from "hooks/AuthCheck";
 import { Footer } from "components/Footer";
 import Navbar from "components/Navbar";
 import PostComponents from "components/PostComponents";
-
-import Top from "components/PostComponents/Top";
-import {
-  auth,
-  firestore,
-  getUserWithUid,
-  getUserWithUsername,
-  postToJSON,
-} from "lib/firebase";
+import Top from "@components/PostComponents/Elements/Top";
+import { auth, firestore, getUserWithUsername, postToJSON } from "lib/firebase";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import {
   Anchor,
-  Avatar,
   Breadcrumbs,
   Button,
   Container,
   Divider,
   Group,
-  Modal,
   Pagination,
   Stack,
   Text,
-  Tooltip,
 } from "@mantine/core";
 import React, { useEffect, useState } from "react";
-import CreateComment from "components/PostComponents/CreateComment";
-import Comment from "components/PostComponents/Comment";
+import Add from "@components/CommentComponents/Add";
+import Comment from "@components/CommentComponents";
 import { Check, Refresh, Star, X } from "tabler-icons-react";
 import Loading from "@components/Loading";
 import Metatags from "components/Metatags";
@@ -38,7 +28,6 @@ import { useContext } from "react";
 import { UserContext } from "@lib/context";
 import { useModals } from "@mantine/modals";
 import { showNotification } from "@mantine/notifications";
-import { useMemo } from "react";
 
 export async function getServerSideProps({ query }) {
   try {
@@ -188,7 +177,7 @@ export default function PostPage(props) {
               )
             }
           >
-            <CreateComment post={post} />
+            <Add post={post} />
           </AuthCheck>
         </Stack>
       </Container>
@@ -449,20 +438,6 @@ function GivePostStars({ post }) {
           <span>• {defaultStars} คน</span>
         </Text>
       </Group>
-      {/* <Modal
-        size="lg"
-        opened={opened}
-        onClose={() => setOpened(false)}
-        title={post.title}
-        centered
-        classNames={{
-          modal: "bg-foreground",
-          overlay: "bg-background",
-          title: "text-title",
-        }}
-      >
-        {opened && <UsersStared post={post} />}
-      </Modal> */}
     </>
   );
 }

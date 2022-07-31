@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 // Components
 import { LoadingOverlay, Stack } from "@mantine/core";
-import TagHeader from "./FormComponents/TagHeader";
-import TagGenre from "./FormComponents/TagGenre";
-import { PostHeader, RefCredit } from "./FormComponents";
-import PostImage from "./FormComponents/PostImage";
-import PostContent from "./FormComponents/PostContent";
-import { ButtonControl } from "./FormComponents/ButtonControl";
+import TagHeader from "./Form/TagHeader";
+import TagGenre from "./Form/TagGenre";
+import { PostHeader, RefCredit } from "./Form";
+import PostImage from "./Form/PostImage";
+import PostContent from "./Form/PostContent";
+import { ButtonControl } from "./Form/ButtonControl";
 import { serverTimestamp } from "lib/firebase";
 import AuthCheck from "hooks/AuthCheck";
 import WebsiteRule from "components/WebsiteRule";
@@ -61,9 +61,8 @@ function PostForm({ post, postRef, setOpened }) {
       },
     });
 
-    setLoading(false);
-
     router.reload();
+    setLoading(false);
   };
 
   const form = useForm({

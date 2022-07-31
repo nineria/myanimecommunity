@@ -4,10 +4,10 @@ import { useForm } from "@mantine/hooks";
 // Components
 import { Divider, Stack } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
-import ButtonControl from "./PostComponents/ButtonControl";
-import Content from "./PostComponents/Content";
-import Header from "./PostComponents/Header";
-import Title from "./PostComponents/Title";
+import ButtonControl from "./Elements/ButtonControl";
+import Content from "./Elements/Content";
+import Header from "./Elements/Header";
+import Title from "./Elements/Title";
 // Icons
 import { Check } from "tabler-icons-react";
 import { auth, firestore, serverTimestamp } from "lib/firebase";

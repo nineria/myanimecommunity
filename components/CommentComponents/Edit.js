@@ -1,7 +1,5 @@
 import React, { useContext } from "react";
-// Hooks
 import { useForm } from "@mantine/hooks";
-// Components
 import { Button, Group, InputWrapper, Stack, Text } from "@mantine/core";
 import AuthCheck from "hooks/AuthCheck";
 import { firestore, serverTimestamp } from "lib/firebase";
@@ -30,7 +28,7 @@ const handleImageUpload = (image) =>
       .catch(() => reject(new Error("Upload failed")));
   });
 
-export default function EditComment({ comment, commentRef, setOpened, post }) {
+export default function Edit({ comment, commentRef, setOpened, post }) {
   return (
     <AuthCheck>
       {comment && (

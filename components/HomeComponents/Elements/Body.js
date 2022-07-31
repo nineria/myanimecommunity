@@ -3,14 +3,14 @@ import Link from "next/link";
 // Context
 import { UserContext } from "lib/context";
 // Components
-import Edit from "./Edit";
-import Status from "./PostComponents/Status";
+import Edit from "../Edit";
+import Status from "./Status";
 import { Modal } from "@mantine/core";
 // Icons
 import { ChevronUp, Edit as EditIcon } from "tabler-icons-react";
 import AdminCheck from "hooks/AdminCheck";
 
-export default function Post({ today, homePosts, disabled }) {
+export default function Body({ today, homePosts, disabled }) {
   const { user } = useContext(UserContext);
 
   const [toggle, setTogle] = useState(true);
